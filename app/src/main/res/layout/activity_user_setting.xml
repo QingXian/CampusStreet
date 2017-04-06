@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <RelativeLayout
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/act_user_setting_head"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorBlack"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="40dp"
+            android:layout_centerVertical="true"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_head_test"/>
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="8dp"
+            android:text="@string/act_user_setting_name"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="40dp"
+            android:src="@drawable/ic_head_test"
+            android:text="清闲"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingLeft="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/act_user_setting_department"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorBlack"/>
+        <TextView
+            android:textSize="16sp"
+            android:text="信息院"
+            android:textColor="@color/colorBlack"
+            android:layout_marginRight="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_head_test"/>
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentRight="true"
+            android:id="@+id/imageView2"/>
+    </RelativeLayout>
+</LinearLayout>
