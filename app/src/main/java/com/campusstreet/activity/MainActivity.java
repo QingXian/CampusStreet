@@ -1,5 +1,6 @@
 package com.campusstreet.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -61,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_toolbar_right:
+                if (mToolbarTitle.getText().equals(getString(R.string.bot_tv_user))){
+                    Intent intent = new Intent(this,UserSettingActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.tv_home:
                 mToolbarTitle.setText(getString(R.string.bot_tv_home));
@@ -81,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.tv_user:
                 mToolbarTitle.setText(getString(R.string.bot_tv_user));
+                mIvToolbarRight.setImageResource(R.mipmap.ic_launcher);
                 mUserFragment = new UserFragment();
                 setFragment(mUserFragment);
                 mIvToolbarRight.setVisibility(View.VISIBLE);

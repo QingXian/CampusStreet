@@ -130,7 +130,7 @@ public class HomeFragment extends Fragment implements OnBannerListener {
                 startActivity(intent);
                 break;
             case R.id.tv_campus_information:
-                intent = new Intent(getActivity(), CampusRecruitmentActivity.class);
+                intent = new Intent(getActivity(), CampusInformationActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tv_partner:

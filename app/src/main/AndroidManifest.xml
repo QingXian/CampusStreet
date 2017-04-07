@@ -32,6 +32,15 @@
         </activity>
         <activity android:name=".activity.PeripheraShopActivity">
         </activity>
+        <activity android:name=".activity.UserSettingActivity">
+        </activity>
+        <activity android:name=".activity.ModifyDepartmentActivity">
+        </activity>
+        <activity android:name=".activity.ModifyHeadActivity">
+        </activity>
+        <activity android:name=".activity.ModifyNickNameActivity">
+        </activity>
+
 
     </application>
 

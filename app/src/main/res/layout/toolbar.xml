@@ -24,7 +24,6 @@
         <ImageView
             android:visibility="gone"
             android:id="@+id/iv_toolbar_right"
-            android:background="@mipmap/ic_launcher"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="right"

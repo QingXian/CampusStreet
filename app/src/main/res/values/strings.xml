@@ -44,4 +44,11 @@
     <string name="act_user_setting_department">院系</string>
     <string name="act_user_setting_name">昵称</string>
     <string name="act_user_setting_head">头像</string>
+    <string name="act_modify_save">保存</string>
+    <string name="act_modify_head_choice">选择头像</string>
+    <string name="act_modify_department_hint">院系</string>
+    <string name="act_user_setting_toolbar_title">设置</string>
+    <string name="act_modify_department_toolbar_title">修改院系</string>
+    <string name="act_modify_head_toolbar_title">修改头像</string>
+    <string name="act_modify_nickname_toolbar_title">修改昵称</string>
 </resources>
