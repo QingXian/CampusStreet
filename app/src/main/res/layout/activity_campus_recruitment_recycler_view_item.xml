@@ -54,7 +54,7 @@
         android:paddingTop="8dp"
         android:paddingLeft="16dp"
         android:layout_below="@+id/tv_company"
-        android:id="@+id/tv_education"
+        android:id="@+id/tv_requirement"
         android:layout_toRightOf="@+id/tv_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

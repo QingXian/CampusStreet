@@ -51,4 +51,11 @@
     <string name="act_modify_department_toolbar_title">修改院系</string>
     <string name="act_modify_head_toolbar_title">修改头像</string>
     <string name="act_modify_nickname_toolbar_title">修改昵称</string>
+    <string name="act_campus_recruitment_detail_feedback">平均48小时反馈</string>
+    <string name="act_campus_recruitment_position_introduction">职位介绍</string>
+    <string name="act_campus_recruitment_responsibilities">岗位职责</string>
+    <string name="act_campus_recruitment_job_requirements">任职要求</string>
+    <string name="act_idle_sale_detail_time_hint">发布时间：</string>
+    <string name="act_idle_sale_detail_phone_hint">手机：</string>
+    <string name="act_detail">详情</string>
 </resources>
