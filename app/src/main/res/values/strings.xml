@@ -58,4 +58,35 @@
     <string name="act_idle_sale_detail_time_hint">发布时间：</string>
     <string name="act_idle_sale_detail_phone_hint">手机：</string>
     <string name="act_detail">详情</string>
+    <!--spinner item value-->
+    <string name="act_idle_sale_add_spinner">交易方式</string>
+    <string name="action_settings">Settings</string>
+    <string name="act_idle_sale_add_toolbar_title">商品发布</string>
+    <string name="act_idle_sale_add_title_hint">标题</string>
+    <string name="act_idle_sale_add_price_hint">价格</string>
+    <string name="act_idle_sale_add_place_hint">交易地点</string>
+    <string name="act_idle_sale_add_degree_hint">新旧程度</string>
+    <string name="act_idle_sale_add_phone_hint">联系方式</string>
+    <string name="act_idle_sale_add_describe_hint">简要描述</string>
+    <string name="act_idle_sale_add_release">发布</string>
+    <string name="act_buy_zone_place_hint">发布于</string>
+    <string name="act_buy_zone_time_hint">前来过</string>
+    <string name="act_buy_zone_message_hint">留言专区</string>
+    <string name="act_buy_zone_add_toolbar_title">求购发布</string>
+    <string name="act_my_bounty_hall_toolbar_title">我的赏金</string>
+    <string name="act_my_bounty_hall_demand">需求：</string>
+    <string name="act_my_bounty_hall_cost">费用：</string>
+    <string name="act_my_bounty_hall_end_time">截止：</string>
+    <string name="act_my_bounty_hall_demand_unit">人</string>
+    <string name="act_bounty_hall_detail_toolbar_title">任务详情</string>
+    <string name="act_registration_detail_remuneration">报酬</string>
+    <string name="act_registration_detail_place">地点</string>
+    <string name="act_registration_detail_evaluate">历史评价</string>
+    <string name="act_registration_detail_remarks">备注</string>
+    <string name="act_registration_detail_toolbar_title">报名详情</string>
+    <string-array name="act_idle_sale_add_spinner_item">
+        <item>test</item>
+        <item>test</item>
+        <item>test</item>
+    </string-array>
 </resources>

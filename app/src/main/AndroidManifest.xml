@@ -40,6 +40,20 @@
         </activity>
         <activity android:name=".activity.ModifyNickNameActivity">
         </activity>
+        <activity android:name=".activity.AddIdleSaleActivity">
+        </activity>
+        <activity android:name=".activity.CampusRecruitmentDetailActivity">
+        </activity>
+        <activity android:name=".activity.BuyZoneDetailActivity">
+        </activity>
+        <activity android:name=".activity.IdleSaleDetailActivity">
+        </activity>
+        <activity android:name=".activity.AddBuyZoneActivity">
+        </activity>
+        <activity android:name=".activity.BountyHallDetailActivity">
+        </activity>
+        <activity android:name=".activity.RegistrationDetailActivity">
+        </activity>
 
 
     </application>

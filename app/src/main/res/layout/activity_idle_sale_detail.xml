@@ -104,24 +104,33 @@
         android:background="@color/colorGray"/>
     <TextView
         android:layout_below="@+id/iv_head"
-        android:paddingTop="16dp"
+        android:paddingTop="8dp"
         android:paddingRight="16dp"
-        android:paddingBottom="16dp"
         android:layout_toRightOf="@+id/iv_head"
         android:id="@+id/tv_introduce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="见面交易"/>
-    <View
+    <TextView
         android:layout_below="@+id/tv_introduce"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
+        android:layout_toRightOf="@+id/iv_head"
+        android:id="@+id/tv_degree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="九成新"/>
+    <View
+        android:layout_below="@+id/tv_degree"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorGray"/>
     <TextView
         android:id="@+id/tv_place"
         android:layout_toRightOf="@+id/iv_head"
-        android:layout_below="@+id/tv_introduce"
-        android:paddingTop="16dp"
+        android:layout_below="@+id/tv_degree"
+        android:paddingTop="8dp"
         android:text="二组食堂"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

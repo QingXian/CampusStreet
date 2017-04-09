@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:background="@color/colorGray"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include layout="@layout/toolbar"/>
+    <EditText
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:id="@+id/et_title"
+        android:hint="@string/act_idle_sale_add_title_hint"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_act_idle_sale_detail_et"/>
+    <EditText
+        android:inputType="number"
+        android:textSize="16sp"
+        android:layout_marginTop="1dp"
+        android:padding="8dp"
+        android:id="@+id/et_price"
+        android:hint="@string/act_idle_sale_add_price_hint"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_act_idle_sale_detail_et"/>
+
+
+    <EditText
+        android:inputType="number"
+        android:textSize="16sp"
+        android:layout_marginTop="1dp"
+        android:padding="8dp"
+        android:id="@+id/et_phone"
+        android:hint="@string/act_idle_sale_add_phone_hint"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_act_idle_sale_detail_et"/>
+    <EditText
+        android:gravity="start"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:id="@+id/et_describe"
+        android:hint="@string/act_idle_sale_add_describe_hint"
+        android:maxLength="300"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/bg_act_idle_sale_detail_et"/>
+
+
+    <Button
+        android:id="@+id/btn_release"
+        android:layout_width="150dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:background="@color/colorPrimary"
+        android:text="@string/act_idle_sale_add_release"
+        android:textColor="@color/colorWhite"/>
+</LinearLayout>

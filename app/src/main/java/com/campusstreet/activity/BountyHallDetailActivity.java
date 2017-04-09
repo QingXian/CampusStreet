@@ -1,6 +1,5 @@
 package com.campusstreet.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
@@ -17,32 +16,51 @@ import com.campusstreet.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
- * Created by Orange on 2017/4/6.
+ * Created by Orange on 2017/4/9.
  */
 
-public class IdleSaleActivity extends AppCompatActivity {
+public class BountyHallDetailActivity extends AppCompatActivity {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
     ImageView mIvToolbarRight;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.iv_head)
+    CircleImageView mIvHead;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+    @BindView(R.id.tv_state)
+    TextView mTvState;
+    @BindView(R.id.tv_price)
+    TextView mTvPrice;
+    @BindView(R.id.tv_people)
+    TextView mTvPeople;
+    @BindView(R.id.tv_position)
+    TextView mTvPosition;
+    @BindView(R.id.tv_end_time)
+    TextView mTvEndTime;
+    @BindView(R.id.tv_describe)
+    TextView mTvDescribe;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
     @BindView(R.id.rl_content)
     RecyclerView mRlContent;
-    @BindView(R.id.btn_add)
-    Button mBtnAdd;
+    @BindView(R.id.btn_entel)
+    Button mBtnEntel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_idle_sale);
+        setContentView(R.layout.activity_bounty_hall_detail);
         ButterKnife.bind(this);
         mToolbar.setTitle("");
-        mToolbarTitle.setText(getString(R.string.frag_home_idle_sale));
+        mToolbarTitle.setText(getString(R.string.act_bounty_hall_detail_toolbar_title));
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -54,21 +72,11 @@ public class IdleSaleActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        mIvToolbarRight.setVisibility(View.VISIBLE);
-        mIvToolbarRight.setImageResource(R.mipmap.ic_launcher);
 
     }
 
 
-    @OnClick({R.id.iv_toolbar_right, R.id.btn_add})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_toolbar_right:
-                break;
-            case R.id.btn_add:
-                Intent intent = new Intent(this,AddIdleSaleActivity.class);
-                startActivity(intent);
-                break;
-        }
+    @OnClick(R.id.btn_entel)
+    public void onViewClicked() {
     }
 }

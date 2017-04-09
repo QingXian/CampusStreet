@@ -30,16 +30,25 @@
         android:layout_width="16dp"
         android:layout_height="24dp"/>
     <TextView
-
         android:paddingLeft="8dp"
         android:id="@+id/tv_time"
         android:paddingTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="4小时前来过"
+        android:text="4小时"
         android:layout_below="@+id/tv_name"
         android:layout_toRightOf="@+id/iv_head"
         android:layout_toEndOf="@+id/iv_head"/>
+    <TextView
+        android:id="@+id/tv_time_hint"
+        android:paddingTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/act_buy_zone_time_hint"
+        android:layout_below="@+id/tv_name"
+        android:layout_toRightOf="@+id/tv_time"
+        android:layout_toEndOf="@+id/tv_time"/>
+
     <TextView
         android:textColor="@color/colorBlack"
         android:ellipsize="end"
