@@ -54,7 +54,22 @@
         </activity>
         <activity android:name=".activity.RegistrationDetailActivity">
         </activity>
-
+        <activity android:name=".activity.AddBountyHallActivity">
+        </activity>
+        <activity android:name=".activity.AssociationDetailActivity">
+        </activity>
+        <activity android:name=".activity.PartnerDetailActivity">
+        </activity>
+        <activity android:name=".activity.PostDetailActivity">
+        </activity>
+        <activity android:name=".activity.AddPostActivity">
+        </activity>
+        <activity android:name=".activity.NoticeActivity">
+        </activity>
+        <activity android:name=".activity.AddNotice">
+        </activity>
+        <activity android:name=".activity.PeripheralShopDetailActivity">
+        </activity>
 
     </application>
 

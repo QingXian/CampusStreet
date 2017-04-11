@@ -9,4 +9,5 @@
     <color name="colorOrange">#FF6600</color>
     <color name="colorRed">#CC0000</color>
     <color name="tv_color_defult">#7A7A7A</color>
+    <color name="tv_color_peripheral_shop_detail_name">#83000000</color>
 </resources>

@@ -17,10 +17,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Orange on 2017/4/9.
+ * Created by Orange on 2017/4/10.
  */
 
-public class MyBountyHallActivity extends AppCompatActivity {
+public class NoticeActivity extends AppCompatActivity {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -33,10 +33,10 @@ public class MyBountyHallActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_bounty_hall);
+        setContentView(R.layout.activity_notice);
         ButterKnife.bind(this);
         mToolbar.setTitle("");
-        mToolbarTitle.setText(R.string.act_my_bounty_hall_toolbar_title);
+        mToolbarTitle.setText(getString(R.string.act_notice_toolbar_title));
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -48,12 +48,14 @@ public class MyBountyHallActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        mIvToolbarRight.setVisibility(View.VISIBLE);
+        mIvToolbarRight.setImageResource(R.mipmap.ic_launcher);
 
     }
 
     @OnClick(R.id.iv_toolbar_right)
     public void onClick() {
-        Intent intent = new Intent(this,AddBountyHallActivity.class);
+        Intent intent = new Intent(this,AddNotice.class);
         startActivity(intent);
     }
 }

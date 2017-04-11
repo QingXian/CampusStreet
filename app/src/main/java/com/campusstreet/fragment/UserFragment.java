@@ -43,6 +43,7 @@ public class UserFragment extends Fragment {
     TextView mTvMyClub;
     @BindView(R.id.tv_about_us)
     TextView mTvAboutUs;
+    private Unbinder mUnbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_user, container, false);
-        ButterKnife.bind(this, root);
+        mUnbinder = ButterKnife.bind(this, root);
         return root;
     }
 
@@ -75,5 +76,10 @@ public class UserFragment extends Fragment {
             case R.id.tv_my_club:
                 break;
         }
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 }

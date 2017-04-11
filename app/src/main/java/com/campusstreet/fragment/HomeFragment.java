@@ -35,6 +35,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * Created by Orange on 2017/4/1.
@@ -66,6 +67,7 @@ public class HomeFragment extends Fragment implements OnBannerListener {
     @BindView(R.id.rl_content)
     RecyclerView mRlContent;
     private List<Integer> testList = new ArrayList<>();
+    private Unbinder mUnbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +79,7 @@ public class HomeFragment extends Fragment implements OnBannerListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        ButterKnife.bind(this, root);
+        mUnbinder = ButterKnife.bind(this, root);
         initData();
         initEvent();
         return root;
@@ -168,5 +170,10 @@ public class HomeFragment extends Fragment implements OnBannerListener {
     public void onStop() {
         super.onStop();
         mBanner.isAutoPlay(false);
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 }
