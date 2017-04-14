@@ -68,6 +68,8 @@ public class AssociationDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        mIvToolbarRight.setVisibility(View.VISIBLE);
+        mIvToolbarRight.setImageResource(R.drawable.ic_more);
 
     }
 

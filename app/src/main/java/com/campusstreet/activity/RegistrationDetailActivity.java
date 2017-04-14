@@ -52,7 +52,7 @@ public class RegistrationDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration_detail);
         ButterKnife.bind(this);
         mToolbar.setTitle("");
-        mToolbarTitle.setText(R.string.act_registration_detail_toolbar_title);
+        mToolbarTitle.setText(getString(R.string.act_registration_detail_toolbar_title));
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

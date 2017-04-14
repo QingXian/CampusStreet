@@ -23,6 +23,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class BountyHallDetailActivity extends AppCompatActivity {
+
+
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -33,18 +35,38 @@ public class BountyHallDetailActivity extends AppCompatActivity {
     CircleImageView mIvHead;
     @BindView(R.id.tv_name)
     TextView mTvName;
-    @BindView(R.id.tv_title)
-    TextView mTvTitle;
-    @BindView(R.id.tv_state)
-    TextView mTvState;
-    @BindView(R.id.tv_price)
-    TextView mTvPrice;
-    @BindView(R.id.tv_people)
-    TextView mTvPeople;
+    @BindView(R.id.iv_sex)
+    ImageView mIvSex;
+    @BindView(R.id.tv_real_name_authentication)
+    TextView mTvRealNameAuthentication;
+    @BindView(R.id.tv_task_num)
+    TextView mTvTaskNum;
+    @BindView(R.id.textView3)
+    TextView mTextView3;
+    @BindView(R.id.tv_skill_num)
+    TextView mTvSkillNum;
+    @BindView(R.id.tv_help_num)
+    TextView mTvHelpNum;
     @BindView(R.id.tv_position)
     TextView mTvPosition;
-    @BindView(R.id.tv_end_time)
-    TextView mTvEndTime;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+    @BindView(R.id.tv_price)
+    TextView mTvPrice;
+    @BindView(R.id.tv_people_num)
+    TextView mTvPeopleNum;
+    @BindView(R.id.tv_day)
+    TextView mTvDay;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
+    @BindView(R.id.tv_remaining_time)
+    TextView mTvRemainingTime;
+    @BindView(R.id.tv_completion_time)
+    TextView mTvCompletionTime;
+    @BindView(R.id.tv_contact_people)
+    TextView mTvContactPeople;
+    @BindView(R.id.tv_contact_place)
+    TextView mTvContactPlace;
     @BindView(R.id.tv_describe)
     TextView mTvDescribe;
     @BindView(R.id.tab_layout)
@@ -72,6 +94,8 @@ public class BountyHallDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        mIvToolbarRight.setVisibility(View.VISIBLE);
+        mIvToolbarRight.setImageResource(R.drawable.ic_add);
 
     }
 

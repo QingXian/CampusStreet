@@ -9,7 +9,8 @@
         android:layout_height="160dp"
         />
     <TextView
-        android:padding="16dp"
+        android:id="@+id/tv_department"
+        android:padding="12dp"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
@@ -20,6 +21,7 @@
         android:layout_height="2dp"
         android:background="@color/colorGray"/>
     <RelativeLayout
+        android:id="@+id/rl_release"
         android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -27,7 +29,7 @@
             android:id="@+id/iv_user_head"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/ic_head_test"/>
         <TextView
             android:layout_marginLeft="32dp"
             android:padding="8dp"
@@ -38,7 +40,7 @@
             android:hint="@string/frag_find_hint"/>
         <ImageView
             android:layout_alignParentRight="true"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/ic_camera"
             android:layout_width="24dp"
             android:layout_height="24dp"/>
     </RelativeLayout>

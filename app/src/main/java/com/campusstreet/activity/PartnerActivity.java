@@ -51,7 +51,7 @@ public class PartnerActivity extends AppCompatActivity {
             }
         });
         mIvToolbarRight.setVisibility(View.VISIBLE);
-        mIvToolbarRight.setImageResource(R.mipmap.ic_launcher);
+        mIvToolbarRight.setImageResource(R.drawable.ic_search);
 
     }
 

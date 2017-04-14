@@ -64,7 +64,7 @@
     <string name="act_idle_sale_detail_time_hint">发布时间：</string>
     <string name="act_idle_sale_detail_phone_hint">手机：</string>
     <string name="act_detail">详情</string>
-    <string name="act_idle_sale_add_spinner">交易方式</string>
+    <string name="act_idle_sale_add_mode_hint">交易方式</string>
     <string name="action_settings">Settings</string>
     <string name="act_idle_sale_add_toolbar_title">商品发布</string>
     <string name="act_idle_sale_add_title_hint">标题</string>
@@ -117,4 +117,20 @@
     <string name="act_post_add_post">发帖</string>
     <string name="act_post_add_toolbar_title">发布帖子</string>
     <string name="act_notice_add_toolbar_title">公告发布</string>
+    <string name="act_release_live_toolbar_title">分享生活</string>
+    <string name="act_idle_sale_add_type_hint">讨价类型</string>
+    <string name="act_bounty_hall_detail_real_name_authentication">已实名认证</string>
+    <string name="act_bounty_hall_detail_task">任务</string>
+    <string name="left_parenthesis">（</string>
+    <string name="right_parenthesis">）</string>
+    <string name="act_bounty_hall_detail_skill">技能</string>
+    <string name="act_bounty_hall_detail_help">众帮</string>
+    <string name="act_bounty_hall_detail_price_hint">预算</string>
+    <string name="act_bounty_hall_detail_people_num_hint">人投注</string>
+    <string name="act_bounty_hall_detail_time_hint">发布</string>
+    <string name="act_bounty_hall_detail_remaining_time">招标剩余时间：</string>
+    <string name="act_bounty_hall_detail_completion_time">计划完成时间：</string>
+    <string name="act_bounty_hall_detail_contact_people">联系人：</string>
+    <string name="act_bounty_hall_detail_contact_place">联系地址：</string>
+    <string name="act_bounty_hall_detail_describe">任务描述</string>
 </resources>

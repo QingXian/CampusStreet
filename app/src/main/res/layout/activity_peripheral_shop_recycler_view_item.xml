@@ -31,29 +31,29 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/iv_star1"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_star_fill"/>
         <ImageView
             android:id="@+id/iv_star2"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_star"/>
         <ImageView
             android:id="@+id/iv_star3"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_star"/>
         <ImageView
             android:id="@+id/iv_star4"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_star"/>
         <ImageView
             android:id="@+id/iv_star5"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_star"/>
         <TextView
             android:textSize="12sp"
             android:paddingLeft="8dp"
@@ -97,6 +97,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_discount"
         android:id="@+id/tv_introduce"
         android:padding="8dp"
         android:layout_below="@+id/tv_business_hours_hint"

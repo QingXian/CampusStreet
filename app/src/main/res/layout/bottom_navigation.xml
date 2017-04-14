@@ -6,14 +6,15 @@
     android:layout_height="72dp"
     >
     <LinearLayout
+        android:padding="4dp"
         android:background="@color/colorWhite"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
     <TextView
         android:id="@+id/tv_home"
-        android:drawableTop="@mipmap/ic_launcher"
+        android:drawableTop="@drawable/ic_home_selector"
         android:gravity="center"
         android:layout_weight="1"
         android:layout_width="0dp"
@@ -21,7 +22,7 @@
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/tv_notice"
-        android:drawableTop="@mipmap/ic_launcher"
+        android:drawableTop="@drawable/ic_message_selector"
         android:gravity="center"
         android:layout_weight="1"
         android:layout_width="0dp"
@@ -34,7 +35,7 @@
         </FrameLayout>
     <TextView
         android:id="@+id/tv_find"
-        android:drawableTop="@mipmap/ic_launcher"
+        android:drawableTop="@drawable/ic_find_selector"
         android:gravity="center"
         android:layout_weight="1"
         android:layout_width="0dp"
@@ -42,7 +43,7 @@
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/tv_user"
-        android:drawableTop="@mipmap/ic_launcher"
+        android:drawableTop="@drawable/ic_user_selector"
         android:gravity="center"
         android:layout_weight="1"
         android:layout_width="0dp"
@@ -53,11 +54,11 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
-        android:layout_height="72dp">
+        android:layout_height="64dp">
         <ImageView
             android:id="@+id/iv_release"
-            android:background="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
+            android:background="@drawable/ic_release"
+            android:layout_width="72dp"
             android:layout_height="wrap_content"
             />
 

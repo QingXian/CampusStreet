@@ -21,19 +21,21 @@
         android:textSize="16sp"
         android:text="事件消息"/>
     <TextView
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/ic_association_num"
         android:id="@+id/tv_association_num_hint"
-        android:gravity="bottom"
-        android:layout_alignBottom="@+id/iv_head"
+        android:gravity="center"
         android:layout_below="@+id/tv_name"
         android:paddingLeft="24dp"
+        android:paddingTop="16dp"
         android:layout_toRightOf="@+id/iv_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/act_association_num_hint"/>
     <TextView
+        android:paddingTop="16dp"
         android:id="@+id/tv_association_num"
-        android:gravity="bottom"
-        android:layout_alignBottom="@+id/iv_head"
+        android:gravity="center"
         android:layout_below="@+id/tv_name"
         android:layout_toRightOf="@+id/tv_association_num_hint"
         android:layout_width="wrap_content"
@@ -42,7 +44,7 @@
     <TextView
         android:gravity="center"
         android:background="@drawable/bg_act_association_btn"
-        android:id="@+id/tv_time"
+        android:id="@+id/tv_follow"
         android:layout_width="48dp"
         android:layout_height="24dp"
         android:text="@string/act_association_follow"

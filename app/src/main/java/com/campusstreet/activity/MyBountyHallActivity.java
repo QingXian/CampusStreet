@@ -48,6 +48,8 @@ public class MyBountyHallActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        mIvToolbarRight.setVisibility(View.VISIBLE);
+        mIvToolbarRight.setImageResource(R.drawable.ic_add);
 
     }
 

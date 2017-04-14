@@ -124,6 +124,9 @@
                 android:text="私营"/>
         </LinearLayout>
         <TextView
+            android:gravity="bottom"
+            android:drawablePadding="8dp"
+            android:drawableLeft="@drawable/ic_postion"
             android:layout_marginLeft="16dp"
             android:textSize="14sp"
             android:layout_below="@+id/ll_company_detail"
@@ -131,12 +134,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="龙岩市新罗区东肖镇龙岩学院"/>
-        <ImageView
-            android:background="@mipmap/ic_launcher"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_marginTop="8dp"

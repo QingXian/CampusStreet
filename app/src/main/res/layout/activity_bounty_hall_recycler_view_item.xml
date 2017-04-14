@@ -168,9 +168,9 @@
     <ImageView
         android:id="@+id/iv_ic_time"
         android:layout_marginTop="16dp"
-        android:background="@mipmap/ic_launcher"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:background="@drawable/ic_count_down"
+        android:layout_width="12dp"
+        android:layout_height="18dp"
         android:layout_below="@id/View_separate"/>
     <TextView
         android:paddingLeft="8dp"
@@ -182,7 +182,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <ImageView
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/ic_leave_message"
         android:layout_toLeftOf="@+id/tv_message"
         android:layout_alignBottom="@+id/tv_message"
         android:layout_width="16dp"

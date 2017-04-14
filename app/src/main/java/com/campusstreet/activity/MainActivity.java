@@ -86,10 +86,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.tv_user:
                 mToolbarTitle.setText(getString(R.string.bot_tv_user));
-                mIvToolbarRight.setImageResource(R.mipmap.ic_launcher);
                 mUserFragment = new UserFragment();
                 setFragment(mUserFragment);
                 mIvToolbarRight.setVisibility(View.VISIBLE);
+                mIvToolbarRight.setImageResource(R.drawable.ic_setting);
                 break;
             case R.id.iv_release:
                 break;
