@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import com.campusstreet.activity.CampusRecruitmentActivity;
 import com.campusstreet.activity.IdleSaleActivity;
 import com.campusstreet.activity.PartnerActivity;
 import com.campusstreet.activity.PeripheraShopActivity;
+import com.campusstreet.adapter.HomeFragmentRecyclerViewAdapter;
+import com.campusstreet.contract.IHomeContract;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -30,19 +33,24 @@ import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static android.R.id.list;
+
 /**
  * Created by Orange on 2017/4/1.
  */
 
 
-public class HomeFragment extends Fragment implements OnBannerListener {
+public class HomeFragment extends Fragment implements OnBannerListener,IHomeContract.View {
 
     @BindView(R.id.banner)
     Banner mBanner;
@@ -64,11 +72,12 @@ public class HomeFragment extends Fragment implements OnBannerListener {
     TextView mTvPeripheralShop;
     @BindView(R.id.imageView)
     ImageView mImageView;
-    @BindView(R.id.rl_content)
-    RecyclerView mRlContent;
+    @BindView(R.id.rv_content)
+    RecyclerView mRvContent;
     private List<Integer> testList = new ArrayList<>();
     private Unbinder mUnbinder;
-
+    private HomeFragmentRecyclerViewAdapter mAdapter;
+    private IHomeContract.Presenter mPresenter;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +114,21 @@ public class HomeFragment extends Fragment implements OnBannerListener {
         mBanner.setIndicatorGravity(BannerConfig.RIGHT);
         mBanner.setImages(testList);
         mBanner.start();
+
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < 10; i++) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("name", "龙岩学院");
+            map.put("head", R.drawable.bg_test);
+            map.put("title", "震惊");
+            map.put("content", "特大新闻");
+            list.add(map);
+        }
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRvContent.setLayoutManager(linearLayoutManager);
+        mAdapter = new HomeFragmentRecyclerViewAdapter(getActivity(), list);
+        mRvContent.setNestedScrollingEnabled(false);
+        mRvContent.setAdapter(mAdapter);
     }
 
 
@@ -152,6 +176,47 @@ public class HomeFragment extends Fragment implements OnBannerListener {
 
     }
 
+    @Override
+    public void setPresenter(IHomeContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void setUserInfo() {
+
+    }
+
+    @Override
+    public void setBanner() {
+
+    }
+
+    @Override
+    public void setAdvertisement() {
+
+    }
+
+    @Override
+    public void setdynamicList() {
+
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+
+    }
+
+    @Override
+    public void clearCookie() {
+
+    }
+
+
     private class PicassoImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
@@ -175,5 +240,6 @@ public class HomeFragment extends Fragment implements OnBannerListener {
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+        testList.clear();
     }
 }

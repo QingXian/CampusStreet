@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_marginTop="4dp"
+              android:background="@color/colorWhite"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <RelativeLayout
@@ -31,11 +32,11 @@
 
     <TextView
         android:ellipsize="end"
-        android:id="@+id/tv_title"
+        android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/iv_head"
-        android:lines="3"
+        android:maxLines="3"
         android:padding="8dp"
         android:hint="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
         android:textSize="16sp"/>

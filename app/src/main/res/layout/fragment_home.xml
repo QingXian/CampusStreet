@@ -1,153 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:background="@color/colorWhite"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:background="@color/colorWhite"
+                  android:orientation="vertical">
 
-    <com.youth.banner.Banner
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        app:delay_time="2500"
-        app:image_scale_type="center_crop"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
-        >
-
-        <TextView
-            android:drawablePadding="4dp"
-            android:id="@+id/tv_campus_recruitment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_campus_recruitment"
-            android:gravity="center"
-            android:text="@string/frag_home_campus_recruitment"
-            android:textSize="12sp"
+        <com.youth.banner.Banner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            app:delay_time="2500"
+            app:image_scale_type="center_crop"
             />
 
-        <TextView
-            android:drawablePadding="4dp"
-            android:id="@+id/tv_idle_sale"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_idle_sale"
-            android:gravity="center"
-            android:text="@string/frag_home_idle_sale"
-            android:textSize="12sp"
-            />
+            android:background="@color/colorWhite"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            >
 
-        <TextView
-            android:drawablePadding="4dp"
-            android:id="@+id/tv_buy_zone"
-            android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tv_campus_recruitment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/ic_campus_recruitment"
+                android:gravity="center"
+                android:text="@string/frag_home_campus_recruitment"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_idle_sale"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/ic_idle_sale"
+                android:gravity="center"
+                android:text="@string/frag_home_idle_sale"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_buy_zone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/ic_buy_zone"
+                android:gravity="center"
+                android:text="@string/frag_home_buy_zone"
+                android:textSize="12sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_bounty_hall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/ic_bounty_hall"
+                android:gravity="center"
+                android:text="@string/frag_home_bounty_hall"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_buy_zone"
-            android:gravity="center"
-            android:text="@string/frag_home_buy_zone"
-            android:textSize="12sp"
-            />
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            >
 
-        <TextView
-            android:drawablePadding="4dp"
-            android:id="@+id/tv_bounty_hall"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_bounty_hall"
-            android:gravity="center"
-            android:text="@string/frag_home_bounty_hall"
-            android:textSize="12sp"
-            />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_association"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/ic_association"
+                android:gravity="center"
+                android:text="@string/frag_home_association"
+                android:textSize="12sp"
+                />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:orientation="horizontal"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
-        >
+            <TextView
+                android:id="@+id/tv_campus_information"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/ic_campus_information"
+                android:gravity="center"
+                android:text="@string/frag_home_campus_information"
+                android:textSize="12sp"
+                />
 
-        <TextView
-            android:drawablePadding="4dp"
-            android:id="@+id/tv_association"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_association"
-            android:gravity="center"
-            android:text="@string/frag_home_association"
-            android:textSize="12sp"
-            />
+            <TextView
+                android:id="@+id/tv_partner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/ic_partner"
+                android:gravity="center"
+                android:text="@string/frag_home_partner"
+                android:textSize="12sp"
+                />
 
-        <TextView
-            android:drawablePadding="4dp"
-            android:id="@+id/tv_campus_information"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_campus_information"
-            android:gravity="center"
-            android:text="@string/frag_home_campus_information"
-            android:textSize="12sp"
-            />
+            <TextView
+                android:id="@+id/tv_peripheral_shop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="4dp"
+                android:drawableTop="@drawable/ic_peripheral_shop"
+                android:gravity="center"
+                android:text="@string/frag_home_peripheral_shop"
+                android:textSize="12sp"
+                />
+        </LinearLayout>
 
-        <TextView
-            android:drawablePadding="4dp"
-            android:id="@+id/tv_partner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_partner"
-            android:gravity="center"
-            android:text="@string/frag_home_partner"
-            android:textSize="12sp"
-            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/colorGray"/>
 
-        <TextView
-            android:drawablePadding="4dp"
-            android:id="@+id/tv_peripheral_shop"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_peripheral_shop"
-            android:gravity="center"
-            android:text="@string/frag_home_peripheral_shop"
-            android:textSize="12sp"
-            />
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:background="@color/colorGray"/>
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"/>
+
     <View
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:background="@color/colorGray"/>
-    <android.support.v7.widget.RecyclerView
-        android:background="@color/colorGray"
-        android:id="@+id/rl_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/colorGray"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorGray"
+            android:paddingBottom="48dp">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
