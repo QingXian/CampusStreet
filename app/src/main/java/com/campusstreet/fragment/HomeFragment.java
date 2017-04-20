@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -127,6 +128,8 @@ public class HomeFragment extends Fragment implements OnBannerListener,IHomeCont
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRvContent.setLayoutManager(linearLayoutManager);
         mAdapter = new HomeFragmentRecyclerViewAdapter(getActivity(), list);
+        mRvContent.addItemDecoration(new DividerItemDecoration(getActivity(),
+                DividerItemDecoration.VERTICAL));
         mRvContent.setNestedScrollingEnabled(false);
         mRvContent.setAdapter(mAdapter);
     }

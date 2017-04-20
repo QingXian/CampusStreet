@@ -30,7 +30,7 @@ public interface IFindBiz {
     interface LoadFindListCallback {
 
         // 加载所有GoodDeeds
-        void ondyFindListLoaded();
+        void onFindListLoaded();
 
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);

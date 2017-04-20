@@ -41,7 +41,7 @@ public class PostDetailActivity extends AppCompatActivity {
     TextView mTvTitle;
     @BindView(R.id.tv_content)
     TextView mTvContent;
-    @BindView(R.id.rl_content)
+    @BindView(R.id.rv_content)
     RecyclerView mRlContent;
 
     @Override

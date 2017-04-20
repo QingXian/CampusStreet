@@ -19,17 +19,12 @@ public class FindPresenter implements IFindContract.Presenter {
 
 
 
-    public FindPresenter(FindImpl homeImpl, IFindContract.View view) {
-        mFindImpl = homeImpl;
+    public FindPresenter(FindImpl findImpl, IFindContract.View view) {
+        mFindImpl = findImpl;
         mView = view;
 
         mView.setPresenter(this);
     }
-    @Override
-    public void start() {
-        Log.d(TAG, "start: 开始");
-    }
-
     @Override
     public void fetchFindList() {
 

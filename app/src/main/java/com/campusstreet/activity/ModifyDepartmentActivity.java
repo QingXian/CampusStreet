@@ -11,6 +11,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.contract.ISettingContract;
+import com.campusstreet.model.HomeImpl;
+import com.campusstreet.model.SettingImpl;
+import com.campusstreet.presenter.HomePresenter;
+import com.campusstreet.presenter.SettingPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +25,7 @@ import butterknife.OnClick;
  * Created by Orange on 2017/4/6.
  */
 
-public class ModifyDepartmentActivity extends AppCompatActivity {
+public class ModifyDepartmentActivity extends AppCompatActivity implements ISettingContract.View{
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -31,6 +36,9 @@ public class ModifyDepartmentActivity extends AppCompatActivity {
     Button mBtnSave;
     @BindView(R.id.spinner)
     Spinner mSpinner;
+    ISettingContract.Presenter mPresenter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +58,30 @@ public class ModifyDepartmentActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
+        new SettingPresenter(SettingImpl.getInstance(getApplicationContext()),this);
     }
 
     @OnClick(R.id.btn_save)
     public void onClick() {
+    }
+
+    @Override
+    public void setPresenter(ISettingContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void showSuccessMsg(String successMsg) {
+
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+
     }
 }

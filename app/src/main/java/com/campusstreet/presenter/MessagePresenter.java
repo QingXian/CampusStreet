@@ -19,17 +19,13 @@ public class MessagePresenter implements IMessageContract.Presenter {
 
 
 
-    public MessagePresenter(MessageImpl homeImpl, IMessageContract.View view) {
-        mMessageImpl = homeImpl;
+    public MessagePresenter(MessageImpl messageImpl, IMessageContract.View view) {
+        mMessageImpl = messageImpl;
         mView = view;
 
         mView.setPresenter(this);
     }
-    
-    @Override
-    public void start() {
-        Log.d(TAG, "start: 开始");
-    }
+
 
     @Override
     public void fetchMessageList() {

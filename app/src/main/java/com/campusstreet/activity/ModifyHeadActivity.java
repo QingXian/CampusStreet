@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.contract.ISettingContract;
+import com.campusstreet.model.SettingImpl;
+import com.campusstreet.presenter.SettingPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +22,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Orange on 2017/4/6.
  */
 
-public class ModifyHeadActivity extends AppCompatActivity {
+public class ModifyHeadActivity extends AppCompatActivity implements ISettingContract.View{
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.tv_toolbar_right)
@@ -30,6 +33,7 @@ public class ModifyHeadActivity extends AppCompatActivity {
     CircleImageView mIvHead;
     @BindView(R.id.btn_choice_head)
     Button mBtnChoiceHead;
+    private ISettingContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,7 @@ public class ModifyHeadActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
+        new SettingPresenter(SettingImpl.getInstance(getApplicationContext()),this);
     }
 
     @OnClick({R.id.tv_toolbar_right, R.id.btn_choice_head})
@@ -60,5 +64,25 @@ public class ModifyHeadActivity extends AppCompatActivity {
             case R.id.btn_choice_head:
                 break;
         }
+    }
+
+    @Override
+    public void setPresenter(ISettingContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void showSuccessMsg(String successMsg) {
+
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+
     }
 }

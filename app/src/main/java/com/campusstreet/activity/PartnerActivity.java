@@ -29,8 +29,8 @@ public class PartnerActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
-    @BindView(R.id.rl_content)
-    RecyclerView mRlContent;
+    @BindView(R.id.rv_content)
+    RecyclerView mRvContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

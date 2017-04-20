@@ -8,7 +8,7 @@ public interface ICampusRecruitmentContract {
 
     interface Presenter extends BasePresenter {
 
-        void fetchCampusRecruitmentList(String type);
+        void fetchCampusRecruitmentList(int type,int pi);
 
         void searchRecruit(String keyWord);
 

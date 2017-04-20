@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.contract.ICampusRecruitmentContract;
+import com.campusstreet.model.CampusRecruitmentImpl;
+import com.campusstreet.presenter.CampusRecruitmentPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,17 +23,18 @@ import butterknife.OnClick;
  * Created by Orange on 2017/4/6.
  */
 
-public class CampusRecruitmentActivity extends AppCompatActivity {
+public class CampusRecruitmentActivity extends AppCompatActivity implements ICampusRecruitmentContract.View {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
-    @BindView(R.id.rl_content)
-    RecyclerView mRlContent;
+    @BindView(R.id.rv_content)
+    RecyclerView mRvContent;
     @BindView(R.id.et_search)
     EditText mEtSearch;
     @BindView(R.id.tv_toolbar_right)
     TextView mTvToolbarRight;
+    ICampusRecruitmentContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +54,33 @@ public class CampusRecruitmentActivity extends AppCompatActivity {
             }
         });
         initView();
+        new CampusRecruitmentPresenter(CampusRecruitmentImpl.getInstance(getApplicationContext()),this);
     }
 
     private void initView() {
-
     }
 
     @OnClick(R.id.tv_toolbar_right)
     public void onClick() {
+    }
+
+    @Override
+    public void setPresenter(ICampusRecruitmentContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void setCampusRecruitment() {
+
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+
     }
 }

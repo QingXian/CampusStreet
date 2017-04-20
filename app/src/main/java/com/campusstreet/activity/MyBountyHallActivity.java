@@ -27,8 +27,8 @@ public class MyBountyHallActivity extends AppCompatActivity {
     ImageView mIvToolbarRight;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.rl_content)
-    RecyclerView mRlContent;
+    @BindView(R.id.rv_content)
+    RecyclerView mRvContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

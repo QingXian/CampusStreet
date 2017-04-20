@@ -54,8 +54,8 @@ public class BuyZoneDetailActivity extends AppCompatActivity {
     RelativeLayout mRlBuyZoneContent;
     @BindView(R.id.tv_message_hint)
     TextView mTvMessageHint;
-    @BindView(R.id.rl_content)
-    RecyclerView mRlContent;
+    @BindView(R.id.rv_content)
+    RecyclerView mRvContent;
     @BindView(R.id.et_message)
     EditText mEtMessage;
     @BindView(R.id.btn_send_message)

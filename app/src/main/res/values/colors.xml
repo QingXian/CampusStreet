@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#12b5f5</color>
     <color name="colorPrimaryDark">#12b5f5</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#12b5f5</color>
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#F1F1F1</color>
@@ -10,4 +10,5 @@
     <color name="colorRed">#CC0000</color>
     <color name="tv_color_defult">#7A7A7A</color>
     <color name="tv_color_peripheral_shop_detail_name">#83000000</color>
+    <color name="progress_bar_background">#90000000</color>
 </resources>

@@ -91,10 +91,4 @@
 
             />
     </LinearLayout>
-    <View
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/image_content_ll"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:background="@color/colorGray"/>
 </RelativeLayout>

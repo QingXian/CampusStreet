@@ -35,8 +35,8 @@ public class AssociationDetailActivity extends AppCompatActivity {
     CircleImageView mIvHead;
     @BindView(R.id.tv_name)
     TextView mTvName;
-    @BindView(R.id.rl_content)
-    RecyclerView mRlContent;
+    @BindView(R.id.rv_content)
+    RecyclerView mRvContent;
     @BindView(R.id.tv_introduce)
     TextView mTvIntroduce;
     @BindView(R.id.btn_join)

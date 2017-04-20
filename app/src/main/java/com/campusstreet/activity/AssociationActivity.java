@@ -32,8 +32,8 @@ public class AssociationActivity extends AppCompatActivity {
     TabLayout mTabLayout;
     @BindView(R.id.tab_layout_sub)
     TabLayout mTabLayoutSub;
-    @BindView(R.id.rl_content)
-    RecyclerView mRlContent;
+    @BindView(R.id.rv_content)
+    RecyclerView mRvContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

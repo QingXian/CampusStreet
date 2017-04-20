@@ -26,7 +26,7 @@ public class PeripheraShopActivity extends AppCompatActivity {
     TextView mTvToolbarRight;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.rl_content)
+    @BindView(R.id.rv_content)
     RecyclerView mRlContent;
 
     @Override

@@ -27,11 +27,6 @@ public class HomePresenter implements IHomeContract.Presenter {
 
 
     @Override
-    public void start() {
-        Log.d(TAG, "start: 开始");
-    }
-
-    @Override
     public void fetchBanner() {
 
     }

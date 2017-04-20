@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
+        <item name="android:listDivider">@drawable/bg_divider</item>
     </style>
 
 </resources>

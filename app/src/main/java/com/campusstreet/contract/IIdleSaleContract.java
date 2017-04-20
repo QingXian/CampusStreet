@@ -1,5 +1,9 @@
 package com.campusstreet.contract;
 
+import com.campusstreet.entity.IdleSaleInfo;
+
+import java.util.List;
+
 /**
  * Created by Orange on 2017/4/15.
  */
@@ -10,7 +14,13 @@ public interface IIdleSaleContract {
 
         void fetchIdleSaleCategories();
 
-        void fetchIdleSaleList();
+        void fetchIdleSaleList(int type , int pi);
+
+        void searchGoods(String keyWord);
+
+        void pushGoods();
+
+        void leaveMessage();
 
 
 
@@ -19,10 +29,15 @@ public interface IIdleSaleContract {
 
     interface View extends BaseView<Presenter> {
 
+        void setIdleSale(List<IdleSaleInfo> idleSaleInfoList);
 
-        void setCampusRecruitment();
+        void setIdleSaleCategories();
 
         void showErrorMsg(String errorMsg);
+
+        void showSuccessfullyPush(String succcessMsg);
+
+        void showSuccessfullyleaveMessage(String succcessMsg);
 
         /**
          * 设置是否加载指示器

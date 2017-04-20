@@ -13,6 +13,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.common.AppConfig;
+import com.campusstreet.common.Const;
+import com.campusstreet.entity.IdleSaleInfo;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,12 +56,18 @@ public class IdleSaleDetailActivity extends AppCompatActivity {
     TextView mTvPhoneHint;
     @BindView(R.id.tv_phone)
     TextView mTvPhone;
-    @BindView(R.id.rl_content)
-    RecyclerView mRlContent;
+    @BindView(R.id.rv_content)
+    RecyclerView mRvContent;
     @BindView(R.id.et_message)
     EditText mEtMessage;
     @BindView(R.id.btn_send_message)
     Button mBtnSendMessage;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_degree)
+    TextView mTvDegree;
+
+    private IdleSaleInfo mIdleSaleInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +87,29 @@ public class IdleSaleDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
+        mIdleSaleInfo = (IdleSaleInfo) getIntent().getSerializableExtra(Const.IDLESALEINFO_EXTRA);
+        initView();
     }
+
+    private void initView() {
+        Picasso.with(this)
+                .load(AppConfig.PIC_SERVER_HOST + mIdleSaleInfo.getCoverimage())
+                .placeholder(R.drawable.ic_base_picture)
+                .fit()
+                .error(R.drawable.ic_pic_error)
+                .into(mIvPhoto);
+        mToolbarTitle.setText(mIdleSaleInfo.getName());
+        mTvPrice.setText(mIdleSaleInfo.getMoney());
+        mTvName.setText(mIdleSaleInfo.getUsername());
+        Picasso.with(this)
+                .load(AppConfig.PIC_SERVER_HOST + mIdleSaleInfo.getUserpic())
+                .fit()
+                .into(mIvHead);
+        mTvDegree.setText(mIdleSaleInfo.getBewrite());
+        mTvIntroduce.setText(mIdleSaleInfo.getSelltype());
+        mTvTime.setText(mIdleSaleInfo.getGpublishtime());
+    }
+
 
     @OnClick(R.id.btn_send_message)
     public void onClick() {
