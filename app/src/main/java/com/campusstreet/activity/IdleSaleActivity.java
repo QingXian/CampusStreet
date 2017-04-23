@@ -21,6 +21,7 @@ import com.campusstreet.adapter.IdleSaleRecyclerViewAdapter;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IIdleSaleContract;
 import com.campusstreet.entity.IdleSaleInfo;
+import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.model.IdleSaleImpl;
 import com.campusstreet.presenter.IdleSalePresenter;
 
@@ -130,6 +131,11 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
 
     @Override
     public void setIdleSaleCategories() {
+
+    }
+
+    @Override
+    public void setIdleSaleMessageList(List<LeaveMessageInfo> idleSaleMessageList) {
 
     }
 

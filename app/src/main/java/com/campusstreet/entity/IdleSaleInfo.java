@@ -1,5 +1,6 @@
 package com.campusstreet.entity;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -25,7 +26,7 @@ public class IdleSaleInfo implements Serializable {
      * vn : 0
      */
 
-    private String id;
+    private int id;
     private String money;
     private String userpic;
     private String gmoney;
@@ -38,12 +39,77 @@ public class IdleSaleInfo implements Serializable {
     private String username;
     private String coverimage;
     private String vn;
+    private String goodstype;
+    private String tradeplace;
+    private String tradetype;
+    private String mobile;
+    private String qq;
+    private String uid;
+    private File image; // 本地图片文件
 
-    public String getId() {
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+
+    public String getGoodstype() {
+        return goodstype;
+    }
+
+    public void setGoodstype(String goodstype) {
+        this.goodstype = goodstype;
+    }
+
+    public String getTradeplace() {
+        return tradeplace;
+    }
+
+    public void setTradeplace(String tradeplace) {
+        this.tradeplace = tradeplace;
+    }
+
+    public String getTradetype() {
+        return tradetype;
+    }
+
+    public void setTradetype(String tradetype) {
+        this.tradetype = tradetype;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public File getImage() {
+        return image;
+    }
+
+    public void setImage(File image) {
+        this.image = image;
+    }
+
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

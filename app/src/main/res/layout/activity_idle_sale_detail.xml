@@ -115,40 +115,50 @@
         android:layout_height="wrap_content"
         android:text="见面交易"/>
     <TextView
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:id="@+id/tv_degree"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="九成新"
         android:layout_below="@+id/tv_introduce"
+        android:layout_alignLeft="@+id/tv_introduce"
+        android:layout_alignStart="@+id/tv_introduce"/>
+    <TextView
+        android:layout_below="@+id/tv_degree"
         android:paddingTop="8dp"
         android:paddingRight="16dp"
         android:paddingBottom="8dp"
         android:layout_toRightOf="@+id/iv_head"
-        android:id="@+id/tv_degree"
+        android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="九成新"/>
+        android:text="内容内容"/>
     <View
-        android:layout_below="@+id/tv_degree"
+        android:layout_below="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorGray"/>
     <TextView
         android:id="@+id/tv_place"
         android:layout_toRightOf="@+id/iv_head"
-        android:layout_below="@+id/tv_degree"
+        android:layout_below="@+id/tv_content"
         android:paddingTop="8dp"
         android:text="二组食堂"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
         android:id="@+id/tv_phone_hint"
-        android:layout_toRightOf="@+id/iv_head"
-        android:layout_below="@+id/tv_place"
         android:paddingTop="8dp"
         android:text="@string/act_idle_sale_detail_phone_hint"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_place"
+        android:layout_alignLeft="@+id/tv_place"
+        android:layout_alignStart="@+id/tv_place"/>
     <TextView
         android:id="@+id/tv_phone"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:text="156456789645"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -156,14 +166,34 @@
         android:layout_alignBottom="@+id/tv_phone_hint"
         android:layout_toRightOf="@+id/tv_phone_hint"
         android:layout_toEndOf="@+id/tv_phone_hint"/>
-    <View
+    <TextView
+        android:id="@+id/tv_qq_hint"
+        android:paddingTop="8dp"
+        android:text="@string/act_idle_sale_detail_qq_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tv_phone"
+        android:layout_alignLeft="@+id/tv_place"
+        android:layout_alignStart="@+id/tv_place"/>
+    <TextView
+        android:id="@+id/tv_qq"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="156567898"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_qq_hint"
+        android:layout_alignBottom="@+id/tv_qq_hint"
+        android:layout_toRightOf="@+id/tv_qq_hint"
+        android:layout_toEndOf="@+id/tv_qq_hint"/>
+    <View
+        android:layout_below="@+id/tv_qq"
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="@color/colorGray"/>
     <android.support.v7.widget.RecyclerView
         android:layout_marginTop="8dp"
-        android:layout_below="@+id/tv_phone"
+        android:layout_below="@+id/tv_qq"
         android:background="@color/colorGray"
         android:id="@+id/rv_content"
         android:layout_width="match_parent"
@@ -182,6 +212,8 @@
         android:layout_alignParentStart="true">
 
         <EditText
+            android:maxLength="200"
+            android:maxLines="2"
             android:id="@+id/et_message"
             android:layout_width="0dp"
             android:layout_height="32dp"
@@ -200,4 +232,5 @@
             android:layout_width="0dp"
             android:layout_height="32dp"/>
     </LinearLayout>
+    <include layout="@layout/progress_bar"></include>
 </RelativeLayout>

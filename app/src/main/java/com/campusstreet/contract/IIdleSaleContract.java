@@ -1,6 +1,7 @@
 package com.campusstreet.contract;
 
 import com.campusstreet.entity.IdleSaleInfo;
+import com.campusstreet.entity.LeaveMessageInfo;
 
 import java.util.List;
 
@@ -18,9 +19,11 @@ public interface IIdleSaleContract {
 
         void searchGoods(String keyWord);
 
-        void pushGoods();
+        void pushGoods(IdleSaleInfo idleSaleInfo);
 
-        void leaveMessage();
+        void leaveMessage(String uid,int gid,String con);
+
+        void fetchIdleSaleMessageList(int id,int pi);
 
 
 
@@ -32,6 +35,8 @@ public interface IIdleSaleContract {
         void setIdleSale(List<IdleSaleInfo> idleSaleInfoList);
 
         void setIdleSaleCategories();
+
+        void setIdleSaleMessageList(List<LeaveMessageInfo> idleSaleMessageList);
 
         void showErrorMsg(String errorMsg);
 

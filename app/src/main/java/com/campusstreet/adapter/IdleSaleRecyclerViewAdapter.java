@@ -109,8 +109,6 @@ public class IdleSaleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         TextView mTvPrice;
         @BindView(R.id.tv_place)
         TextView mTvPlace;
-        @BindView(R.id.tv_message)
-        TextView mTvMessage;
 
         private RecyclerItemViewHolder(View viewItem) {
             super(viewItem);

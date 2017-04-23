@@ -3,6 +3,7 @@ package com.campusstreet.model;
 import android.support.annotation.NonNull;
 
 import com.campusstreet.entity.IdleSaleInfo;
+import com.campusstreet.entity.LeaveMessageInfo;
 
 import java.util.List;
 
@@ -18,11 +19,13 @@ public interface IdleSaleBiz {
     //搜索商品列表
     void searchIdleSale(String picType, @NonNull searchIdleSaleCallback callback);
 
-    void addGoods(@NonNull addGoodsCallback callback);
+    void addIdleGoods(IdleSaleInfo idleSaleInfo ,@NonNull addIdleGoodsCallback callback);
 
-    void leaveMessagae(@NonNull LeaveMessageCallback callback);
+    void leaveMessagae(int gid ,String uid ,String con,@NonNull LeaveMessageCallback callback);
 
-    interface addGoodsCallback {
+    void fetchIdleSaleMessageList(int id,int pi,@NonNull LoadIdleSaleMessageListCallback callback);
+
+    interface addIdleGoodsCallback {
 
         void onAddSuccess();
 
@@ -48,6 +51,14 @@ public interface IdleSaleBiz {
 
         // 加载所有IdleSale
         void onIdleSaleListLoaded(List<IdleSaleInfo> idleSaleInfoList);
+
+        // 获取数据失败的回调
+        void onDataNotAvailable(String errorMsg);
+    }
+    interface LoadIdleSaleMessageListCallback {
+
+        // 加载所有IdleSaleMessage
+        void onIdleSaleMessageListLoaded(List<LeaveMessageInfo> leaveMessageInfos);
 
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);
