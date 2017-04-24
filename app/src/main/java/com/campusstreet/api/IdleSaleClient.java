@@ -36,6 +36,10 @@ public interface IdleSaleClient {
     Call<JsonObject> pushIdlegoods(@PartMap Map<String, RequestBody> Idlegoods,
                                    @Part MultipartBody.Part files);
 
+//    @Multipart
+//    @POST("ins_ewu_goods")
+//    Call<JsonObject> pushIdlegoods(@PartMap Map<String, RequestBody> Idlegoods);
+
     @FormUrlEncoded
     @POST("get_ewu_comment")
     Call<JsonObject> getIdleSaleMessage(@Field("gid") Integer id, @Field("pi") Integer pi);

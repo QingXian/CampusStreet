@@ -109,8 +109,17 @@
         android:layout_below="@+id/iv_head"
         android:paddingTop="8dp"
         android:paddingRight="16dp"
+        android:layout_toRightOf="@+id/tv_tradetype"
+        android:id="@+id/tv_selltype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="可小刀"/>
+    <TextView
+        android:layout_below="@+id/iv_head"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
         android:layout_toRightOf="@+id/iv_head"
-        android:id="@+id/tv_introduce"
+        android:id="@+id/tv_tradetype"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="见面交易"/>
@@ -121,9 +130,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="九成新"
-        android:layout_below="@+id/tv_introduce"
-        android:layout_alignLeft="@+id/tv_introduce"
-        android:layout_alignStart="@+id/tv_introduce"/>
+        android:layout_below="@+id/tv_tradetype"
+        android:layout_alignLeft="@+id/tv_tradetype"
+        android:layout_alignStart="@+id/tv_tradetype"/>
     <TextView
         android:layout_below="@+id/tv_degree"
         android:paddingTop="8dp"

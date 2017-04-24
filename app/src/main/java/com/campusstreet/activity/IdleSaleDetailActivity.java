@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
-import com.campusstreet.adapter.IdleSaleRecyclerViewAdapter;
 import com.campusstreet.adapter.LeaveMessageRecycleViewAdapter;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
@@ -64,8 +62,8 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     RelativeLayout mRlCommodityContent;
     @BindView(R.id.iv_head)
     CircleImageView mIvHead;
-    @BindView(R.id.tv_introduce)
-    TextView mTvIntroduce;
+    @BindView(R.id.tv_tradetype)
+    TextView mTvTradetype;
     @BindView(R.id.tv_place)
     TextView mTvPlace;
     @BindView(R.id.tv_phone_hint)
@@ -94,6 +92,8 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    @BindView(R.id.tv_selltype)
+    TextView mTvSelltype;
     private IIdleSaleContract.Presenter mPresenter;
     private LeaveMessageRecycleViewAdapter mAdapter;
     private IdleSaleInfo mIdleSaleInfo;
@@ -139,7 +139,8 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
                 .into(mIvHead);
         mTvDegree.setText(mIdleSaleInfo.getBewrite());
         mTvContent.setText(mIdleSaleInfo.getContent());
-        mTvIntroduce.setText(mIdleSaleInfo.getSelltype());
+
+        mTvSelltype.setText(mIdleSaleInfo.getSelltype());
         mTvTime.setText(mIdleSaleInfo.getGpublishtime());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRvContent.setLayoutManager(linearLayoutManager);
@@ -154,7 +155,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
             showMessage("请填写留言内容");
             return;
         }
-        mPresenter.leaveMessage("Mw==",mIdleSaleInfo.getId(),mEtMessage.getText().toString().trim());
+        mPresenter.leaveMessage("Mw==", mIdleSaleInfo.getId(), mEtMessage.getText().toString().trim());
         setLoadingIndicator(true);
     }
 
@@ -180,19 +181,19 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        Toast.makeText(this,errorMsg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showSuccessfullyPush(String succcessMsg) {//忽略
-         }
+    }
 
     @Override
     public void showSuccessfullyleaveMessage(String succcessMsg) {
-        Toast.makeText(this,succcessMsg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, succcessMsg, Toast.LENGTH_SHORT).show();
         mPresenter.fetchIdleSaleMessageList(mIdleSaleInfo.getId(), 1);
-        InputMethodManager imm =  (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(imm != null) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
             imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
                     0);
         }
@@ -213,6 +214,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
             }
         }
     }
+
     protected void showMessage(String msg) {
         if (this != null && !this.isFinishing()) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

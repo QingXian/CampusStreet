@@ -102,8 +102,11 @@ public class IdleSaleImpl implements IdleSaleBiz {
     public void addIdleGoods(IdleSaleInfo idleSaleInfo ,@NonNull final addIdleGoodsCallback callback) {
         Map<String, RequestBody> requestBodyMap = new HashMap<>();
         RequestBody body = null;
+        MultipartBody.Part part = null;
+        if (idleSaleInfo.getImage()!=null){
         body = RequestBody.create(MediaType.parse("application/otcet-stream"), idleSaleInfo.getImage());
-        MultipartBody.Part part = MultipartBody.Part.createFormData("image", idleSaleInfo.getImage().getName(), body);
+        part = MultipartBody.Part.createFormData("image", idleSaleInfo.getImage().getName(), body);
+        }
 
 
         //添加请求参数
@@ -120,6 +123,7 @@ public class IdleSaleImpl implements IdleSaleBiz {
         requestBodyMap.put("bewrite", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getBewrite()));
         requestBodyMap.put("gcontent", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getContent()));
         Call<JsonObject> call = mIdleSaleClient.pushIdlegoods(requestBodyMap,part);
+//        Call<JsonObject> call = mIdleSaleClient.pushIdlegoods(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

@@ -3,6 +3,8 @@ package com.campusstreet.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -153,7 +155,6 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
         switch (view.getId()) {
             case R.id.iv_add_img:
                 mIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                mIntent.putExtra(ID, mId);
                 startActivityForResult(mIntent, REQUEST_UPDATE_AVATAR);
                 break;
             case R.id.btn_release:
@@ -323,10 +324,8 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
                 cursor.moveToFirst();
                 path = cursor.getString(column_index);
                 mFile = new File(path);
-                Picasso.with(this)
-                        .load(mFile)
-                        .fit()
-                        .into(mIvImage1);
+                mIvImage1.setImageURI(data.getData());
+
             }
         } catch (Exception e) {
             Log.e(TAG, "fetchAvatar: 选择图片异常", e);

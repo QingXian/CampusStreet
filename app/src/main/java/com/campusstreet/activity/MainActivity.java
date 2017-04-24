@@ -28,6 +28,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import com.campusstreet.utils.PermissionsManage;
+
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.scrollview)
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mTvUser;
     @BindView(R.id.iv_release)
     ImageView mIvRelease;
+    PermissionsManage mPermissionsManage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         mScrollview.smoothScrollTo(0, 20);
         mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
         mTvHome.setSelected(true);
-
+        PermissionsManage.verifyStoragePermissions(this);
     }
 
     @OnClick({R.id.iv_toolbar_right, R.id.tv_home, R.id.tv_notice, R.id.tv_find, R.id.tv_user, R.id.iv_release})
