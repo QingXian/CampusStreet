@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mHomeFragment = new HomeFragment();
         setFragment(mHomeFragment);
-        mScrollview.smoothScrollTo(0, 20);
+        mScrollview.smoothScrollTo(0,0);
         mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
         mTvHome.setSelected(true);
         PermissionsManage.verifyStoragePermissions(this);

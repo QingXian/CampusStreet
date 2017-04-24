@@ -30,13 +30,17 @@
         </activity>
         <activity android:name=".activity.CampusInformationActivity">
         </activity>
-        <activity android:name=".activity.CampusRecruitmentActivity">
+        <activity
+            android:name=".activity.CampusRecruitmentActivity"
+            android:windowSoftInputMode ="stateAlwaysHidden|adjustPan">
         </activity>
         <activity android:name=".activity.IdleSaleActivity">
         </activity>
         <activity android:name=".activity.PartnerActivity">
         </activity>
-        <activity android:name=".activity.PeripheraShopActivity">
+        <activity
+            android:name=".activity.PeripheraShopActivity"
+            android:windowSoftInputMode ="stateAlwaysHidden|adjustPan">
         </activity>
         <activity android:name=".activity.UserSettingActivity">
         </activity>

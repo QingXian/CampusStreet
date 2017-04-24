@@ -36,7 +36,7 @@ public class FindImpl implements IFindBiz{
     }
 
     @Override
-    public void addLive(@NonNull addLiveCallback callback) {
+    public void addLive(@NonNull AddLiveCallback callback) {
 
     }
 }

@@ -36,12 +36,14 @@
             android:textColor="@color/colorBlack"
             android:textSize="18sp"/>
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:textSize="18sp"/>
+        <Button
+            android:layout_marginRight="12dp"
+            android:id="@+id/btn_department"
+            android:layout_width="12dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/ic_drop_down"
+            />
     </LinearLayout>
 
     <Button
@@ -54,4 +56,6 @@
         android:text="保存"
         android:textColor="@color/colorWhite"
         android:textSize="18sp"/>
+    <include layout="@layout/progress_bar">
+    </include>
 </LinearLayout>

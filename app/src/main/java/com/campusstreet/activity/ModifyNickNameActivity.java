@@ -1,14 +1,20 @@
 package com.campusstreet.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.contract.ISettingContract;
@@ -34,6 +40,12 @@ public class ModifyNickNameActivity extends AppCompatActivity implements ISettin
     Button mBtnSave;
     @BindView(R.id.editText)
     EditText mEditText;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.progress_bar_title)
+    TextView mProgressBarTitle;
+    @BindView(R.id.progress_bar_container)
+    LinearLayout mProgressBarContainer;
     private ISettingContract.Presenter mPresenter;
 
     @Override
@@ -64,21 +76,46 @@ public class ModifyNickNameActivity extends AppCompatActivity implements ISettin
 
     @Override
     public void showSuccessMsg(String successMsg) {
-
+        showMessage(successMsg);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
+                    0);
+        }
     }
 
     @Override
     public void showErrorMsg(String errorMsg) {
-
+        showMessage(errorMsg);
     }
 
     @Override
     public void setLoadingIndicator(boolean active) {
+        if (mProgressBarContainer != null) {
+            if (active) {
+                //设置滚动条可见
+                mProgressBarContainer.setVisibility(View.VISIBLE);
+                mProgressBarTitle.setText(R.string.Modifying_progress_bar_title);
+            } else {
+                if (mProgressBarContainer.getVisibility() == View.VISIBLE) {
+                    mProgressBarContainer.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
 
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.btn_save)
     public void onViewClicked() {
-        mPresenter.reviseNickName();
+        if (TextUtils.isEmpty(mEditText.getText().toString().trim())) {
+            showMessage("请填写昵称");
+            return;
+        }
+        mPresenter.reviseNickName("Mw==",mEditText.getText().toString());
     }
 }

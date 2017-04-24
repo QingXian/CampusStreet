@@ -8,10 +8,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.contract.IPeripheralShopContract;
+import com.campusstreet.model.PeripheralShopImpl;
+import com.campusstreet.presenter.PeripheralShopPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +25,7 @@ import butterknife.ButterKnife;
  * Created by Orange on 2017/4/11.
  */
 
-public class PeripheralShopDetailActivity extends AppCompatActivity {
+public class PeripheralShopDetailActivity extends AppCompatActivity implements IPeripheralShopContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -57,6 +62,13 @@ public class PeripheralShopDetailActivity extends AppCompatActivity {
     LinearLayout mLlShopContent;
     @BindView(R.id.rl_commodity_content)
     RelativeLayout mRlCommodityContent;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.progress_bar_title)
+    TextView mProgressBarTitle;
+    @BindView(R.id.progress_bar_container)
+    LinearLayout mProgressBarContainer;
+    private IPeripheralShopContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +87,46 @@ public class PeripheralShopDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        new PeripheralShopPresenter(PeripheralShopImpl.getInstance(getApplicationContext()),this);
+    }
 
+    @Override
+    public void setPresenter(IPeripheralShopContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void setPeriPheralShop() {
+
+    }
+
+    @Override
+    public void setShopCommodityList() {
+
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        showMessage(errorMsg);
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        if (mProgressBarContainer != null) {
+            if (active) {
+                //设置滚动条可见
+                mProgressBarContainer.setVisibility(View.VISIBLE);
+                mProgressBarTitle.setText(R.string.loading_progress_bar_title);
+            } else {
+                if (mProgressBarContainer.getVisibility() == View.VISIBLE) {
+                    mProgressBarContainer.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
     }
 }

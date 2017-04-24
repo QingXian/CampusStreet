@@ -34,5 +34,6 @@ public class Const {
      */
     public static final String[] TRADETYPE = {"见面交易","在线交易","担保交易"};
     public static final String[] SELLTYPE = {"一口价","可小刀"};
+    public static final String[] DEPARTMENT = {"信息院","物机院","化材院","经管院","教科院","生科院"};
 
 }

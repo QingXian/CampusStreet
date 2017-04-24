@@ -1,28 +1,45 @@
 package com.campusstreet.activity;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.contract.ISettingContract;
 import com.campusstreet.model.SettingImpl;
 import com.campusstreet.presenter.SettingPresenter;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
+import static com.campusstreet.activity.AddIdleSaleActivity.REQUEST_UPDATE_AVATAR;
 
 /**
  * Created by Orange on 2017/4/6.
  */
 
-public class ModifyHeadActivity extends AppCompatActivity implements ISettingContract.View{
+public class ModifyHeadActivity extends AppCompatActivity implements ISettingContract.View {
+
+    protected final String TAG = getClass().getSimpleName();
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.tv_toolbar_right)
@@ -33,7 +50,15 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
     CircleImageView mIvHead;
     @BindView(R.id.btn_choice_head)
     Button mBtnChoiceHead;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.progress_bar_title)
+    TextView mProgressBarTitle;
+    @BindView(R.id.progress_bar_container)
+    LinearLayout mProgressBarContainer;
     private ISettingContract.Presenter mPresenter;
+
+    private File mFile = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +78,28 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
                 onBackPressed();
             }
         });
-        new SettingPresenter(SettingImpl.getInstance(getApplicationContext()),this);
+        new SettingPresenter(SettingImpl.getInstance(getApplicationContext()), this);
     }
 
     @OnClick({R.id.tv_toolbar_right, R.id.btn_choice_head})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_toolbar_right:
+                modifyHead();
                 break;
             case R.id.btn_choice_head:
+                Intent mIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(mIntent, REQUEST_UPDATE_AVATAR);
                 break;
+        }
+    }
+
+    private void modifyHead() {
+
+        RequestBody body = null;
+        if (mFile != null) {
+            body = RequestBody.create(MediaType.parse("application/otcet-stream"), mFile);
+            mPresenter.reviseHead("Mw==", MultipartBody.Part.createFormData("avatar", mFile.getName(), body));
         }
     }
 
@@ -73,16 +110,64 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
 
     @Override
     public void showSuccessMsg(String successMsg) {
-
+        showMessage(successMsg);
     }
 
     @Override
     public void showErrorMsg(String errorMsg) {
-
+        showMessage(errorMsg);
     }
 
     @Override
     public void setLoadingIndicator(boolean active) {
+        if (mProgressBarContainer != null) {
+            if (active) {
+                //设置滚动条可见
+                mProgressBarContainer.setVisibility(View.VISIBLE);
+                mProgressBarTitle.setText(R.string.Modifying_progress_bar_title);
+            } else {
+                if (mProgressBarContainer.getVisibility() == View.VISIBLE) {
+                    mProgressBarContainer.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
 
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_UPDATE_AVATAR && resultCode == RESULT_OK) {
+            fetchImage(data);
+        }
+    }
+
+    private void fetchImage(Intent data) {
+        String path = null;
+        Uri uri = data.getData();
+        Cursor cursor = null;
+        try {
+            cursor = this.getContentResolver().query(uri, null, null, null, null);
+            int column_index = 0;
+            if (cursor != null) {
+                column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                path = cursor.getString(column_index);
+                mFile = new File(path);
+                mIvHead.setImageURI(data.getData());
+
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "fetchAvatar: 选择图片异常", e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 }

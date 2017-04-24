@@ -8,9 +8,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.contract.IBuyZoneContract;
+import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.model.BuyZoneImpl;
+import com.campusstreet.model.IdleSaleImpl;
+import com.campusstreet.presenter.BuyZonePresenter;
+import com.campusstreet.presenter.IdleSalePresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +30,7 @@ import butterknife.OnClick;
  * Created by Orange on 2017/4/6.
  */
 
-public class BuyZoneActivity extends AppCompatActivity {
+public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -29,6 +39,15 @@ public class BuyZoneActivity extends AppCompatActivity {
     Toolbar mToolbar;
     @BindView(R.id.rv_content)
     RecyclerView mRvContent;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.progress_bar_title)
+    TextView mProgressBarTitle;
+    @BindView(R.id.progress_bar_container)
+    LinearLayout mProgressBarContainer;
+    @BindView(R.id.tv_error)
+    TextView mTvError;
+    private IBuyZoneContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +69,60 @@ public class BuyZoneActivity extends AppCompatActivity {
         });
         mIvToolbarRight.setVisibility(View.VISIBLE);
         mIvToolbarRight.setImageResource(R.drawable.ic_add);
+        new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
 
     }
 
     @OnClick(R.id.iv_toolbar_right)
     public void onClick() {
-        Intent intent = new Intent(this,AddBuyZoneActivity.class);
+        Intent intent = new Intent(this, AddBuyZoneActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void setPresenter(IBuyZoneContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void setBuyZone() {
+
+    }
+
+    @Override
+    public void setBuyZoneMessageList(List<LeaveMessageInfo> BuyZoneMessageList) {
+
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        mRvContent.setVisibility(View.GONE);
+        mTvError.setText(errorMsg);
+        mTvError.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showSuccessfullyPush(String succcessMsg) {
+
+    }
+
+    @Override
+    public void showSuccessfullyleaveMessage(String succcessMsg) {
+
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        if (mProgressBarContainer != null) {
+            if (active) {
+                //设置滚动条可见
+                mProgressBarContainer.setVisibility(View.VISIBLE);
+                mProgressBarTitle.setText(R.string.loading_progress_bar_title);
+            } else {
+                if (mProgressBarContainer.getVisibility() == View.VISIBLE) {
+                    mProgressBarContainer.setVisibility(View.GONE);
+                }
+            }
+        }
     }
 }

@@ -358,12 +358,12 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show();
+        showMessage(errorMsg);
     }
 
     @Override
     public void showSuccessfullyPush(String succcessMsg) {
-        Toast.makeText(this, succcessMsg, Toast.LENGTH_SHORT).show();
+        showMessage(succcessMsg);
         Intent intent = new Intent(this, IdleSaleActivity.class);
         startActivity(intent);
     }

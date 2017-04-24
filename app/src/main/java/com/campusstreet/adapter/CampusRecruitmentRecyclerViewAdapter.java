@@ -38,7 +38,7 @@ public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<R
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecyclerItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_campus_recruitment_recycler_view_item, null));
+        return new RecyclerItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_campus_recruitment_recycler_view_item, parent,false));
     }
 
     @Override
@@ -52,7 +52,6 @@ public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<R
     public int getItemCount() {
         return mList.size();
     }
-
 
     static class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
 

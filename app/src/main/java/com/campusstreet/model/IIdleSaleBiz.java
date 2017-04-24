@@ -11,13 +11,15 @@ import java.util.List;
  * Created by Orange on 2017/4/19.
  */
 
-public interface IdleSaleBiz {
+public interface IIdleSaleBiz {
 
     //获取闲置商品列表
     void fetchIdleSaleList(int type,int pi,@NonNull LoadIdleSaleListCallback callback);
 
     //搜索商品列表
     void searchIdleSale(String picType, @NonNull searchIdleSaleCallback callback);
+
+    void fetchIdleSaleCategories(String picType, @NonNull LoadIdleSaleCategoriesCallback callback);
 
     void addIdleGoods(IdleSaleInfo idleSaleInfo ,@NonNull addIdleGoodsCallback callback);
 
@@ -53,6 +55,12 @@ public interface IdleSaleBiz {
         void onIdleSaleListLoaded(List<IdleSaleInfo> idleSaleInfoList);
 
         // 获取数据失败的回调
+        void onDataNotAvailable(String errorMsg);
+    }
+    interface LoadIdleSaleCategoriesCallback {
+
+        void onIdleSaleCategoriesLoaded();
+
         void onDataNotAvailable(String errorMsg);
     }
     interface LoadIdleSaleMessageListCallback {

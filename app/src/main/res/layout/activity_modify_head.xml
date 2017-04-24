@@ -53,4 +53,6 @@
         android:text="@string/act_modify_head_choice"
         android:textColor="@color/colorBlack"
         android:textSize="16sp"/>
+    <include layout="@layout/progress_bar">
+    </include>
 </LinearLayout>

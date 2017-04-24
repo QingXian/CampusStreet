@@ -181,7 +181,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        Toast.makeText(this, errorMsg, Toast.LENGTH_SHORT).show();
+       showMessage(errorMsg);
     }
 
     @Override
@@ -190,7 +190,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
 
     @Override
     public void showSuccessfullyleaveMessage(String succcessMsg) {
-        Toast.makeText(this, succcessMsg, Toast.LENGTH_SHORT).show();
+        showMessage(succcessMsg);
         mPresenter.fetchIdleSaleMessageList(mIdleSaleInfo.getId(), 1);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {

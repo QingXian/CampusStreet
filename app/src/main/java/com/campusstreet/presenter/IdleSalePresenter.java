@@ -1,16 +1,12 @@
 package com.campusstreet.presenter;
 
 import com.campusstreet.contract.IIdleSaleContract;
-import com.campusstreet.contract.IIdleSaleContract;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
-import com.campusstreet.model.IdleSaleBiz;
+import com.campusstreet.model.IIdleSaleBiz;
 import com.campusstreet.model.IdleSaleImpl;
 
 import java.util.List;
-
-import static android.R.attr.id;
-import static android.R.attr.type;
 
 /**
  * Created by Orange on 2017/4/19.
@@ -39,7 +35,7 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
 
     @Override
     public void fetchIdleSaleList(int type, int pi) {
-        mIdleSaleImpl.fetchIdleSaleList(type, pi, new IdleSaleBiz.LoadIdleSaleListCallback() {
+        mIdleSaleImpl.fetchIdleSaleList(type, pi, new IIdleSaleBiz.LoadIdleSaleListCallback() {
             @Override
             public void onIdleSaleListLoaded(List<IdleSaleInfo> idleSaleInfoList) {
                 mView.setIdleSale(idleSaleInfoList);
@@ -63,7 +59,7 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
     @Override
     public void pushGoods(IdleSaleInfo idleSaleInfo) {
         mView.setLoadingIndicator(true);
-        mIdleSaleImpl.addIdleGoods(idleSaleInfo, new IdleSaleBiz.addIdleGoodsCallback() {
+        mIdleSaleImpl.addIdleGoods(idleSaleInfo, new IIdleSaleBiz.addIdleGoodsCallback() {
             @Override
             public void onAddSuccess() {
                 mView.setLoadingIndicator(false);
@@ -81,7 +77,7 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
     @Override
     public void leaveMessage(String uid, int gid, String con) {
         mIdleSaleImpl.leaveMessagae(gid, uid,con,
-        new IdleSaleBiz.LeaveMessageCallback() {
+        new IIdleSaleBiz.LeaveMessageCallback() {
             @Override
             public void onLeaveMessageSuccess() {
                 mView.showSuccessfullyleaveMessage("留言成功");
@@ -99,7 +95,7 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
 
     @Override
     public void fetchIdleSaleMessageList(int id, int pi) {
-        mIdleSaleImpl.fetchIdleSaleMessageList(id, pi, new IdleSaleBiz.LoadIdleSaleMessageListCallback() {
+        mIdleSaleImpl.fetchIdleSaleMessageList(id, pi, new IIdleSaleBiz.LoadIdleSaleMessageListCallback() {
             @Override
             public void onIdleSaleMessageListLoaded(List<LeaveMessageInfo> leaveMessageInfos) {
                 mView.setIdleSaleMessageList(leaveMessageInfos);

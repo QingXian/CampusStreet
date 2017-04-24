@@ -14,12 +14,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,14 +26,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.R.attr.id;
-import static android.R.attr.type;
 import static com.campusstreet.common.Const.MULTIPART_FORM_DATA;
 
 /**
  * Created by Orange on 2017/4/19.
  */
-public class IdleSaleImpl implements IdleSaleBiz {
+public class IdleSaleImpl implements IIdleSaleBiz {
 
 
     private final String TAG = this.getClass().getSimpleName();
@@ -95,6 +89,11 @@ public class IdleSaleImpl implements IdleSaleBiz {
 
     @Override
     public void searchIdleSale(String picType, @NonNull searchIdleSaleCallback callback) {
+
+    }
+
+    @Override
+    public void fetchIdleSaleCategories(String picType, @NonNull LoadIdleSaleCategoriesCallback callback) {
 
     }
 

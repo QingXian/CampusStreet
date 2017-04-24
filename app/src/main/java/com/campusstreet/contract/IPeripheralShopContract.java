@@ -1,27 +1,33 @@
 package com.campusstreet.contract;
 
-import okhttp3.MultipartBody;
+import com.campusstreet.entity.LeaveMessageInfo;
+
+import java.util.List;
 
 /**
- * Created by Orange on 2017/4/15.
+ * Created by Orange on 2017/4/24.
  */
 
-public interface ISettingContract {
-
+public interface IPeripheralShopContract {
+    
     interface Presenter extends BasePresenter {
 
-        void reviseHead(String uid, MultipartBody.Part avatar);
+        void fetchPeriPheralShopList(int type , int pi);
 
-        void reviseNickName(String uid,String nickName);
+        void searchShop(String keyWord);
 
-        void reviseDepartment(String uid,String department);
+        void fetchShopCommodityList(int id,int pi);
+
+
+
 
     }
 
     interface View extends BaseView<Presenter> {
 
+        void setPeriPheralShop();
 
-        void showSuccessMsg(String successMsg);
+        void setShopCommodityList();
 
         void showErrorMsg(String errorMsg);
 
@@ -31,7 +37,6 @@ public interface ISettingContract {
          * @param active true表示显示，false不显示
          */
         void setLoadingIndicator(boolean active);
-
 
     }
 }

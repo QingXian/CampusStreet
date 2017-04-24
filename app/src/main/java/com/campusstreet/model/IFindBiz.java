@@ -12,9 +12,9 @@ public interface IFindBiz {
 
     void fetchTopImage(String picType, @NonNull GetTopImageCallback callback);
 
-    void addLive(@NonNull addLiveCallback callback);
+    void addLive(@NonNull AddLiveCallback callback);
 
-    interface addLiveCallback {
+    interface AddLiveCallback {
 
         void onAddSuccess();
 

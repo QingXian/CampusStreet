@@ -161,4 +161,5 @@
             android:layout_width="0dp"
             android:layout_height="32dp"/>
     </LinearLayout>
+    <include layout="@layout/progress_bar"></include>
 </RelativeLayout>
