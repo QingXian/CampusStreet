@@ -29,13 +29,20 @@ import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.model.IdleSaleImpl;
 import com.campusstreet.presenter.IdleSalePresenter;
 import com.squareup.picasso.Picasso;
+import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.youth.banner.loader.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.R.attr.x;
 
 /**
  * Created by Orange on 2017/4/7.
@@ -47,7 +54,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.iv_photo)
-    ImageView mIvPhoto;
+    Banner mIvPhoto;
     @BindView(R.id.tv_symbol)
     TextView mTvSymbol;
     @BindView(R.id.tv_price)
@@ -56,8 +63,8 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     TextView mTvTimeHint;
     @BindView(R.id.tv_time)
     TextView mTvTime;
-    @BindView(R.id.tv_type)
-    TextView mTvType;
+    @BindView(R.id.tv_selltype)
+    TextView mTvSellType;
     @BindView(R.id.rl_commodity_content)
     RelativeLayout mRlCommodityContent;
     @BindView(R.id.iv_head)
@@ -92,11 +99,12 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
-    @BindView(R.id.tv_selltype)
-    TextView mTvSelltype;
     private IIdleSaleContract.Presenter mPresenter;
     private LeaveMessageRecycleViewAdapter mAdapter;
     private IdleSaleInfo mIdleSaleInfo;
+    private int mImageNum = 0;
+    private List<String> mImageList = new ArrayList<>();
+    private String[] mImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,12 +132,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     }
 
     private void initView() {
-        Picasso.with(this)
-                .load(AppConfig.PIC_SERVER_HOST + mIdleSaleInfo.getCoverimage())
-                .placeholder(R.drawable.ic_base_picture)
-                .fit()
-                .error(R.drawable.ic_pic_error)
-                .into(mIvPhoto);
+
         mToolbarTitle.setText(mIdleSaleInfo.getName());
         mTvPrice.setText(mIdleSaleInfo.getMoney());
         mTvName.setText(mIdleSaleInfo.getUsername());
@@ -140,12 +143,64 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         mTvDegree.setText(mIdleSaleInfo.getBewrite());
         mTvContent.setText(mIdleSaleInfo.getContent());
 
-        mTvSelltype.setText(mIdleSaleInfo.getSelltype());
+        if (mIdleSaleInfo.getSelltype().equals(0)){
+            mTvSellType.setText("一口价");
+        }else if (mIdleSaleInfo.getSelltype().equals(1)){
+            mTvSellType.setText("可小刀");
+        }
+
         mTvTime.setText(mIdleSaleInfo.getGpublishtime());
+        if (mIdleSaleInfo.getTradetype().equals(0)) {
+            mTvTradetype.setText("见面交易");
+        }
+        mTvPlace.setText(mIdleSaleInfo.getTradeplace());
+        mTvPhone.setText(mIdleSaleInfo.getMobile());
+        mTvQq.setText(mIdleSaleInfo.getQq());
+        initImage(mIdleSaleInfo.getImages());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRvContent.setLayoutManager(linearLayoutManager);
         mAdapter = new LeaveMessageRecycleViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
+    }
+
+    private void initImage(String images) {
+        if (images!=null) {
+            for (int i = 0; i <= images.length() - 1; i++) {
+                String getstr = images.substring(i, i + 1);
+                if (getstr.equals(",")) {
+                    mImageNum++;
+                }
+            }
+            if (mImageNum == 0) {
+                mImageList.add(images);
+                setImage(mImageList);
+            } else if (mImageNum == 1) {
+                mImages = images.split(",");
+                mImageList.add(mImages[0]);
+                mImageList.add(mImages[1]);
+                setImage(mImageList);
+            } else if (mImageNum == 2) {
+                mImages = images.split(",");
+                mImageList.add(mImages[0]);
+                mImageList.add(mImages[1]);
+                mImageList.add(mImages[2]);
+                setImage(mImageList);
+            }
+        }
+    }
+
+    private void setImage(List<String> images) {
+        mIvPhoto.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        // 设置图片加载器
+        mIvPhoto.setImageLoader(new PicassoImageLoader());
+        // 设置banner动画效果
+        mIvPhoto.setBannerAnimation(Transformer.DepthPage);
+        // 设置标题集合（当banner样式有显示title时）
+        // mBanner.setBannerTitles(Arrays.asList(mTitles));
+        // 设置指示器位置（当banner模式中有指示器时）
+        mIvPhoto.setIndicatorGravity(BannerConfig.RIGHT);
+        mIvPhoto.setImages(images);
+        mIvPhoto.start();
     }
 
 
@@ -219,5 +274,26 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         if (this != null && !this.isFinishing()) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
+    }
+    private class PicassoImageLoader extends ImageLoader {
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+            Picasso.with(context)
+                    .load(AppConfig.PIC_SERVER_HOST+ path)
+                    .placeholder(R.drawable.ic_base_picture)
+                    .error(R.drawable.ic_pic_error)
+                    .into(imageView);
+        }
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        mIvPhoto.isAutoPlay(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mImageList.clear();
     }
 }

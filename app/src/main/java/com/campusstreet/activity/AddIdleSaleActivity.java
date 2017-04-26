@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -33,13 +34,20 @@ import com.campusstreet.presenter.IdleSalePresenter;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.iwf.photopicker.PhotoPickerActivity;
+import me.iwf.photopicker.utils.PhotoPickerIntent;
 
+import static android.R.attr.data;
+import static android.R.attr.path;
 import static android.os.Build.ID;
 
 
@@ -101,13 +109,14 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
     private IIdleSaleContract.Presenter mPresenter;
-    public static final int REQUEST_UPDATE_AVATAR = 1;
+    public static final int REQUEST_CODE = 1;
     private int mIndex;
 
     private String[] mTitles;
     private String mTabType;
 
-    private File mFile = null;
+    private Set<File> mFiles;
+    private ArrayList<String> mImages;
 
     private HashMap<String, String> mPushRange;
     private String mId;
@@ -147,15 +156,20 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
 
 
     private void initView() {
+        mIvImage1.setVisibility(View.INVISIBLE);
+        mIvImage2.setVisibility(View.INVISIBLE);
+        mIvImage3.setVisibility(View.INVISIBLE);
     }
 
 
-    @OnClick({R.id.iv_add_img, R.id.btn_release, R.id.btn_goods_type, R.id.btn_mode, R.id.btn_trade_type,R.id.tv_goods_type, R.id.tv_mode, R.id.tv_trade_type})
+    @OnClick({R.id.iv_add_img, R.id.btn_release, R.id.btn_goods_type, R.id.btn_mode, R.id.btn_trade_type, R.id.tv_goods_type, R.id.tv_mode, R.id.tv_trade_type})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_add_img:
-                mIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(mIntent, REQUEST_UPDATE_AVATAR);
+                PhotoPickerIntent intent = new PhotoPickerIntent(this);
+                intent.setPhotoCount(3);
+                intent.setShowCamera(false);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
             case R.id.btn_release:
                 AddIdleSaleGoods();
@@ -283,9 +297,12 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
             showMessage("请填写详细介绍");
             return;
         }
-        if (mFile == null) {
+        if (mImages == null) {
             showMessage("请选择一张图片");
             return;
+        }
+        for (int i = 0; i < mImages.size(); i++) {
+            mFiles.add(new File(mImages.get(i)));
         }
         IdleSaleInfo idlSaleInfo = new IdleSaleInfo();
         idlSaleInfo.setName(mEtTitle.getText().toString());
@@ -299,7 +316,7 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
         idlSaleInfo.setMobile(mEtPhone.getText().toString());
         idlSaleInfo.setQq(mEtQq.getText().toString());
         idlSaleInfo.setUid("Mw==");
-        idlSaleInfo.setImage(mFile);
+        idlSaleInfo.setFiles(mFiles);
         mPresenter.pushGoods(idlSaleInfo);
     }
 
@@ -307,34 +324,38 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_UPDATE_AVATAR && resultCode == RESULT_OK) {
-            addImage(data);
-        }
-    }
-
-    private void addImage(Intent data) {
-        String path = null;
-        Uri uri = data.getData();
-        Cursor cursor = null;
-        try {
-            cursor = this.getContentResolver().query(uri, null, null, null, null);
-            int column_index = 0;
-            if (cursor != null) {
-                column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                path = cursor.getString(column_index);
-                mFile = new File(path);
-                mIvImage1.setImageURI(data.getData());
-
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            if (data != null) {
+                mImages = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+                mFiles = new HashSet<>(3);
+                if (mImages.size() == 1) {
+                        mIvImage1.setVisibility(View.VISIBLE);
+                        Picasso.with(this).load(new File(mImages.get(0))).into(mIvImage1);
+                        if (mIvImage2.getVisibility() == View.VISIBLE) {
+                            mIvImage2.setVisibility(View.INVISIBLE);
+                        }
+                        if (mIvImage3.getVisibility() == View.VISIBLE) {
+                            mIvImage3.setVisibility(View.INVISIBLE);
+                        }
+                    } else if (mImages.size() == 2) {
+                        mIvImage1.setVisibility(View.VISIBLE);
+                        mIvImage2.setVisibility(View.VISIBLE);
+                        Picasso.with(this).load(new File(mImages.get(0))).into(mIvImage1);
+                        Picasso.with(this).load(new File(mImages.get(1))).into(mIvImage2);
+                        if (mIvImage3.getVisibility() == View.VISIBLE) {
+                            mIvImage3.setVisibility(View.INVISIBLE);
+                        }
+                    } else if (mImages.size() == 3) {
+                        mIvImage1.setVisibility(View.VISIBLE);
+                        mIvImage2.setVisibility(View.VISIBLE);
+                        mIvImage3.setVisibility(View.VISIBLE);
+                        Picasso.with(this).load(new File(mImages.get(0))).into(mIvImage1);
+                        Picasso.with(this).load(new File(mImages.get(1))).into(mIvImage2);
+                        Picasso.with(this).load(new File(mImages.get(2))).into(mIvImage3);
+                }
             }
-        } catch (Exception e) {
-            Log.e(TAG, "fetchAvatar: 选择图片异常", e);
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
     }
+}
 
     @Override
     public void setPresenter(IIdleSaleContract.Presenter presenter) {
@@ -365,6 +386,7 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
     public void showSuccessfullyPush(String succcessMsg) {
         showMessage(succcessMsg);
         Intent intent = new Intent(this, IdleSaleActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

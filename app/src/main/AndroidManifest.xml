@@ -5,8 +5,8 @@
     <!--获取网络权限-->
     <uses-permission android:name="android.permission.INTERNET"/>
     <!--获取读写图片权限-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:name=".activity.CampusRecruitmentActivity"
-            android:windowSoftInputMode ="stateAlwaysHidden|adjustPan">
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>
         <activity android:name=".activity.IdleSaleActivity">
         </activity>
@@ -40,7 +40,7 @@
         </activity>
         <activity
             android:name=".activity.PeripheraShopActivity"
-            android:windowSoftInputMode ="stateAlwaysHidden|adjustPan">
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>
         <activity android:name=".activity.UserSettingActivity">
         </activity>
@@ -80,11 +80,19 @@
         </activity>
         <activity android:name=".activity.PeripheralShopDetailActivity">
         </activity>
-        <activity android:name=".activity.ReleaseLiveActivity">
-        </activity>
         <activity android:name=".activity.MyBountyHallActivity">
         </activity>
-
+        <activity
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/PhotoPickerTheme"/>
+        <activity android:name=".activity.LoginActivity">
+        </activity>
+        <activity android:name=".activity.RegisterActivity">
+        </activity>
+        <activity android:name=".activity.ReSetPasswrodActivity">
+        </activity>
+        <activity android:name=".activity.ForgetPasswordActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -31,8 +31,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-import static com.campusstreet.activity.AddIdleSaleActivity.REQUEST_UPDATE_AVATAR;
-
 /**
  * Created by Orange on 2017/4/6.
  */
@@ -59,6 +57,8 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
     private ISettingContract.Presenter mPresenter;
 
     private File mFile = null;
+
+    public static final int REQUEST_UPDATE_AVATAR = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

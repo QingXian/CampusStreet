@@ -14,8 +14,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -100,12 +102,23 @@ public class IdleSaleImpl implements IIdleSaleBiz {
     @Override
     public void addIdleGoods(IdleSaleInfo idleSaleInfo ,@NonNull final addIdleGoodsCallback callback) {
         Map<String, RequestBody> requestBodyMap = new HashMap<>();
-        RequestBody body = null;
-        MultipartBody.Part part = null;
-        if (idleSaleInfo.getImage()!=null){
-        body = RequestBody.create(MediaType.parse("application/otcet-stream"), idleSaleInfo.getImage());
-        part = MultipartBody.Part.createFormData("image", idleSaleInfo.getImage().getName(), body);
+        MultipartBody.Part[] files = new MultipartBody.Part[0];
+        if (idleSaleInfo.getFiles() != null && idleSaleInfo.getFiles().size() > 0) {
+            files = new MultipartBody.Part[idleSaleInfo.getFiles().size()];
+            RequestBody requestFile;
+            Iterator<File> iterator = idleSaleInfo.getFiles().iterator();
+            int i = 0;
+            while (iterator.hasNext()) {
+                File file = iterator.next();
+                // 创建 RequestBody，用于封装 请求RequestBody
+                requestFile = RequestBody.create(MediaType.parse("application/otcet-stream"), file);
+                //  MultipartBody.Part is used to send also the actual file name
+                files[i] = MultipartBody.Part.createFormData("images", file.getName(), requestFile);
+
+                i++;
+            }
         }
+
 
 
         //添加请求参数
@@ -121,7 +134,7 @@ public class IdleSaleImpl implements IIdleSaleBiz {
         requestBodyMap.put("qq", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getQq()));
         requestBodyMap.put("bewrite", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getBewrite()));
         requestBodyMap.put("gcontent", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getContent()));
-        Call<JsonObject> call = mIdleSaleClient.pushIdlegoods(requestBodyMap,part);
+        Call<JsonObject> call = mIdleSaleClient.pushIdlegoods(requestBodyMap,files);
 //        Call<JsonObject> call = mIdleSaleClient.pushIdlegoods(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {
             @Override
