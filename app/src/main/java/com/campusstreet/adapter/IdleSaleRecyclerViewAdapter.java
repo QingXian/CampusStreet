@@ -71,7 +71,7 @@ public class IdleSaleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         IdleSaleInfo idleSaleInfo = mList.get(position);
         if (idleSaleInfo != null){
             Picasso.with(mContext)
-                    .load(AppConfig.PIC_SERVER_HOST+idleSaleInfo.getCoverimage())
+                    .load(AppConfig.PIC_EWU_SERVER_HOST+idleSaleInfo.getCoverimage())
                     .placeholder(R.drawable.ic_base_picture)
                     .fit()
                     .error(R.drawable.ic_pic_error)

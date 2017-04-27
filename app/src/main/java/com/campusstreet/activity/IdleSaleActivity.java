@@ -58,6 +58,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
     TextView mTvError;
     private IIdleSaleContract.Presenter mPresenter;
     private IdleSaleRecyclerViewAdapter mAdapter;
+    private int mPi = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +84,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
         setLoadingIndicator(true);
         initView();
         initEvent();
-        mPresenter.fetchIdleSaleList(0, 1);
+        mPresenter.fetchIdleSaleList(0, mPi);
     }
 
     private void initEvent() {

@@ -1,238 +1,272 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
     <android.support.v7.widget.Toolbar
-        android:background="@color/colorPrimary"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
         <TextView
-            android:ellipsize="marquee"
-            android:maxLines="1"
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:maxLines="1"
             android:text="@string/app_name"
             android:textColor="@color/colorWhite"
             android:textSize="20sp"/>
     </android.support.v7.widget.Toolbar>
-    <com.youth.banner.Banner
-        android:id="@+id/iv_photo"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_below="@+id/toolbar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-    <RelativeLayout
-        android:id="@+id/rl_commodity_content"
-        android:background="@color/colorPrimary"
-        android:padding="8dp"
-        android:layout_below="@+id/iv_photo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.youth.banner.Banner
+            android:id="@+id/iv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_commodity_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_photo"
+            android:background="@color/colorPrimary"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:text="@string/frag_campus_recruitment_wages_symbol"
+                android:textColor="@color/colorWhite"
+                />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/tv_symbol"
+                android:paddingLeft="8dp"
+                android:text="300"
+                android:textColor="@color/colorWhite"
+                />
+
+            <TextView
+                android:id="@+id/tv_time_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_price"
+                android:paddingTop="8dp"
+                android:text="@string/act_idle_sale_detail_time_hint"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_price"
+                android:layout_toRightOf="@+id/tv_time_hint"
+                android:paddingLeft="8dp"
+                android:paddingTop="8dp"
+                android:text="2017.12.03"
+                android:textColor="@color/colorWhite"/>
+
+            <TextView
+                android:id="@+id/tv_selltype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="一口价"
+                android:textColor="@color/colorWhite"/>
+        </RelativeLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_head"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/rl_commodity_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"/>
+
         <TextView
-            android:id="@+id/tv_symbol"
-            android:paddingLeft="8dp"
-            android:textColor="@color/colorWhite"
-            android:text="@string/frag_campus_recruitment_wages_symbol"
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:layout_below="@+id/rl_commodity_content"
+            android:layout_marginTop="32dp"
+            android:layout_toRightOf="@+id/iv_head"
+            android:text="昵称"
+            android:textSize="16sp"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/iv_head"
+            android:background="@color/colorGray"/>
+
         <TextView
-            android:id="@+id/tv_price"
-            android:paddingLeft="8dp"
-            android:textColor="@color/colorWhite"
-            android:text="300"
-            android:layout_toRightOf="@id/tv_symbol"
+            android:id="@+id/tv_tradetype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
-        <TextView
-            android:id="@+id/tv_time_hint"
-            android:textColor="@color/colorWhite"
+            android:layout_alignTop="@+id/view"
+            android:layout_toEndOf="@+id/iv_head"
+            android:layout_toRightOf="@+id/iv_head"
+            android:paddingRight="16dp"
             android:paddingTop="8dp"
-            android:text="@string/act_idle_sale_detail_time_hint"
-            android:layout_below="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:text="见面交易"/>
+
         <TextView
-            android:paddingLeft="8dp"
+            android:id="@+id/tv_degree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_tradetype"
+            android:layout_alignStart="@+id/tv_tradetype"
+            android:layout_below="@+id/tv_tradetype"
+            android:paddingRight="16dp"
             android:paddingTop="8dp"
-            android:layout_toRightOf="@+id/tv_time_hint"
-            android:layout_below="@+id/tv_price"
-            android:textColor="@color/colorWhite"
-            android:text="2017.12.03"
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:text="九成新"/>
+
         <TextView
-            android:id="@+id/tv_selltype"
-            android:textColor="@color/colorWhite"
-            android:text="一口价"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
+            android:id="@+id/tv_content"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="4dp"
-        android:id="@+id/iv_head"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_below="@+id/rl_commodity_content"/>
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="昵称"
-        android:layout_below="@+id/rl_commodity_content"
-        android:layout_toRightOf="@+id/iv_head"
-        android:layout_marginTop="32dp"
-        android:textSize="16sp"/>
-    <View
-        android:layout_below="@+id/iv_head"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorGray"
-        android:id="@+id/view"/>
-    <TextView
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:id="@+id/tv_tradetype"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="见面交易"
-        android:layout_alignTop="@+id/view"
-        android:layout_toRightOf="@+id/iv_head"
-        android:layout_toEndOf="@+id/iv_head"/>
-    <TextView
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:id="@+id/tv_degree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="九成新"
-        android:layout_below="@+id/tv_tradetype"
-        android:layout_alignLeft="@+id/tv_tradetype"
-        android:layout_alignStart="@+id/tv_tradetype"/>
-    <TextView
-        android:layout_below="@+id/tv_degree"
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="8dp"
-        android:layout_toRightOf="@+id/iv_head"
-        android:id="@+id/tv_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="内容内容"/>
-    <View
-        android:layout_below="@+id/tv_content"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorGray"/>
-    <TextView
-        android:id="@+id/tv_place"
-        android:layout_toRightOf="@+id/iv_head"
-        android:layout_below="@+id/tv_content"
-        android:paddingTop="8dp"
-        android:text="二组食堂"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/tv_phone_hint"
-        android:paddingTop="8dp"
-        android:text="@string/act_idle_sale_detail_phone_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_place"
-        android:layout_alignLeft="@+id/tv_place"
-        android:layout_alignStart="@+id/tv_place"/>
-    <TextView
-        android:id="@+id/tv_phone"
-        android:paddingTop="8dp"
-        android:text="156456789645"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tv_phone_hint"
-        android:layout_alignBottom="@+id/tv_phone_hint"
-        android:layout_toRightOf="@+id/tv_phone_hint"
-        android:layout_toEndOf="@+id/tv_phone_hint"/>
-    <TextView
-        android:id="@+id/tv_qq_hint"
-        android:paddingTop="8dp"
-        android:text="@string/act_idle_sale_detail_qq_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_phone"
-        android:layout_alignLeft="@+id/tv_place"
-        android:layout_alignStart="@+id/tv_place"/>
-    <TextView
-        android:id="@+id/tv_qq"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:text="156567898"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tv_qq_hint"
-        android:layout_alignBottom="@+id/tv_qq_hint"
-        android:layout_toRightOf="@+id/tv_qq_hint"
-        android:layout_toEndOf="@+id/tv_qq_hint"/>
-    <View
-        android:layout_below="@+id/tv_qq"
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:background="@color/colorGray"/>
-    <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="8dp"
-        android:layout_below="@+id/tv_qq"
-        android:background="@color/colorGray"
-        android:id="@+id/rv_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_degree"
+            android:layout_toRightOf="@+id/iv_head"
+            android:paddingBottom="8dp"
+            android:paddingRight="16dp"
+            android:paddingTop="8dp"
+            android:text="内容内容"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_content"
+            android:background="@color/colorGray"/>
+
+        <TextView
+            android:id="@+id/tv_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_content"
+            android:layout_toRightOf="@+id/iv_head"
+            android:paddingTop="8dp"
+            android:text="二组食堂"/>
+
+        <TextView
+            android:id="@+id/tv_phone_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_place"
+            android:layout_alignStart="@+id/tv_place"
+            android:layout_below="@+id/tv_place"
+            android:paddingTop="8dp"
+            android:text="@string/act_idle_sale_detail_phone_hint"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_phone_hint"
+            android:layout_alignBottom="@+id/tv_phone_hint"
+            android:layout_toEndOf="@+id/tv_phone_hint"
+            android:layout_toRightOf="@+id/tv_phone_hint"
+            android:paddingTop="8dp"
+            android:text="156456789645"/>
+
+        <TextView
+            android:id="@+id/tv_qq_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_place"
+            android:layout_alignStart="@+id/tv_place"
+            android:layout_below="@+id/tv_phone"
+            android:paddingTop="8dp"
+            android:text="@string/act_idle_sale_detail_qq_hint"/>
+
+        <TextView
+            android:id="@+id/tv_qq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_qq_hint"
+            android:layout_alignBottom="@+id/tv_qq_hint"
+            android:layout_toEndOf="@+id/tv_qq_hint"
+            android:layout_toRightOf="@+id/tv_qq_hint"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="156567898"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_below="@+id/tv_qq"
+            android:background="@color/colorGray"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_qq"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="48dp"
+            android:background="@color/colorGray">
+        </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
     <LinearLayout
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="16dp"
-        android:background="@color/tv_color_defult"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:background="@color/tv_color_defult"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="4dp">
 
         <EditText
-            android:maxLength="200"
-            android:maxLines="2"
             android:id="@+id/et_message"
             android:layout_width="0dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
             android:layout_weight="5"
             android:background="@drawable/bg_act_idle_sale_detail_et"
+            android:maxLength="200"
+            android:maxLines="2"
             android:textSize="16sp"/>
 
         <Button
             android:id="@+id/btn_send_message"
-            android:layout_marginLeft="16dp"
-            android:text="发送"
-            android:textColor="@color/colorPrimary"
-            android:background="@drawable/bg_act_idle_sale_detail_btn"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="32dp"/>
+            android:layout_height="32dp"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_act_idle_sale_detail_btn"
+            android:text="发送"
+            android:textColor="@color/colorPrimary"/>
     </LinearLayout>
+
     <include layout="@layout/progress_bar"></include>
 </RelativeLayout>

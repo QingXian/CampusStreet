@@ -52,10 +52,8 @@ public class LeaveMessageRecycleViewAdapter extends RecyclerView.Adapter<Recycle
         LeaveMessageInfo leaveMessageInfo = mList.get(position);
         if (leaveMessageInfo != null) {
             Picasso.with(mContext)
-                    .load(AppConfig.PIC_SERVER_HOST + leaveMessageInfo.getUserpic())
-                    .placeholder(R.drawable.ic_base_picture)
+                    .load(AppConfig.AVATAR_SERVER_HOST + leaveMessageInfo.getUserpic())
                     .fit()
-                    .error(R.drawable.ic_pic_error)
                     .into(viewHolder.mIvHead);
             viewHolder.mTvName.setText(leaveMessageInfo.getNick());
             viewHolder.mTvContent.setText(leaveMessageInfo.getCon());

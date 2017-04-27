@@ -105,7 +105,7 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
             @Override
             public void onDataNotAvailable(String errorMsg) {
                 mView.setLoadingIndicator(false);
-                mView.showErrorMsg(errorMsg+"获取留言信息失败");
+                mView.showErrorMsg(errorMsg);
             }
         });
     }

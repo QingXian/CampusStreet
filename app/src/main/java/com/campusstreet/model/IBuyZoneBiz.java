@@ -1,6 +1,8 @@
 package com.campusstreet.model;
 
 import android.support.annotation.NonNull;
+
+import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 
 import java.util.List;
@@ -12,9 +14,9 @@ import java.util.List;
 public interface IBuyZoneBiz {
 
     //获取求购列表
-    void fetchBuyZoneList(int type,int pi,@NonNull LoadBuyZoneListCallback callback);
+    void fetchBuyZoneList(int pi,@NonNull LoadBuyZoneListCallback callback);
 
-    void addBuy( @NonNull addIdleGoodsCallback callback);
+    void addBuy(BuyZoneInfo buyZoneInfo, @NonNull addIdleGoodsCallback callback);
 
     void leaveMessagae(int gid ,String uid ,String con,@NonNull LeaveMessageCallback callback);
 
@@ -40,7 +42,7 @@ public interface IBuyZoneBiz {
     interface LoadBuyZoneListCallback {
 
         // 加载所有BuyZone
-        void onBuyZoneListLoaded();
+        void onBuyZoneListLoaded(List<BuyZoneInfo> buyZoneInfoList);
 
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);

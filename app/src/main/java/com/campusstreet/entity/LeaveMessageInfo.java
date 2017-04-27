@@ -1,10 +1,12 @@
 package com.campusstreet.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Orange on 2017/4/21.
  */
 
-public class LeaveMessageInfo {
+public class LeaveMessageInfo implements Serializable {
 
     /**
      * nick : 式微云雨

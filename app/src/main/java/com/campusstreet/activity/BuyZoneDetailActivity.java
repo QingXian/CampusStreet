@@ -1,11 +1,16 @@
 package com.campusstreet.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,10 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.adapter.LeaveMessageRecycleViewAdapter;
+import com.campusstreet.common.AppConfig;
+import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBuyZoneContract;
+import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.model.BuyZoneImpl;
 import com.campusstreet.presenter.BuyZonePresenter;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -75,7 +85,18 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+    @BindView(R.id.tv_phone)
+    TextView mTvPhone;
+    @BindView(R.id.tv_qq)
+    TextView mTvQq;
+    @BindView(R.id.tv_qq_hint)
+    TextView mTvQqHint;
     private IBuyZoneContract.Presenter mPresenter;
+    private BuyZoneInfo mBuyZoneInfo;
+    private int mPi = 0;
+    private LeaveMessageRecycleViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,12 +116,45 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
                 onBackPressed();
             }
         });
+        mBuyZoneInfo = (BuyZoneInfo) getIntent().getSerializableExtra(Const.BUYZONEIINFO_EXTRA);
         new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
+        initView();
+        setLoadingIndicator(true);
+        mPresenter.fetchBuyZoneMessageList(mBuyZoneInfo.getId(), mPi);
+    }
 
+    private void initView() {
+
+        mTvExpectedPrice.setText(mBuyZoneInfo.getMoney());
+        mTvName.setText(mBuyZoneInfo.getUsername());
+        mTvTime.setText(mBuyZoneInfo.getPubtime());
+        mTvTitle.setText(mBuyZoneInfo.getName());
+        mTvContent.setText(mBuyZoneInfo.getCon());
+        mTvPhone.setText(mBuyZoneInfo.getMoney());
+        Picasso.with(this)
+                .load(AppConfig.AVATAR_SERVER_HOST + mBuyZoneInfo.getUserpic())
+                .fit()
+                .into(mIvHead);
+        if (mBuyZoneInfo.getQq() != null) {
+            mTvQq.setVisibility(View.VISIBLE);
+            mTvQq.setText(mBuyZoneInfo.getQq());
+        }else{
+            mTvQq.setVisibility(View.GONE);
+        }
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRvContent.setLayoutManager(linearLayoutManager);
+        mAdapter = new LeaveMessageRecycleViewAdapter(this, null);
+        mRvContent.setAdapter(mAdapter);
     }
 
     @OnClick(R.id.btn_send_message)
     public void onViewClicked() {
+        if (TextUtils.isEmpty(mEtMessage.getText().toString().trim())) {
+            showMessage("请填写留言内容");
+            return;
+        }
+        mPresenter.leaveMessage("Mw==", mBuyZoneInfo.getId(), mEtMessage.getText().toString().trim());
+        setLoadingIndicator(true);
     }
 
     @Override
@@ -108,14 +162,14 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
         mPresenter = presenter;
     }
 
-    @Override
-    public void setBuyZone() {
 
+    @Override
+    public void setBuyZone(List<BuyZoneInfo> buyZoneInfoList) {
     }
 
     @Override
     public void setBuyZoneMessageList(List<LeaveMessageInfo> BuyZoneMessageList) {
-
+        mAdapter.replaceData(BuyZoneMessageList);
     }
 
     @Override
@@ -125,12 +179,17 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
 
     @Override
     public void showSuccessfullyPush(String succcessMsg) {
-        showMessage(succcessMsg);
     }
 
     @Override
     public void showSuccessfullyleaveMessage(String succcessMsg) {
         showMessage(succcessMsg);
+        mPresenter.fetchBuyZoneMessageList(mBuyZoneInfo.getId(), mPi);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+        }
+        mEtMessage.setText("");
     }
 
     @Override

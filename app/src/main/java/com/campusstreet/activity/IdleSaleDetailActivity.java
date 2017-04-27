@@ -105,6 +105,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     private int mImageNum = 0;
     private List<String> mImageList = new ArrayList<>();
     private String[] mImages;
+    private int mPi = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +129,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         new IdleSalePresenter(IdleSaleImpl.getInstance(getApplicationContext()), this);
         initView();
         setLoadingIndicator(true);
-        mPresenter.fetchIdleSaleMessageList(mIdleSaleInfo.getId(), 1);
+        mPresenter.fetchIdleSaleMessageList(mIdleSaleInfo.getId(), mPi);
     }
 
     private void initView() {
@@ -137,7 +138,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         mTvPrice.setText(mIdleSaleInfo.getMoney());
         mTvName.setText(mIdleSaleInfo.getUsername());
         Picasso.with(this)
-                .load(AppConfig.PIC_SERVER_HOST + mIdleSaleInfo.getUserpic())
+                .load(AppConfig.AVATAR_SERVER_HOST + mIdleSaleInfo.getUserpic())
                 .fit()
                 .into(mIvHead);
         mTvDegree.setText(mIdleSaleInfo.getBewrite());
@@ -246,11 +247,10 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     @Override
     public void showSuccessfullyleaveMessage(String succcessMsg) {
         showMessage(succcessMsg);
-        mPresenter.fetchIdleSaleMessageList(mIdleSaleInfo.getId(), 1);
+        mPresenter.fetchIdleSaleMessageList(mIdleSaleInfo.getId(), mPi);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
-            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
-                    0);
+            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
         }
         mEtMessage.setText("");
     }
@@ -279,9 +279,10 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
             Picasso.with(context)
-                    .load(AppConfig.PIC_SERVER_HOST+ path)
+                    .load(AppConfig.PIC_EWU_SERVER_HOST+ path)
                     .placeholder(R.drawable.ic_base_picture)
                     .error(R.drawable.ic_pic_error)
+                    .fit()
                     .into(imageView);
         }
     }

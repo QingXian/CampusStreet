@@ -1,5 +1,6 @@
 package com.campusstreet.contract;
 
+import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 
 import java.util.List;
@@ -12,9 +13,9 @@ public interface IBuyZoneContract {
 
     interface Presenter extends BasePresenter {
 
-    void fetchBuyZoneList(int type, int pi);
+    void fetchBuyZoneList(int pi);
 
-    void pushBuy();
+    void pushBuy(BuyZoneInfo buyZoneInfo);
 
     void leaveMessage(String uid, int gid, String con);
 
@@ -23,7 +24,7 @@ public interface IBuyZoneContract {
 }
 interface View extends BaseView<Presenter> {
 
-    void setBuyZone();
+    void setBuyZone(List<BuyZoneInfo> buyZoneInfoList);
 
     void setBuyZoneMessageList(List<LeaveMessageInfo> BuyZoneMessageList);
 

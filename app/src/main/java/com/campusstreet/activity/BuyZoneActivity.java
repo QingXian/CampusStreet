@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,7 +15,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.adapter.BuyZoneRecyclerViewAdapter;
+import com.campusstreet.adapter.IdleSaleRecyclerViewAdapter;
+import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBuyZoneContract;
+import com.campusstreet.entity.BuyZoneInfo;
+import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.model.BuyZoneImpl;
 import com.campusstreet.model.IdleSaleImpl;
@@ -25,6 +32,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.campusstreet.R.id.view;
 
 /**
  * Created by Orange on 2017/4/6.
@@ -48,6 +57,8 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
     @BindView(R.id.tv_error)
     TextView mTvError;
     private IBuyZoneContract.Presenter mPresenter;
+    private BuyZoneRecyclerViewAdapter mAdapter;
+    private int mPi = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +81,27 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
         mIvToolbarRight.setVisibility(View.VISIBLE);
         mIvToolbarRight.setImageResource(R.drawable.ic_add);
         new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
+        initView();
+        initEvent();
+        mPresenter.fetchBuyZoneList(mPi);
+    }
 
+    private void initView() {
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
+        mRvContent.setLayoutManager(gridLayoutManager);
+        mAdapter = new BuyZoneRecyclerViewAdapter(this,null);
+        mRvContent.setAdapter(mAdapter);
+    }
+
+    private void initEvent() {
+        mAdapter.setOnItemClickListener(new BuyZoneRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view,BuyZoneInfo buyZoneInfo) {
+                Intent intent = new Intent(BuyZoneActivity.this, BuyZoneDetailActivity.class);
+                intent.putExtra(Const.BUYZONEIINFO_EXTRA,buyZoneInfo);
+                startActivity(intent);
+            }
+        });
     }
 
     @OnClick(R.id.iv_toolbar_right)
@@ -84,9 +115,10 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
         mPresenter = presenter;
     }
 
-    @Override
-    public void setBuyZone() {
 
+    @Override
+    public void setBuyZone(List<BuyZoneInfo> buyZoneInfoList) {
+        mAdapter.replaceData(buyZoneInfoList);
     }
 
     @Override

@@ -63,18 +63,20 @@ public class IdleSaleImpl implements IIdleSaleBiz {
                 if (bodyJson != null) {
                     int res = bodyJson.get(Const.RES_KEY).getAsInt();
                     if (res == 1) {
-                        JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
-                        Gson gson = new GsonBuilder().setLenient().create();
-                        List<IdleSaleInfo> IdleSaleInfoList = new ArrayList<>();
-                        for (int i = 0; i < resultJsons.size(); i++) {
-                            JsonObject json = resultJsons.get(i).getAsJsonObject();
-                            IdleSaleInfo idleSaleInfo = gson.fromJson(json, IdleSaleInfo.class);
-                            IdleSaleInfoList.add(idleSaleInfo);
+                        if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
+                            JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            List<IdleSaleInfo> IdleSaleInfoList = new ArrayList<>();
+                            for (int i = 0; i < resultJsons.size(); i++) {
+                                JsonObject json = resultJsons.get(i).getAsJsonObject();
+                                IdleSaleInfo idleSaleInfo = gson.fromJson(json, IdleSaleInfo.class);
+                                IdleSaleInfoList.add(idleSaleInfo);
+                            }
+                            callback.onIdleSaleListLoaded(IdleSaleInfoList);
+                        } else {
+                            callback.onDataNotAvailable("暂时没有数据");
                         }
-                        callback.onIdleSaleListLoaded(IdleSaleInfoList);
 
-                    } else if (res == 1) {
-                        callback.onDataNotAvailable("暂时没有数据");
                     } else {
                         callback.onDataNotAvailable(bodyJson.get(Const.MESSAGE_KEY).getAsString());
                     }
@@ -84,7 +86,7 @@ public class IdleSaleImpl implements IIdleSaleBiz {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 callback.onDataNotAvailable("服务器异常");
-                Log.d(TAG, "onFailure: "+t);
+                Log.d(TAG, "onFailure: " + t);
             }
         });
     }
@@ -100,7 +102,7 @@ public class IdleSaleImpl implements IIdleSaleBiz {
     }
 
     @Override
-    public void addIdleGoods(IdleSaleInfo idleSaleInfo ,@NonNull final addIdleGoodsCallback callback) {
+    public void addIdleGoods(IdleSaleInfo idleSaleInfo, @NonNull final addIdleGoodsCallback callback) {
         Map<String, RequestBody> requestBodyMap = new HashMap<>();
         MultipartBody.Part[] files = new MultipartBody.Part[0];
         if (idleSaleInfo.getFiles() != null && idleSaleInfo.getFiles().size() > 0) {
@@ -120,7 +122,6 @@ public class IdleSaleImpl implements IIdleSaleBiz {
         }
 
 
-
         //添加请求参数
         requestBodyMap.put("uid", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), String.valueOf(idleSaleInfo.getUid())));
         requestBodyMap.put("name", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA),
@@ -134,7 +135,7 @@ public class IdleSaleImpl implements IIdleSaleBiz {
         requestBodyMap.put("qq", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getQq()));
         requestBodyMap.put("bewrite", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getBewrite()));
         requestBodyMap.put("gcontent", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getContent()));
-        Call<JsonObject> call = mIdleSaleClient.pushIdlegoods(requestBodyMap,files);
+        Call<JsonObject> call = mIdleSaleClient.pushIdlegoods(requestBodyMap, files);
 //        Call<JsonObject> call = mIdleSaleClient.pushIdlegoods(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {
             @Override
@@ -145,23 +146,23 @@ public class IdleSaleImpl implements IIdleSaleBiz {
                     if (res == 1) {
                         callback.onAddSuccess();
 
-                    }
-                    else {
+                    } else {
                         callback.onAddFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 callback.onAddFailure("服务器异常");
-                Log.d(TAG, "onFailure: "+t);
+                Log.d(TAG, "onFailure: " + t);
             }
         });
     }
 
     @Override
     public void leaveMessagae(int gid, String uid, String con, @NonNull final LeaveMessageCallback callback) {
-        Call<JsonObject> call = mIdleSaleClient.LeaveMessage(gid,uid,con);
+        Call<JsonObject> call = mIdleSaleClient.LeaveMessage(gid, uid, con);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -170,16 +171,16 @@ public class IdleSaleImpl implements IIdleSaleBiz {
                     int res = bodyJson.get(Const.RES_KEY).getAsInt();
                     if (res == 1) {
                         callback.onLeaveMessageSuccess();
-                        }
-                    else {
+                    } else {
                         callback.onLeaveMessageFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
                     }
                 }
             }
+
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 callback.onLeaveMessageFailure("服务器异常");
-                Log.d(TAG, "onFailure: "+t);
+                Log.d(TAG, "onFailure: " + t);
             }
         });
     }
@@ -195,18 +196,20 @@ public class IdleSaleImpl implements IIdleSaleBiz {
                 if (bodyJson != null) {
                     int res = bodyJson.get(Const.RES_KEY).getAsInt();
                     if (res == 1) {
-                        JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
-                        Gson gson = new GsonBuilder().setLenient().create();
-                        List<LeaveMessageInfo> leaveMessageInfoList = new ArrayList<>();
-                        for (int i = 0; i < resultJsons.size(); i++) {
-                            JsonObject json = resultJsons.get(i).getAsJsonObject();
-                            LeaveMessageInfo leaveMessageInfo = gson.fromJson(json, LeaveMessageInfo.class);
-                            leaveMessageInfoList.add(leaveMessageInfo);
+                        if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
+                            JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            List<LeaveMessageInfo> leaveMessageInfoList = new ArrayList<>();
+                            for (int i = 0; i < resultJsons.size(); i++) {
+                                JsonObject json = resultJsons.get(i).getAsJsonObject();
+                                LeaveMessageInfo leaveMessageInfo = gson.fromJson(json, LeaveMessageInfo.class);
+                                leaveMessageInfoList.add(leaveMessageInfo);
+                            }
+                            callback.onIdleSaleMessageListLoaded(leaveMessageInfoList);
+                        } else {
+                            callback.onDataNotAvailable("暂时没有人留言");
                         }
-                        callback.onIdleSaleMessageListLoaded(leaveMessageInfoList);
 
-                    } else if (res == 1) {
-                        callback.onDataNotAvailable("暂时没有数据");
                     } else {
                         callback.onDataNotAvailable(bodyJson.get(Const.MESSAGE_KEY).getAsString());
                     }
@@ -216,7 +219,7 @@ public class IdleSaleImpl implements IIdleSaleBiz {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 callback.onDataNotAvailable("服务器异常");
-                Log.d(TAG, "onFailure: "+t);
+                Log.d(TAG, "onFailure: " + t);
             }
         });
     }

@@ -28,6 +28,7 @@ public class Const {
      * 实体类
      */
     public static final String IDLESALEINFO_EXTRA = "idlesaleinfo_extra";
+    public static final String BUYZONEIINFO_EXTRA = "buyzoneinfo_extra";
 
     /**
      * spinner数据源
