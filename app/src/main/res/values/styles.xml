@@ -10,5 +10,15 @@
         <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name="android:listDivider">@drawable/bg_divider</item>
     </style>
+    <style name="PhotoPickerTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="actionBarTheme">@style/actionBarTheme</item>-->
+        <!--<item name="actionBarPopupTheme">@style/actionBarPopupTheme</item>-->
+    </style>
+
 
 </resources>

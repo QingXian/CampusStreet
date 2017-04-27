@@ -2,6 +2,7 @@ package com.campusstreet.entity;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * IdleSale实体类
@@ -11,19 +12,23 @@ import java.io.Serializable;
 public class IdleSaleInfo implements Serializable {
 
     /**
-     * id : 53
-     * money : 1,399.00
-     * userpic :
-     * gmoney : 1399.0000
-     * content :
-     * pubtime : 3天前
-     * gpublishtime : 2017/4/15 1:06:00
-     * name : oppor9s
-     * bewrite : 全新
+     * id : 58
+     * money : 12.00
+     * userpic : 3.jpg
+     * gmoney : 12.0000
+     * content : 46646454
+     * pubtime : 1天前
+     * gpublishtime : 2017/4/24 11:40:32
+     * name : 测试5
+     * bewrite : 9.9
      * selltype : 0
-     * username : 小黄人
-     * coverimage : 1017415010600_c.jpg
+     * username : 式微云雨
+     * coverimage : 3174241140320_c.jpg
      * vn : 0
+     * mobile : 13635283686
+     * qq : 830825546
+     * tradeplace : 哦哦
+     * tradetype : 0
      */
 
     private int id;
@@ -39,13 +44,31 @@ public class IdleSaleInfo implements Serializable {
     private String username;
     private String coverimage;
     private String vn;
-    private String goodstype;
-    private String tradeplace;
-    private String tradetype;
     private String mobile;
     private String qq;
+    private String tradeplace;
+    private String tradetype;
+    private String images;
     private String uid;
-    private File image; // 本地图片文件
+    private Set<File> mFiles;
+
+    public Set<File> getFiles() {
+        return mFiles;
+    }
+
+    public void setFiles(Set<File> files) {
+        mFiles = files;
+    }
+
+    private String goodstype;
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
 
     public String getUid() {
         return uid;
@@ -55,7 +78,6 @@ public class IdleSaleInfo implements Serializable {
         this.uid = uid;
     }
 
-
     public String getGoodstype() {
         return goodstype;
     }
@@ -63,47 +85,6 @@ public class IdleSaleInfo implements Serializable {
     public void setGoodstype(String goodstype) {
         this.goodstype = goodstype;
     }
-
-    public String getTradeplace() {
-        return tradeplace;
-    }
-
-    public void setTradeplace(String tradeplace) {
-        this.tradeplace = tradeplace;
-    }
-
-    public String getTradetype() {
-        return tradetype;
-    }
-
-    public void setTradetype(String tradetype) {
-        this.tradetype = tradetype;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getQq() {
-        return qq;
-    }
-
-    public void setQq(String qq) {
-        this.qq = qq;
-    }
-
-    public File getImage() {
-        return image;
-    }
-
-    public void setImage(File image) {
-        this.image = image;
-    }
-
 
     public int getId() {
         return id;
@@ -207,5 +188,37 @@ public class IdleSaleInfo implements Serializable {
 
     public void setVn(String vn) {
         this.vn = vn;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getTradeplace() {
+        return tradeplace;
+    }
+
+    public void setTradeplace(String tradeplace) {
+        this.tradeplace = tradeplace;
+    }
+
+    public String getTradetype() {
+        return tradetype;
+    }
+
+    public void setTradetype(String tradetype) {
+        this.tradetype = tradetype;
     }
 }

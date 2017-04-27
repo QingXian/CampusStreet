@@ -34,7 +34,7 @@ public interface IdleSaleClient {
     @Multipart
     @POST("ins_ewu_goods")
     Call<JsonObject> pushIdlegoods(@PartMap Map<String, RequestBody> Idlegoods,
-                                   @Part MultipartBody.Part files);
+                                   @Part MultipartBody.Part[] files);
 
 //    @Multipart
 //    @POST("ins_ewu_goods")

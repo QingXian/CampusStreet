@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.activity.LoginActivity;
 import com.campusstreet.activity.MyBountyHallActivity;
 
 import butterknife.BindView;
@@ -43,6 +45,10 @@ public class UserFragment extends Fragment {
     TextView mTvMyClub;
     @BindView(R.id.tv_about_us)
     TextView mTvAboutUs;
+    @BindView(R.id.rl_user_info)
+    RelativeLayout mRlUserInfo;
+    @BindView(R.id.tv_login)
+    TextView mTvLogin;
     private Unbinder mUnbinder;
 
     @Override
@@ -60,7 +66,7 @@ public class UserFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.tv_recharge, R.id.tv_bounty_mission, R.id.tv_detection_update, R.id.tv_my_idle, R.id.tv_my_club})
+    @OnClick({R.id.tv_recharge, R.id.tv_bounty_mission, R.id.tv_detection_update, R.id.tv_my_idle, R.id.tv_my_club, R.id.tv_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_recharge:
@@ -75,11 +81,17 @@ public class UserFragment extends Fragment {
                 break;
             case R.id.tv_my_club:
                 break;
+            case R.id.tv_login:
+                intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+                break;
         }
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
     }
+
 }

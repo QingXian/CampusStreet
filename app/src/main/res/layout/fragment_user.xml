@@ -5,71 +5,91 @@
               android:layout_height="match_parent"
               android:background="@color/colorGray"
     >
+
     <RelativeLayout
-        android:padding="16dp"
-        android:orientation="vertical"
-        android:background="@color/colorWhite"
+        android:visibility="gone"
+        android:id="@+id/rl_user_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_head"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_head_test"
-        android:layout_width="64dp"
-        android:layout_height="64dp"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_head"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_head_test"/>
+
         <TextView
-            android:textSize="16sp"
-            android:paddingTop="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_toLeftOf="@+id/view_name_pos"
-            android:layout_below="@+id/iv_head"
-            android:text="@string/frag_user_name_hint"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <View
+            android:layout_height="wrap_content"
             android:layout_below="@+id/iv_head"
             android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/view_name_pos"
+            android:paddingTop="8dp"
+            android:text="@string/frag_user_name_hint"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"/>
+
+        <View
             android:id="@+id/view_name_pos"
             android:layout_width="1dp"
-            android:layout_height="1dp"/>
+            android:layout_height="1dp"
+            android:layout_below="@+id/iv_head"
+            android:layout_centerHorizontal="true"/>
+
         <TextView
-            android:textSize="16sp"
-            android:padding="8dp"
-            android:layout_toRightOf="@id/view_name_pos"
-            android:textColor="@color/colorBlack"
             android:id="@+id/tv_name"
-            android:layout_below="@+id/iv_head"
-            android:text="清闲"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-        <TextView
-            android:textSize="16sp"
-            android:paddingTop="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_toLeftOf="@+id/view_department_pos"
-            android:layout_below="@+id/tv_name"
-            android:text="@string/frag_user_department_hint"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <View
+            android:layout_height="wrap_content"
             android:layout_below="@+id/iv_head"
+            android:layout_toRightOf="@id/view_name_pos"
+            android:padding="8dp"
+            android:text="清闲"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
             android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/view_department_pos"
+            android:paddingTop="8dp"
+            android:text="@string/frag_user_department_hint"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"/>
+
+        <View
             android:id="@+id/view_department_pos"
             android:layout_width="1dp"
-            android:layout_height="1dp"/>
+            android:layout_height="1dp"
+            android:layout_below="@+id/iv_head"
+            android:layout_centerHorizontal="true"/>
+
         <TextView
-            android:textSize="16sp"
-            android:padding="8dp"
-            android:layout_toRightOf="@id/view_department_pos"
-            android:textColor="@color/colorBlack"
             android:id="@+id/tv_department"
-            android:layout_below="@+id/tv_name"
-            android:text="信息院"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-</RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name"
+            android:layout_toRightOf="@id/view_department_pos"
+            android:padding="8dp"
+            android:text="信息院"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:background="@color/colorWhite"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="@string/frag_user_login"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

@@ -24,7 +24,7 @@
             android:textColor="@color/colorWhite"
             android:textSize="20sp"/>
     </android.support.v7.widget.Toolbar>
-    <ImageView
+    <com.youth.banner.Banner
         android:id="@+id/iv_photo"
         android:layout_width="match_parent"
         android:layout_height="160dp"
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/tv_type"
+            android:id="@+id/tv_selltype"
             android:textColor="@color/colorWhite"
             android:text="一口价"
             android:layout_alignParentRight="true"
@@ -104,25 +104,18 @@
         android:layout_below="@+id/iv_head"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorGray"/>
+        android:background="@color/colorGray"
+        android:id="@+id/view"/>
     <TextView
-        android:layout_below="@+id/iv_head"
         android:paddingTop="8dp"
         android:paddingRight="16dp"
-        android:layout_toRightOf="@+id/tv_tradetype"
-        android:id="@+id/tv_selltype"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="可小刀"/>
-    <TextView
-        android:layout_below="@+id/iv_head"
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:layout_toRightOf="@+id/iv_head"
         android:id="@+id/tv_tradetype"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="见面交易"/>
+        android:text="见面交易"
+        android:layout_alignTop="@+id/view"
+        android:layout_toRightOf="@+id/iv_head"
+        android:layout_toEndOf="@+id/iv_head"/>
     <TextView
         android:paddingTop="8dp"
         android:paddingRight="16dp"
