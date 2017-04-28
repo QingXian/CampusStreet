@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Orange on 2017/4/24.
  */
 
-public class AssociationContract {
+public interface IAssociationContract {
 
     interface Presenter extends BasePresenter {
 

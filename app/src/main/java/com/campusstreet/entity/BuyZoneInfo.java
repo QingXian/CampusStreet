@@ -3,6 +3,7 @@ package com.campusstreet.entity;
 import java.io.Serializable;
 
 /**
+ * 求购专区的实体类
  * Created by Orange on 2017/4/27.
  */
 

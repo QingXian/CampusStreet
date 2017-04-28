@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -83,6 +84,11 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
         new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
         initView();
         initEvent();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         mPresenter.fetchBuyZoneList(mPi);
     }
 

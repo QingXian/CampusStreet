@@ -3,6 +3,7 @@ package com.campusstreet.entity;
 import java.io.Serializable;
 
 /**
+ * 留言消息的实体类
  * Created by Orange on 2017/4/21.
  */
 

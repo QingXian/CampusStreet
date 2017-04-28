@@ -84,7 +84,7 @@ public class AddBuyZoneActivity extends AppCompatActivity implements IBuyZoneCon
 
     @OnClick(R.id.btn_release)
     public void onViewClicked() {
-        AddBuy();
+      AddBuy();
     }
 
     private void AddBuy() {
@@ -148,8 +148,8 @@ public class AddBuyZoneActivity extends AppCompatActivity implements IBuyZoneCon
     public void showSuccessfullyPush(String succcessMsg) {
         showMessage(succcessMsg);
         Intent intent = new Intent(this, BuyZoneActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        this.finish();
     }
 
     @Override

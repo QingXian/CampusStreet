@@ -29,6 +29,7 @@ public class Const {
      */
     public static final String IDLESALEINFO_EXTRA = "idlesaleinfo_extra";
     public static final String BUYZONEIINFO_EXTRA = "buyzoneinfo_extra";
+    public static final String BOUNTYHALLINFO_EXTRA = "bountyhallinfo_extra";
 
     /**
      * spinner数据源

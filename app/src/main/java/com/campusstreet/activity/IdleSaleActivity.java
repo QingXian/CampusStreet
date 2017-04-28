@@ -84,6 +84,11 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
         setLoadingIndicator(true);
         initView();
         initEvent();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         mPresenter.fetchIdleSaleList(0, mPi);
     }
 

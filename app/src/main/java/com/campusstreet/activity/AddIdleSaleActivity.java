@@ -386,8 +386,8 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
     public void showSuccessfullyPush(String succcessMsg) {
         showMessage(succcessMsg);
         Intent intent = new Intent(this, IdleSaleActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        this.finish();
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * IdleSale实体类
+ * 闲置出售的实体类
  * Created by Orange on 2017/4/19.
  */
 

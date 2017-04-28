@@ -158,4 +158,5 @@
     <string name="act_reset_password_toolbar_title">重设密码</string>
     <string name="frag_user_login"><![CDATA[请点击登录>]]></string>
     <string name="act_buy_zone_qq_hint">QQ(选填)</string>
+    <string name="act_bounty_halll_item_end_hint">结束</string>
 </resources>

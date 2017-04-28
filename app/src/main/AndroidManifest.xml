@@ -26,7 +26,8 @@
         </activity>
         <activity android:name=".activity.BountyHallActivity">
         </activity>
-        <activity android:name=".activity.BuyZoneActivity">
+        <activity android:name=".activity.BuyZoneActivity"
+            android:launchMode="singleTask">
         </activity>
         <activity android:name=".activity.CampusInformationActivity">
         </activity>
@@ -34,7 +35,8 @@
             android:name=".activity.CampusRecruitmentActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>
-        <activity android:name=".activity.IdleSaleActivity">
+        <activity android:name=".activity.IdleSaleActivity"
+                  android:launchMode="singleTask">
         </activity>
         <activity android:name=".activity.PartnerActivity">
         </activity>

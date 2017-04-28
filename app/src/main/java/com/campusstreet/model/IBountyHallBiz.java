@@ -1,0 +1,101 @@
+package com.campusstreet.model;
+
+import android.support.annotation.NonNull;
+
+import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.IdleSaleInfo;
+import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.LeaveMessageInfo;
+
+import java.util.List;
+
+/**
+ * Created by Orange on 2017/4/27.
+ */
+
+public interface IBountyHallBiz {
+
+    //获取赏金大厅列表数据
+    void fetchTaskList(int type, int pi, String key, @NonNull LoadTaskListCallback callback);
+
+    //获取赏金大厅分类
+    void fetchBountyHallCategories(@NonNull LoadBountyHallCategoriesCallback callback);
+
+    //获取报名数据
+    void fetchjoinTaskList(int tp, int state, int pi, @NonNull LoadJoinTaskListCallback callback);
+
+    //报名请求
+    void onJoinTask(JoinInfo joinInfo, @NonNull onJoinTaskCallback callback);
+
+    //通过报名请求
+    void onPassJoinTask(String uid, int tid, int tpid, @NonNull onPassJoinTaskCallback callback);
+
+    //确认开始服务
+    void onStartTask(String uid, int tid, @NonNull onStartTaskCallback callback);
+
+    //发布赏金任务
+    void addTask(BountyHallInfo bountyHallInfo, @NonNull addTaskCallback callback);
+
+    //获取我的赏金任务
+    void fetchUserTaskList(String uid, int tp, String key, int pi, LoadUserTaskListCallback callback);
+
+    interface addTaskCallback {
+
+        void onAddSuccess();
+
+        void onAddFailure(String errorMsg);
+    }
+
+    interface onJoinTaskCallback {
+
+        void onJoinTaskSuccess();
+
+        void onJoinTaskFailure(String errorMsg);
+    }
+
+    interface onPassJoinTaskCallback {
+
+        void onPassJoinTaskSuccess();
+
+        void onPassJoinTaskFailure(String errorMsg);
+    }
+
+    interface onStartTaskCallback {
+
+        void onStartTaskSuccess();
+
+        void onStartTaskFailure(String errorMsg);
+    }
+
+    interface LoadBountyHallCategoriesCallback {
+
+        void onBountyHallCategoriesLoaded(String[] type);
+
+        void onDataNotAvailable(String errorMsg);
+    }
+
+
+    interface LoadUserTaskListCallback {
+
+        void onUserTaskListLoaded(List<BountyHallInfo> bountyHallInfos);
+
+        void onDataNotAvailable(String errorMsg);
+    }
+
+    interface LoadTaskListCallback {
+
+        void onTaskListLoaded(List<BountyHallInfo> bountyHallInfos);
+
+
+        void onDataNotAvailable(String errorMsg);
+    }
+
+    interface LoadJoinTaskListCallback {
+
+
+        void onJoinTaskListLoaded(List<JoinInfo> joinInfos);
+
+
+        void onDataNotAvailable(String errorMsg);
+    }
+}
