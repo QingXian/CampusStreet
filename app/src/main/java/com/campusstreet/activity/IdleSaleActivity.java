@@ -132,6 +132,8 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
 
     @Override
     public void setIdleSale(List<IdleSaleInfo> idleSaleInfoList) {
+        mRvContent.setVisibility(View.VISIBLE);
+        mTvError.setVisibility(View.GONE);
         mAdapter.replaceData(idleSaleInfoList);
     }
 

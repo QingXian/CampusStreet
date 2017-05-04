@@ -2,80 +2,67 @@ package com.campusstreet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
-import com.campusstreet.adapter.BountyHallRecyclerViewAdapter;
-import com.campusstreet.adapter.BuyZoneRecyclerViewAdapter;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
-import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.R.id.message;
+import static com.campusstreet.common.Const.TID_EXTRA;
 
 /**
- * Created by Orange on 2017/4/6.
+ * Created by Orange on 2017/5/2.
  */
 
-public class BountyHallActivity extends AppCompatActivity implements IBountyHallContract.View {
+public class RegistrationActivity extends AppCompatActivity implements IBountyHallContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
-    @BindView(R.id.iv_toolbar_right)
-    ImageView mIvToolbarRight;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.tab_layout)
-    TabLayout mTabLayout;
-    @BindView(R.id.rv_content)
-    RecyclerView mRvContent;
-    @BindView(R.id.tv_error)
-    TextView mTvError;
+    @BindView(R.id.et_bounty)
+    EditText mEtBounty;
+    @BindView(R.id.et_phone)
+    EditText mEtPhone;
+    @BindView(R.id.et_detail)
+    EditText mEtDetail;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.progress_bar_title)
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    @BindView(R.id.btn_join)
+    Button mBtnJoin;
     private IBountyHallContract.Presenter mPresenter;
-    private BountyHallRecyclerViewAdapter mAdapter;
-    private String[] mTitle;
-    private int mIndex;
-    private List<BountyHallInfo> mBountyHallInfoList;
-    private int mPi = 0;
-    private int mPostion = 0;
-
+    private int mTid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bounty_hall);
+        setContentView(R.layout.activity_registration);
         ButterKnife.bind(this);
         mToolbar.setTitle("");
-        mToolbarTitle.setText(getString(R.string.frag_home_bounty_hall));
+        mToolbarTitle.setText(getString(R.string.act_registration_toolbar_title));
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -87,45 +74,9 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
                 onBackPressed();
             }
         });
-        mIvToolbarRight.setVisibility(View.VISIBLE);
-        mIvToolbarRight.setImageResource(R.drawable.ic_add);
+        mTid = getIntent().getIntExtra(TID_EXTRA,0);
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
-        mBountyHallInfoList = new ArrayList<>();
-        initView();
-        initEvent();
         mPresenter.fetchBountyHallCategories();
-
-    }
-
-    @Override
-    protected void onStart() {
-        mPresenter.fetchTaskList(mPostion, mPi, null);
-        super.onStart();
-
-    }
-
-    private void initEvent() {
-        mAdapter.setOnItemClickListener(new BountyHallRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, BountyHallInfo BountyHallInfo) {
-                Intent intent = new Intent(BountyHallActivity.this, BountyHallDetailActivity.class);
-                intent.putExtra(Const.BOUNTYHALLINFO_EXTRA, BountyHallInfo);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void initView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(linearLayoutManager);
-        mAdapter = new BountyHallRecyclerViewAdapter(this, mBountyHallInfoList);
-        mRvContent.setAdapter(mAdapter);
-    }
-
-    @OnClick(R.id.iv_toolbar_right)
-    public void onClick() {
-        Intent intent = new Intent(this, AddBountyHallActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -135,10 +86,7 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
 
     @Override
     public void setTaskList(List<BountyHallInfo> bountyHallInfos) {
-        mRvContent.setVisibility(View.VISIBLE);
-        mTvError.setVisibility(View.GONE);
-        mAdapter.replaceData(bountyHallInfos);
-        setLoadingIndicator(false);
+
     }
 
     @Override
@@ -148,29 +96,6 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
 
     @Override
     public void setBountyHallCategories(String[] type) {
-        mTitle = type;
-        if (type != null) {
-            for (int i = 0; i < type.length; i++) {
-                mTabLayout.addTab(mTabLayout.newTab().setText(type[i]));
-            }
-            mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    mPresenter.fetchTaskList(tab.getPosition() + 1, 0, null);
-                    mPostion = tab.getPosition() + 1;
-                }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-
-                }
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-
-                }
-            });
-        }
 
     }
 
@@ -186,7 +111,10 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
 
     @Override
     public void showSuccessfullJointask(String successMsg) {
-
+        showMessage(successMsg);
+        Intent intent = new Intent(this, BountyHallDetailActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 
     @Override
@@ -196,10 +124,7 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        mRvContent.setVisibility(View.GONE);
-        mTvError.setText(errorMsg);
-        mTvError.setVisibility(View.VISIBLE);
-        setLoadingIndicator(false);
+        showMessage(errorMsg);
     }
 
     @Override
@@ -209,7 +134,7 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
 
     @Override
     public void showfetchBountyHallCategoriesFailMsg(String errorMsg) {
-        showMessage(errorMsg);
+
     }
 
     @Override
@@ -231,5 +156,36 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
         if (this != null && !this.isFinishing()) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @OnClick(R.id.btn_join)
+    public void onViewClicked() {
+        try {
+            if (Integer.valueOf(mEtBounty.getText().toString().trim()) < 0) {
+                showMessage("请填写正确的价格");
+                return;
+            }
+
+        } catch (NumberFormatException e) {
+            showMessage("价格格式不正确");
+            return;
+        }
+        if (TextUtils.isEmpty(mEtDetail.getText().toString().trim())) {
+            showMessage("请填写详细内容");
+            return;
+        }
+
+        if (TextUtils.isEmpty(mEtPhone.getText().toString().trim())) {
+            showMessage("请填写联系方式");
+            return;
+        }
+
+        JoinInfo joinInfo = new JoinInfo();
+        joinInfo.setFee(mEtBounty.getText().toString());
+        joinInfo.setSummary(mEtDetail.getText().toString());
+        joinInfo.setPhone(mEtPhone.getText().toString());
+        joinInfo.setUid("Mw==");
+        joinInfo.setId(mTid);
+        mPresenter.joinTask(joinInfo);
     }
 }

@@ -14,5 +14,6 @@ public final class AppConfig {
     public static final String SERVER_HOST = "http://ifireant.com";
     public static final String AVATAR_SERVER_HOST = "http://ifireant.com/d/up/";
     public static final String PIC_EWU_SERVER_HOST = "http://ifireant.com/d/ewu/";
+    public static final String PIC_HOME_BANNER_SERVER_HOST = "http://ifireant.com/d/";
 
 }

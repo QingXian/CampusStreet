@@ -1,6 +1,7 @@
 package com.campusstreet.contract;
 
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.NewInfo;
 
 import java.util.List;
 
@@ -12,13 +13,17 @@ public interface ICampusInformationContract {
 
     interface Presenter extends BasePresenter {
 
-        void fetchCampusInformationList(int pi);
+        void fetchCampusInformationList(String key,int pi);
+
+        void fetchCampusInformationDetail(int nid);
 
 
     }
     interface View extends BaseView<Presenter> {
 
-        void setCampusInformationList(List<LeaveMessageInfo> BuyZoneMessageList);
+        void setCampusInformationList(List<NewInfo> newInfos);
+
+        void setCampusInformationDetail(NewInfo newInfo);
 
         void showErrorMsg(String errorMsg);
 

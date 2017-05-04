@@ -44,6 +44,7 @@ public class BountyHallInfo implements Serializable {
     private String type;
     private String linkman;
     private String con;
+    private String key;
 
     public Integer getId() {
         return id;
@@ -188,5 +189,13 @@ public class BountyHallInfo implements Serializable {
 
     public void setCon(String con) {
         this.con = con;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

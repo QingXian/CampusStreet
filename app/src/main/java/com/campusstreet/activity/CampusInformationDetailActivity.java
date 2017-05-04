@@ -1,66 +1,61 @@
 package com.campusstreet.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
-import com.campusstreet.adapter.BountyHallRecyclerViewAdapter;
-import com.campusstreet.adapter.CampusInformationRecyclerViewAdapter;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.ICampusInformationContract;
-import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.NewInfo;
+import com.campusstreet.entity.RecruitInfo;
 import com.campusstreet.model.CampusInformationImpl;
 import com.campusstreet.presenter.CampusInformationPresenter;
 
-import java.security.Key;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.campusstreet.R.id.view;
-
 /**
- * Created by Orange on 2017/4/6.
+ * Created by Orange on 2017/5/4.
  */
 
-public class CampusInformationActivity extends AppCompatActivity implements ICampusInformationContract.View {
+public class CampusInformationDetailActivity extends AppCompatActivity implements ICampusInformationContract.View {
+
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
     ImageView mIvToolbarRight;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.rv_content)
-    RecyclerView mRvContent;
+    @BindView(R.id.tv_title)
+    TextView mTvTitle;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
+    @BindView(R.id.tv_content)
+    TextView mTvContent;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.progress_bar_title)
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
-    @BindView(R.id.tv_error)
-    TextView mTvError;
     private ICampusInformationContract.Presenter mPresenter;
-    private int mPi = 0;
-    private CampusInformationRecyclerViewAdapter mAdapter;
+    private NewInfo mNewInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_campus_information);
+        setContentView(R.layout.activity_campus_information_detail);
         ButterKnife.bind(this);
         mToolbar.setTitle("");
         mToolbarTitle.setText(getString(R.string.frag_home_campus_information));
@@ -76,33 +71,12 @@ public class CampusInformationActivity extends AppCompatActivity implements ICam
             }
         });
         new CampusInformationPresenter(CampusInformationImpl.getInstance(getApplicationContext()), this);
-        initView();
-        initEvent();
+        mNewInfo = (NewInfo) getIntent().getSerializableExtra(Const.NEWINFO_EXTRA);
+        mPresenter.fetchCampusInformationDetail(mNewInfo.getId());
+        mTvTitle.setText(mNewInfo.getTitle());
+        mTvTime.setText(mNewInfo.getPubtime());
     }
 
-    private void initEvent() {
-        mAdapter.setOnItemClickListener(new CampusInformationRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, NewInfo newInfo) {
-                Intent intent = new Intent(CampusInformationActivity.this, CampusInformationDetailActivity.class);
-                intent.putExtra(Const.NEWINFO_EXTRA, newInfo);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void initView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(linearLayoutManager);
-        mAdapter = new CampusInformationRecyclerViewAdapter(this,null);
-        mRvContent.setAdapter(mAdapter);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPresenter.fetchCampusInformationList(null,mPi);
-    }
 
     @Override
     public void setPresenter(ICampusInformationContract.Presenter presenter) {
@@ -112,20 +86,18 @@ public class CampusInformationActivity extends AppCompatActivity implements ICam
 
     @Override
     public void setCampusInformationList(List<NewInfo> newInfos) {
-        mRvContent.setVisibility(View.VISIBLE);
-        mTvError.setVisibility(View.GONE);
-        mAdapter.replaceData(newInfos);
+
     }
 
     @Override
-    public void setCampusInformationDetail(NewInfo newInfo) {//忽略
+    public void setCampusInformationDetail(NewInfo newInfo) {
+        mTvContent.setText(newInfo.getSummary());
     }
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        mRvContent.setVisibility(View.GONE);
-        mTvError.setText(errorMsg);
-        mTvError.setVisibility(View.VISIBLE);
+        showMessage(errorMsg);
+        mTvContent.setText("没有可显示内容");
     }
 
     @Override
@@ -140,6 +112,11 @@ public class CampusInformationActivity extends AppCompatActivity implements ICam
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
+        }
+    }
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

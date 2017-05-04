@@ -29,7 +29,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
 
         mView.setPresenter(this);
     }
-    
+
     @Override
     public void fetchBountyHallCategories() {
         mView.setLoadingIndicator(true);
@@ -42,6 +42,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
+                mView.setLoadingIndicator(false);
                 mView.showfetchBountyHallCategoriesFailMsg(errorMsg);
             }
         });
@@ -59,6 +60,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
+                mView.setLoadingIndicator(false);
                 mView.showErrorMsg(errorMsg);
             }
         });
@@ -66,27 +68,94 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
 
     @Override
     public void fetchjoinTaskList(int tid, int state, int pi) {
+        mView.setLoadingIndicator(true);
+        mBountyHallImpl.fetchjoinTaskList(tid, state, pi, new IBountyHallBiz.LoadJoinTaskListCallback() {
+            @Override
+            public void onJoinTaskListLoaded(List<JoinInfo> joinInfos) {
+                mView.setLoadingIndicator(false);
+                mView.setJoinTaskList(joinInfos);
+            }
+
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
 
     }
 
     @Override
     public void joinTask(JoinInfo joinInfo) {
+        mView.setLoadingIndicator(true);
+        mBountyHallImpl.onJoinTask(joinInfo, new IBountyHallBiz.onJoinTaskCallback() {
+            @Override
+            public void onJoinTaskSuccess() {
+                mView.setLoadingIndicator(true);
+                mView.showSuccessfullJointask("报名成功");
+            }
+
+            @Override
+            public void onJoinTaskFailure(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
 
     }
 
     @Override
     public void passJoinTask(String uid, int tid, int tpid) {
+        mView.setLoadingIndicator(true);
+        mBountyHallImpl.onPassJoinTask(uid, tid, tpid, new IBountyHallBiz.onPassJoinTaskCallback() {
+            @Override
+            public void onPassJoinTaskSuccess() {
+                mView.setLoadingIndicator(false);
+                mView.showSuccessfullpassJoinTask();
+            }
 
+            @Override
+            public void onPassJoinTaskFailure(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
     }
 
     @Override
     public void startTask(String uid, int tid) {
+        mView.setLoadingIndicator(true);
+        mBountyHallImpl.onStartTask(uid, tid, new IBountyHallBiz.onStartTaskCallback() {
+            @Override
+            public void onStartTaskSuccess() {
+                mView.setLoadingIndicator(false);
+                mView.showSuccessfullStartTask();
+            }
 
+            @Override
+            public void onStartTaskFailure(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
     }
 
     @Override
     public void addTask(BountyHallInfo bountyHallInfo) {
+        mView.setLoadingIndicator(true);
+        mBountyHallImpl.addTask(bountyHallInfo, new IBountyHallBiz.addTaskCallback() {
+            @Override
+            public void onAddSuccess() {
+                mView.setLoadingIndicator(false);
+                mView.showSuccessfullyPush("发布成功");
+            }
 
+            @Override
+            public void onAddFailure(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
     }
 
     @Override

@@ -6,39 +6,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.campusstreet.R;
-import com.campusstreet.common.AppConfig;
-import com.campusstreet.entity.BountyHallInfo;
-import com.campusstreet.entity.JoinInfo;
-import com.campusstreet.entity.RecruitInfo;
-import com.squareup.picasso.Picasso;
+import com.campusstreet.entity.StudyWorkInfo;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.R.id.list;
 
 /**
- * Created by Orange on 2017/4/18.
+ * Created by Orange on 2017/5/3.
  */
 
-public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
+public class CampusStudyWorkRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
 
     private Context mContext;
-    private List<RecruitInfo> mList;
+    private List<StudyWorkInfo> mList;
     private OnRecyclerViewItemClickListener mOnItemClickListener;
 
 
-    public CampusRecruitmentRecyclerViewAdapter(Context context, List<RecruitInfo> list) {
+    public CampusStudyWorkRecyclerViewAdapter(Context context, List<StudyWorkInfo> list) {
         mContext = context;
         mList = list;
     }
@@ -47,13 +37,13 @@ public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<R
     public void onClick(View view) {
         if (mOnItemClickListener != null) {
             // 注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(view, (RecruitInfo) view.getTag());
+            mOnItemClickListener.onItemClick(view, (StudyWorkInfo) view.getTag());
         }
     }
 
     public static interface OnRecyclerViewItemClickListener {
 
-        void onItemClick(View view, RecruitInfo recruitInfo);
+        void onItemClick(View view, StudyWorkInfo StudyWorkInfo);
 
     }
 
@@ -62,9 +52,9 @@ public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<R
     }
 
 
-    public void replaceData(List<RecruitInfo> recruitInfos) {
+    public void replaceData(List<StudyWorkInfo> studyWorkInfos) {
         //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);
-        mList = recruitInfos;
+        mList = studyWorkInfos;
         // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
         notifyDataSetChanged();
     }
@@ -80,19 +70,16 @@ public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<R
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
-        RecruitInfo recruiInfo = mList.get(position);
-        if (recruiInfo!=null){
-//            Picasso.with(mContext)
-//                    .load(AppConfig.AVATAR_SERVER_HOST + recruiInfo.get)
-//                    .fit()
-//                    .into(viewHolder.mIvHead);
-            viewHolder.mTvTitle.setText(recruiInfo.getJobtitle());
-            viewHolder.mTvCompany.setText(recruiInfo.getComtypename());
-            viewHolder.mTvReleaseTime.setText(recruiInfo.getPublishtime());
-            viewHolder.mTvPlace.setText(recruiInfo.getJobplace());
-            viewHolder.mTvRequirement.setText(recruiInfo.getJobeduname());
-            viewHolder.mTvWages.setText(recruiInfo.getJobmoney());
-            viewHolder.itemView.setTag(recruiInfo);
+        StudyWorkInfo studyWorkInfo = mList.get(position);
+        viewHolder.mIvHead.setVisibility(View.GONE);
+        viewHolder.mTvRequirement.setVisibility(View.GONE);
+        if (studyWorkInfo != null) {
+            viewHolder.mTvTitle.setText(studyWorkInfo.getTitle());
+            viewHolder.mTvCompany.setText(studyWorkInfo.getJobcom());
+            viewHolder.mTvReleaseTime.setText(studyWorkInfo.getPublishtime());
+            viewHolder.mTvPlace.setText(studyWorkInfo.getJobplace());
+            viewHolder.mTvWages.setText(studyWorkInfo.getJobmoney());
+            viewHolder.itemView.setTag(studyWorkInfo);
         }
     }
 

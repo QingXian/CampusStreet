@@ -2,30 +2,34 @@ package com.campusstreet.model;
 
 import android.support.annotation.NonNull;
 
+import com.campusstreet.entity.RecruitInfo;
+import com.campusstreet.entity.StudyWorkInfo;
+
+import java.util.List;
+
 /**
  * Created by Orange on 2017/4/18.
  */
 
 public interface ICampusRecruitmentBiz {
 
-    void fetchCampusRecruitmentList(@NonNull LoadCampusRecruitmentListCallback callback);
+    void fetchCampusRecruitmentList(String key,int pi,@NonNull LoadCampusRecruitmentListCallback callback);
 
-    void searchCampusRecruitment(String picType, @NonNull searchCampusRecruitmentCallback callback);
+    void fetchStudyWorkList(String key,int pi, @NonNull LoadStudyWorkListCallback callback);
 
 
 
-    interface searchCampusRecruitmentCallback {
-        void onSearchSuccess();
+    interface LoadStudyWorkListCallback {
 
-        void onSearchFailure(String errorMsg);
+        void onStudyWorkListLoaded(List<StudyWorkInfo> studyWorkInfos);
+
+        void onDataNotAvailable(String errorMsg);
     }
 
     interface LoadCampusRecruitmentListCallback {
 
-        // 加载所有GoodDeeds
-        void onCampusRecruitmentListLoaded();
+        void onCampusRecruitmentListLoaded(List<RecruitInfo> recruitInfos);
 
-        // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);
     }
 }

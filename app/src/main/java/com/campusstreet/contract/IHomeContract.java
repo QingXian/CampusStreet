@@ -1,5 +1,9 @@
 package com.campusstreet.contract;
 
+import com.campusstreet.entity.BannerInfo;
+
+import java.util.List;
+
 /**
  * Created by Orange on 2017/4/15.
  */
@@ -20,7 +24,7 @@ public interface IHomeContract {
 
         void setUserInfo();
 
-        void setBanner();
+        void setBanner(List<BannerInfo> bannerInfos);
 
         void setAdvertisement();
 

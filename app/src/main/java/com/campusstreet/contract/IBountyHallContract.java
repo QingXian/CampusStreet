@@ -47,13 +47,13 @@ public interface IBountyHallContract {
 
         void setBountyHallCategories(String[] type);
 
-        void setjoinTaskList(List<JoinInfo> joinInfos);
+        void setJoinTaskList(List<JoinInfo> joinInfos);
 
         //报名通过成功
         void showSuccessfullpassJoinTask();
 
         //报名成功
-        void showSuccessfulljointask();
+        void showSuccessfullJointask(String successMsg);
 
         //服务开始成功
         void showSuccessfullStartTask();
@@ -61,7 +61,7 @@ public interface IBountyHallContract {
         void showErrorMsg(String errorMsg);
 
         //赏金任务发布成功
-        void showSuccessfullyPush(String succcessMsg);
+        void showSuccessfullyPush(String successMsg);
 
         void showfetchBountyHallCategoriesFailMsg(String errorMsg);
 

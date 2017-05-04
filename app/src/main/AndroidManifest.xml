@@ -24,9 +24,12 @@
         </activity>
         <activity android:name=".activity.AssociationActivity">
         </activity>
-        <activity android:name=".activity.BountyHallActivity">
+        <activity
+            android:name=".activity.BountyHallActivity"
+            android:launchMode="singleTask">
         </activity>
-        <activity android:name=".activity.BuyZoneActivity"
+        <activity
+            android:name=".activity.BuyZoneActivity"
             android:launchMode="singleTask">
         </activity>
         <activity android:name=".activity.CampusInformationActivity">
@@ -35,8 +38,9 @@
             android:name=".activity.CampusRecruitmentActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>
-        <activity android:name=".activity.IdleSaleActivity"
-                  android:launchMode="singleTask">
+        <activity
+            android:name=".activity.IdleSaleActivity"
+            android:launchMode="singleTask">
         </activity>
         <activity android:name=".activity.PartnerActivity">
         </activity>
@@ -58,11 +62,15 @@
         </activity>
         <activity android:name=".activity.BuyZoneDetailActivity">
         </activity>
-        <activity android:name=".activity.IdleSaleDetailActivity">
+        <activity
+            android:name=".activity.IdleSaleDetailActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>
         <activity android:name=".activity.AddBuyZoneActivity">
         </activity>
-        <activity android:name=".activity.BountyHallDetailActivity">
+        <activity
+            android:name=".activity.BountyHallDetailActivity"
+            android:launchMode="singleTask">
         </activity>
         <activity android:name=".activity.RegistrationDetailActivity">
         </activity>
@@ -94,6 +102,12 @@
         <activity android:name=".activity.ReSetPasswrodActivity">
         </activity>
         <activity android:name=".activity.ForgetPasswordActivity">
+        </activity>
+        <activity android:name=".activity.RegistrationActivity">
+        </activity>
+        <activity android:name=".activity.CampusInformationDetailActivity">
+        </activity>
+        <activity android:name=".activity.AdActivity">
         </activity>
     </application>
 

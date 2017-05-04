@@ -1,28 +1,52 @@
 package com.campusstreet.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.adapter.BountyHallDetailRecyclerViewAdapter;
+import com.campusstreet.adapter.BountyHallRecyclerViewAdapter;
+import com.campusstreet.common.AppConfig;
+import com.campusstreet.common.Const;
+import com.campusstreet.contract.IBountyHallContract;
+import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.model.BountyHallImpl;
+import com.campusstreet.presenter.BountyHallPresenter;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.campusstreet.common.Const.ISSTRAT;
+import static com.campusstreet.common.Const.JOINNOTPASS;
+import static com.campusstreet.common.Const.JOINPASS;
+import static com.campusstreet.common.Const.STARTTASK;
+import static com.campusstreet.common.Const.TID_EXTRA;
+import static com.campusstreet.common.Const.TYPE;
+
 /**
  * Created by Orange on 2017/4/9.
  */
 
-public class BountyHallDetailActivity extends AppCompatActivity {
+public class BountyHallDetailActivity extends AppCompatActivity implements IBountyHallContract.View {
 
 
     @BindView(R.id.toolbar_title)
@@ -55,18 +79,12 @@ public class BountyHallDetailActivity extends AppCompatActivity {
     TextView mTvPrice;
     @BindView(R.id.tv_people_num)
     TextView mTvPeopleNum;
-    @BindView(R.id.tv_day)
-    TextView mTvDay;
     @BindView(R.id.tv_time)
     TextView mTvTime;
-    @BindView(R.id.tv_remaining_time)
-    TextView mTvRemainingTime;
     @BindView(R.id.tv_completion_time)
     TextView mTvCompletionTime;
     @BindView(R.id.tv_contact_people)
     TextView mTvContactPeople;
-    @BindView(R.id.tv_contact_place)
-    TextView mTvContactPlace;
     @BindView(R.id.tv_describe)
     TextView mTvDescribe;
     @BindView(R.id.tab_layout)
@@ -75,6 +93,16 @@ public class BountyHallDetailActivity extends AppCompatActivity {
     RecyclerView mRvContent;
     @BindView(R.id.btn_entel)
     Button mBtnEntel;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.progress_bar_title)
+    TextView mProgressBarTitle;
+    @BindView(R.id.progress_bar_container)
+    LinearLayout mProgressBarContainer;
+    private BountyHallInfo mBountyHallInfo;
+    private IBountyHallContract.Presenter mPresenter;
+    private BountyHallDetailRecyclerViewAdapter mAdapter;
+    private int mPi = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,13 +122,171 @@ public class BountyHallDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-        mIvToolbarRight.setVisibility(View.VISIBLE);
-        mIvToolbarRight.setImageResource(R.drawable.ic_add);
+        mBountyHallInfo = (BountyHallInfo) getIntent().getSerializableExtra(Const.BOUNTYHALLINFO_EXTRA);
+        new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
+        initView();
+        initEvent();
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
+    }
+
+    private void initEvent() {
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getText().equals("报名申请")) {
+                    //获取报名的列表数据
+                    mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
+                    mAdapter.replaceType(JOINNOTPASS);
+                } else {
+                    //获取通过报名的列表数据
+                    mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+                    mAdapter.replaceType(JOINPASS);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        mAdapter.setOnItemClickListener(new BountyHallDetailRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, JoinInfo JoinInfo, int type,int start) {
+                Intent intent = new Intent(BountyHallDetailActivity.this, RegistrationDetailActivity.class);
+                intent.putExtra(Const.JOINNFO_EXTRA, JoinInfo);
+                intent.putExtra(TYPE, type);
+                intent.putExtra(ISSTRAT, start);
+                intent.putExtra(TID_EXTRA, mBountyHallInfo.getId());
+                startActivity(intent);
+            }
+
+        });
+    }
+
+    private void initView() {
+        if (mBountyHallInfo.getFee().equals(0)) {
+            mTvPrice.setText("面议");
+        } else {
+            mTvPrice.setText(mBountyHallInfo.getFee());
+        }
+        mTvName.setText(mBountyHallInfo.getUsername());
+        mTvTime.setText(mBountyHallInfo.getPubtime());
+        mTvTitle.setText(mBountyHallInfo.getTitle());
+        mTvPeopleNum.setText(String.valueOf(mBountyHallInfo.getSperson()));
+        mTvCompletionTime.setText(mBountyHallInfo.getEndtime());
+        mTvContactPeople.setText(mBountyHallInfo.getLinkman());
+        mTvDescribe.setText(mBountyHallInfo.getCon());
+        Picasso.with(this)
+                .load(AppConfig.AVATAR_SERVER_HOST + mBountyHallInfo.getUserpic())
+                .fit()
+                .into(mIvHead);
+        mTabLayout.addTab(mTabLayout.newTab().setText("报名申请"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("已选择名单"));
+        // TODO: 2017/5/2  暂留发布者判断、状态判断
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
+        mRvContent.setLayoutManager(gridLayoutManager);
+        mAdapter = new BountyHallDetailRecyclerViewAdapter(this, null, 0);
+        mRvContent.setAdapter(mAdapter);
+    }
+
+
+    @Override
+    public void setPresenter(IBountyHallContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void setTaskList(List<BountyHallInfo> bountyHallInfos) {
+
+    }
+
+    @Override
+    public void setUserTaskList(List<BountyHallInfo> bountyHallInfos) {
+
+    }
+
+    @Override
+    public void setBountyHallCategories(String[] type) {
+
+    }
+
+    @Override
+    public void setJoinTaskList(List<JoinInfo> joinInfos) {
+        mAdapter.replaceData(joinInfos);
+    }
+
+    @Override
+    public void showSuccessfullpassJoinTask() {
+
+    }
+
+    @Override
+    public void showSuccessfullJointask(String successMsg) {
+
+    }
+
+    @Override
+    public void showSuccessfullStartTask() {
+        mBtnEntel.setVisibility(View.GONE);
+        mAdapter.startTask(STARTTASK);
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        showMessage(errorMsg);
+    }
+
+    @Override
+    public void showSuccessfullyPush(String succcessMsg) {
+
+    }
+
+    @Override
+    public void showfetchBountyHallCategoriesFailMsg(String errorMsg) {
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        if (mProgressBarContainer != null) {
+            if (active) {
+                //设置滚动条可见
+                mProgressBarContainer.setVisibility(View.VISIBLE);
+                mProgressBarTitle.setText(R.string.loading_progress_bar_title);
+            } else {
+                if (mProgressBarContainer.getVisibility() == View.VISIBLE) {
+                    mProgressBarContainer.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
+    }
 
     @OnClick(R.id.btn_entel)
     public void onViewClicked() {
+        // TODO: 2017/5/2  暂留发布者判断
+        //   if ()
+        if (mBtnEntel.getText().toString().equals("报名")) {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            intent.putExtra(TID_EXTRA, mBountyHallInfo.getId());
+            startActivity(intent);
+        } else {
+            mPresenter.startTask("Mw==",mBountyHallInfo.getId());
+        }
     }
 }

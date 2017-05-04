@@ -96,8 +96,10 @@
     <string name="act_bounty_hall_add_detail_hint">请填写详情内容</string>
     <string name="act_bounty_hall_add_bounty">赏金</string>
     <string name="act_bounty_hall_add_bounty_hint">我愿意支付每个人的费用</string>
-    <string name="act_bounty_hall_add_place">地址</string>
-    <string name="act_bounty_hall_add_place_hint">任务的位置</string>
+    <string name="act_bounty_hall_add_key">关键字</string>
+    <string name="act_bounty_hall_add_key_hint">请填写任务关键字</string>
+    <string name="act_bounty_hall_add_linkman">联系人</string>
+    <string name="act_bounty_hall_add_linkman_hint">请填写联系人</string>
     <string name="act_bounty_hall_add_type">分类</string>
     <string name="act_bounty_hall_add_type_hint">请选择</string>
     <string name="act_bounty_hall_add_num">需要人数</string>
@@ -126,7 +128,7 @@
     <string name="act_bounty_hall_detail_skill">技能</string>
     <string name="act_bounty_hall_detail_help">众帮</string>
     <string name="act_bounty_hall_detail_price_hint">预算</string>
-    <string name="act_bounty_hall_detail_people_num_hint">人投注</string>
+    <string name="act_bounty_hall_detail_people_num_hint">人报名</string>
     <string name="act_bounty_hall_detail_time_hint">发布</string>
     <string name="act_bounty_hall_detail_remaining_time">招标剩余时间：</string>
     <string name="act_bounty_hall_detail_completion_time">计划完成时间：</string>
@@ -159,4 +161,10 @@
     <string name="frag_user_login"><![CDATA[请点击登录>]]></string>
     <string name="act_buy_zone_qq_hint">QQ(选填)</string>
     <string name="act_bounty_halll_item_end_hint">结束</string>
+    <string name="act_registertion_money">金额</string>
+    <string name="act_registertion_money_hint">期望报酬</string>
+    <string name="act_registertion_summary">备注</string>
+    <string name="act_registertion_summary_hint">备注内容</string>
+    <string name="act_registertion_join">报名</string>
+    <string name="act_registration_toolbar_title">报名</string>
 </resources>

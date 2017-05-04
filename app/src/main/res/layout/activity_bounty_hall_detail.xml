@@ -1,337 +1,336 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:background="@color/colorGray"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <include layout="@layout/toolbar"/>
-    <RelativeLayout
-        android:background="@color/colorWhite"
-        android:padding="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:id="@id/iv_head"
-            android:src="@drawable/ic_head_test"/>
-        <TextView
-            android:layout_toRightOf="@+id/iv_head"
-            android:id="@+id/tv_name"
-            android:textSize="16sp"
-            android:paddingLeft="16dp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="昵称"/>
-        <ImageView
-            android:visibility="gone"
-            android:id="@+id/iv_sex"
-            android:layout_toRightOf="@+id/tv_name"
-            android:background="@drawable/ic_sex_famale"
-            android:layout_width="12dp"
-            android:layout_height="12dp"/>
-        <TextView
-            android:visibility="gone"
-            android:layout_marginLeft="4dp"
-            android:textColor="@color/colorPrimary"
-            android:drawableLeft="@drawable/ic_real_name_authentication"
-            android:padding="4dp"
-            android:textSize="12sp"
-            android:background="@drawable/bg_act_bounty_hall_real_name_authentication"
-            android:id="@+id/tv_real_name_authentication"
-            android:layout_toRightOf="@+id/iv_sex"
-            android:text="@string/act_bounty_hall_detail_real_name_authentication"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <LinearLayout
-            android:visibility="gone"
-            android:paddingTop="8dp"
-            android:paddingLeft="16dp"
-            android:layout_toRightOf="@+id/iv_head"
-            android:layout_below="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="@string/act_bounty_hall_detail_task"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="@string/left_parenthesis"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_task_num"
-                android:text="6"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="@string/right_parenthesis"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/act_bounty_hall_detail_skill"
-                android:textSize="12sp"/>
-
-            <TextView
-                android:text="@string/left_parenthesis"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_skill_num"
-                android:text="6"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="@string/right_parenthesis"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="@string/act_bounty_hall_detail_help"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="@string/left_parenthesis"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_help_num"
-                android:text="6"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="@string/right_parenthesis"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/tv_position"
-                android:drawablePadding="8dp"
-                android:paddingLeft="8dp"
-                android:gravity="bottom"
-                android:drawableLeft="@drawable/ic_postion_black"
-                android:text="龙岩学院"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </RelativeLayout>
-    <TextView
-        android:padding="8dp"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
-        android:background="@color/colorWhite"
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="标题"/>
-    <LinearLayout
-        android:padding="8dp"
-        android:background="@color/colorWhite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content">
-        <TextView
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_bounty_hall_detail_price_hint"/>
-        <TextView
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/frag_campus_recruitment_wages_symbol"/>
-        <TextView
-            android:id="@+id/tv_price"
-            android:textColor="@color/colorPrimary"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="500"/>
-    </LinearLayout>
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_people_num"
-                android:textSize="12sp"
-                android:drawablePadding="4dp"
-                android:gravity="bottom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_peoloe"
-                android:text="0"/>
-
-            <TextView
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/act_bounty_hall_detail_people_num_hint"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_day"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="昨天"/>
-
-            <TextView
-                android:id="@+id/tv_time"
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="19:30"/>
-            <TextView
-                android:textSize="12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/act_bounty_hall_detail_time_hint"/>
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:background="@color/colorWhite"
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_bounty_hall_detail_remaining_time"/>
-
-        <TextView
-            android:id="@+id/tv_remaining_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1天9个小时"/>
-    </LinearLayout>
-    <LinearLayout
-        android:background="@color/colorWhite"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_bounty_hall_detail_completion_time"/>
-
-        <TextView
-            android:id="@+id/tv_completion_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2017-03-22"/>
-    </LinearLayout>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="4dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_bounty_hall_detail_contact_people"/>
-
-        <TextView
-            android:id="@+id/tv_contact_people"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="张森"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:background="@color/colorWhite"
-
-        android:paddingTop="4dp"
-        android:paddingBottom="16dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/act_bounty_hall_detail_contact_place"/>
-
-        <TextView
-            android:id="@+id/tv_contact_place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="龙岩学院"/>
-    </LinearLayout>
-    <TextView
-        android:background="@color/colorWhite"
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/act_bounty_hall_detail_describe"/>
-
-    <TextView
-        android:id="@+id/tv_describe"
-        android:background="@color/colorWhite"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:lineSpacingExtra="4dp"
-        android:padding="8dp"
-        android:text="需要应用大量推荐人推荐人推荐人推荐人推荐人推荐人推荐人"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <android.support.design.widget.TabLayout
-        android:visibility="gone"
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="scrollable"
-        app:tabIndicatorHeight="0dp"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        />
-    <android.support.v7.widget.RecyclerView
-        android:visibility="gone"
+        android:layout_height="match_parent"
         android:background="@color/colorGray"
-        android:id="@+id/rv_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
-    <Button
-        android:textSize="16sp"
-        android:id="@+id/btn_entel"
-        android:layout_margin="16dp"
-        android:background="@color/colorWhite"
-        android:layout_width="match_parent"
-        android:text="报名"
-        android:textColor="@color/colorPrimary"
-        android:layout_height="40dp"/>
-</LinearLayout>
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:padding="16dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@id/iv_head"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_head_test"/>
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_toRightOf="@+id/iv_head"
+                android:paddingLeft="16dp"
+                android:text="昵称"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:id="@+id/iv_sex"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_toRightOf="@+id/tv_name"
+                android:background="@drawable/ic_sex_famale"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_real_name_authentication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/iv_sex"
+                android:background="@drawable/bg_act_bounty_hall_real_name_authentication"
+                android:drawableLeft="@drawable/ic_real_name_authentication"
+                android:padding="4dp"
+                android:text="@string/act_bounty_hall_detail_real_name_authentication"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_name"
+                android:layout_toRightOf="@+id/iv_head"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/act_bounty_hall_detail_task"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/left_parenthesis"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_task_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/right_parenthesis"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/act_bounty_hall_detail_skill"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/left_parenthesis"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_skill_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/right_parenthesis"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/act_bounty_hall_detail_help"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/left_parenthesis"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_help_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/right_parenthesis"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/tv_position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_postion_black"
+                    android:drawablePadding="8dp"
+                    android:gravity="bottom"
+                    android:paddingLeft="8dp"
+                    android:text="龙岩学院"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorWhite"
+            android:padding="8dp"
+            android:text="标题"
+            android:textSize="18sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:padding="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/act_bounty_hall_detail_price_hint"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/frag_campus_recruitment_wages_symbol"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_people_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_peoloe"
+                    android:drawablePadding="4dp"
+                    android:gravity="bottom"
+                    android:text="0"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/act_bounty_hall_detail_people_num_hint"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="19:30"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/act_bounty_hall_detail_time_hint"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/act_bounty_hall_detail_completion_time"/>
+
+            <TextView
+                android:id="@+id/tv_completion_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2017-03-22"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/act_bounty_hall_detail_contact_people"/>
+
+            <TextView
+                android:id="@+id/tv_contact_people"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张森"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:padding="8dp"
+            android:text="@string/act_bounty_hall_detail_describe"/>
+
+        <TextView
+            android:id="@+id/tv_describe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:ellipsize="end"
+            android:lineSpacingExtra="4dp"
+            android:maxLines="3"
+            android:padding="8dp"
+            android:text="需要应用大量推荐人推荐人推荐人推荐人推荐人推荐人推荐人"/>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorGray"
+            android:visibility="gone">
+        </android.support.v7.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/btn_entel"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="16dp"
+            android:background="@color/colorWhite"
+            android:text="报名"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <include layout="@layout/progress_bar"></include>
+
+</RelativeLayout>

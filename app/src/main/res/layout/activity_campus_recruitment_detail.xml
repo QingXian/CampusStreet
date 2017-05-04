@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             />
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_feedback"
             android:layout_margin="4dp"
             android:textSize="12sp"
@@ -61,100 +62,199 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/rl_company_info"
-        android:padding="16dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorWhite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:src="@drawable/ic_head_test"
-            android:id="@+id/iv_head"
-            android:layout_width="48dp"
-            android:layout_height="48dp"/>
         <TextView
-            android:id="@+id/tv_company_name"
-            android:layout_marginLeft="16dp"
+            android:hint="2017-10-2"
+            android:paddingTop="8dp"
+            android:paddingLeft="16dp"
+            android:layout_below="@+id/tv_feedback"
+            android:id="@+id/tv_time"
+            android:layout_toRightOf="@+id/tv_education"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_company_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorWhite"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_head_test"/>
+
+        <TextView
+            android:id="@+id/tv_company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/iv_head"
             android:text="厦门某企业"
             android:textColor="@color/colorBlack"
-            android:layout_toRightOf="@+id/iv_head"/>
+            android:textSize="18sp"/>
+
         <LinearLayout
             android:id="@+id/ll_company_detail"
-            android:layout_margin="16dp"
-            android:layout_toRightOf="@+id/iv_head"
-            android:layout_below="@+id/tv_company_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_company_name"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/iv_head">
+
             <TextView
                 android:id="@+id/tv_company_range"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="IT服务"/>
+                android:text="IT服务"
+                android:textSize="12sp"/>
+
             <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/tv_color_defult"
-                android:layout_gravity="center"
-                android:layout_width="1dp"
-                android:layout_height="12dp"/>
+                android:background="@color/tv_color_defult"/>
+
             <TextView
                 android:id="@+id/tv_company_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="200-300人"
                 android:textSize="12sp"
-                android:text="200-300人"/>
+                android:visibility="gone"/>
+
             <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:background="@color/tv_color_defult"
-                android:layout_gravity="center"
-                android:layout_width="1dp"
-                android:layout_height="12dp"/>
+                android:visibility="gone"/>
+
             <TextView
                 android:id="@+id/tv_company_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text="私营"/>
+                android:text="私营"
+                android:textSize="12sp"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@color/tv_color_defult"
+                />
+            <TextView
+                android:id="@+id/tv_company_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12334567432"
+                android:textSize="12sp"/>
         </LinearLayout>
         <TextView
-            android:gravity="bottom"
-            android:drawablePadding="8dp"
-            android:drawableLeft="@drawable/ic_postion"
-            android:layout_marginLeft="16dp"
-            android:textSize="14sp"
-            android:layout_below="@+id/ll_company_detail"
             android:id="@+id/tv_position"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="龙岩市新罗区东肖镇龙岩学院"/>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="17dp"
+            android:layout_marginStart="17dp"
+            android:drawableLeft="@drawable/ic_postion"
+            android:drawablePadding="8dp"
+            android:gravity="bottom"
+            android:text="龙岩市新罗区东肖镇龙岩学院"
+            android:textSize="14sp"
+            android:visibility="gone"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_marginTop="8dp"
+        android:background="@color/colorWhite"
+        android:id="@+id/ll_studywork_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_company_name"
+        android:padding="16dp"
+        android:layout_toRightOf="@+id/iv_head">
+
+        <TextView
+            android:id="@+id/tv_studywork_range"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IT服务"
+            />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/tv_color_defult"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/tv_color_defult"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_studywork_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="私营"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/tv_color_defult"
+            />
+        <TextView
+            android:id="@+id/tv_studywork_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12334567432"
+           />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="8dp"
+        android:padding="16dp"
         android:orientation="vertical"
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:textColor="@color/colorBlack"
-            android:paddingTop="16dp"
             android:textSize="16sp"
             android:text="@string/act_campus_recruitment_position_introduction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
         <TextView
-            android:textColor="@color/colorBlack"
+            android:id="@+id/tv_duty_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="@string/act_campus_recruitment_responsibilities"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/colorBlack"/>
+
         <TextView
+            android:id="@+id/tv_duty"
             android:textColor="@color/colorBlack"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
@@ -168,6 +268,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/tv_req"
             android:textColor="@color/colorBlack"
             android:paddingLeft="16dp"
             android:text="1、3年以上"

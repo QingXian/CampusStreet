@@ -14,18 +14,20 @@ import com.campusstreet.common.AppConfig;
 import com.campusstreet.entity.BountyHallInfo;
 import com.squareup.picasso.Picasso;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.R.attr.data;
+
 /**
  * Created by Orange on 2017/4/28.
  */
 
 public class BountyHallRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-
 
 
     private List<BountyHallInfo> mList;
@@ -49,9 +51,9 @@ public class BountyHallRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
 
-    public void replaceData(List<BountyHallInfo> BountyHallInfos) {
+    public void replaceData(List<BountyHallInfo> bountyHallInfos) {
         //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);
-        mList = BountyHallInfos;
+        mList = bountyHallInfos;
         // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
         notifyDataSetChanged();
     }
@@ -66,21 +68,27 @@ public class BountyHallRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
-        BountyHallInfo BountyHallInfo = mList.get(position);
-        if (BountyHallInfo != null) {
+        BountyHallInfo bountyHallInfo = mList.get(position);
+        if (bountyHallInfo != null) {
             Picasso.with(mContext)
-                    .load(AppConfig.AVATAR_SERVER_HOST + BountyHallInfo.getUserpic())
+                    .load(AppConfig.AVATAR_SERVER_HOST + bountyHallInfo.getUserpic())
                     .fit()
                     .into(viewHolder.mIvHead);
-            viewHolder.mTvName.setText(BountyHallInfo.getUsername());
-            viewHolder.mTvTime.setText(BountyHallInfo.getPubtime());
-            viewHolder.mTvContent.setText(BountyHallInfo.getCon());
-            viewHolder.mTvTitle.setText(BountyHallInfo.getTitle());
-            viewHolder.mTvNeedNum.setText(String.valueOf(BountyHallInfo.getPerson()));
-            viewHolder.mTvSignUpNum.setText(String.valueOf(BountyHallInfo.getSperson()));
-            viewHolder.mTvSelectedNum.setText(String.valueOf(BountyHallInfo.getTperson()));
-            viewHolder.mTvSurplusTime.setText(BountyHallInfo.getEndtime()+mContext.getString(R.string.act_bounty_halll_item_end_hint));
-            viewHolder.itemView.setTag(BountyHallInfo);
+            viewHolder.mTvName.setText(bountyHallInfo.getUsername());
+            viewHolder.mTvTime.setText(bountyHallInfo.getPubtime());
+            String con = bountyHallInfo.getCon();
+            try {
+                con = java.net.URLDecoder.decode(con, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            viewHolder.mTvContent.setText(con);
+            viewHolder.mTvTitle.setText(bountyHallInfo.getTitle());
+            viewHolder.mTvNeedNum.setText(String.valueOf(bountyHallInfo.getPerson()));
+            viewHolder.mTvSignUpNum.setText(String.valueOf(bountyHallInfo.getSperson()));
+            viewHolder.mTvSelectedNum.setText(String.valueOf(bountyHallInfo.getTperson()));
+            viewHolder.mTvSurplusTime.setText(bountyHallInfo.getEndtime() + mContext.getString(R.string.act_bounty_halll_item_end_hint));
+            viewHolder.itemView.setTag(bountyHallInfo);
         }
 
     }

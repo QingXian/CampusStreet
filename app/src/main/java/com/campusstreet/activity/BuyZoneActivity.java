@@ -124,6 +124,8 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
 
     @Override
     public void setBuyZone(List<BuyZoneInfo> buyZoneInfoList) {
+        mRvContent.setVisibility(View.VISIBLE);
+        mTvError.setVisibility(View.GONE);
         mAdapter.replaceData(buyZoneInfoList);
     }
 

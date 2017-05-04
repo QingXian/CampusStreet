@@ -4,5 +4,5 @@ package com.campusstreet.api;
  * Created by Orange on 2017/4/24.
  */
 
-public class AssociationClient {
+public interface AssociationClient {
 }

@@ -1,5 +1,10 @@
 package com.campusstreet.contract;
 
+import com.campusstreet.entity.RecruitInfo;
+import com.campusstreet.entity.StudyWorkInfo;
+
+import java.util.List;
+
 /**
  * Created by Orange on 2017/4/15.
  */
@@ -8,17 +13,18 @@ public interface ICampusRecruitmentContract {
 
     interface Presenter extends BasePresenter {
 
-        void fetchCampusRecruitmentList(int type,int pi);
+        void fetchCampusRecruitmentList(String key,int pi);
 
-        void searchRecruit(String keyWord);
-
+        void fetchStudyWorkList(String key,int pi);
 
     }
 
     interface View extends BaseView<Presenter> {
 
 
-        void setCampusRecruitment();
+        void setCampusRecruitmentList(List<RecruitInfo> recruitInfos);
+
+        void setStudyWorkList(List<StudyWorkInfo> studyWorkInfos);
 
         void showErrorMsg(String errorMsg);
 

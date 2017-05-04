@@ -11,6 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.common.Const;
+import com.campusstreet.entity.RecruitInfo;
+import com.campusstreet.entity.StudyWorkInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +56,26 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity {
     TextView mTvPosition;
     @BindView(R.id.rl_company_info)
     RelativeLayout mRlCompanyInfo;
+    @BindView(R.id.tv_duty)
+    TextView mTvDuty;
+    @BindView(R.id.tv_req)
+    TextView mTvReq;
+    @BindView(R.id.tv_company_phone)
+    TextView mTvCompanyPhone;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
+    @BindView(R.id.tv_duty_hint)
+    TextView mTvDutyHint;
+    @BindView(R.id.tv_studywork_range)
+    TextView mTvStudyworkRange;
+    @BindView(R.id.tv_studywork_type)
+    TextView mTvStudyworkType;
+    @BindView(R.id.tv_studywork_phone)
+    TextView mTvStudyworkPhone;
+    @BindView(R.id.ll_studywork_detail)
+    LinearLayout mLlStudyworkDetail;
+    private RecruitInfo mRecruitInfo;
+    private StudyWorkInfo mStudyWorkInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +95,51 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        mRecruitInfo = (RecruitInfo) getIntent().getSerializableExtra(Const.RECRUITMENTNFO_EXTRA);
+        mStudyWorkInfo = (StudyWorkInfo) getIntent().getSerializableExtra(Const.STUDYWORKINFO_EXTRA);
+        initView();
+    }
 
+    private void initView() {
+        if (mRecruitInfo != null) {
+            showRecriutDetail();
+            mTvTitle.setText(mRecruitInfo.getJobtitle());
+            mTvPlace.setText(mRecruitInfo.getJobplace());
+            mTvEducation.setText(mRecruitInfo.getJobeduname());
+            mTvWages.setText(mRecruitInfo.getJobmoney());
+            mTvCompanyName.setText(mRecruitInfo.getComname());
+            mTvCompanyRange.setText(mRecruitInfo.getComindustryname());
+            mTvCompanyType.setText(mRecruitInfo.getComtypename());
+            mTvDuty.setText(mRecruitInfo.getJobddes());
+            mTvReq.setText(mRecruitInfo.getJobreq());
+            mTvCompanyPhone.setText(mRecruitInfo.getComphone());
+            mTvTime.setText(mRecruitInfo.getPublishtime());
+        } else {
+            showStudyWorkDetail();
+            mTvTitle.setText(mStudyWorkInfo.getTitle());
+            mTvPlace.setText(mStudyWorkInfo.getJobplace());
+            mTvWages.setText(mStudyWorkInfo.getJobmoney());
+            mTvStudyworkType.setText(mStudyWorkInfo.getJobcom());
+            mTvStudyworkRange.setText(mStudyWorkInfo.getJobtime());
+            mTvStudyworkPhone.setText(mStudyWorkInfo.getPhone());
+            mTvReq.setText(mStudyWorkInfo.getJobreq());
+            mTvTime.setText(mStudyWorkInfo.getPublishtime());
+            mTvDuty.setText(mStudyWorkInfo.getJobperson());
+            mTvDutyHint.setText("需要人数");
+            showStudyWorkDetail();
+        }
+    }
+
+    private void showRecriutDetail() {
+        mTvEducation.setVisibility(View.VISIBLE);
+        mRlCompanyInfo.setVisibility(View.VISIBLE);
+        mLlStudyworkDetail.setVisibility(View.GONE);
+    }
+
+    private void showStudyWorkDetail() {
+        mTvEducation.setVisibility(View.GONE);
+        mRlCompanyInfo.setVisibility(View.GONE);
+        mLlStudyworkDetail.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.rl_company_info)

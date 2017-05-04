@@ -2,19 +2,39 @@ package com.campusstreet.model;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.campusstreet.api.AdvertisementClient;
+import com.campusstreet.api.CampusRecruitmentClient;
+import com.campusstreet.api.ServiceGenerator;
+import com.campusstreet.common.Const;
+import com.campusstreet.entity.BannerInfo;
+import com.campusstreet.entity.StudyWorkInfo;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Orange on 2017/4/16.
  */
 
-public class HomeImpl implements IHomeBiz{
+public class HomeImpl implements IHomeBiz {
 
     private final String TAG = this.getClass().getSimpleName();
     private static HomeImpl sHomeImple;
-
+    private AdvertisementClient mAdvertisementClient;
 
 
     private HomeImpl(Context context) {
+        mAdvertisementClient = ServiceGenerator.createService(context, AdvertisementClient.class);
     }
 
     public static HomeImpl getInstance(Context context) {
@@ -26,7 +46,42 @@ public class HomeImpl implements IHomeBiz{
     }
 
     @Override
-    public void fetchBannerImage(String picType, @NonNull GetBannerCallback callback) {
+    public void fetchBannerImage(@NonNull final GetBannerCallback callback) {
+        Call<JsonObject> call = mAdvertisementClient.getHomeBanner();
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+                        if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
+                            JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            List<BannerInfo> bannerInfos = new ArrayList<>();
+                            for (int i = 0; i < resultJsons.size(); i++) {
+                                JsonObject json = resultJsons.get(i).getAsJsonObject();
+                                BannerInfo bannerInfo = gson.fromJson(json, BannerInfo.class);
+                                bannerInfos.add(bannerInfo);
+                            }
+                            callback.onFetchSuccess(bannerInfos);
+                        } else {
+                            callback.onFetchFailure("暂时没有数据");
+                        }
+
+                    } else {
+                        callback.onFetchFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onFetchFailure("服务器异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+
     }
 
     @Override

@@ -2,20 +2,24 @@ package com.campusstreet.model;
 
 import android.support.annotation.NonNull;
 
+import com.campusstreet.entity.BannerInfo;
+
+import java.util.List;
+
 /**
  * Created by Orange on 2017/4/16.
  */
 
 public interface IHomeBiz {
 
-    void fetchBannerImage(String picType, @NonNull GetBannerCallback callback);
+    void fetchBannerImage(@NonNull GetBannerCallback callback);
 
     void fetchAdImage(String picType, @NonNull GetAdImageCallback callback);
 
     void getdynamicList(@NonNull LoaddynamicListCallback callback);
 
     interface GetBannerCallback {
-        void onFetchSuccess();
+        void onFetchSuccess(List<BannerInfo> bannerInfos);
 
         void onFetchFailure(String errorMsg);
     }

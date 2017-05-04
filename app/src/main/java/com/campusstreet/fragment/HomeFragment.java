@@ -14,8 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.activity.AdActivity;
 import com.campusstreet.activity.AssociationActivity;
 import com.campusstreet.activity.BountyHallActivity;
 import com.campusstreet.activity.BuyZoneActivity;
@@ -25,7 +27,9 @@ import com.campusstreet.activity.IdleSaleActivity;
 import com.campusstreet.activity.PartnerActivity;
 import com.campusstreet.activity.PeripheraShopActivity;
 import com.campusstreet.adapter.HomeFragmentRecyclerViewAdapter;
+import com.campusstreet.common.AppConfig;
 import com.campusstreet.contract.IHomeContract;
+import com.campusstreet.entity.BannerInfo;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -45,13 +49,15 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static android.R.id.list;
+import static com.campusstreet.common.Const.BANNER_TITLE_EXTRA;
+import static com.campusstreet.common.Const.BANNER_URL_EXTRA;
 
 /**
  * Created by Orange on 2017/4/1.
  */
 
 
-public class HomeFragment extends Fragment implements OnBannerListener,IHomeContract.View {
+public class HomeFragment extends Fragment implements OnBannerListener, IHomeContract.View {
 
     @BindView(R.id.banner)
     Banner mBanner;
@@ -75,13 +81,15 @@ public class HomeFragment extends Fragment implements OnBannerListener,IHomeCont
     ImageView mImageView;
     @BindView(R.id.rv_content)
     RecyclerView mRvContent;
-    private List<Integer> testList = new ArrayList<>();
     private Unbinder mUnbinder;
     private HomeFragmentRecyclerViewAdapter mAdapter;
     private IHomeContract.Presenter mPresenter;
+    private ArrayList<BannerInfo> mBannerInfos;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mBannerInfos = new ArrayList<>();
     }
 
     @Nullable
@@ -100,10 +108,6 @@ public class HomeFragment extends Fragment implements OnBannerListener,IHomeCont
     }
 
     private void initData() {
-        testList.add(R.drawable.bg_test);
-        testList.add(R.drawable.bg_test);
-        testList.add(R.drawable.bg_test);
-        testList.add(R.drawable.bg_test);
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         // 设置图片加载器
         mBanner.setImageLoader(new PicassoImageLoader());
@@ -113,8 +117,15 @@ public class HomeFragment extends Fragment implements OnBannerListener,IHomeCont
         // mBanner.setBannerTitles(Arrays.asList(mTitles));
         // 设置指示器位置（当banner模式中有指示器时）
         mBanner.setIndicatorGravity(BannerConfig.RIGHT);
-        mBanner.setImages(testList);
-        mBanner.start();
+        if (mBannerInfos == null || mBannerInfos.size() < 1) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (mPresenter!=null)
+                    mPresenter.fetchBanner();
+                }
+            }).start();
+        }
 
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < 10; i++) {
@@ -175,8 +186,12 @@ public class HomeFragment extends Fragment implements OnBannerListener,IHomeCont
 
     @Override
     public void OnBannerClick(int position) {
-        Log.d("HomeFragment", "OnBannerClick: "+position);
-
+        if (mBannerInfos != null || mBannerInfos.size() > 1) {
+            Intent intent = new Intent(getActivity(), AdActivity.class);
+            intent.putExtra(BANNER_TITLE_EXTRA, mBannerInfos.get(position).getTitle());
+            intent.putExtra(BANNER_URL_EXTRA, mBannerInfos.get(position).getUrl());
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -190,8 +205,15 @@ public class HomeFragment extends Fragment implements OnBannerListener,IHomeCont
     }
 
     @Override
-    public void setBanner() {
-
+    public void setBanner(List<BannerInfo> bannerInfos) {
+        mBannerInfos = (ArrayList<BannerInfo>) bannerInfos;
+        ArrayList<String> imagesUrl = new ArrayList<>();
+        for (BannerInfo bannerInfo :
+                bannerInfos) {
+            imagesUrl.add(bannerInfo.getImage());
+        }
+        mBanner.setImages(imagesUrl);
+        mBanner.start();
     }
 
     @Override
@@ -206,7 +228,7 @@ public class HomeFragment extends Fragment implements OnBannerListener,IHomeCont
 
     @Override
     public void showErrorMsg(String errorMsg) {
-
+        showErrorMsg(errorMsg);
     }
 
     @Override
@@ -223,9 +245,14 @@ public class HomeFragment extends Fragment implements OnBannerListener,IHomeCont
     private class PicassoImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
-            Picasso.with(context).load((Integer) path).into(imageView);
+            Picasso.with(context)
+                    .load(AppConfig.PIC_HOME_BANNER_SERVER_HOST + path)
+                    .placeholder(R.drawable.ic_base_picture)
+                    .error(R.drawable.ic_pic_error)
+                    .fit()
+                    .into(imageView);
         }
-    }
+}
 
     @Override
     public void onStart() {
@@ -239,10 +266,16 @@ public class HomeFragment extends Fragment implements OnBannerListener,IHomeCont
         super.onStop();
         mBanner.isAutoPlay(false);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
-        testList.clear();
+    }
+
+    protected void showMessage(String msg) {
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        }
     }
 }

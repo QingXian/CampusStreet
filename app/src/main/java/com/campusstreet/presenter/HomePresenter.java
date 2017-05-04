@@ -1,9 +1,14 @@
 package com.campusstreet.presenter;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.campusstreet.contract.IHomeContract;
+import com.campusstreet.entity.BannerInfo;
 import com.campusstreet.model.HomeImpl;
+import com.campusstreet.model.IHomeBiz;
+
+import java.util.List;
 
 /**
  * Created by Orange on 2017/4/17.
@@ -28,7 +33,17 @@ public class HomePresenter implements IHomeContract.Presenter {
 
     @Override
     public void fetchBanner() {
+        mHomeImpl.fetchBannerImage(new IHomeBiz.GetBannerCallback() {
+            @Override
+            public void onFetchSuccess(List<BannerInfo> bannerInfos) {
+                mView.setBanner(bannerInfos);
+            }
 
+            @Override
+            public void onFetchFailure(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+            }
+        });
     }
 
     @Override

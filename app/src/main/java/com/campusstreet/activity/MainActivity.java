@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
         mTvHome.setSelected(true);
         PermissionsManage.verifyStoragePermissions(this);
+        new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
     }
 
     @OnClick({R.id.iv_toolbar_right, R.id.tv_home, R.id.tv_notice, R.id.tv_find, R.id.tv_user, R.id.iv_release})
