@@ -16,22 +16,20 @@ public interface ILoginContract {
 
         void onLogin(String phone, String password);
 
-        void forgetPassword(String phone, String inputCaptcha, String password);
+        void forgetPassword(String phone, String inputCaptcha, String password,String passwordAgain);
 
         void fetchCaptcha(String phone);
 
-        void changePassword(String userId, String oldPassword, String newPassword);
     }
 
     interface View extends BaseView<Presenter> {
 
         void showSuccessfullyLogin(UserInfo userInfo);
 
-        void fetchCaptchaSuccessfull(List<BountyHallInfo> bountyHallInfos);
+        void fetchCaptchaSuccessfull();
 
         void showSuccessfullyForgetPasswrod();
 
-        void showSuccessfullyChangePassword();
 
         void showErrorMsg(String errorMsg);
 

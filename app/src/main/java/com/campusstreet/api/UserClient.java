@@ -25,19 +25,27 @@ public interface UserClient {
 
     @FormUrlEncoded
     @POST("get_mobilecode")
-    Call<JsonObject> fetchCaptcha(@Field("mobile") String phone, @Field("pwd") String passwrod);
+    Call<JsonObject> fetchCaptcha(@Field("mobile") String phone,@Field("mc") String mc);
 
     @Multipart
     @POST("ins_register")
-    Call<JsonObject> resgister(@PartMap Map<String, Objects> params);
+    Call<JsonObject> resgister(@PartMap Map<String, Object> params);
 
     @Multipart
     @POST("upd_userpwd")
-    Call<JsonObject> changePassword(@PartMap Map<String, Objects> params);
+    Call<JsonObject> changePassword(@PartMap Map<String, Object> params);
 
     @Multipart
-    @POST("")
-    Call<JsonObject> forgetPassword(@PartMap Map<String, Objects> params);
+    @POST("upd_forgotpwd")
+    Call<JsonObject> forgetPassword(@PartMap Map<String, Object> params);
+
+    @FormUrlEncoded
+    @POST("get_regmc")
+    Call<JsonObject> getRegMc(@Field("mobile") String phone);
+
+    @FormUrlEncoded
+    @POST("get_forgotmc")
+    Call<JsonObject> getForgetmc(@Field("mobile") String phone);
 
 }
 

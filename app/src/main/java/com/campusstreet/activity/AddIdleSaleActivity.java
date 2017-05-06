@@ -29,6 +29,7 @@ import com.campusstreet.common.Const;
 import com.campusstreet.contract.IIdleSaleContract;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.IdleSaleImpl;
 import com.campusstreet.presenter.IdleSalePresenter;
 import com.squareup.picasso.Picasso;
@@ -129,8 +130,8 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
     private String mQQ;
     private String mBewrite;
     private String mContent;
-
     private Intent mIntent;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +153,7 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
             }
         });
         new IdleSalePresenter(IdleSaleImpl.getInstance(getApplicationContext()), this);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
     }
 
 
@@ -315,7 +317,7 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
         idlSaleInfo.setTradeplace(mEtPlace.getText().toString());
         idlSaleInfo.setMobile(mEtPhone.getText().toString());
         idlSaleInfo.setQq(mEtQq.getText().toString());
-        idlSaleInfo.setUid("Mw==");
+        idlSaleInfo.setUid(mUserInfo.getUid());
         idlSaleInfo.setFiles(mFiles);
         mPresenter.pushGoods(idlSaleInfo);
     }

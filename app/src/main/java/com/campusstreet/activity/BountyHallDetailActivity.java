@@ -1,6 +1,7 @@
 package com.campusstreet.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
@@ -18,16 +19,17 @@ import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.adapter.BountyHallDetailRecyclerViewAdapter;
-import com.campusstreet.adapter.BountyHallRecyclerViewAdapter;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,6 +43,7 @@ import static com.campusstreet.common.Const.JOINPASS;
 import static com.campusstreet.common.Const.STARTTASK;
 import static com.campusstreet.common.Const.TID_EXTRA;
 import static com.campusstreet.common.Const.TYPE;
+import static com.campusstreet.common.Const.USERINFO_EXTRA;
 
 /**
  * Created by Orange on 2017/4/9.
@@ -103,6 +106,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     private IBountyHallContract.Presenter mPresenter;
     private BountyHallDetailRecyclerViewAdapter mAdapter;
     private int mPi = 0;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +127,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             }
         });
         mBountyHallInfo = (BountyHallInfo) getIntent().getSerializableExtra(Const.BOUNTYHALLINFO_EXTRA);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
         initView();
         initEvent();
@@ -162,12 +167,13 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         });
         mAdapter.setOnItemClickListener(new BountyHallDetailRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onItemClick(View view, JoinInfo JoinInfo, int type,int start) {
+            public void onItemClick(View view, JoinInfo JoinInfo, int type, int start) {
                 Intent intent = new Intent(BountyHallDetailActivity.this, RegistrationDetailActivity.class);
                 intent.putExtra(Const.JOINNFO_EXTRA, JoinInfo);
                 intent.putExtra(TYPE, type);
                 intent.putExtra(ISSTRAT, start);
                 intent.putExtra(TID_EXTRA, mBountyHallInfo.getId());
+                intent.putExtra(USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
             }
 
@@ -178,7 +184,10 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         if (mBountyHallInfo.getFee().equals(0)) {
             mTvPrice.setText("面议");
         } else {
-            mTvPrice.setText(mBountyHallInfo.getFee());
+            double price = Double.parseDouble(mBountyHallInfo.getFee());
+            DecimalFormat df = new DecimalFormat("0.00");
+            String strprice = df.format(price);
+            mTvPrice.setText(strprice);
         }
         mTvName.setText(mBountyHallInfo.getUsername());
         mTvTime.setText(mBountyHallInfo.getPubtime());
@@ -193,7 +202,22 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                 .into(mIvHead);
         mTabLayout.addTab(mTabLayout.newTab().setText("报名申请"));
         mTabLayout.addTab(mTabLayout.newTab().setText("已选择名单"));
-        // TODO: 2017/5/2  暂留发布者判断、状态判断
+        // TODO: 2017/5/2 状态判断
+        if (mUserInfo == null) {
+            mBtnEntel.setVisibility(View.GONE);
+            mTabLayout.setVisibility(View.GONE);
+            mRvContent.setVisibility(View.GONE);
+        } else {
+            if (mUserInfo.getUid() == mBountyHallInfo.getUid()) {
+                mTabLayout.setVisibility(View.VISIBLE);
+                mRvContent.setVisibility(View.VISIBLE);
+                mBtnEntel.setText("确认开始服务");
+            } else {
+                mTabLayout.setVisibility(View.GONE);
+                mRvContent.setVisibility(View.GONE);
+                mBtnEntel.setText("报名");
+            }
+        }
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
         mRvContent.setLayoutManager(gridLayoutManager);
         mAdapter = new BountyHallDetailRecyclerViewAdapter(this, null, 0);
@@ -223,7 +247,18 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
 
     @Override
     public void setJoinTaskList(List<JoinInfo> joinInfos) {
+        for (JoinInfo joinInfo :
+                joinInfos) {
+            if (mUserInfo != null) {
+                if (joinInfo.getUid() == mUserInfo.getUid()) {
+                    mBtnEntel.setText("已报名");
+                    mBtnEntel.setBackgroundColor(Color.parseColor("#B6B6D8"));
+                    mBtnEntel.setEnabled(false);
+                }
+            }
+        }
         mAdapter.replaceData(joinInfos);
+
     }
 
     @Override
@@ -279,14 +314,24 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
 
     @OnClick(R.id.btn_entel)
     public void onViewClicked() {
-        // TODO: 2017/5/2  暂留发布者判断
-        //   if ()
         if (mBtnEntel.getText().toString().equals("报名")) {
             Intent intent = new Intent(this, RegistrationActivity.class);
             intent.putExtra(TID_EXTRA, mBountyHallInfo.getId());
-            startActivity(intent);
+            intent.putExtra(USERINFO_EXTRA, mUserInfo);
+            startActivityForResult(intent, 1);
         } else {
-            mPresenter.startTask("Mw==",mBountyHallInfo.getId());
+            mPresenter.startTask(mUserInfo.getUid(), mBountyHallInfo.getId());
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            mBtnEntel.setText("已报名");
+            mBtnEntel.setBackgroundColor(Color.parseColor("#B6B6D8"));
+            mBtnEntel.setEnabled(false);
         }
     }
 }

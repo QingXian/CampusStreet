@@ -7,12 +7,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.request.target.AppWidgetTarget;
 import com.campusstreet.R;
+import com.campusstreet.common.Const;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.fragment.FindFragment;
 import com.campusstreet.fragment.HomeFragment;
 import com.campusstreet.fragment.MessageFragment;
@@ -29,9 +34,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import com.campusstreet.utils.PermissionsManage;
+import com.campusstreet.utils.PreferencesUtil;
+import com.google.gson.GsonBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     @BindView(R.id.scrollview)
     NestedScrollView mScrollview;
     private HomeFragment mHomeFragment;
@@ -59,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.iv_release)
     ImageView mIvRelease;
     PermissionsManage mPermissionsManage;
+    private UserInfo mUserInfo;
+    private boolean mIsLogined = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +77,18 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mHomeFragment = new HomeFragment();
         setFragment(mHomeFragment);
-        mScrollview.smoothScrollTo(0,0);
+        mScrollview.smoothScrollTo(0, 0);
         mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
         mTvHome.setSelected(true);
         PermissionsManage.verifyStoragePermissions(this);
+        // 从登录成功后获取的用户信息
+        if (getIntent() != null) {
+            mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+            if (mUserInfo != null) {
+                Log.d(TAG, "登录成功获取的用户: mUserInfo <== " + mUserInfo.getUid());
+                mIsLogined = true;
+            }
+        }
         new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
     }
 
@@ -78,9 +96,12 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_toolbar_right:
-                if (mToolbarTitle.getText().equals(getString(R.string.bot_tv_user))) {
+                if (mToolbarTitle.getText().equals(getString(R.string.bot_tv_user)) && mUserInfo != null) {
                     Intent intent = new Intent(this, UserSettingActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                     startActivity(intent);
+                } else {
+                    showMessage("请您先登录");
                 }
                 break;
             case R.id.tv_home:
@@ -110,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 mFindFragment = new FindFragment();
                 setFragment(mFindFragment);
                 mIvToolbarRight.setVisibility(View.GONE);
+                HomeFragment.newInstance(mUserInfo);
                 new FindPresenter(FindImpl.getInstance(getApplicationContext()), mFindFragment);
                 break;
             case R.id.tv_user:
@@ -119,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 mTvUser.setSelected(true);
                 mUserFragment = new UserFragment();
                 setFragment(mUserFragment);
+                UserFragment.newInstance(mUserInfo);
                 mIvToolbarRight.setVisibility(View.VISIBLE);
                 mIvToolbarRight.setImageResource(R.drawable.ic_setting);
                 break;
@@ -141,5 +164,22 @@ public class MainActivity extends AppCompatActivity {
         mTvFind.setSelected(false);
         mTvUser.setSelected(false);
         mScrollview.smoothScrollTo(0, 20);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mIsLogined && mUserInfo == null) {
+            String userStr = PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
+                    .getString(Const.PREF_USERINFO_KEY, null);
+            if (userStr != null) {
+                mUserInfo = new GsonBuilder().setLenient().create().fromJson(userStr, UserInfo.class);
+            }
+        }
+    }
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
     }
 }

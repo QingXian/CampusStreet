@@ -25,6 +25,7 @@ import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 
@@ -66,7 +67,8 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
     private int mIndex;
     private List<BountyHallInfo> mBountyHallInfoList;
     private int mPi = 0;
-    private int mPostion = 0;
+    private int mPostion = 1;
+    private UserInfo mUserInfo;
 
 
     @Override
@@ -93,6 +95,7 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
         mBountyHallInfoList = new ArrayList<>();
         initView();
         initEvent();
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         mPresenter.fetchBountyHallCategories();
 
     }
@@ -110,6 +113,7 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
             public void onItemClick(View view, BountyHallInfo BountyHallInfo) {
                 Intent intent = new Intent(BountyHallActivity.this, BountyHallDetailActivity.class);
                 intent.putExtra(Const.BOUNTYHALLINFO_EXTRA, BountyHallInfo);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
             }
         });
@@ -124,8 +128,12 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
 
     @OnClick(R.id.iv_toolbar_right)
     public void onClick() {
-        Intent intent = new Intent(this, AddBountyHallActivity.class);
-        startActivity(intent);
+        if (mUserInfo != null) {
+            Intent intent = new Intent(this, AddBountyHallActivity.class);
+            startActivity(intent);
+        } else {
+            showMessage("您还未登录");
+        }
     }
 
     @Override

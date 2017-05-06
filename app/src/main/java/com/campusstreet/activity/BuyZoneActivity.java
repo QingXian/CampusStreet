@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.adapter.BuyZoneRecyclerViewAdapter;
@@ -23,6 +24,7 @@ import com.campusstreet.contract.IBuyZoneContract;
 import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BuyZoneImpl;
 import com.campusstreet.model.IdleSaleImpl;
 import com.campusstreet.presenter.BuyZonePresenter;
@@ -60,6 +62,7 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
     private IBuyZoneContract.Presenter mPresenter;
     private BuyZoneRecyclerViewAdapter mAdapter;
     private int mPi = 0;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,7 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
         mIvToolbarRight.setVisibility(View.VISIBLE);
         mIvToolbarRight.setImageResource(R.drawable.ic_add);
         new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         initView();
         initEvent();
     }
@@ -95,16 +99,17 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
     private void initView() {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
         mRvContent.setLayoutManager(gridLayoutManager);
-        mAdapter = new BuyZoneRecyclerViewAdapter(this,null);
+        mAdapter = new BuyZoneRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
     }
 
     private void initEvent() {
         mAdapter.setOnItemClickListener(new BuyZoneRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onItemClick(View view,BuyZoneInfo buyZoneInfo) {
+            public void onItemClick(View view, BuyZoneInfo buyZoneInfo) {
                 Intent intent = new Intent(BuyZoneActivity.this, BuyZoneDetailActivity.class);
-                intent.putExtra(Const.BUYZONEIINFO_EXTRA,buyZoneInfo);
+                intent.putExtra(Const.BUYZONEIINFO_EXTRA, buyZoneInfo);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
             }
         });
@@ -112,8 +117,12 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
 
     @OnClick(R.id.iv_toolbar_right)
     public void onClick() {
-        Intent intent = new Intent(this, AddBuyZoneActivity.class);
-        startActivity(intent);
+        if (mUserInfo != null) {
+            Intent intent = new Intent(this, AddBuyZoneActivity.class);
+            startActivity(intent);
+        } else {
+            showMessage("您还未登录");
+        }
     }
 
     @Override
@@ -163,6 +172,12 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
+        }
+    }
+
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

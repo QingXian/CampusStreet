@@ -17,9 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.common.Const;
 import com.campusstreet.contract.ISettingContract;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.SettingImpl;
 import com.campusstreet.presenter.SettingPresenter;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -59,6 +62,7 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
     private File mFile = null;
 
     public static final int REQUEST_UPDATE_AVATAR = 1;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,11 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
             }
         });
         new SettingPresenter(SettingImpl.getInstance(getApplicationContext()), this);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+        //        Picasso.with(getActivity())
+//                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.)
+//                .fit()
+//                .into(mIvHead);
     }
 
     @OnClick({R.id.tv_toolbar_right, R.id.btn_choice_head})
@@ -99,7 +108,7 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
         RequestBody body = null;
         if (mFile != null) {
             body = RequestBody.create(MediaType.parse("application/otcet-stream"), mFile);
-            mPresenter.reviseHead("Mw==", MultipartBody.Part.createFormData("avatar", mFile.getName(), body));
+            mPresenter.reviseHead(mUserInfo.getUid(), MultipartBody.Part.createFormData("avatar", mFile.getName(), body));
         }
     }
 
@@ -116,6 +125,11 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
     @Override
     public void showErrorMsg(String errorMsg) {
         showMessage(errorMsg);
+    }
+
+    @Override
+    public void showSuccessfullyChangePassword() {
+
     }
 
     @Override

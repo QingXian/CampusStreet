@@ -19,6 +19,7 @@ import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 import com.squareup.picasso.Picasso;
@@ -72,6 +73,7 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
     private int mType;
     private int mIsStart;
     private int mTid;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
         mIsStart = getIntent().getIntExtra(ISSTRAT, 0);
         mType = getIntent().getIntExtra(TYPE, 1);
         mTid = getIntent().getIntExtra(TID_EXTRA, 0);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
         initView();
 
@@ -118,7 +121,7 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
 
     @OnClick(R.id.btn_adopt)
     public void onViewClicked() {
-        mPresenter.passJoinTask("Mw==", mTid, mJoinInfo.getId());
+        mPresenter.passJoinTask(mUserInfo.getUid(), mTid, mJoinInfo.getId());
     }
 
     @Override

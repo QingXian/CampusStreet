@@ -27,6 +27,7 @@ import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 
@@ -86,6 +87,7 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
     private String mType;
     private int mIndex;
     private String mEndTime;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,7 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
             }
         });
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         mPresenter.fetchBountyHallCategories();
     }
 
@@ -304,7 +307,7 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
         bountyHallInfo.setMobile(mEtPhone.getText().toString());
         bountyHallInfo.setLinkman(mEtLinkman.getText().toString());
         bountyHallInfo.setPerson(Integer.valueOf(mEtNum.getText().toString()));
-        bountyHallInfo.setUid("Mw==");
+        bountyHallInfo.setUid(mUserInfo.getUid());
         bountyHallInfo.setEndtime(mEndTime);
         mPresenter.addTask(bountyHallInfo);
     }

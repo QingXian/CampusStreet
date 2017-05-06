@@ -167,4 +167,9 @@
     <string name="act_registertion_summary_hint">备注内容</string>
     <string name="act_registertion_join">报名</string>
     <string name="act_registration_toolbar_title">报名</string>
+    <string name="act_user_setting_passwrod">修改密码</string>
+    <string name="act_modif_password_old_password">旧密码</string>
+    <string name="act_modif_password_new_password">新密码</string>
+    <string name="act_modif_password_new_password_again">确认密码</string>
+    <string name="act_modify_password_toolbar_title">修改密码</string>
 </resources>

@@ -1,23 +1,18 @@
 package com.campusstreet.contract;
 
-import android.content.Intent;
 
-import com.campusstreet.entity.BountyHallInfo;
-import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by Orange on 2017/5/3.
  */
 
-public interface IRegisterrContract {
+public interface IRegisterContract {
     interface Presenter extends BasePresenter {
 
-        void onResgister(Map<String, Objects> params);
+        void onResgister(Map<String, Object> params);
 
 
         void fetchCaptcha(String phone);
@@ -29,7 +24,7 @@ public interface IRegisterrContract {
 
         void showSuccessfullyresgister(UserInfo userInfo);
 
-        void fetchCaptchaSuccessfull(List<BountyHallInfo> bountyHallInfos);
+        void fetchCaptchaSuccessfull();
 
         void showErrorMsg(String errorMsg);
 

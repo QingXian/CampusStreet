@@ -16,6 +16,8 @@ public interface ISettingBiz {
 
     void avatarRevise(Map<String, Object> params, @NonNull AvatarReviseCallback callback);
 
+    void changePassword(String userId, String oldPassword, String newPassword, @NonNull ChangePasswordCallback callback);
+
 
     interface UserInfoReviseCallback {
         void onUserInfoReviseSuccess();
@@ -27,5 +29,12 @@ public interface ISettingBiz {
         void onAvatarReviseSuccess();
 
         void onAvatarReviseFailure(String errorMsg);
+
+    }
+
+    interface ChangePasswordCallback {
+        void onChangePasswordSuccess();
+
+        void onChangePasswordFailure(String errorMsg);
     }
 }

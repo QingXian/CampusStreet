@@ -27,6 +27,7 @@ public class Const {
     public static final String MESSAGE_KEY = "msg";
     public static final String DATA_KEY = "data";
     public static final String TOTAL_KEY = "total";
+    public static final String EXT_KEY = "ext";
 
     /**
      * 实体类
@@ -38,6 +39,7 @@ public class Const {
     public static final String RECRUITMENTNFO_EXTRA = "recruitmentinfo_extra";
     public static final String STUDYWORKINFO_EXTRA = "studyworkinfo_extra";
     public static final String NEWINFO_EXTRA = "newinfo_extra";
+    public static final String USERINFO_EXTRA = "userinfo_extra";
 
     /**
      * spinner数据源
@@ -60,4 +62,6 @@ public class Const {
     public static final String TID_EXTRA = "tid";
     public static final String BANNER_TITLE_EXTRA = "banner_title_extra";
     public static final String BANNER_URL_EXTRA = "banner_url_extra";
+    public static final String PHONE = "phone";
+    public static final String CAPTCHA = "captcha";
 }

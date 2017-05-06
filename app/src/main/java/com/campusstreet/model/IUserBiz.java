@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.UserInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -18,21 +19,22 @@ public interface IUserBiz {
     void onLogin(String phone, String password, @NonNull onLoginCallback callback);
 
 
-    void onResgister(Map<String, Objects> params,@NonNull onResgisterCallback callback);
+    void onResgister(Map<String, Object> params, @NonNull onResgisterCallback callback);
 
 
-    void fetchCaptcha(String phone,@NonNull GetCaptchaCallback callback);
+    void fetchCaptcha(String mc,String phone,@NonNull GetCaptchaCallback callback);
+
+    void getResgisterMc(String phone ,@NonNull GetResgisterMcCallback callback);
+
+    void getforgetPasswordrMc(String phone ,@NonNull GetRForgetPasswordMcCallback callback);
 
 
-    void changePassword(String userId, String oldPassword, String newPassword,@NonNull ChangePasswordCallback callback);
-
-
-    void forgetPassword(String phone, String inputCaptcha, String password,@NonNull ForgetPasswordCallback callback);
+    void forgetPassword (Map<String, Object> params, @NonNull ForgetPasswordCallback callback);
 
 
     interface onLoginCallback {
 
-        void onLoginSuccess();
+        void onLoginSuccess(UserInfo userInfo);
 
         void onLoginFailure(String errorMsg);
     }
@@ -40,27 +42,34 @@ public interface IUserBiz {
 
     interface onResgisterCallback {
 
-        void onResgisterSuccess();
+        void onResgisterSuccess(UserInfo userInfo);
 
         void onResgisterFailure(String errorMsg);
     }
 
     interface GetCaptchaCallback {
 
-        void onFetchSuccess(List<BuyZoneInfo> buyZoneInfoList);
+        void onFetchSuccess(String captcha);
 
         void onFetchFailure(String errorMsg);
     }
+    interface GetResgisterMcCallback {
+
+        void GetResgisterMcSuccess(String mc);
+
+        void GetResgisterMcFailure(String errorMsg);
+    }
+    interface GetRForgetPasswordMcCallback {
+
+        void GetForgetPasswordMcSuccess(String mc);
+
+        void GetForgetPasswordMcFailure(String errorMsg);
+    }
 
     interface ForgetPasswordCallback {
+
         void onForgetPasswordSuccess();
 
         void onForgetPasswordFailure(String errorMsg);
-    }
-
-    interface ChangePasswordCallback {
-        void onChangePasswordSuccess();
-
-        void onChangePasswordFailure(String errorMsg);
     }
 }

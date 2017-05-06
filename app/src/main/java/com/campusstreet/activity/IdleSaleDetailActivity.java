@@ -26,6 +26,7 @@ import com.campusstreet.common.Const;
 import com.campusstreet.contract.IIdleSaleContract;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.IdleSaleImpl;
 import com.campusstreet.presenter.IdleSalePresenter;
 import com.squareup.picasso.Picasso;
@@ -106,6 +107,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     private List<String> mImageList = new ArrayList<>();
     private String[] mImages;
     private int mPi = 0;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +132,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         initView();
         setLoadingIndicator(true);
         mPresenter.fetchIdleSaleMessageList(mIdleSaleInfo.getId(), mPi);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
     }
 
     private void initView() {
@@ -144,9 +147,9 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         mTvDegree.setText(mIdleSaleInfo.getBewrite());
         mTvContent.setText(mIdleSaleInfo.getContent());
 
-        if (mIdleSaleInfo.getSelltype().equals(0)){
+        if (mIdleSaleInfo.getSelltype().equals(0)) {
             mTvSellType.setText("一口价");
-        }else if (mIdleSaleInfo.getSelltype().equals(1)){
+        } else if (mIdleSaleInfo.getSelltype().equals(1)) {
             mTvSellType.setText("可小刀");
         }
 
@@ -165,7 +168,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     }
 
     private void initImage(String images) {
-        if (images!=null) {
+        if (images != null) {
             for (int i = 0; i <= images.length() - 1; i++) {
                 String getstr = images.substring(i, i + 1);
                 if (getstr.equals(",")) {
@@ -211,8 +214,12 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
             showMessage("请填写留言内容");
             return;
         }
-        mPresenter.leaveMessage("Mw==", mIdleSaleInfo.getId(), mEtMessage.getText().toString().trim());
-        setLoadingIndicator(true);
+        if (mUserInfo != null) {
+            mPresenter.leaveMessage(mUserInfo.getUid(), mIdleSaleInfo.getId(), mEtMessage.getText().toString().trim());
+            setLoadingIndicator(true);
+        } else {
+            showMessage("您还未登录");
+        }
     }
 
     @Override
@@ -237,7 +244,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
 
     @Override
     public void showErrorMsg(String errorMsg) {
-       showMessage(errorMsg);
+        showMessage(errorMsg);
     }
 
     @Override
@@ -275,17 +282,19 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
+
     private class PicassoImageLoader extends ImageLoader {
         @Override
         public void displayImage(Context context, Object path, ImageView imageView) {
             Picasso.with(context)
-                    .load(AppConfig.PIC_EWU_SERVER_HOST+ path)
+                    .load(AppConfig.PIC_EWU_SERVER_HOST + path)
                     .placeholder(R.drawable.ic_base_picture)
                     .error(R.drawable.ic_pic_error)
                     .fit()
                     .into(imageView);
         }
     }
+
     @Override
     public void onStop() {
         super.onStop();

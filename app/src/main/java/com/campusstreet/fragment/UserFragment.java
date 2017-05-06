@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.campusstreet.R;
 import com.campusstreet.activity.LoginActivity;
 import com.campusstreet.activity.MyBountyHallActivity;
+import com.campusstreet.common.AppConfig;
+import com.campusstreet.common.Const;
+import com.campusstreet.entity.UserInfo;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,10 +54,22 @@ public class UserFragment extends Fragment {
     @BindView(R.id.tv_login)
     TextView mTvLogin;
     private Unbinder mUnbinder;
+    private UserInfo mUserInfo;
+
+    public static UserFragment newInstance(UserInfo userInfo) {
+        Bundle args = new Bundle();
+        args.putSerializable(Const.USERINFO_EXTRA, userInfo);
+        UserFragment userFragment = new UserFragment();
+        userFragment.setArguments(args);
+        return userFragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (mUserInfo != null) {
+            mUserInfo = (UserInfo) getArguments().getSerializable(Const.USERINFO_EXTRA);
+        }
     }
 
     @Nullable
@@ -62,7 +78,24 @@ public class UserFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_user, container, false);
         mUnbinder = ButterKnife.bind(this, root);
+        if (mUserInfo != null) {
+            mRlUserInfo.setVisibility(View.VISIBLE);
+            mTvLogin.setVisibility(View.GONE);
+            initView();
+        } else {
+            mRlUserInfo.setVisibility(View.GONE);
+            mTvLogin.setVisibility(View.VISIBLE);
+        }
         return root;
+    }
+
+    private void initView() {
+//        Picasso.with(getActivity())
+//                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.)
+//                .fit()
+//                .into(mIvHead);
+        mTvDepartment.setText(mUserInfo.getMajor());
+        mTvName.setText(mUserInfo.getUsername());
     }
 
 
@@ -73,6 +106,7 @@ public class UserFragment extends Fragment {
                 break;
             case R.id.tv_bounty_mission:
                 Intent intent = new Intent(getActivity(), MyBountyHallActivity.class);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.tv_detection_update:
@@ -83,6 +117,7 @@ public class UserFragment extends Fragment {
                 break;
             case R.id.tv_login:
                 intent = new Intent(getActivity(), LoginActivity.class);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
         }

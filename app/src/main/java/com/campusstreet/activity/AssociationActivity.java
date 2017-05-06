@@ -53,7 +53,12 @@ public class AssociationActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        initView();
+    }
 
+    private void initView() {
+        mTabLayout.addTab(mTabLayout.newTab().setText("推荐社团"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("我的社团"));
     }
 
     @OnClick(R.id.iv_toolbar_right)

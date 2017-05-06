@@ -28,8 +28,10 @@ import com.campusstreet.activity.PartnerActivity;
 import com.campusstreet.activity.PeripheraShopActivity;
 import com.campusstreet.adapter.HomeFragmentRecyclerViewAdapter;
 import com.campusstreet.common.AppConfig;
+import com.campusstreet.common.Const;
 import com.campusstreet.contract.IHomeContract;
 import com.campusstreet.entity.BannerInfo;
+import com.campusstreet.entity.UserInfo;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -85,11 +87,23 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
     private HomeFragmentRecyclerViewAdapter mAdapter;
     private IHomeContract.Presenter mPresenter;
     private ArrayList<BannerInfo> mBannerInfos;
+    private UserInfo mUserInfo;
+
+    public static HomeFragment newInstance(UserInfo userInfo) {
+        Bundle args = new Bundle();
+        args.putSerializable(Const.USERINFO_EXTRA, userInfo);
+        HomeFragment homeFragment = new HomeFragment();
+        homeFragment.setArguments(args);
+        return homeFragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBannerInfos = new ArrayList<>();
+        if (mUserInfo != null) {
+            mUserInfo = (UserInfo) getArguments().getSerializable(Const.USERINFO_EXTRA);
+        }
     }
 
     @Nullable
@@ -121,8 +135,8 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    if (mPresenter!=null)
-                    mPresenter.fetchBanner();
+                    if (mPresenter != null)
+                        mPresenter.fetchBanner();
                 }
             }).start();
         }
@@ -155,18 +169,22 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                 break;
             case R.id.tv_idle_sale:
                 intent = new Intent(getActivity(), IdleSaleActivity.class);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.tv_buy_zone:
                 intent = new Intent(getActivity(), BuyZoneActivity.class);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.tv_bounty_hall:
                 intent = new Intent(getActivity(), BountyHallActivity.class);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.tv_association:
                 intent = new Intent(getActivity(), AssociationActivity.class);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.tv_campus_information:
@@ -252,7 +270,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                     .fit()
                     .into(imageView);
         }
-}
+    }
 
     @Override
     public void onStart() {

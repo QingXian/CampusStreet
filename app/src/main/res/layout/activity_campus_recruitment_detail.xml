@@ -80,7 +80,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@color/colorWhite"
-        android:padding="16dp">
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp">
 
         <ImageView
             android:id="@+id/iv_head"
@@ -99,61 +100,39 @@
             android:textSize="18sp"/>
 
         <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/ll_company_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_company_name"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@+id/iv_head">
 
             <TextView
+                android:padding="4dp"
                 android:id="@+id/tv_company_range"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="IT服务"
                 android:textSize="12sp"/>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="12dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/tv_color_defult"/>
-
             <TextView
+                android:padding="4dp"
                 android:id="@+id/tv_company_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="200-300人"
                 android:textSize="12sp"
                 android:visibility="gone"/>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="12dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/tv_color_defult"
-                android:visibility="gone"/>
-
             <TextView
+                android:padding="4dp"
                 android:id="@+id/tv_company_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="私营"
                 android:textSize="12sp"/>
-            <View
-                android:layout_width="1dp"
-                android:layout_height="12dp"
-                android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:background="@color/tv_color_defult"
-                />
             <TextView
+                android:padding="4dp"
                 android:id="@+id/tv_company_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -177,54 +156,34 @@
             android:visibility="gone"/>
     </RelativeLayout>
     <LinearLayout
+        android:orientation="vertical"
         android:layout_marginTop="8dp"
         android:background="@color/colorWhite"
         android:id="@+id/ll_studywork_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_company_name"
-        android:padding="16dp"
+        android:paddingTop="4dp"
+        android:paddingLeft="16dp"
         android:layout_toRightOf="@+id/iv_head">
 
         <TextView
             android:id="@+id/tv_studywork_range"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="4dp"
             android:text="IT服务"
             />
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="12dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/tv_color_defult"/>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="12dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/tv_color_defult"
-            android:visibility="gone"/>
-
         <TextView
+            android:padding="4dp"
             android:id="@+id/tv_studywork_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="私营"
             />
-        <View
-            android:layout_width="1dp"
-            android:layout_height="12dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@color/tv_color_defult"
-            />
         <TextView
+            android:padding="4dp"
             android:id="@+id/tv_studywork_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

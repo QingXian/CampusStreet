@@ -16,6 +16,8 @@ public interface ISettingContract {
 
         void reviseDepartment(String uid,String department);
 
+        void changePassword(String userId, String oldPassword, String newPassword);
+
     }
 
     interface View extends BaseView<Presenter> {
@@ -24,6 +26,8 @@ public interface ISettingContract {
         void showSuccessMsg(String successMsg);
 
         void showErrorMsg(String errorMsg);
+
+        void showSuccessfullyChangePassword();
 
         /**
          * 设置是否加载指示器

@@ -27,6 +27,7 @@ import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBuyZoneContract;
 import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BuyZoneImpl;
 import com.campusstreet.presenter.BuyZonePresenter;
 import com.squareup.picasso.Picasso;
@@ -97,6 +98,7 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
     private BuyZoneInfo mBuyZoneInfo;
     private int mPi = 0;
     private LeaveMessageRecycleViewAdapter mAdapter;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,8 +120,10 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
         });
         mBuyZoneInfo = (BuyZoneInfo) getIntent().getSerializableExtra(Const.BUYZONEIINFO_EXTRA);
         new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         initView();
         setLoadingIndicator(true);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         mPresenter.fetchBuyZoneMessageList(mBuyZoneInfo.getId(), mPi);
     }
 
@@ -138,7 +142,7 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
         if (mBuyZoneInfo.getQq() != null) {
             mTvQq.setVisibility(View.VISIBLE);
             mTvQq.setText(mBuyZoneInfo.getQq());
-        }else{
+        } else {
             mTvQq.setVisibility(View.GONE);
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -153,8 +157,12 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
             showMessage("请填写留言内容");
             return;
         }
-        mPresenter.leaveMessage("Mw==", mBuyZoneInfo.getId(), mEtMessage.getText().toString().trim());
-        setLoadingIndicator(true);
+        if (mUserInfo != null) {
+            mPresenter.leaveMessage(mUserInfo.getUid(), mBuyZoneInfo.getId(), mEtMessage.getText().toString().trim());
+            setLoadingIndicator(true);
+        } else {
+            showMessage("您还未登录");
+        }
     }
 
     @Override

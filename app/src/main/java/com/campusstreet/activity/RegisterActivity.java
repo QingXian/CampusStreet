@@ -7,25 +7,42 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.common.Const;
+import com.campusstreet.contract.IRegisterContract;
+import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.UserInfo;
+import com.campusstreet.model.UserImpl;
+import com.campusstreet.presenter.LoginPresenter;
+import com.campusstreet.presenter.RegisterPresenter;
+import com.campusstreet.utils.PreferencesUtil;
+import com.campusstreet.utils.TimeCountUtil;
+import com.google.gson.GsonBuilder;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.password;
+
 /**
  * Created by Orange on 2017/4/26.
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity implements IRegisterContract.View {
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -59,6 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
     LinearLayout mProgressBarContainer;
     private int mIndex;
     private String mDepartment;
+    private IRegisterContract.Presenter mPresenter;
+    private TimeCountUtil mTimeCountUtil;
 
 
     @Override
@@ -72,12 +91,14 @@ public class RegisterActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+        mTimeCountUtil = new TimeCountUtil(60000, 1000, mBtnFetchCaptcha);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+        new RegisterPresenter(UserImpl.getInstance(getApplicationContext()), this);
 
     }
 
@@ -85,10 +106,16 @@ public class RegisterActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
-                Intent intent = new Intent(this,LoginActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_fetch_captcha:
+                if (mEtPhone.length() != 11) {
+                    showMessage("请输入有效的手机号码！");
+                } else {
+                    mPresenter.fetchCaptcha(mEtPhone.getText().toString());
+                    mTimeCountUtil.start();
+                }
                 break;
             case R.id.ll_department:
                 new AlertDialog.Builder(this)
@@ -105,7 +132,96 @@ public class RegisterActivity extends AppCompatActivity {
                         .show();
                 break;
             case R.id.btn_register:
+                addUser();
                 break;
+        }
+    }
+
+    private void addUser() {
+        if (!mTvDepartment.getText().toString().trim().equals(mDepartment)) {
+            showMessage("请选择院系");
+            return;
+        }
+        if (TextUtils.isEmpty(mEtPhone.getText().toString().trim())) {
+            showMessage("请填写手机号");
+            return;
+        }
+        if (TextUtils.isEmpty(mEtCaptcha.getText().toString().trim())) {
+            showMessage("请填写验证码");
+            return;
+        }
+        if (TextUtils.isEmpty(mEtPassword.getText().toString().trim())) {
+            showMessage("请输入密码");
+            return;
+        }
+        if (TextUtils.isEmpty(mEtNickname.getText().toString().trim())) {
+            showMessage("请输入昵称");
+            return;
+        }
+        if (!mEtPassword.getText().toString().trim().equals(mEtPasswordAgain.getText().toString().trim())) {
+            showMessage("两次密码不一致");
+            return;
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("phone", mEtPhone.getText().toString());
+        params.put("captcha", mEtCaptcha.getText().toString());
+        params.put("password", mEtPassword.getText().toString());
+        params.put("password", mEtNickname.getText().toString());
+        params.put("password", mTvDepartment.getText().toString());
+        mPresenter.onResgister(params);
+    }
+
+    @Override
+    public void setPresenter(IRegisterContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void showSuccessfullyresgister(UserInfo userInfo) {
+        showMessage("注册成功");
+        String userinfo = new GsonBuilder().create().toJson(userInfo, UserInfo.class);
+        PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
+                .edit()
+                .putString(Const.PREF_USERINFO_KEY, userinfo)
+                .apply();
+
+        // 设置返回的结果数据
+        Intent data = new Intent(this, MainActivity.class);
+        data.putExtra(Const.USERINFO_EXTRA, userInfo);
+        data.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(data);
+        this.finish();
+    }
+
+    @Override
+    public void fetchCaptchaSuccessfull() {
+
+    }
+
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        showMessage(errorMsg);
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        if (mProgressBarContainer != null) {
+            if (active) {
+                //设置滚动条可见
+                mProgressBarContainer.setVisibility(View.VISIBLE);
+                mProgressBarTitle.setText(R.string.Modifying_progress_bar_title);
+            } else {
+                if (mProgressBarContainer.getVisibility() == View.VISIBLE) {
+                    mProgressBarContainer.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

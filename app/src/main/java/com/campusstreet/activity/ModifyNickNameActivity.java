@@ -17,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.common.Const;
 import com.campusstreet.contract.ISettingContract;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.SettingImpl;
 import com.campusstreet.presenter.SettingPresenter;
 
@@ -47,6 +49,7 @@ public class ModifyNickNameActivity extends AppCompatActivity implements ISettin
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
     private ISettingContract.Presenter mPresenter;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,8 @@ public class ModifyNickNameActivity extends AppCompatActivity implements ISettin
             }
         });
         new SettingPresenter(SettingImpl.getInstance(getApplicationContext()), this);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+        mEditText.setText(mUserInfo.getUsername());
     }
 
     @Override
@@ -87,6 +92,11 @@ public class ModifyNickNameActivity extends AppCompatActivity implements ISettin
     @Override
     public void showErrorMsg(String errorMsg) {
         showMessage(errorMsg);
+    }
+
+    @Override
+    public void showSuccessfullyChangePassword() {
+
     }
 
     @Override
@@ -116,6 +126,6 @@ public class ModifyNickNameActivity extends AppCompatActivity implements ISettin
             showMessage("请填写昵称");
             return;
         }
-        mPresenter.reviseNickName("Mw==",mEditText.getText().toString());
+        mPresenter.reviseNickName(mUserInfo.getUid(),mEditText.getText().toString());
     }
 }

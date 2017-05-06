@@ -7,6 +7,7 @@ import android.util.Log;
 import com.campusstreet.api.IdleSaleClient;
 import com.campusstreet.api.ModifyInfoClient;
 import com.campusstreet.api.ServiceGenerator;
+import com.campusstreet.api.UserClient;
 import com.campusstreet.common.Const;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.google.gson.Gson;
@@ -35,10 +36,12 @@ public class SettingImpl implements  ISettingBiz {
     private final String TAG = this.getClass().getSimpleName();
     private static SettingImpl sSettingImpl;
     private ModifyInfoClient mModifyInfoClient;
+    private UserClient mUserClient;
 
 
     private SettingImpl(Context context) {
         mModifyInfoClient = ServiceGenerator.createService(context, ModifyInfoClient.class);
+        mUserClient = ServiceGenerator.createService(context,UserClient.class);
     }
 
 
@@ -106,5 +109,33 @@ public class SettingImpl implements  ISettingBiz {
                 }
             });
         }
+    }
+    @Override
+    public void changePassword(String userId, String oldPassword, String newPassword, @NonNull final ChangePasswordCallback callback) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("uid", userId);
+        params.put("oldpwd", oldPassword);
+        params.put("newpwd", newPassword);
+        Call<JsonObject> call = mUserClient.changePassword(params);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.EXT_KEY).getAsInt();
+                    if (res == 1) {
+                        callback.onChangePasswordSuccess();
+                    } else {
+                        callback.onChangePasswordFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onChangePasswordFailure("服务器异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
     }
 }

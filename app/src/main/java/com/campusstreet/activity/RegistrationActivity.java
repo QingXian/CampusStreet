@@ -1,5 +1,6 @@
 package com.campusstreet.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -19,6 +20,7 @@ import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 
@@ -28,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.data;
 import static com.campusstreet.common.Const.TID_EXTRA;
 
 /**
@@ -55,6 +58,7 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
     Button mBtnJoin;
     private IBountyHallContract.Presenter mPresenter;
     private int mTid;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
         });
         mTid = getIntent().getIntExtra(TID_EXTRA,0);
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         mPresenter.fetchBountyHallCategories();
     }
 
@@ -113,8 +118,9 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
     public void showSuccessfullJointask(String successMsg) {
         showMessage(successMsg);
         Intent intent = new Intent(this, BountyHallDetailActivity.class);
-        startActivity(intent);
+        this.setResult(Activity.RESULT_OK, intent);
         this.finish();
+        startActivity(intent);
     }
 
     @Override
@@ -184,7 +190,7 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
         joinInfo.setFee(mEtBounty.getText().toString());
         joinInfo.setSummary(mEtDetail.getText().toString());
         joinInfo.setPhone(mEtPhone.getText().toString());
-        joinInfo.setUid("Mw==");
+        joinInfo.setUid(mUserInfo.getUid());
         joinInfo.setId(mTid);
         mPresenter.joinTask(joinInfo);
     }

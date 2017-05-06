@@ -11,10 +11,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.common.Const;
+import com.campusstreet.entity.UserInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Orange on 2017/4/6.
@@ -34,6 +37,15 @@ public class UserSettingActivity extends AppCompatActivity {
     RelativeLayout mRlName;
     @BindView(R.id.rl_department)
     RelativeLayout mRlDepartment;
+    @BindView(R.id.rl_password)
+    RelativeLayout mRlPassword;
+    @BindView(R.id.iv_head)
+    CircleImageView mIvHead;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_department)
+    TextView mTvDepartment;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,22 +65,41 @@ public class UserSettingActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+        initView();
 
     }
 
-    @OnClick({R.id.rl_head, R.id.rl_name, R.id.rl_department})
+    private void initView() {
+        //        Picasso.with(getActivity())
+//                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.)
+//                .fit()
+//                .into(mIvHead);
+        mTvDepartment.setText(mUserInfo.getMajor());
+        mTvName.setText(mUserInfo.getUsername());
+    }
+
+    @OnClick({R.id.rl_head, R.id.rl_name, R.id.rl_department, R.id.rl_password})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_head:
-                Intent intent = new Intent(this,ModifyHeadActivity.class);
+                Intent intent = new Intent(this, ModifyHeadActivity.class);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.rl_name:
-                intent = new Intent(this,ModifyNickNameActivity.class);
+                intent = new Intent(this, ModifyNickNameActivity.class);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.rl_department:
-                intent = new Intent(this,ModifyDepartmentActivity.class);
+                intent = new Intent(this, ModifyDepartmentActivity.class);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                startActivity(intent);
+                break;
+            case R.id.rl_password:
+                intent = new Intent(this, ModifyPasswordActivity.class);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
         }

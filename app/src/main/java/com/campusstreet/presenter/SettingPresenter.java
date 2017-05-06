@@ -96,4 +96,22 @@ public class SettingPresenter implements ISettingContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void changePassword(String userId, String oldPassword, String newPassword) {
+        mView.setLoadingIndicator(true);
+        mSettingImpl.changePassword(userId, oldPassword, newPassword, new ISettingBiz.ChangePasswordCallback() {
+            @Override
+            public void onChangePasswordSuccess() {
+                mView.showSuccessfullyChangePassword();
+                mView.setLoadingIndicator(false);
+            }
+
+            @Override
+            public void onChangePasswordFailure(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+                mView.setLoadingIndicator(false);
+            }
+        });
+    }
 }

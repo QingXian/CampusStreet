@@ -22,6 +22,7 @@ import com.campusstreet.common.Const;
 import com.campusstreet.contract.IIdleSaleContract;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.IdleSaleImpl;
 import com.campusstreet.presenter.IdleSalePresenter;
 
@@ -59,6 +60,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
     private IIdleSaleContract.Presenter mPresenter;
     private IdleSaleRecyclerViewAdapter mAdapter;
     private int mPi = 0;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
         mIvToolbarRight.setVisibility(View.VISIBLE);
         mIvToolbarRight.setImageResource(R.drawable.ic_search);
         new IdleSalePresenter(IdleSaleImpl.getInstance(getApplicationContext()), this);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         setLoadingIndicator(true);
         initView();
         initEvent();
@@ -98,6 +101,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
             public void onItemClick(View view, IdleSaleInfo idleSaleInfo) {
                 Intent intent = new Intent(IdleSaleActivity.this, IdleSaleDetailActivity.class);
                 intent.putExtra(Const.IDLESALEINFO_EXTRA, idleSaleInfo);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
             }
         });
@@ -118,8 +122,13 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
             case R.id.iv_toolbar_right:
                 break;
             case R.id.btn_add:
-                Intent intent = new Intent(this, AddIdleSaleActivity.class);
-                startActivity(intent);
+                if (mUserInfo != null) {
+                    Intent intent = new Intent(this, AddIdleSaleActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    startActivity(intent);
+                }else{
+                   showMessage("您还未登录");
+                }
                 break;
         }
     }
@@ -176,6 +185,11 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
+        }
+    }
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

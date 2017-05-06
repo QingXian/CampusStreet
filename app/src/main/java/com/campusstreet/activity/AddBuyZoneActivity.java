@@ -16,10 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBuyZoneContract;
 import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BuyZoneImpl;
 import com.campusstreet.presenter.BuyZonePresenter;
 
@@ -60,6 +62,7 @@ public class AddBuyZoneActivity extends AppCompatActivity implements IBuyZoneCon
     @BindView(R.id.et_qq)
     EditText mEtQq;
     private IBuyZoneContract.Presenter mPresenter;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,7 @@ public class AddBuyZoneActivity extends AppCompatActivity implements IBuyZoneCon
                 onBackPressed();
             }
         });
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
     }
 
@@ -119,7 +123,7 @@ public class AddBuyZoneActivity extends AppCompatActivity implements IBuyZoneCon
         if (!TextUtils.isEmpty(mEtQq.getText().toString().trim())) {
             buyZoneinfo.setQq(mEtQq.getText().toString());
         }
-        buyZoneinfo.setUid("Mw==");
+        buyZoneinfo.setUid(mUserInfo.getUid());
         mPresenter.pushBuy(buyZoneinfo);
     }
 
