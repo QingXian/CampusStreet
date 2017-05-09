@@ -7,19 +7,10 @@
     <include
         android:id="@+id/apptoolbar"
         layout="@layout/toolbar"/>
-
-    <ImageView
-        android:layout_below="@+id/apptoolbar"
-        android:id="@+id/iv_photo"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:background="@drawable/bg_test">
-    </ImageView>
-
     <RelativeLayout
         android:background="@color/colorWhite"
         android:id="@+id/rl_publisher_content"
-        android:layout_below="@+id/iv_photo"
+        android:layout_below="@+id/apptoolbar"
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -119,4 +110,5 @@
             android:layout_width="0dp"
             android:layout_height="32dp"/>
     </LinearLayout>
+    <include layout="@layout/progress_bar"/>
 </RelativeLayout>

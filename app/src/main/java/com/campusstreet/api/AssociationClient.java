@@ -23,7 +23,7 @@ public interface AssociationClient {
     @POST("get_assn")
     Call<JsonObject> getAssociation(@Field("pi") Integer pi);
 
-    @Multipart
+    @FormUrlEncoded
     @POST("get_assnpost")
     Call<JsonObject> getAssociationPost(@Field("aid") Integer aid,@Field("pi") Integer pi);
 
@@ -45,9 +45,13 @@ public interface AssociationClient {
 
     @FormUrlEncoded
     @POST("apply_joinassn")
-    Call<JsonObject> applyJoinAssn(@Field("aid") Integer pid, @Field("uid") String uid ,@Field("st") int st,@Field("con") String con);
+    Call<JsonObject> applyJoinAssn(@Field("aid") Integer aid, @Field("uid") String uid ,@Field("st") int st,@Field("con") String con);
 
     @FormUrlEncoded
     @POST("get_assnmember")
-    Call<JsonObject> getAssociationNumber(@Field("aid") Integer pid ,@Field("pi") Integer pi,@Field("key") String key);
+    Call<JsonObject> getAssociationNumber(@Field("aid") Integer aid ,@Field("pi") Integer pi,@Field("ps") Integer ps);
+
+    @FormUrlEncoded
+    @POST("get_assnpostdetail")
+    Call<JsonObject> getAssociationPostDetail(@Field("pid") Integer pid);
 }

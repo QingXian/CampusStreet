@@ -138,6 +138,8 @@
     <string name="loading_progress_bar_title">加载中...</string>
     <string name="pushing_progress_bar_title">发布中...</string>
     <string name="Modifying_progress_bar_title">修改中...</string>
+    <string name="Login_progress_bar_title">登录中...</string>
+    <string name="register_progress_bar_title">注册中...</string>
     <string name="act_idle_sale_detail_qq_hint">QQ：</string>
     <string name="act_idle_sale_add_goods_type_hint_hint">商品类型</string>
     <string name="act_idle_sale_add_qq_hint">QQ</string>

@@ -1,7 +1,14 @@
 package com.campusstreet.contract;
 
+import android.support.annotation.NonNull;
+
+import com.campusstreet.entity.AssociationInfo;
+import com.campusstreet.entity.AssociationNumInfo;
+import com.campusstreet.entity.AssociationPostInfo;
+import com.campusstreet.entity.AssociationPostMessageInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.NewInfo;
 
 import java.util.List;
 
@@ -13,36 +20,53 @@ public interface IAssociationContract {
 
     interface Presenter extends BasePresenter {
 
-        void fetchAssociationCategories();
+        void fetchAssociationList(int pi);
 
-        void fetchAssociationList(int type , int pi);
+        //获取社团下帖子列表数据
+        void fetchAssociationPostList(int aid, int pi);
 
-        void fetchMyAssociationList(int type , int pi);
+        //留言请求
+        void onLeaveMessage(int pid, String uid, String con);
 
-        void searchGoods(String keyWord);
+        //加入社团
+        void onJoinAssociation(int aid, String uid ,String con);
 
-        void pushGoods(IdleSaleInfo idleSaleInfo);
+        //同意加入社团
+        void onApplyJoinAssn(int pid, String uid ,int st,String con);
 
-        void leaveMessage(String uid,int gid,String con);
+        void fetchAssociationNumList(int pid ,int pi,int ps);
 
-        void fetchIdleSaleMessageList(int id,int pi);
+        //发布帖子
+        void addAssociationPost(int aid,String uid ,String con,String title);
 
+        //获取社团下帖子的留言列表数据
+        void fetchAssociationPostMessageList(int pid, int pi);
 
+        //获取社团下帖子的留言列表数据
 
+        void fetchAssociationPostDetail(int pid);
 
     }
 
     interface View extends BaseView<Presenter> {
 
-        void setIdleSale(List<IdleSaleInfo> idleSaleInfoList);
+        void setAssociationPostMessageList(List<AssociationPostMessageInfo> associationPostMessageList);
 
-        void setIdleSaleCategories();
+        void setAssociationPostList(List<AssociationPostInfo> associationPostList);
 
-        void setIdleSaleMessageList(List<LeaveMessageInfo> idleSaleMessageList);
+        void setAssociationNumList(List<AssociationNumInfo> associationNumList);
+
+        void setAssociationList(List<AssociationInfo> associationList);
+
+        void showSuccessfullyJoin(String succcessMsg);
+
+        void showSuccessfullyApplyJoin(String succcessMsg);
+
+        void showSuccessfullyPushPost(String succcessMsg);
+
+        void setAssociationPostDetail(AssociationPostInfo associationPostInfo);
 
         void showErrorMsg(String errorMsg);
-
-        void showSuccessfullyPush(String succcessMsg);
 
         void showSuccessfullyleaveMessage(String succcessMsg);
 

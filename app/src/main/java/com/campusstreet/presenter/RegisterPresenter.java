@@ -5,17 +5,16 @@ import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.IUserBiz;
 import com.campusstreet.model.UserImpl;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
-import static com.campusstreet.utils.EncryptionUtil.getEncryptionString;
+import static com.campusstreet.utils.Md5Util.encrypt;
 
 /**
  * Created by Orange on 2017/5/5.
  */
 
 public class RegisterPresenter implements IRegisterContract.Presenter {
-    
+
     public static final String TAG = "RegisterPresenter";
 
     private UserImpl mUserImpl;
@@ -28,6 +27,7 @@ public class RegisterPresenter implements IRegisterContract.Presenter {
 
         mView.setPresenter(this);
     }
+
     @Override
     public void onResgister(Map<String, Object> params) {
         mView.setLoadingIndicator(true);
@@ -51,20 +51,18 @@ public class RegisterPresenter implements IRegisterContract.Presenter {
         mUserImpl.getResgisterMc(phone, new IUserBiz.GetResgisterMcCallback() {
             @Override
             public void GetResgisterMcSuccess(String mc) {
-                String newMc = mc.substring(3,4)+mc.substring(9,3);
-                try {
-                    newMc = getEncryptionString(newMc);
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                mUserImpl.fetchCaptcha(newMc, phone, new IUserBiz.GetCaptchaCallback() {
+                String newMc = mc.substring(3, 7) + mc.substring(9, 12);
+                newMc = encrypt(newMc);
+                String mt = "01";
+                mUserImpl.fetchCaptcha(mt,newMc, phone, new IUserBiz.GetCaptchaCallback() {
                     @Override
-                    public void onFetchSuccess(String captcha) {
+                    public void onFetchSuccess() {
                         mView.fetchCaptchaSuccessfull();
                     }
 
                     @Override
                     public void onFetchFailure(String errorMsg) {
+                        mView.showErrorMsg(errorMsg);
                     }
                 });
             }

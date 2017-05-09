@@ -307,6 +307,7 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
         bountyHallInfo.setMobile(mEtPhone.getText().toString());
         bountyHallInfo.setLinkman(mEtLinkman.getText().toString());
         bountyHallInfo.setPerson(Integer.valueOf(mEtNum.getText().toString()));
+//        bountyHallInfo.setUid("Mw==");
         bountyHallInfo.setUid(mUserInfo.getUid());
         bountyHallInfo.setEndtime(mEndTime);
         mPresenter.addTask(bountyHallInfo);

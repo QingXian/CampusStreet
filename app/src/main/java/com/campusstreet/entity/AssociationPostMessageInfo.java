@@ -1,10 +1,12 @@
 package com.campusstreet.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Orange on 2017/5/6.
  */
 
-public class AssociationPostMessageInfo {
+public class AssociationPostMessageInfo implements Serializable {
 
     /**
      * id : 11

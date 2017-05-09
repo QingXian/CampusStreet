@@ -1,16 +1,14 @@
 package com.campusstreet.presenter;
 
 import com.campusstreet.contract.ILoginContract;
-import com.campusstreet.contract.ILoginContract;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.IUserBiz;
 import com.campusstreet.model.UserImpl;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.campusstreet.utils.EncryptionUtil.getEncryptionString;
+import static com.campusstreet.utils.Md5Util.encrypt;
 
 /**
  * Created by Orange on 2017/5/5.
@@ -82,20 +80,18 @@ public class LoginPresenter implements ILoginContract.Presenter {
         mUserImpl.getResgisterMc(phone, new IUserBiz.GetResgisterMcCallback() {
             @Override
             public void GetResgisterMcSuccess(String mc) {
-                String newMc = mc.substring(3, 4) + mc.substring(9, 3);
-                try {
-                    newMc = getEncryptionString(newMc);
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                }
-                mUserImpl.fetchCaptcha(newMc, phone, new IUserBiz.GetCaptchaCallback() {
+                String newMc = mc.substring(3, 7) + mc.substring(9, 12);
+                newMc = encrypt(newMc);
+                String mt = "02";
+                mUserImpl.fetchCaptcha(mt,newMc, phone, new IUserBiz.GetCaptchaCallback() {
                     @Override
-                    public void onFetchSuccess(String captcha) {
+                    public void onFetchSuccess() {
                         mView.fetchCaptchaSuccessfull();
                     }
 
                     @Override
                     public void onFetchFailure(String errorMsg) {
+                        mView.showErrorMsg(errorMsg);
                     }
                 });
             }

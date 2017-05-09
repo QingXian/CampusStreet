@@ -25,7 +25,7 @@ public interface UserClient {
 
     @FormUrlEncoded
     @POST("get_mobilecode")
-    Call<JsonObject> fetchCaptcha(@Field("mobile") String phone,@Field("mc") String mc);
+    Call<JsonObject> fetchCaptcha(@Field("mt") String mt,@Field("mc") String mc, @Field("mobile") String phone);
 
     @Multipart
     @POST("ins_register")

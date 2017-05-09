@@ -29,18 +29,21 @@ public interface IAssociationBiz {
     void onLeaveMessage(int pid, String uid, String con, @NonNull onLeaveMessageCallback callback);
 
     //加入社团
-    void onJoinAssociation(int aid, String uid ,String con, @NonNull onJoinAssociationCallback callback);
+    void onJoinAssociation(int aid, String uid, String con, @NonNull onJoinAssociationCallback callback);
 
     //同意加入社团
-    void onApplyJoinAssn(int pid, String uid ,int st,String con, @NonNull onApplyJoinAssnCallback callback);
+    void onApplyJoinAssn(int pid, String uid, int st, String con, @NonNull onApplyJoinAssnCallback callback);
 
-    void fetchAssociationNumList(int pid ,int pi,String key,@NonNull LoadAssociationNumListCallback callback);
+
+    void fetchAssociationNumList(int pid, int pi, int ps, @NonNull LoadAssociationNumListCallback callback);
 
     //发布帖子
-    void addAssociationPost(int aid,String uid ,String con,String title, @NonNull addAssociationPostCallback callback);
+    void addAssociationPost(int aid, String uid, String con, String title, @NonNull addAssociationPostCallback callback);
 
     //获取社团下帖子的留言列表数据
-    void fetchAssociationPostMessageList(int pid, int pi, LoadAssociationPostMessageCallback callback);
+    void fetchAssociationPostMessageList(int pid, int pi, @NonNull LoadAssociationPostMessageCallback callback);
+
+    void fetchAssociationPostDetail(int pid, @NonNull LoadAssociationPostDetailCallback callback);
 
     interface addAssociationPostCallback {
 
@@ -49,7 +52,7 @@ public interface IAssociationBiz {
         void onAddFailure(String errorMsg);
     }
 
-    interface  onJoinAssociationCallback {
+    interface onJoinAssociationCallback {
 
         void onJoinAssociationSuccess();
 
@@ -93,10 +96,20 @@ public interface IAssociationBiz {
 
         void onDataNotAvailable(String errorMsg);
     }
+
     interface LoadAssociationNumListCallback {
 
 
         void onAssociationNumListLoaded(List<AssociationNumInfo> associationNumInfos);
+
+
+        void onDataNotAvailable(String errorMsg);
+    }
+
+    interface LoadAssociationPostDetailCallback {
+
+
+        void onAssociationPostDetailLoaded(AssociationPostInfo associationPostInfo);
 
 
         void onDataNotAvailable(String errorMsg);

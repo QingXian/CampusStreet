@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
                 android:padding="16dp"
-                android:layout_marginTop="1dp"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/iv_head"
         android:layout_width="56dp"
@@ -41,12 +42,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="120"/>
-    <TextView
-        android:gravity="center"
-        android:background="@drawable/bg_act_association_btn"
-        android:id="@+id/tv_follow"
-        android:layout_width="48dp"
-        android:layout_height="24dp"
-        android:text="@string/act_association_follow"
-        android:layout_alignParentRight="true"/>
 </RelativeLayout>

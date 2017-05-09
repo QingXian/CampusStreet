@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
             if (active) {
                 //设置滚动条可见
                 mProgressBarContainer.setVisibility(View.VISIBLE);
-                mProgressBarTitle.setText(R.string.Modifying_progress_bar_title);
+                mProgressBarTitle.setText(R.string.Login_progress_bar_title);
             } else {
                 if (mProgressBarContainer.getVisibility() == View.VISIBLE) {
                     mProgressBarContainer.setVisibility(View.GONE);

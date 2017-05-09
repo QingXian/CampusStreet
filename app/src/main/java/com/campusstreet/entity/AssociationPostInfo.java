@@ -1,10 +1,12 @@
 package com.campusstreet.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Orange on 2017/5/6.
  */
 
-public class AssociationPostInfo {
+public class AssociationPostInfo implements Serializable {
 
     /**
      * id : 92
@@ -16,19 +18,28 @@ public class AssociationPostInfo {
      * replynum : 11
      */
 
-    private String id;
+    private int id;
     private String userpic;
     private String username;
     private String addtime;
     private String title;
     private String viewnum;
     private String replynum;
+    private String con;
 
-    public String getId() {
+    public String getCon() {
+        return con;
+    }
+
+    public void setCon(String con) {
+        this.con = con;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

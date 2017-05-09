@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.activity.LoginActivity;
@@ -105,18 +106,30 @@ public class UserFragment extends Fragment {
             case R.id.tv_recharge:
                 break;
             case R.id.tv_bounty_mission:
-                Intent intent = new Intent(getActivity(), MyBountyHallActivity.class);
-                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
-                startActivity(intent);
+                if (mUserInfo != null) {
+                    Intent intent = new Intent(getActivity(), MyBountyHallActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    startActivity(intent);
+                } else {
+                    showMessage("请先登录");
+                }
                 break;
             case R.id.tv_detection_update:
                 break;
             case R.id.tv_my_idle:
+                if (mUserInfo != null) {
+                } else {
+                    showMessage("请先登录");
+                }
                 break;
             case R.id.tv_my_club:
+                if (mUserInfo != null) {
+                } else {
+                    showMessage("请先登录");
+                }
                 break;
             case R.id.tv_login:
-                intent = new Intent(getActivity(), LoginActivity.class);
+                Intent  intent = new Intent(getActivity(), LoginActivity.class);
                 intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
@@ -127,6 +140,11 @@ public class UserFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+    }
+    protected void showMessage(String msg) {
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

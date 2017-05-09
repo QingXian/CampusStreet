@@ -272,7 +272,7 @@ public class BountyHallImpl implements IBountyHallBiz {
         requestBodyMap.put("linkman", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getType()));
         requestBodyMap.put("mobile", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getType()));
         requestBodyMap.put("keys", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getKey()));
-        Call<JsonObject> call = mBountyHallClient.joinTask(requestBodyMap);
+        Call<JsonObject> call = mBountyHallClient.addTask(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

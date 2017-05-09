@@ -1,111 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:background="@color/colorGray"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorGray"
+                android:orientation="vertical">
+
     <include
         android:id="@+id/apptoolbar"
         layout="@layout/toolbar"/>
-    <RelativeLayout
-        android:layout_below="@+id/apptoolbar"
-        android:id="@+id/rl_association_content"
-        android:background="@drawable/bg_test"
-        android:layout_width="match_parent"
-        android:layout_height="180dp">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="56dp"
-            android:id="@+id/iv_head"
-            android:layout_above="@+id/tv_name"
-            android:src="@drawable/ic_head_test"
-            android:layout_height="56dp"
-            android:layout_centerInParent="true"/>
-        <TextView
-            android:id="@+id/tv_name"
-            android:padding="8dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="名称"
-            android:layout_centerInParent="true"
-            android:textSize="18sp"/>
-        <TextView
-            android:id="@+id/tv_introduce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:layout_below="@+id/tv_name"
-            android:text="介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍"/>
-        <Button
-            android:id="@+id/btn_join"
-            android:layout_margin="16dp"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/colorWhite"
-            android:text="加入"
-            android:background="@color/colorPrimary"
-            android:layout_width="48dp"
-            android:layout_height="32dp"/>
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:background="@color/colorWhite"
-        android:layout_marginTop="4dp"
-        android:layout_below="@+id/rl_association_content"
-        android:id="@+id/rl_notice"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp"
-        >
+        android:layout_below="@+id/apptoolbar">
 
-        <ImageView
-            android:id="@+id/iv_notice_icon"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/ic_notice"/>
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/iv_notice_icon"
-            android:layout_toRightOf="@+id/iv_notice_icon"
-            android:paddingLeft="8dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:text="社团公告"/>
+            <RelativeLayout
+                android:id="@+id/rl_association_content"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                >
 
-        <ImageView
-            android:layout_centerInParent="true"
-            android:layout_width="8dp"
-            android:layout_height="12dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/ic_arrow_right"
-            />
-    </RelativeLayout>
+                <ImageView
+                    android:background="@drawable/bg_test"
+                    android:id="@+id/iv_association_content_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="4dp"
-        android:background="@color/colorGray"
-        android:id="@+id/rv_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_above="@+id/tv_name"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_head_test"/>
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="8dp"
+                    android:text="名称"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tv_introduce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_name"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:text="介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍介绍"
+                    android:textSize="16sp"/>
+
+                <Button
+                    android:id="@+id/btn_join"
+                    android:layout_width="48dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="16dp"
+                    android:background="@color/colorPrimary"
+                    android:text="加入"
+                    android:textColor="@color/colorWhite"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@color/colorWhite"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_notice_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/ic_notice"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/iv_notice_icon"
+                    android:layout_toRightOf="@+id/iv_notice_icon"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="4dp"
+                    android:text="社团公告"/>
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="12dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/ic_arrow_right"
+                    />
+            </RelativeLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:background="@color/colorGray">
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:fabSize="normal"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_margin="16dp"
+        app:fabSize="normal"
         app:layout_behavior="com.campussteet.utils.FabBehavior"
         />
 
+    <include layout="@layout/progress_bar"/>
 </RelativeLayout>

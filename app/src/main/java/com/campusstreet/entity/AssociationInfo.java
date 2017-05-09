@@ -1,10 +1,12 @@
 package com.campusstreet.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Orange on 2017/5/6.
  */
 
-public class AssociationInfo {
+public class AssociationInfo implements Serializable {
 
     /**
      * id : 10
@@ -16,7 +18,7 @@ public class AssociationInfo {
      * username :
      */
 
-    private String id;
+    private int id;
     private String name;
     private String classimg;
     private String note;
@@ -24,11 +26,11 @@ public class AssociationInfo {
     private String memnum;
     private String username;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -22,7 +22,7 @@ public interface IUserBiz {
     void onResgister(Map<String, Object> params, @NonNull onResgisterCallback callback);
 
 
-    void fetchCaptcha(String mc,String phone,@NonNull GetCaptchaCallback callback);
+    void fetchCaptcha(String mt,String mc,String phone,@NonNull GetCaptchaCallback callback);
 
     void getResgisterMc(String phone ,@NonNull GetResgisterMcCallback callback);
 
@@ -49,7 +49,7 @@ public interface IUserBiz {
 
     interface GetCaptchaCallback {
 
-        void onFetchSuccess(String captcha);
+        void onFetchSuccess();
 
         void onFetchFailure(String errorMsg);
     }

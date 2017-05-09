@@ -102,8 +102,8 @@ public class UserImpl implements IUserBiz {
     }
 
     @Override
-    public void fetchCaptcha(String mc, String phone, @NonNull final GetCaptchaCallback callback) {
-        Call<JsonObject> call = mUserClient.fetchCaptcha(mc, phone);
+    public void fetchCaptcha(String mt,String mc, String phone, @NonNull final GetCaptchaCallback callback) {
+        Call<JsonObject> call = mUserClient.fetchCaptcha(mt,mc, phone);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -111,10 +111,9 @@ public class UserImpl implements IUserBiz {
                 if (bodyJson != null) {
                     int res = bodyJson.get(Const.RES_KEY).getAsInt();
                     if (res == 1) {
-                        String captcha = bodyJson.get(Const.MESSAGE_KEY).getAsString();
-                        callback.onFetchSuccess(captcha);
+                        callback.onFetchSuccess();
                     } else {
-                        callback.onFetchSuccess(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                        callback.onFetchFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
                     }
                 }
             }
@@ -126,6 +125,7 @@ public class UserImpl implements IUserBiz {
             }
         });
     }
+
 
     @Override
     public void getResgisterMc(String phone, @NonNull final GetResgisterMcCallback callback) {

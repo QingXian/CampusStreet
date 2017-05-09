@@ -1,5 +1,6 @@
 package com.campusstreet.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -109,7 +110,10 @@ public class ReSetPasswrodActivity extends AppCompatActivity implements ILoginCo
 
     @Override
     public void showSuccessfullyForgetPasswrod() {
-
+        Intent data = new Intent(this, MainActivity.class);
+        data.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(data);
+        this.finish();
     }
 
     @Override

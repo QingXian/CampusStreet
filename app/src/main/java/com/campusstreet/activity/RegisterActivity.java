@@ -91,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterCont
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setHomeButtonEnabled(true);
-        mTimeCountUtil = new TimeCountUtil(60000, 1000, mBtnFetchCaptcha);
+        mTimeCountUtil = new TimeCountUtil(80000, 1000, mBtnFetchCaptcha);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,11 +163,11 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterCont
             return;
         }
         Map<String, Object> params = new HashMap<>();
-        params.put("phone", mEtPhone.getText().toString());
-        params.put("captcha", mEtCaptcha.getText().toString());
-        params.put("password", mEtPassword.getText().toString());
-        params.put("password", mEtNickname.getText().toString());
-        params.put("password", mTvDepartment.getText().toString());
+        params.put("mobile", mEtPhone.getText().toString());
+        params.put("mcode", mEtCaptcha.getText().toString());
+        params.put("pwd", mEtPassword.getText().toString());
+        params.put("nick", mEtNickname.getText().toString());
+        params.put("major", mTvDepartment.getText().toString());
         mPresenter.onResgister(params);
     }
 
@@ -195,7 +195,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterCont
 
     @Override
     public void fetchCaptchaSuccessfull() {
-
+        showMessage("验证码已发送");
     }
 
 
@@ -210,7 +210,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterCont
             if (active) {
                 //设置滚动条可见
                 mProgressBarContainer.setVisibility(View.VISIBLE);
-                mProgressBarTitle.setText(R.string.Modifying_progress_bar_title);
+                mProgressBarTitle.setText(R.string.register_progress_bar_title);
             } else {
                 if (mProgressBarContainer.getVisibility() == View.VISIBLE) {
                     mProgressBarContainer.setVisibility(View.GONE);

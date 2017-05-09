@@ -75,7 +75,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ILoginC
                 onBackPressed();
             }
         });
-        mTimeCountUtil = new TimeCountUtil(60000, 1000, mBtnFetchCaptcha);
+        mTimeCountUtil = new TimeCountUtil(80000, 1000, mBtnFetchCaptcha);
     }
 
     @OnClick({R.id.btn_fetch_captcha, R.id.btn_next})
@@ -116,15 +116,11 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ILoginC
 
     @Override
     public void fetchCaptchaSuccessfull() {
-        Intent data = new Intent(this, MainActivity.class);
-        data.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(data);
-        this.finish();
+        showMessage("验证码已发送");
     }
 
     @Override
     public void showSuccessfullyForgetPasswrod() {
-
     }
 
     @Override
