@@ -20,6 +20,7 @@ import com.campusstreet.R;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IRegisterContract;
 import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.UserImpl;
 import com.campusstreet.presenter.LoginPresenter;
@@ -78,6 +79,7 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterCont
     private String mDepartment;
     private IRegisterContract.Presenter mPresenter;
     private TimeCountUtil mTimeCountUtil;
+    private Integer mTel;
 
 
     @Override
@@ -143,9 +145,14 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterCont
             return;
         }
         if (TextUtils.isEmpty(mEtPhone.getText().toString().trim())) {
-            showMessage("请填写手机号");
+            showMessage("请输入手机号");
             return;
         }
+//        try {
+//            mTel = Integer.valueOf(mEtPhone.getText().toString().trim());
+//        } catch (NumberFormatException e) {
+//            showMessage("请输入正确的手机号码");
+//            return;//       }
         if (TextUtils.isEmpty(mEtCaptcha.getText().toString().trim())) {
             showMessage("请填写验证码");
             return;
@@ -162,13 +169,11 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterCont
             showMessage("两次密码不一致");
             return;
         }
-        Map<String, Object> params = new HashMap<>();
-        params.put("mobile", mEtPhone.getText().toString());
-        params.put("mcode", mEtCaptcha.getText().toString());
-        params.put("pwd", mEtPassword.getText().toString());
-        params.put("nick", mEtNickname.getText().toString());
-        params.put("major", mTvDepartment.getText().toString());
-        mPresenter.onResgister(params);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setMajor(mTvDepartment.getText().toString());
+        userInfo.setUsername(mEtNickname.getText().toString());
+        userInfo.setMobile(mEtPhone.getText().toString());
+        mPresenter.onResgister(userInfo,mEtPassword.getText().toString(),mEtCaptcha.getText().toString());
     }
 
     @Override

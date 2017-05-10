@@ -68,7 +68,7 @@ public class UserFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mUserInfo != null) {
+        if (getArguments() != null) {
             mUserInfo = (UserInfo) getArguments().getSerializable(Const.USERINFO_EXTRA);
         }
     }
@@ -129,7 +129,7 @@ public class UserFragment extends Fragment {
                 }
                 break;
             case R.id.tv_login:
-                Intent  intent = new Intent(getActivity(), LoginActivity.class);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
                 intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
@@ -141,6 +141,7 @@ public class UserFragment extends Fragment {
         super.onDestroyView();
         mUnbinder.unbind();
     }
+
     protected void showMessage(String msg) {
         if (getActivity() != null && !getActivity().isFinishing()) {
             Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();

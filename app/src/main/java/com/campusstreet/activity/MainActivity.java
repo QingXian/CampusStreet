@@ -75,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mHomeFragment = new HomeFragment();
-        setFragment(mHomeFragment);
-        mScrollview.smoothScrollTo(0, 0);
         mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
         mTvHome.setSelected(true);
         PermissionsManage.verifyStoragePermissions(this);
@@ -89,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 mIsLogined = true;
             }
         }
-        new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
     }
 
     @OnClick({R.id.iv_toolbar_right, R.id.tv_home, R.id.tv_notice, R.id.tv_find, R.id.tv_user, R.id.iv_release})
@@ -131,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 mFindFragment = new FindFragment();
                 setFragment(mFindFragment);
                 mIvToolbarRight.setVisibility(View.GONE);
-                HomeFragment.newInstance(mUserInfo);
                 new FindPresenter(FindImpl.getInstance(getApplicationContext()), mFindFragment);
                 break;
             case R.id.tv_user:
@@ -139,9 +134,8 @@ public class MainActivity extends AppCompatActivity {
                 clearSeleted();
                 mTvUser.setTextColor(getResources().getColor(R.color.colorPrimary));
                 mTvUser.setSelected(true);
-                mUserFragment = new UserFragment();
+                mUserFragment = mUserFragment.newInstance(mUserInfo);
                 setFragment(mUserFragment);
-                UserFragment.newInstance(mUserInfo);
                 mIvToolbarRight.setVisibility(View.VISIBLE);
                 mIvToolbarRight.setImageResource(R.drawable.ic_setting);
                 break;
@@ -163,20 +157,27 @@ public class MainActivity extends AppCompatActivity {
         mTvNotice.setSelected(false);
         mTvFind.setSelected(false);
         mTvUser.setSelected(false);
-        mScrollview.smoothScrollTo(0, 20);
+        mScrollview.smoothScrollTo(0, 0);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (mIsLogined && mUserInfo == null) {
+        if (!mIsLogined && mUserInfo == null) {
             String userStr = PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
                     .getString(Const.PREF_USERINFO_KEY, null);
             if (userStr != null) {
                 mUserInfo = new GsonBuilder().setLenient().create().fromJson(userStr, UserInfo.class);
             }
         }
+//        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
+//        setFragment(mHomeFragment);
+        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
+        setFragment(mHomeFragment);
+        mScrollview.smoothScrollTo(0, 0);
+        new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
     }
+
     protected void showMessage(String msg) {
         if (this != null && !this.isFinishing()) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

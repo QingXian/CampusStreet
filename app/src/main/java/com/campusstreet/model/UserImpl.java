@@ -13,11 +13,16 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.campusstreet.common.Const.MULTIPART_FORM_DATA;
 
 /**
  * Created by Orange on 2017/5/3.
@@ -73,8 +78,14 @@ public class UserImpl implements IUserBiz {
     }
 
     @Override
-    public void onResgister(Map<String, Object> params, @NonNull final onResgisterCallback callback) {
-        Call<JsonObject> call = mUserClient.resgister(params);
+    public void onResgister(UserInfo userInfo,String password,String code, @NonNull final onResgisterCallback callback) {
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+        requestBodyMap.put("mobile", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), userInfo.getMobile()));
+        requestBodyMap.put("mcode", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), code));
+        requestBodyMap.put("pwd", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), password));
+        requestBodyMap.put("nick", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), userInfo.getUsername()));
+        requestBodyMap.put("major", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), userInfo.getMajor()));
+        Call<JsonObject> call = mUserClient.resgister(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

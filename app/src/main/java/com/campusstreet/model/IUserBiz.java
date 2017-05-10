@@ -19,7 +19,7 @@ public interface IUserBiz {
     void onLogin(String phone, String password, @NonNull onLoginCallback callback);
 
 
-    void onResgister(Map<String, Object> params, @NonNull onResgisterCallback callback);
+    void onResgister(UserInfo userInfo,String password,String code, @NonNull onResgisterCallback callback);
 
 
     void fetchCaptcha(String mt,String mc,String phone,@NonNull GetCaptchaCallback callback);

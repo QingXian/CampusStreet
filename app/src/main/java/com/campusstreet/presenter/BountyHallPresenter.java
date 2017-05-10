@@ -32,17 +32,14 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
 
     @Override
     public void fetchBountyHallCategories() {
-        mView.setLoadingIndicator(true);
         mBountyHallImpl.fetchBountyHallCategories(new IBountyHallBiz.LoadBountyHallCategoriesCallback() {
             @Override
             public void onBountyHallCategoriesLoaded(String[] type) {
-                mView.setLoadingIndicator(false);
                 mView.setBountyHallCategories(type);
             }
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
-                mView.setLoadingIndicator(false);
                 mView.showfetchBountyHallCategoriesFailMsg(errorMsg);
             }
         });

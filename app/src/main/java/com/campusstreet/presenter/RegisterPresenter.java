@@ -29,9 +29,9 @@ public class RegisterPresenter implements IRegisterContract.Presenter {
     }
 
     @Override
-    public void onResgister(Map<String, Object> params) {
+    public void onResgister(UserInfo userInfo,String password,String code) {
         mView.setLoadingIndicator(true);
-        mUserImpl.onResgister(params, new IUserBiz.onResgisterCallback() {
+        mUserImpl.onResgister(userInfo,password,code, new IUserBiz.onResgisterCallback() {
             @Override
             public void onResgisterSuccess(UserInfo userInfo) {
                 mView.showSuccessfullyresgister(userInfo);

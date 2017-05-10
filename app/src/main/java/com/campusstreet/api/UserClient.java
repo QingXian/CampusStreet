@@ -29,7 +29,7 @@ public interface UserClient {
 
     @Multipart
     @POST("ins_register")
-    Call<JsonObject> resgister(@PartMap Map<String, Object> params);
+    Call<JsonObject> resgister(@PartMap Map<String,RequestBody> params);
 
     @Multipart
     @POST("upd_userpwd")

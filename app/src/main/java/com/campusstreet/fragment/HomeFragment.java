@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBannerInfos = new ArrayList<>();
-        if (mUserInfo != null) {
+        if (getArguments() != null) {
             mUserInfo = (UserInfo) getArguments().getSerializable(Const.USERINFO_EXTRA);
         }
     }
@@ -230,8 +230,10 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                 bannerInfos) {
             imagesUrl.add(bannerInfo.getImage());
         }
-        mBanner.setImages(imagesUrl);
-        mBanner.start();
+        if (mBanner != null) {
+            mBanner.setImages(imagesUrl);
+            mBanner.start();
+        }
     }
 
     @Override
@@ -246,7 +248,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        showErrorMsg(errorMsg);
+        showMessage(errorMsg);
     }
 
     @Override

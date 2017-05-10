@@ -12,7 +12,7 @@ import java.util.Map;
 public interface IRegisterContract {
     interface Presenter extends BasePresenter {
 
-        void onResgister(Map<String, Object> params);
+        void onResgister(UserInfo userInfo,String password,String code);
 
 
         void fetchCaptcha(String phone);

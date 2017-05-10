@@ -130,6 +130,7 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
     public void onClick() {
         if (mUserInfo != null) {
             Intent intent = new Intent(this, AddBountyHallActivity.class);
+            intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
             startActivity(intent);
         } else {
             showMessage("您还未登录");

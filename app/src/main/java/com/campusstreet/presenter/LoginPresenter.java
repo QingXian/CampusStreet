@@ -77,13 +77,13 @@ public class LoginPresenter implements ILoginContract.Presenter {
 
     @Override
     public void fetchCaptcha(final String phone) {
-        mUserImpl.getResgisterMc(phone, new IUserBiz.GetResgisterMcCallback() {
+        mUserImpl.getforgetPasswordrMc(phone, new IUserBiz.GetRForgetPasswordMcCallback() {
             @Override
-            public void GetResgisterMcSuccess(String mc) {
+            public void GetForgetPasswordMcSuccess(String mc) {
                 String newMc = mc.substring(3, 7) + mc.substring(9, 12);
                 newMc = encrypt(newMc);
                 String mt = "02";
-                mUserImpl.fetchCaptcha(mt,newMc, phone, new IUserBiz.GetCaptchaCallback() {
+                mUserImpl.fetchCaptcha(mt, newMc, phone, new IUserBiz.GetCaptchaCallback() {
                     @Override
                     public void onFetchSuccess() {
                         mView.fetchCaptchaSuccessfull();
@@ -97,7 +97,7 @@ public class LoginPresenter implements ILoginContract.Presenter {
             }
 
             @Override
-            public void GetResgisterMcFailure(String errorMsg) {
+            public void GetForgetPasswordMcFailure(String errorMsg) {
                 mView.showErrorMsg(errorMsg);
             }
         });
