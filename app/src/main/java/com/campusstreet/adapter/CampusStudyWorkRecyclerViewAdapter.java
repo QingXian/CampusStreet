@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.entity.RecruitInfo;
 import com.campusstreet.entity.StudyWorkInfo;
 
 import java.util.List;
@@ -51,6 +52,11 @@ public class CampusStudyWorkRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         this.mOnItemClickListener = listener;
     }
 
+
+    public void addData(List<StudyWorkInfo> studyWorkInfos) {
+        mList.addAll(studyWorkInfos);
+        notifyDataSetChanged();
+    }
 
     public void replaceData(List<StudyWorkInfo> studyWorkInfos) {
         //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);

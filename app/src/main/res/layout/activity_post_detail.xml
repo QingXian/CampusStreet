@@ -1,95 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@color/colorGray"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+                android:orientation="vertical">
+
     <include
         android:id="@+id/apptoolbar"
         layout="@layout/toolbar"/>
-    <RelativeLayout
-        android:background="@color/colorWhite"
-        android:id="@+id/rl_publisher_content"
-        android:layout_below="@+id/apptoolbar"
-        android:padding="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_head"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/ic_head_test"/>
-    <TextView
-        android:id="@+id/tv_name"
-        android:padding="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="昵称"
-        android:textSize="16sp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/iv_head"
-        android:layout_toEndOf="@+id/iv_head"/>
-        <TextView
-            android:layout_toLeftOf="@+id/tv_time"
-            android:paddingTop="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="发表于"
-            />
-        <TextView
-            android:paddingLeft="4dp"
-            android:id="@+id/tv_time"
-            android:paddingTop="16dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2017-03-22 09:23"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
-    </RelativeLayout>
-    <TextView
-        android:layout_below="@+id/rl_publisher_content"
-        android:layout_marginTop="1dp"
-        android:background="@color/colorWhite"
-        android:maxLines="1"
-        android:textColor="@color/colorBlack"
-        android:textSize="16sp"
-        android:id="@+id/tv_title"
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="标题"
-        android:padding="8dp"/>
-    <TextView
-        android:background="@color/colorWhite"
-        android:id="@+id/tv_content"
-        android:maxLines="3"
-        android:ellipsize="end"
-        android:lines="3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="内容内容内容内容内容类"
-        android:padding="8dp"
-        android:layout_below="@+id/tv_title"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/tv_content"
-        android:background="@color/colorGray"
-        android:id="@+id/rv_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_below="@+id/apptoolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rl_publisher_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:padding="8dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_head_test"/>
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toEndOf="@+id/iv_head"
+                    android:layout_toRightOf="@+id/iv_head"
+                    android:padding="16dp"
+                    android:text="昵称"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/tv_time"
+                    android:paddingTop="16dp"
+                    android:text="发表于"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="16dp"
+                    android:text="2017-03-22 09:23"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_publisher_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/colorWhite"
+                android:maxLines="1"
+                android:padding="8dp"
+                android:text="标题"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_title"
+                android:background="@color/colorWhite"
+                android:ellipsize="end"
+                android:lines="3"
+                android:maxLines="3"
+                android:padding="8dp"
+                android:text="内容内容内容内容内容类"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_content"
+                android:layout_marginBottom="48dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv_content"
+                android:background="@color/colorGray">
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
     <LinearLayout
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="16dp"
-        android:background="@color/tv_color_defult"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:background="@color/tv_color_defult"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="4dp">
 
         <EditText
             android:id="@+id/et_message"
@@ -102,13 +123,14 @@
 
         <Button
             android:id="@+id/btn_send_message"
-            android:layout_marginLeft="16dp"
-            android:text="发送"
-            android:textColor="@color/colorPrimary"
-            android:background="@drawable/bg_act_idle_sale_detail_btn"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="32dp"/>
+            android:layout_height="32dp"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_act_idle_sale_detail_btn"
+            android:text="发送"
+            android:textColor="@color/colorPrimary"/>
     </LinearLayout>
+
     <include layout="@layout/progress_bar"/>
 </RelativeLayout>

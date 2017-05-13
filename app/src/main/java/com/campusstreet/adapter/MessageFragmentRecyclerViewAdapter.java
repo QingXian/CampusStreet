@@ -33,6 +33,7 @@ public class MessageFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Rec
     }
 
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new RecyclerItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_message_recycler_view_item,null));

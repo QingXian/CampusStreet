@@ -78,7 +78,7 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
                 onBackPressed();
             }
         });
-        mTid = getIntent().getIntExtra(TID_EXTRA,0);
+        mTid = getIntent().getIntExtra(TID_EXTRA, 0);
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         mPresenter.fetchBountyHallCategories();
@@ -183,6 +183,10 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
 
         if (TextUtils.isEmpty(mEtPhone.getText().toString().trim())) {
             showMessage("请填写联系方式");
+            return;
+        }
+        if (mEtPhone.getText().toString().trim().length() != 11) {
+            showMessage("请正确的联系方式");
             return;
         }
 

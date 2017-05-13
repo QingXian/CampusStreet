@@ -77,7 +77,7 @@ public class HomeImpl implements IHomeBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onFetchFailure("服务器异常");
+                callback.onFetchFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });

@@ -28,6 +28,7 @@ import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
     @BindView(R.id.rv_content)
-    RecyclerView mRvContent;
+    PullLoadMoreRecyclerView mRvContent;
     @BindView(R.id.tv_error)
     TextView mTvError;
     @BindView(R.id.progress_bar)
@@ -67,7 +68,7 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
     private int mIndex;
     private List<BountyHallInfo> mBountyHallInfoList;
     private int mPi = 0;
-    private int mPostion = 1;
+    private int mPostion = 0;
     private UserInfo mUserInfo;
 
 
@@ -102,9 +103,10 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
 
     @Override
     protected void onStart() {
-        mPresenter.fetchTaskList(mPostion, mPi, null);
         super.onStart();
-
+        mPi = 0;
+        mPresenter.fetchTaskList(mPostion, mPi, null);
+        setLoadingIndicator(true);
     }
 
     private void initEvent() {
@@ -117,11 +119,32 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
                 startActivity(intent);
             }
         });
+        mRvContent.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                mPi = 0;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.fetchTaskList(mPostion, mPi, null);
+                    }
+                }, 1500);
+            }
+
+            @Override
+            public void onLoadMore() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.fetchTaskList(mPostion, ++mPi, null);
+                    }
+                }, 500);
+            }
+        });
     }
 
     private void initView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(linearLayoutManager);
+        mRvContent.setLinearLayout();
         mAdapter = new BountyHallRecyclerViewAdapter(this, mBountyHallInfoList);
         mRvContent.setAdapter(mAdapter);
     }
@@ -144,10 +167,23 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
 
     @Override
     public void setTaskList(List<BountyHallInfo> bountyHallInfos) {
-        mRvContent.setVisibility(View.VISIBLE);
-        mTvError.setVisibility(View.GONE);
-        mAdapter.replaceData(bountyHallInfos);
-        setLoadingIndicator(false);
+        if (bountyHallInfos != null && bountyHallInfos.size() < 20) {
+            mRvContent.setPushRefreshEnable(false);
+        } else {
+            mRvContent.setPushRefreshEnable(true);
+        }
+        if (mPi != 0) {
+            if (bountyHallInfos != null) {
+                mAdapter.addData(bountyHallInfos);
+                mRvContent.setPullLoadMoreCompleted();
+            }
+        } else {
+            mRvContent.setVisibility(View.VISIBLE);
+            mTvError.setVisibility(View.GONE);
+            mAdapter.replaceData(bountyHallInfos);
+            mRvContent.setPullLoadMoreCompleted();
+            setLoadingIndicator(false);
+        }
     }
 
     @Override
@@ -159,14 +195,16 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
     public void setBountyHallCategories(String[] type) {
         mTitle = type;
         if (type != null) {
+            mTabLayout.addTab(mTabLayout.newTab().setText("全部"));
             for (int i = 0; i < type.length; i++) {
                 mTabLayout.addTab(mTabLayout.newTab().setText(type[i]));
             }
             mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
-                    mPresenter.fetchTaskList(tab.getPosition() + 1, 0, null);
-                    mPostion = tab.getPosition() + 1;
+                    mPi = 0;
+                    mPresenter.fetchTaskList(tab.getPosition(), mPi, null);
+                    mPostion = tab.getPosition();
                 }
 
                 @Override
@@ -205,10 +243,15 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        mRvContent.setVisibility(View.GONE);
-        mTvError.setText(errorMsg);
-        mTvError.setVisibility(View.VISIBLE);
+        if (mPi == 0) {
+            mRvContent.setVisibility(View.GONE);
+            mTvError.setText(errorMsg);
+            mTvError.setVisibility(View.VISIBLE);
+        } else {
+            showMessage("没有数据了");
+        }
         setLoadingIndicator(false);
+        mRvContent.setPullLoadMoreCompleted();
     }
 
     @Override

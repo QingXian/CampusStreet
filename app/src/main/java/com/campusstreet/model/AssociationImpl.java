@@ -81,7 +81,7 @@ public class AssociationImpl implements IAssociationBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -119,7 +119,7 @@ public class AssociationImpl implements IAssociationBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -145,7 +145,7 @@ public class AssociationImpl implements IAssociationBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onLeaveMessageFailure("服务器异常");
+                callback.onLeaveMessageFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -171,7 +171,7 @@ public class AssociationImpl implements IAssociationBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onJoinAssociationFailure("服务器异常");
+                callback.onJoinAssociationFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -197,7 +197,7 @@ public class AssociationImpl implements IAssociationBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onApplyJoinAssnFailure("服务器异常");
+                callback.onApplyJoinAssnFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -236,7 +236,7 @@ public class AssociationImpl implements IAssociationBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -279,7 +279,7 @@ public class AssociationImpl implements IAssociationBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -312,7 +312,7 @@ public class AssociationImpl implements IAssociationBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });

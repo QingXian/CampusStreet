@@ -73,7 +73,7 @@ public class SettingImpl implements  ISettingBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onUserInfoReviseFailure("服务器异常");
+                callback.onUserInfoReviseFailure("网络异常");
                 Log.d(TAG, "onFailure: "+t);
             }
         });
@@ -104,7 +104,7 @@ public class SettingImpl implements  ISettingBiz {
 
                 @Override
                 public void onFailure(Call<JsonObject> call, Throwable t) {
-                    callback.onAvatarReviseFailure("服务器异常");
+                    callback.onAvatarReviseFailure("网络异常");
                     Log.d(TAG, "onFailure: " + t);
                 }
             });
@@ -133,7 +133,7 @@ public class SettingImpl implements  ISettingBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onChangePasswordFailure("服务器异常");
+                callback.onChangePasswordFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });

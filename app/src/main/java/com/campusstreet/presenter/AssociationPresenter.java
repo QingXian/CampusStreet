@@ -131,7 +131,7 @@ public class AssociationPresenter implements IAssociationContract.Presenter {
             @Override
             public void onAddSuccess() {
                 mView.setLoadingIndicator(false);
-                mView.showSuccessfullyJoin("发布成功");
+                mView.showSuccessfullyPushPost("发布成功");
             }
 
             @Override

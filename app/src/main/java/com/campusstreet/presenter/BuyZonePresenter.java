@@ -30,7 +30,6 @@ public class BuyZonePresenter implements IBuyZoneContract.Presenter {
     }
     @Override
     public void fetchBuyZoneList(int pi) {
-        mView.setLoadingIndicator(true);
         mBuyZoneImpl.fetchBuyZoneList(pi, new IBuyZoneBiz.LoadBuyZoneListCallback() {
             @Override
             public void onBuyZoneListLoaded(List<BuyZoneInfo> buyZoneInfoList) {

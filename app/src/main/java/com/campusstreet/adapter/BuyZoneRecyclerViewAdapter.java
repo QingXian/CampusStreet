@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.campusstreet.R;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.entity.BuyZoneInfo;
+import com.campusstreet.entity.IdleSaleInfo;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -46,9 +47,14 @@ public class BuyZoneRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
 
-    public void replaceData(List<BuyZoneInfo> BuyZoneInfos) {
+    public void addData(List<BuyZoneInfo> buyZoneInfos) {
+        mList.addAll(buyZoneInfos);
+        notifyDataSetChanged();
+    }
+
+    public void replaceData(List<BuyZoneInfo> buyZoneInfos) {
         //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);
-        mList = BuyZoneInfos;
+        mList = buyZoneInfos;
         // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
         notifyDataSetChanged();
     }

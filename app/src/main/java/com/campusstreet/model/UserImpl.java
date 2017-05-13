@@ -71,7 +71,7 @@ public class UserImpl implements IUserBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onLoginFailure("服务器异常");
+                callback.onLoginFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -106,7 +106,7 @@ public class UserImpl implements IUserBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onResgisterFailure("服务器异常");
+                callback.onResgisterFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -131,7 +131,7 @@ public class UserImpl implements IUserBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onFetchFailure("服务器异常");
+                callback.onFetchFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -158,7 +158,7 @@ public class UserImpl implements IUserBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.GetResgisterMcFailure("服务器异常");
+                callback.GetResgisterMcFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -184,7 +184,7 @@ public class UserImpl implements IUserBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.GetForgetPasswordMcFailure("服务器异常");
+                callback.GetForgetPasswordMcFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -209,7 +209,7 @@ public class UserImpl implements IUserBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onForgetPasswordFailure("服务器异常");
+                callback.onForgetPasswordFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });

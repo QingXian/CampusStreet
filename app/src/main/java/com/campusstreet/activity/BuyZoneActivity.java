@@ -2,6 +2,7 @@ package com.campusstreet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,6 +30,7 @@ import com.campusstreet.model.BuyZoneImpl;
 import com.campusstreet.model.IdleSaleImpl;
 import com.campusstreet.presenter.BuyZonePresenter;
 import com.campusstreet.presenter.IdleSalePresenter;
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.List;
 
@@ -50,7 +52,7 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.rv_content)
-    RecyclerView mRvContent;
+    PullLoadMoreRecyclerView mRvContent;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.progress_bar_title)
@@ -92,13 +94,14 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
 
     @Override
     protected void onStart() {
+        mPi = 0;
         super.onStart();
         mPresenter.fetchBuyZoneList(mPi);
+        setLoadingIndicator(true);
     }
 
     private void initView() {
-        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(gridLayoutManager);
+        mRvContent.setLinearLayout();
         mAdapter = new BuyZoneRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
     }
@@ -111,6 +114,28 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
                 intent.putExtra(Const.BUYZONEIINFO_EXTRA, buyZoneInfo);
                 intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
+            }
+        });
+        mRvContent.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                mPi = 0;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.fetchBuyZoneList(mPi);
+                    }
+                }, 1500);
+            }
+
+            @Override
+            public void onLoadMore() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.fetchBuyZoneList(++mPi);
+                    }
+                }, 500);
             }
         });
     }
@@ -133,9 +158,23 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
 
     @Override
     public void setBuyZone(List<BuyZoneInfo> buyZoneInfoList) {
-        mRvContent.setVisibility(View.VISIBLE);
-        mTvError.setVisibility(View.GONE);
-        mAdapter.replaceData(buyZoneInfoList);
+        if (buyZoneInfoList != null && buyZoneInfoList.size() < 20) {
+            mRvContent.setPushRefreshEnable(false);
+        } else {
+            mRvContent.setPushRefreshEnable(true);
+        }
+        if (mPi != 0) {
+            if (buyZoneInfoList != null) {
+                mAdapter.addData(buyZoneInfoList);
+                mRvContent.setPullLoadMoreCompleted();
+            }
+        } else {
+            mRvContent.setVisibility(View.VISIBLE);
+            mTvError.setVisibility(View.GONE);
+            mAdapter.replaceData(buyZoneInfoList);
+            mRvContent.setPullLoadMoreCompleted();
+            setLoadingIndicator(false);
+        }
     }
 
     @Override
@@ -145,9 +184,15 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        mRvContent.setVisibility(View.GONE);
-        mTvError.setText(errorMsg);
-        mTvError.setVisibility(View.VISIBLE);
+        if (mPi == 0) {
+            mRvContent.setVisibility(View.GONE);
+            mTvError.setText(errorMsg);
+            mTvError.setVisibility(View.VISIBLE);
+        }else{
+            showMessage("没有数据了");
+        }
+        setLoadingIndicator(false);
+        mRvContent.setPullLoadMoreCompleted();
     }
 
     @Override

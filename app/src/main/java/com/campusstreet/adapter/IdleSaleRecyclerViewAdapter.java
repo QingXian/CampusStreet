@@ -57,6 +57,10 @@ public class IdleSaleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
         // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
         notifyDataSetChanged();
     }
+    public void addData(List<IdleSaleInfo> idleSaleInfos) {
+        mList.addAll(idleSaleInfos);
+        notifyDataSetChanged();
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

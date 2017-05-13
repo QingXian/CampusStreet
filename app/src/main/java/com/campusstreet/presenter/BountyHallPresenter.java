@@ -47,7 +47,6 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
 
     @Override
     public void fetchTaskList(int tp, int pi, String key) {
-        mView.setLoadingIndicator(true);
         mBountyHallImpl.fetchTaskList(tp, pi, key, new IBountyHallBiz.LoadTaskListCallback() {
             @Override
             public void onTaskListLoaded(List<BountyHallInfo> bountyHallInfos) {

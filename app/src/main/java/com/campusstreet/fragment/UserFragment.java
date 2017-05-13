@@ -92,7 +92,7 @@ public class UserFragment extends Fragment {
 
     private void initView() {
 //        Picasso.with(getActivity())
-//                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.)
+//                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.get)
 //                .fit()
 //                .into(mIvHead);
         mTvDepartment.setText(mUserInfo.getMajor());

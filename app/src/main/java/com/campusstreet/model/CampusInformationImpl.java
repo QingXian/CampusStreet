@@ -81,7 +81,7 @@ public class CampusInformationImpl implements ICampusInformationBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -114,7 +114,7 @@ public class CampusInformationImpl implements ICampusInformationBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });

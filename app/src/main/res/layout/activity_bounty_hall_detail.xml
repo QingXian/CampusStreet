@@ -9,8 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/include"
-        android:layout_toRightOf="@+id/include"
         android:background="@color/colorGray"
         android:orientation="vertical">
 
@@ -288,6 +286,27 @@
                 android:layout_height="wrap_content"
                 android:text="张森"/>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:paddingBottom="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/act_bounty_hall_detail_phone"/>
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张森"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -309,11 +328,11 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
+            android:background="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:tabIndicatorHeight="0dp"
-            app:tabMode="scrollable"
+            app:tabMode="fixed"
             app:tabSelectedTextColor="@color/colorPrimary"
             />
 

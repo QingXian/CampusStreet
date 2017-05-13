@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.campusstreet.R;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.RecruitInfo;
 import com.squareup.picasso.Picasso;
@@ -61,6 +62,11 @@ public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<R
         this.mOnItemClickListener = listener;
     }
 
+
+    public void addData(List<RecruitInfo> recruitInfos) {
+        mList.addAll(recruitInfos);
+        notifyDataSetChanged();
+    }
 
     public void replaceData(List<RecruitInfo> recruitInfos) {
         //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);

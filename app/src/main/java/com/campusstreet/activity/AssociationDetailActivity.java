@@ -148,7 +148,7 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
             mFabAddTask.setVisibility(View.GONE);
         } else {
             mBtnJoin.setVisibility(View.VISIBLE);
-            mFabAddTask.setVisibility(View.VISIBLE);
+            mFabAddTask.setVisibility(View.GONE);
         }
     }
 
@@ -208,7 +208,7 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
         for (AssociationNumInfo associationNumInfo :
                 associationNumList) {
             if (mUserInfo != null) {
-                if (associationNumInfo.getId() == mUserInfo.getUid()) {
+                if (associationNumInfo.getId() .equals(mUserInfo.getUid())) {
                     mBtnJoin.setVisibility(View.GONE);
                     mFabAddTask.setVisibility(View.VISIBLE);
                 } else {
@@ -229,7 +229,7 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
 
     @Override
     public void showSuccessfullyJoin(String succcessMsg) {
-
+        showMessage(succcessMsg);
     }
 
     @Override

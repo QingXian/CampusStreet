@@ -25,21 +25,23 @@
             android:layout_height="8dp"
             android:background="@color/colorGray"/>
 
-        <android.support.v7.widget.RecyclerView
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorGray">
-        </android.support.v7.widget.RecyclerView>
+        </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
     </LinearLayout>
+
     <TextView
-        android:visibility="gone"
         android:id="@+id/tv_error"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="加载失败"/>
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="加载失败"
+        android:textSize="18sp"
+        android:visibility="gone"/>
+
     <include layout="@layout/progress_bar"></include>
 </RelativeLayout>

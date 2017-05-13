@@ -91,7 +91,7 @@ public class BountyHallImpl implements IBountyHallBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -127,7 +127,7 @@ public class BountyHallImpl implements IBountyHallBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -165,7 +165,7 @@ public class BountyHallImpl implements IBountyHallBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -198,7 +198,7 @@ public class BountyHallImpl implements IBountyHallBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onJoinTaskFailure("服务器异常");
+                callback.onJoinTaskFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -224,7 +224,7 @@ public class BountyHallImpl implements IBountyHallBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onPassJoinTaskFailure("服务器异常");
+                callback.onPassJoinTaskFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -250,7 +250,7 @@ public class BountyHallImpl implements IBountyHallBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onStartTaskFailure("服务器异常");
+                callback.onStartTaskFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -267,10 +267,10 @@ public class BountyHallImpl implements IBountyHallBiz {
         requestBodyMap.put("con", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getCon()));
         requestBodyMap.put("taskfee", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getFee()));
         requestBodyMap.put("tasktype", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getType()));
-        requestBodyMap.put("person", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getType()));
-        requestBodyMap.put("endtime", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getType()));
-        requestBodyMap.put("linkman", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getType()));
-        requestBodyMap.put("mobile", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getType()));
+        requestBodyMap.put("person", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), String.valueOf(bountyHallInfo.getPerson())));
+        requestBodyMap.put("endtime", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getEndtime()));
+        requestBodyMap.put("linkman", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getLinkman()));
+        requestBodyMap.put("mobile", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getMobile()));
         requestBodyMap.put("keys", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), bountyHallInfo.getKey()));
         Call<JsonObject> call = mBountyHallClient.addTask(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {
@@ -290,7 +290,7 @@ public class BountyHallImpl implements IBountyHallBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onAddFailure("服务器异常");
+                callback.onAddFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -333,7 +333,7 @@ public class BountyHallImpl implements IBountyHallBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });

@@ -88,6 +88,9 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
     private int mIndex;
     private String mEndTime;
     private UserInfo mUserInfo;
+    private int mYear;
+    private int mMonth;
+    private int mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +204,7 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mType = mTitle[i];
+                                mIndex = i;
                                 mTvType.setText(mTitle[i]);
                                 dialogInterface.dismiss();
                             }
@@ -215,6 +219,7 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mType = mTitle[i];
+                                mIndex = i;
                                 mTvType.setText(mTitle[i]);
                                 dialogInterface.dismiss();
                             }
@@ -227,8 +232,11 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
                 new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        mTvEndTime.setText( String.format("%d-%d-%d", year, monthOfYear+1, dayOfMonth));
+                        mTvEndTime.setText(String.format("%d-%d-%d", year, monthOfYear + 1, dayOfMonth));
                         mEndTime = mTvEndTime.getText().toString();
+                        mYear = year;
+                        mMonth = monthOfYear;
+                        mDay = dayOfMonth;
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
 
@@ -239,6 +247,10 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         mTvEndTime.setText(String.format("%d-%d-%d", year, monthOfYear, dayOfMonth));
+                        mEndTime = mTvEndTime.getText().toString();
+                        mYear = year;
+                        mMonth = monthOfYear;
+                        mDay = dayOfMonth;
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
                 break;
@@ -297,13 +309,25 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
             showMessage("请选择截止日期");
             return;
         }
+        Calendar c = Calendar.getInstance();
+        if (mYear < c.get(Calendar.YEAR)) {
+            showMessage("请选择正确的日期");
+            return;
+        } else if (mMonth < c.get(Calendar.MONTH)) {
+            showMessage("请选择正确的日期");
+            return;
+        } else if (mDay < c.get(Calendar.DAY_OF_MONTH)) {
+            showMessage("请选择正确的日期");
+            return;
+        }
+
 
         BountyHallInfo bountyHallInfo = new BountyHallInfo();
         bountyHallInfo.setTitle(mEtTitle.getText().toString());
         bountyHallInfo.setFee(mEtBounty.getText().toString());
         bountyHallInfo.setCon(mEtDetail.getText().toString());
         bountyHallInfo.setKey(mEtKey.getText().toString());
-        bountyHallInfo.setType(mTvType.getText().toString());
+        bountyHallInfo.setType(String.valueOf(mIndex + 1));
         bountyHallInfo.setMobile(mEtPhone.getText().toString());
         bountyHallInfo.setLinkman(mEtLinkman.getText().toString());
         bountyHallInfo.setPerson(Integer.valueOf(mEtNum.getText().toString()));

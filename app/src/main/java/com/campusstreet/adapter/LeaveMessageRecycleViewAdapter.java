@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.campusstreet.R;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.StudyWorkInfo;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -33,6 +34,10 @@ public class LeaveMessageRecycleViewAdapter extends RecyclerView.Adapter<Recycle
         mList = list;
     }
 
+    public void addData(List<LeaveMessageInfo> leaveMessageInfos) {
+        mList.addAll(leaveMessageInfos);
+        notifyDataSetChanged();
+    }
 
     public void replaceData(List<LeaveMessageInfo> leaveMessageInfos) {
         mList = leaveMessageInfos;

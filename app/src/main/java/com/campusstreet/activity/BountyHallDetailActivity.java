@@ -102,6 +102,8 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    @BindView(R.id.tv_phone)
+    TextView mTvPhone;
     private BountyHallInfo mBountyHallInfo;
     private IBountyHallContract.Presenter mPresenter;
     private BountyHallDetailRecyclerViewAdapter mAdapter;
@@ -196,6 +198,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         mTvCompletionTime.setText(mBountyHallInfo.getEndtime());
         mTvContactPeople.setText(mBountyHallInfo.getLinkman());
         mTvDescribe.setText(mBountyHallInfo.getCon());
+        mTvPhone.setText(mBountyHallInfo.getMobile());
         Picasso.with(this)
                 .load(AppConfig.AVATAR_SERVER_HOST + mBountyHallInfo.getUserpic())
                 .fit()
@@ -208,7 +211,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             mTabLayout.setVisibility(View.GONE);
             mRvContent.setVisibility(View.GONE);
         } else {
-            if (mUserInfo.getUid() == mBountyHallInfo.getUid()) {
+            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid())) {
                 mTabLayout.setVisibility(View.VISIBLE);
                 mRvContent.setVisibility(View.VISIBLE);
                 mBtnEntel.setText("确认开始服务");
@@ -250,9 +253,9 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         for (JoinInfo joinInfo :
                 joinInfos) {
             if (mUserInfo != null) {
-                if (joinInfo.getUid() == mUserInfo.getUid()) {
+                if (joinInfo.getUid() .equals(mUserInfo.getUid())) {
                     mBtnEntel.setText("已报名");
-                    mBtnEntel.setBackgroundColor(Color.parseColor("#B6B6D8"));
+                    mBtnEntel.setBackgroundColor(Color.parseColor("#f1f1f1"));
                     mBtnEntel.setEnabled(false);
                 }
             }
@@ -330,7 +333,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             mBtnEntel.setText("已报名");
-            mBtnEntel.setBackgroundColor(Color.parseColor("#B6B6D8"));
+            mBtnEntel.setBackgroundColor(Color.parseColor("#f1f1f1"));
             mBtnEntel.setEnabled(false);
         }
     }

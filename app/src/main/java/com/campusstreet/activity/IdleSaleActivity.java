@@ -2,6 +2,7 @@ package com.campusstreet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.IdleSaleImpl;
 import com.campusstreet.presenter.IdleSalePresenter;
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
     @BindView(R.id.rv_content)
-    RecyclerView mRvContent;
+    PullLoadMoreRecyclerView mRvContent;
     @BindView(R.id.btn_add)
     Button mBtnAdd;
     @BindView(R.id.progress_bar)
@@ -84,15 +86,17 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
         mIvToolbarRight.setImageResource(R.drawable.ic_search);
         new IdleSalePresenter(IdleSaleImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
-        setLoadingIndicator(true);
+
         initView();
         initEvent();
     }
 
     @Override
     protected void onStart() {
+        mPi = 0;
         super.onStart();
         mPresenter.fetchIdleSaleList(0, mPi);
+        setLoadingIndicator(true);
     }
 
     private void initEvent() {
@@ -105,12 +109,33 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
                 startActivity(intent);
             }
         });
+        mRvContent.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                mPi = 0;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.fetchIdleSaleList(0, mPi);
+                    }
+                }, 1500);
+            }
+
+            @Override
+            public void onLoadMore() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.fetchIdleSaleList(0, ++mPi);
+                    }
+                }, 500);
+            }
+        });
     }
 
 
     private void initView() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        mRvContent.setLayoutManager(gridLayoutManager);
+        mRvContent.setGridLayout(2);
         mAdapter = new IdleSaleRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
     }
@@ -126,8 +151,8 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
                     Intent intent = new Intent(this, AddIdleSaleActivity.class);
                     intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                     startActivity(intent);
-                }else{
-                   showMessage("您还未登录");
+                } else {
+                    showMessage("您还未登录");
                 }
                 break;
         }
@@ -141,9 +166,23 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
 
     @Override
     public void setIdleSale(List<IdleSaleInfo> idleSaleInfoList) {
-        mRvContent.setVisibility(View.VISIBLE);
-        mTvError.setVisibility(View.GONE);
-        mAdapter.replaceData(idleSaleInfoList);
+        if (idleSaleInfoList != null && idleSaleInfoList.size() < 20) {
+            mRvContent.setPushRefreshEnable(false);
+        } else {
+            mRvContent.setPushRefreshEnable(true);
+        }
+        if (mPi != 0) {
+            if (idleSaleInfoList != null) {
+                mAdapter.addData(idleSaleInfoList);
+                mRvContent.setPullLoadMoreCompleted();
+            }
+        } else {
+            mRvContent.setVisibility(View.VISIBLE);
+            mTvError.setVisibility(View.GONE);
+            mAdapter.replaceData(idleSaleInfoList);
+            mRvContent.setPullLoadMoreCompleted();
+            setLoadingIndicator(false);
+        }
     }
 
     @Override
@@ -158,9 +197,15 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        mRvContent.setVisibility(View.GONE);
-        mTvError.setText(errorMsg);
-        mTvError.setVisibility(View.VISIBLE);
+        if (mPi == 0) {
+            mRvContent.setVisibility(View.GONE);
+            mTvError.setText(errorMsg);
+            mTvError.setVisibility(View.VISIBLE);
+        }else{
+            showMessage("没有数据了");
+        }
+        setLoadingIndicator(false);
+        mRvContent.setPullLoadMoreCompleted();
     }
 
     @Override
@@ -187,6 +232,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
             }
         }
     }
+
     protected void showMessage(String msg) {
         if (this != null && !this.isFinishing()) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

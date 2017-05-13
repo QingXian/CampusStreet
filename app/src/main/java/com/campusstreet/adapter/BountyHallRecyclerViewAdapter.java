@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.campusstreet.R;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.RecruitInfo;
 import com.squareup.picasso.Picasso;
 
 import java.io.UnsupportedEncodingException;
@@ -50,6 +51,11 @@ public class BountyHallRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         this.mOnItemClickListener = listener;
     }
 
+
+    public void addData(List<BountyHallInfo> bountyHallInfos) {
+        mList.addAll(bountyHallInfos);
+        notifyDataSetChanged();
+    }
 
     public void replaceData(List<BountyHallInfo> bountyHallInfos) {
         //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);

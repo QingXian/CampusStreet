@@ -1,18 +1,23 @@
 package com.campusstreet.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.adapter.BountyHallDetailRecyclerViewAdapter;
@@ -25,17 +30,13 @@ import com.campusstreet.entity.RecruitInfo;
 import com.campusstreet.entity.StudyWorkInfo;
 import com.campusstreet.model.CampusRecruitmentImpl;
 import com.campusstreet.presenter.CampusRecruitmentPresenter;
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.R.attr.type;
-import static com.campusstreet.R.id.view;
-import static com.campusstreet.common.Const.ISSTRAT;
-import static com.campusstreet.common.Const.TID_EXTRA;
 
 /**
  * Created by Orange on 2017/4/6.
@@ -47,7 +48,7 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
     @BindView(R.id.rv_content)
-    RecyclerView mRvContent;
+    PullLoadMoreRecyclerView mRvContent;
     @BindView(R.id.et_search)
     EditText mEtSearch;
     @BindView(R.id.tv_toolbar_right)
@@ -65,6 +66,8 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
     private CampusRecruitmentRecyclerViewAdapter mRecruitAdapter;
     private CampusStudyWorkRecyclerViewAdapter mStudyWorkAdapter;
     private int mPostion;
+    List<RecruitInfo> mRecruitInfos;
+    List<StudyWorkInfo> mStudyWorkInfos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,10 +96,13 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getText().equals("普通招聘")) {
-
+                    mPi = 0;
+                    mEtSearch.setText("");
                     mPresenter.fetchCampusRecruitmentList(null, mPi);
                     mPostion = tab.getPosition();
                 } else {
+                    mPi = 0;
+                    mEtSearch.setText("");
                     mPostion = tab.getPosition();
                     mPresenter.fetchStudyWorkList(null, mPi);
                 }
@@ -128,11 +134,80 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
                 startActivity(intent);
             }
         });
+        mRvContent.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                mPi = 0;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mPostion == 0) {
+                            if (!mEtSearch.getText().equals(""))
+                                mPresenter.fetchCampusRecruitmentList(mEtSearch.getText().toString(), mPi);
+                            else
+                                mPresenter.fetchCampusRecruitmentList(null, mPi);
+                        } else {
+                            if (!mEtSearch.getText().equals(""))
+                                mPresenter.fetchStudyWorkList(mEtSearch.getText().toString(), mPi);
+                            else
+                                mPresenter.fetchStudyWorkList(null, mPi);
+                        }
+                    }
+                }, 1500);
+            }
+
+            @Override
+            public void onLoadMore() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mPostion == 0) {
+                            if (!mEtSearch.getText().equals(""))
+                                mPresenter.fetchCampusRecruitmentList(mEtSearch.getText().toString(), ++mPi);
+                            else
+                                mPresenter.fetchCampusRecruitmentList(null, ++mPi);
+                        } else {
+                            if (!mEtSearch.getText().equals(""))
+                                mPresenter.fetchStudyWorkList(mEtSearch.getText().toString(), ++mPi);
+                            else
+                                mPresenter.fetchStudyWorkList(null, ++mPi);
+                        }
+
+                    }
+                }, 1500);
+            }
+        });
+        mEtSearch.setOnKeyListener(new View.OnKeyListener() {
+
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    mPi = 0;
+                    if (mPostion == 0) {
+                        if (!mEtSearch.getText().equals(""))
+                            mPresenter.fetchCampusRecruitmentList(mEtSearch.getText().toString(), mPi);
+                        else
+                            mPresenter.fetchCampusRecruitmentList(null, mPi);
+                    } else {
+                        if (!mEtSearch.getText().equals(""))
+                            mPresenter.fetchStudyWorkList(mEtSearch.getText().toString(), mPi);
+                        else
+                            mPresenter.fetchStudyWorkList(null, mPi);
+                    }
+                    setLoadingIndicator(true);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void initView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(linearLayoutManager);
+        mRvContent.setLinearLayout();
         mRecruitAdapter = new CampusRecruitmentRecyclerViewAdapter(this, null);
         mStudyWorkAdapter = new CampusStudyWorkRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mRecruitAdapter);
@@ -143,11 +218,14 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
     @Override
     protected void onStart() {
         super.onStart();
+        mPi = 0;
         if (mPostion == 0) {
+            setLoadingIndicator(true);
             mPresenter.fetchCampusRecruitmentList(null, mPi);
-        } else
+        } else {
+            setLoadingIndicator(true);
             mPresenter.fetchStudyWorkList(null, mPi);
-
+        }
     }
 
     @OnClick(R.id.tv_toolbar_right)
@@ -162,24 +240,59 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
 
     @Override
     public void setCampusRecruitmentList(List<RecruitInfo> recruitInfos) {
-        mRvContent.setVisibility(View.VISIBLE);
-        mTvError.setVisibility(View.GONE);
-        mRecruitAdapter.replaceData(recruitInfos);
+        if (recruitInfos != null && recruitInfos.size() < 20) {
+            mRvContent.setPushRefreshEnable(false);
+        } else {
+            mRvContent.setPushRefreshEnable(true);
+        }
+        if (mPi != 0) {
+            if (recruitInfos != null) {
+                mRecruitAdapter.addData(recruitInfos);
+                mRvContent.setPullLoadMoreCompleted();
+            }
+        } else {
+            mRvContent.setVisibility(View.VISIBLE);
+            mTvError.setVisibility(View.GONE);
+            mRecruitAdapter.replaceData(recruitInfos);
+            mRvContent.setPullLoadMoreCompleted();
+            setLoadingIndicator(false);
+        }
     }
 
     @Override
     public void setStudyWorkList(List<StudyWorkInfo> studyWorkInfos) {
-        mRvContent.setVisibility(View.VISIBLE);
-        mTvError.setVisibility(View.GONE);
-        mRvContent.setAdapter(mStudyWorkAdapter);
-        mStudyWorkAdapter.replaceData(studyWorkInfos);
+        if (studyWorkInfos != null && studyWorkInfos.size() < 20) {
+            mRvContent.setPushRefreshEnable(false);
+        } else {
+            mRvContent.setPushRefreshEnable(true);
+        }
+        if (mPi != 0) {
+            if (studyWorkInfos != null) {
+                mStudyWorkAdapter.addData(studyWorkInfos);
+                mRvContent.setPullLoadMoreCompleted();
+            }
+        } else {
+            mRvContent.setVisibility(View.VISIBLE);
+            mTvError.setVisibility(View.GONE);
+            mRvContent.setAdapter(mStudyWorkAdapter);
+            mStudyWorkAdapter.replaceData(studyWorkInfos);
+            mRvContent.setPullLoadMoreCompleted();
+            setLoadingIndicator(false);
+        }
+
     }
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        mRvContent.setVisibility(View.GONE);
-        mTvError.setText(errorMsg);
-        mTvError.setVisibility(View.VISIBLE);
+        if (mPi == 0) {
+            mRvContent.setVisibility(View.GONE);
+            mTvError.setText(errorMsg);
+            mTvError.setVisibility(View.VISIBLE);
+        } else {
+            showMessage("没有数据了");
+        }
+        setLoadingIndicator(false);
+        mRvContent.setPullLoadMoreCompleted();
     }
 
     @Override
@@ -194,6 +307,12 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
+        }
+    }
+
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -39,7 +39,6 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
             @Override
             public void onIdleSaleListLoaded(List<IdleSaleInfo> idleSaleInfoList) {
                 mView.setIdleSale(idleSaleInfoList);
-                mView.setLoadingIndicator(false);
             }
 
             @Override

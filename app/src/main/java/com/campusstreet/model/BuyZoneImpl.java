@@ -83,7 +83,7 @@ public class BuyZoneImpl implements IBuyZoneBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -117,7 +117,7 @@ public class BuyZoneImpl implements IBuyZoneBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onAddFailure("服务器异常");
+                callback.onAddFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -143,7 +143,7 @@ public class BuyZoneImpl implements IBuyZoneBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onLeaveMessageFailure("服务器异常");
+                callback.onLeaveMessageFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
@@ -181,7 +181,7 @@ public class BuyZoneImpl implements IBuyZoneBiz {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onDataNotAvailable("服务器异常");
+                callback.onDataNotAvailable("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });
