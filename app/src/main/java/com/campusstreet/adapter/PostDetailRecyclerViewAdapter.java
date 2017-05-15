@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.campusstreet.R;
 import com.campusstreet.common.AppConfig;
+import com.campusstreet.entity.AssociationInfo;
 import com.campusstreet.entity.AssociationPostMessageInfo;
 import com.squareup.picasso.Picasso;
 
@@ -34,9 +35,13 @@ public class PostDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
 
-    public void replaceData(List<AssociationPostMessageInfo> PostDetailInfos) {
-        mList = PostDetailInfos;
+    public void replaceData(List<AssociationPostMessageInfo> postDetailInfos) {
+        mList = postDetailInfos;
         // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
+        notifyDataSetChanged();
+    }
+    public void addData(List<AssociationPostMessageInfo> postDetailInfos) {
+        mList.addAll(postDetailInfos);
         notifyDataSetChanged();
     }
 

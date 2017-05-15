@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.campusstreet.R;
 import com.campusstreet.common.AppConfig;
+import com.campusstreet.entity.AssociationInfo;
 import com.campusstreet.entity.AssociationPostInfo;
 import com.campusstreet.entity.AssociationPostInfo;
 import com.squareup.picasso.Picasso;
@@ -49,10 +50,14 @@ public class AssociationDetailRecyclerViewAdapter extends RecyclerView.Adapter<R
         this.mOnItemClickListener = listener;
     }
 
+    public void addData(List<AssociationPostInfo> associationPostInfos) {
+        mList.addAll(associationPostInfos);
+        notifyDataSetChanged();
+    }
 
-    public void replaceData(List<AssociationPostInfo> AssociationPostInfos) {
+    public void replaceData(List<AssociationPostInfo> associationPostInfos) {
         //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);
-        mList = AssociationPostInfos;
+        mList = associationPostInfos;
         // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
         notifyDataSetChanged();
     }

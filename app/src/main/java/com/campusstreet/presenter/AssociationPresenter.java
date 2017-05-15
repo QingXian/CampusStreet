@@ -32,7 +32,6 @@ public class AssociationPresenter implements IAssociationContract.Presenter {
 
     @Override
     public void fetchAssociationList(int pi) {
-        mView.setLoadingIndicator(true);
         mAssociationImpl.fetchAssociationList(pi, new IAssociationBiz.LoadAssociationListCallback() {
             @Override
             public void onAssociationListLoaded(List<AssociationInfo> associationInfos) {
@@ -144,7 +143,6 @@ public class AssociationPresenter implements IAssociationContract.Presenter {
 
     @Override
     public void fetchAssociationPostMessageList(int pid, int pi) {
-        mView.setLoadingIndicator(true);
         mAssociationImpl.fetchAssociationPostMessageList(pid, pi, new IAssociationBiz.LoadAssociationPostMessageCallback() {
             @Override
             public void onAssociationPostMessageLoaded(List<AssociationPostMessageInfo> associationPostMessageInfos) {

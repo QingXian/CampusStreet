@@ -111,6 +111,8 @@
         </activity>
         <activity android:name=".activity.ModifyPasswordActivity">
         </activity>
+        <activity android:name=".activity.ReleaseLiveActivity">
+        </activity>
     </application>
 
 </manifest>

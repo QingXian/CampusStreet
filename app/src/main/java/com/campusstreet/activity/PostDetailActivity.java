@@ -2,6 +2,7 @@ package com.campusstreet.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -73,11 +74,16 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    @BindView(R.id.scrollView)
+    NestedScrollView mScrollView;
+    private LinearLayoutManager mLinearLayoutManager;
     private IAssociationContract.Presenter mPresenter;
     private AssociationPostInfo mAssociationPostInfo;
     private int mPi = 0;
     private PostDetailRecyclerViewAdapter mAdapter;
     private UserInfo mUserInfo;
+    private boolean mIsLoading;
+    private boolean mIsNeedLoadMore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,14 +108,50 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         mPresenter.fetchAssociationPostDetail(mAssociationPostInfo.getId());
         mPresenter.fetchAssociationPostMessageList(mAssociationPostInfo.getId(), mPi);
+        setLoadingIndicator(true);
         initView();
+        initEvent();
     }
 
     private void initView() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(linearLayoutManager);
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRvContent.setLayoutManager(mLinearLayoutManager);
         mAdapter = new PostDetailRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
+        mRvContent.setNestedScrollingEnabled(false);
+    }
+
+    private void initEvent() {
+        mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                View contentView = mScrollView.getChildAt(0);
+                if (mIsNeedLoadMore && !mIsLoading && contentView.getMeasuredHeight() <= mScrollView.getScrollY() + mScrollView.getHeight()) {
+                    mPresenter.fetchAssociationPostMessageList(mAssociationPostInfo.getId(), ++mPi);
+                    mIsLoading = true;
+                }
+
+            }
+
+        });
+//        mRvContent.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                // 如果当前滑动状态为空闲并且总数小于最后一个可见项+阈值，则加载更多
+//                if (mIsNeedLoadMore && !mIsLoading && RecyclerView.SCROLL_STATE_IDLE == newState &&
+//                        mItemCount < mLastVisibleItemPosition + Const.RECYCLER_VIEW_VISIBLE_THRESHOLD) {
+//                    mPresenter.fetchAssociationPostMessageList(mAssociationPostInfo.getId(), ++mPi);
+//                    mIsLoading = true;
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                mLastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition();
+//                mItemCount = mLinearLayoutManager.getItemCount();
+//            }
+//        });
     }
 
     @Override
@@ -119,7 +161,20 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
 
     @Override
     public void setAssociationPostMessageList(List<AssociationPostMessageInfo> associationPostMessageList) {
-        mAdapter.replaceData(associationPostMessageList);
+        if (associationPostMessageList != null && associationPostMessageList.size() < 20) {
+            mIsNeedLoadMore = false;
+        } else {
+            mIsNeedLoadMore = true;
+        }
+        if (mPi != 0) {
+            if (associationPostMessageList != null) {
+                mAdapter.addData(associationPostMessageList);
+                mIsLoading = false;
+            }
+        } else {
+            mAdapter.replaceData(associationPostMessageList);
+            setLoadingIndicator(false);
+        }
     }
 
     @Override
@@ -158,18 +213,26 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        showMessage(errorMsg);
+        if (mPi == 0) {
+            showMessage(errorMsg);
+        } else {
+            showMessage("没有数据了");
+        }
+        setLoadingIndicator(false);
     }
 
     @Override
     public void showSuccessfullyleaveMessage(String succcessMsg) {
         showMessage(succcessMsg);
+        mPi = 0;
+        setLoadingIndicator(true);
         mPresenter.fetchAssociationPostMessageList(mAssociationPostInfo.getId(), mPi);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
         }
         mEtMessage.setText("");
+        mScrollView.smoothScrollTo(0, 0);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.campusstreet.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -94,11 +94,20 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
     TextView mTvQq;
     @BindView(R.id.tv_qq_hint)
     TextView mTvQqHint;
+    @BindView(R.id.tv_phone_hint)
+    TextView mTvPhoneHint;
+    @BindView(R.id.scrollView)
+    NestedScrollView mScrollView;
+    private LinearLayoutManager mLinearLayoutManager;
     private IBuyZoneContract.Presenter mPresenter;
     private BuyZoneInfo mBuyZoneInfo;
     private int mPi = 0;
     private LeaveMessageRecycleViewAdapter mAdapter;
     private UserInfo mUserInfo;
+    private boolean mIsLoading;
+    private int mLastVisibleItemPosition;
+    private int mItemCount;
+    private boolean mIsNeedLoadMore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,11 +129,44 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
         });
         mBuyZoneInfo = (BuyZoneInfo) getIntent().getSerializableExtra(Const.BUYZONEIINFO_EXTRA);
         new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
-        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         initView();
+        initEvent();
         setLoadingIndicator(true);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         mPresenter.fetchBuyZoneMessageList(mBuyZoneInfo.getId(), mPi);
+    }
+
+    private void initEvent() {
+        mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                View contentView = mScrollView.getChildAt(0);
+                if (mIsNeedLoadMore && !mIsLoading && contentView.getMeasuredHeight() <= mScrollView.getScrollY() + mScrollView.getHeight()) {
+                    mPresenter.fetchBuyZoneMessageList(mBuyZoneInfo.getId(), ++mPi);
+                    mIsLoading = true;
+                }
+
+            }
+
+        });
+//        mRvContent.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                // 如果当前滑动状态为空闲并且总数小于最后一个可见项+阈值，则加载更多
+//                if (mIsNeedLoadMore && !mIsLoading && RecyclerView.SCROLL_STATE_IDLE == newState &&
+//                        mItemCount < mLastVisibleItemPosition + Const.RECYCLER_VIEW_VISIBLE_THRESHOLD) {
+//                    mPresenter.fetchBuyZoneMessageList(mBuyZoneInfo.getId(), ++mPi);
+//                    mIsLoading = true;
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                mLastVisibleItemPosition = mLinearLayoutManager.findLastVisibleItemPosition();
+//                mItemCount = mLinearLayoutManager.getItemCount();
+//            }
+//        });
     }
 
     private void initView() {
@@ -145,10 +187,11 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
         } else {
             mTvQq.setVisibility(View.GONE);
         }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(linearLayoutManager);
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRvContent.setLayoutManager(mLinearLayoutManager);
         mAdapter = new LeaveMessageRecycleViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
+        mRvContent.setNestedScrollingEnabled(false);
     }
 
     @OnClick(R.id.btn_send_message)
@@ -177,12 +220,30 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
 
     @Override
     public void setBuyZoneMessageList(List<LeaveMessageInfo> BuyZoneMessageList) {
-        mAdapter.replaceData(BuyZoneMessageList);
+        if (BuyZoneMessageList != null && BuyZoneMessageList.size() < 20) {
+            mIsNeedLoadMore = false;
+        } else {
+            mIsNeedLoadMore = true;
+        }
+        if (mPi != 0) {
+            if (BuyZoneMessageList != null) {
+                mAdapter.addData(BuyZoneMessageList);
+                mIsLoading = false;
+            }
+        } else {
+            mAdapter.replaceData(BuyZoneMessageList);
+            setLoadingIndicator(false);
+        }
     }
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        showMessage(errorMsg);
+        if (mPi == 0) {
+            showMessage(errorMsg);
+        } else {
+            showMessage("没有数据了");
+        }
+        setLoadingIndicator(false);
     }
 
     @Override
@@ -192,12 +253,15 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
     @Override
     public void showSuccessfullyleaveMessage(String succcessMsg) {
         showMessage(succcessMsg);
+        mPi = 0;
+        setLoadingIndicator(true);
         mPresenter.fetchBuyZoneMessageList(mBuyZoneInfo.getId(), mPi);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) {
             imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
         }
         mEtMessage.setText("");
+        mScrollView.smoothScrollTo(0, 0);
     }
 
     @Override

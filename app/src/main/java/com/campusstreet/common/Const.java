@@ -66,4 +66,8 @@ public class Const {
     public static final String BANNER_URL_EXTRA = "banner_url_extra";
     public static final String PHONE = "phone";
     public static final String CAPTCHA = "captcha";
+    /**
+     * recycler view可见项的阈值
+     */
+    public static final int RECYCLER_VIEW_VISIBLE_THRESHOLD = 3;
 }

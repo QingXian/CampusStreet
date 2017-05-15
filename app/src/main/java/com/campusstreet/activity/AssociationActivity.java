@@ -2,6 +2,7 @@ package com.campusstreet.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.AssociationImpl;
 import com.campusstreet.presenter.AssociationPresenter;
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
     @BindView(R.id.tab_layout_sub)
     TabLayout mTabLayoutSub;
     @BindView(R.id.rv_content)
-    RecyclerView mRvContent;
+    PullLoadMoreRecyclerView mRvContent;
     @BindView(R.id.tv_error)
     TextView mTvError;
     @BindView(R.id.progress_bar)
@@ -101,19 +103,42 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
                 startActivity(intent);
             }
         });
+        mRvContent.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                mPi = 0;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.fetchAssociationList(mPi);
+                    }
+                }, 1500);
+            }
+
+            @Override
+            public void onLoadMore() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.fetchAssociationList(++mPi);
+                    }
+                }, 500);
+            }
+        });
     }
 
     protected void onStart() {
-        mPresenter.fetchAssociationList(mPi);
         super.onStart();
+        mPi = 0;
+        mPresenter.fetchAssociationList(mPi);
+        setLoadingIndicator(true);
 
     }
 
     private void initView() {
         mTabLayout.addTab(mTabLayout.newTab().setText("推荐社团"));
         mTabLayout.addTab(mTabLayout.newTab().setText("我的社团"));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(linearLayoutManager);
+        mRvContent.setLinearLayout();
         mAdapter = new AssociationRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
     }
@@ -140,7 +165,23 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
 
     @Override
     public void setAssociationList(List<AssociationInfo> associationList) {
-        mAdapter.replaceData(associationList);
+        if (associationList != null && associationList.size() < 20) {
+            mRvContent.setPushRefreshEnable(false);
+        } else {
+            mRvContent.setPushRefreshEnable(true);
+        }
+        if (mPi != 0) {
+            if (associationList != null) {
+                mAdapter.addData(associationList);
+                mRvContent.setPullLoadMoreCompleted();
+            }
+        } else {
+            mRvContent.setVisibility(View.VISIBLE);
+            mTvError.setVisibility(View.GONE);
+            mAdapter.replaceData(associationList);
+            mRvContent.setPullLoadMoreCompleted();
+            setLoadingIndicator(false);
+        }
     }
 
     @Override
@@ -165,10 +206,15 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        mRvContent.setVisibility(View.GONE);
-        mTvError.setText(errorMsg);
-        mTvError.setVisibility(View.VISIBLE);
+        if (mPi == 0) {
+            mRvContent.setVisibility(View.GONE);
+            mTvError.setText(errorMsg);
+            mTvError.setVisibility(View.VISIBLE);
+        } else {
+            showMessage("没有数据了");
+        }
         setLoadingIndicator(false);
+        mRvContent.setPullLoadMoreCompleted();
     }
 
     @Override

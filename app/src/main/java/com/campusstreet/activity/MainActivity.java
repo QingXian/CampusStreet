@@ -86,6 +86,20 @@ public class MainActivity extends AppCompatActivity {
                 mIsLogined = true;
             }
         }
+        //从持久化文件中获取的用户信息
+        if (!mIsLogined && mUserInfo == null) {
+            String userStr = PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
+                    .getString(Const.PREF_USERINFO_KEY, null);
+            if (userStr != null) {
+                mUserInfo = new GsonBuilder().setLenient().create().fromJson(userStr, UserInfo.class);
+            }
+        }
+//        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
+//        setFragment(mHomeFragment);
+        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
+        setFragment(mHomeFragment);
+        mScrollview.smoothScrollTo(0, 0);
+        new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
     }
 
     @OnClick({R.id.iv_toolbar_right, R.id.tv_home, R.id.tv_notice, R.id.tv_find, R.id.tv_user, R.id.iv_release})
@@ -106,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
                 mTvHome.setSelected(true);
                 setFragment(mHomeFragment);
+                mScrollview.smoothScrollTo(0, 0);
                 mIvToolbarRight.setVisibility(View.GONE);
                 new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
                 break;
@@ -116,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 mTvNotice.setSelected(true);
                 mMessageFragment = new MessageFragment();
                 setFragment(mMessageFragment);
+                mScrollview.smoothScrollTo(0, 0);
                 mIvToolbarRight.setVisibility(View.GONE);
                 new MessagePresenter(MessageImpl.getInstance(getApplicationContext()), mMessageFragment);
                 break;
@@ -126,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 mTvFind.setSelected(true);
                 mFindFragment = new FindFragment();
                 setFragment(mFindFragment);
+                mScrollview.smoothScrollTo(0, 0);
                 mIvToolbarRight.setVisibility(View.GONE);
                 new FindPresenter(FindImpl.getInstance(getApplicationContext()), mFindFragment);
                 break;
@@ -136,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                 mTvUser.setSelected(true);
                 mUserFragment = mUserFragment.newInstance(mUserInfo);
                 setFragment(mUserFragment);
+                mScrollview.smoothScrollTo(0, 0);
                 mIvToolbarRight.setVisibility(View.VISIBLE);
                 mIvToolbarRight.setImageResource(R.drawable.ic_setting);
                 break;
@@ -163,19 +181,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (!mIsLogined && mUserInfo == null) {
-            String userStr = PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
-                    .getString(Const.PREF_USERINFO_KEY, null);
-            if (userStr != null) {
-                mUserInfo = new GsonBuilder().setLenient().create().fromJson(userStr, UserInfo.class);
-            }
-        }
 //        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
 //        setFragment(mHomeFragment);
-        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
-        setFragment(mHomeFragment);
-        mScrollview.smoothScrollTo(0, 0);
-        new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
     }
 
     protected void showMessage(String msg) {

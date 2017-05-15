@@ -12,7 +12,9 @@ import android.widget.TextView;
 import com.campusstreet.R;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.entity.AssociationInfo;
+import com.campusstreet.entity.AssociationPostInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.RecruitInfo;
 import com.squareup.picasso.Picasso;
 
 import java.io.UnsupportedEncodingException;
@@ -55,6 +57,10 @@ public class AssociationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
         //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);
         mList = associationInfos;
         // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
+        notifyDataSetChanged();
+    }
+    public void addData(List<AssociationInfo> associationInfos) {
+        mList.addAll(associationInfos);
         notifyDataSetChanged();
     }
 

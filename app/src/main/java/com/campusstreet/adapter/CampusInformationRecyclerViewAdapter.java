@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.campusstreet.R;
 import com.campusstreet.entity.NewInfo;
+import com.campusstreet.entity.RecruitInfo;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,10 +50,14 @@ public class CampusInformationRecyclerViewAdapter extends RecyclerView.Adapter<R
         this.mOnItemClickListener = listener;
     }
 
+    public void addData(List<NewInfo> newInfos) {
+        mList.addAll(newInfos);
+        notifyDataSetChanged();
+    }
 
-    public void replaceData(List<NewInfo> NewInfos) {
+    public void replaceData(List<NewInfo> newInfos) {
         //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);
-        mList = NewInfos;
+        mList = newInfos;
         // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
         notifyDataSetChanged();
     }

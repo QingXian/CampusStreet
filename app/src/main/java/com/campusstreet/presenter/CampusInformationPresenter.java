@@ -29,7 +29,6 @@ public class CampusInformationPresenter implements ICampusInformationContract.Pr
 
     @Override
     public void fetchCampusInformationList(String key, int pi) {
-        mView.setLoadingIndicator(true);
         mCampusInformationImpl.fetchCampusInformationList(key, pi, new ICampusInformationBiz.LoadCampusInformationListCallback() {
             @Override
             public void onCampusInformationListLoaded(List<NewInfo> newInfos) {
