@@ -115,6 +115,8 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity {
             mTvCompanyPhone.setText(mRecruitInfo.getComphone());
             mTvTime.setText(mRecruitInfo.getPublishtime());
         } else {
+
+            
             showStudyWorkDetail();
             mTvTitle.setText(mStudyWorkInfo.getTitle());
             mTvPlace.setText(mStudyWorkInfo.getJobplace());
