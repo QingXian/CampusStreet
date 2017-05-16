@@ -19,11 +19,12 @@
         android:paddingLeft="16dp"
         android:textSize="16sp"
         android:textColor="@color/colorBlack"
-        android:layout_width="wrap_content"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/iv_head"
-        android:layout_toEndOf="@+id/iv_head"/>
+        android:layout_toEndOf="@+id/iv_head"
+        android:singleLine="true"/>
     <TextView
         android:hint="厦门国企"
         android:paddingTop="8dp"
