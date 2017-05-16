@@ -116,6 +116,8 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity {
             mTvTime.setText(mRecruitInfo.getPublishtime());
         } else {
 
+
+
             
             showStudyWorkDetail();
             mTvTitle.setText(mStudyWorkInfo.getTitle());
