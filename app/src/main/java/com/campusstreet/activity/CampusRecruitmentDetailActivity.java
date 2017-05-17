@@ -49,6 +49,8 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity {
     @BindView(R.id.tv_company_num)
     TextView mTvCompanyNum;
     @BindView(R.id.tv_company_type)
+
+            
     TextView mTvCompanyType;
     @BindView(R.id.ll_company_detail)
     LinearLayout mLlCompanyDetail;
