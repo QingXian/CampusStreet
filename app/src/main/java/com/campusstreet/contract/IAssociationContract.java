@@ -9,6 +9,7 @@ import com.campusstreet.entity.AssociationPostMessageInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.NewInfo;
+import com.campusstreet.entity.UserAssociationInfo;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public interface IAssociationContract {
         //同意加入社团
         void onApplyJoinAssn(int pid, String uid ,int st,String con);
 
-        void fetchAssociationNumList(int pid ,int pi,int ps);
+        void fetchAssociationNumList(int aid ,int pi,int ps);
 
         //发布帖子
         void addAssociationPost(int aid,String uid ,String con,String title);
@@ -45,6 +46,8 @@ public interface IAssociationContract {
         //获取社团下帖子的留言列表数据
 
         void fetchAssociationPostDetail(int pid);
+
+        void fetchUserAssociationList(int pi,String uid);
 
     }
 
@@ -57,6 +60,8 @@ public interface IAssociationContract {
         void setAssociationNumList(List<AssociationNumInfo> associationNumList);
 
         void setAssociationList(List<AssociationInfo> associationList);
+
+        void setUserAssociationList(List<UserAssociationInfo> UserAssociationList);
 
         void showSuccessfullyJoin(String succcessMsg);
 

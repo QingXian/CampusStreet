@@ -111,26 +111,14 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
     LinearLayout mProgressBarContainer;
     private IIdleSaleContract.Presenter mPresenter;
     public static final int REQUEST_CODE = 1;
+
+    private String[] mTitle;
+    private String mType;
     private int mIndex;
-
-    private String[] mTitles;
-    private String mTabType;
-
     private Set<File> mFiles;
     private ArrayList<String> mImages;
-
-    private HashMap<String, String> mPushRange;
-    private String mId;
-    private String mName;
-    private String mMoney;
-    private String mTradeplace;
     private String mTradetype;
     private String mSelltype;
-    private String mMobile;
-    private String mQQ;
-    private String mBewrite;
-    private String mContent;
-    private Intent mIntent;
     private UserInfo mUserInfo;
 
     @Override
@@ -154,6 +142,7 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
         });
         new IdleSalePresenter(IdleSaleImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+        mPresenter.fetchIdleSaleCategories();
     }
 
 
@@ -214,7 +203,15 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
             case R.id.tv_goods_type:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择商品类型")
-//                        .setSingleChoiceItems(mTitles, mIndex, this)
+                        .setSingleChoiceItems(mTitle, mIndex, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mType = mTitle[i];
+                                mIndex = i;
+                                mTvGoodsType.setText(mTitle[i]);
+                                dialogInterface.dismiss();
+                            }
+                        })
                         .create()
                         .show();
                 break;
@@ -261,10 +258,10 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
             showMessage("请选择讨价类型");
             return;
         }
-//        if (!mTvTradeType.getText().toString().trim().equals(mTradetype)) {
-//            showMessage("请选择求助类别");
-//            return;
-//        }
+        if (!mTvTradeType.getText().toString().trim().equals(mTradetype)) {
+            showMessage("请选择求助类别");
+            return;
+        }
         if (TextUtils.isEmpty(mEtTitle.getText().toString().trim())) {
             showMessage("请填写标题");
             return;
@@ -311,7 +308,7 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
         idlSaleInfo.setMoney(mEtPrice.getText().toString());
         idlSaleInfo.setBewrite(mEtDegree.getText().toString());
         idlSaleInfo.setContent(mEtDescribe.getText().toString());
-        idlSaleInfo.setGoodstype("电脑");
+        idlSaleInfo.setGoodstype(String.valueOf(mIndex + 1));
         idlSaleInfo.setTradetype(mTradetype);
         idlSaleInfo.setSelltype(mSelltype);
         idlSaleInfo.setTradeplace(mEtPlace.getText().toString());
@@ -331,33 +328,33 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
                 mImages = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
                 mFiles = new HashSet<>(3);
                 if (mImages.size() == 1) {
-                        mIvImage1.setVisibility(View.VISIBLE);
-                        Picasso.with(this).load(new File(mImages.get(0))).into(mIvImage1);
-                        if (mIvImage2.getVisibility() == View.VISIBLE) {
-                            mIvImage2.setVisibility(View.INVISIBLE);
-                        }
-                        if (mIvImage3.getVisibility() == View.VISIBLE) {
-                            mIvImage3.setVisibility(View.INVISIBLE);
-                        }
-                    } else if (mImages.size() == 2) {
-                        mIvImage1.setVisibility(View.VISIBLE);
-                        mIvImage2.setVisibility(View.VISIBLE);
-                        Picasso.with(this).load(new File(mImages.get(0))).into(mIvImage1);
-                        Picasso.with(this).load(new File(mImages.get(1))).into(mIvImage2);
-                        if (mIvImage3.getVisibility() == View.VISIBLE) {
-                            mIvImage3.setVisibility(View.INVISIBLE);
-                        }
-                    } else if (mImages.size() == 3) {
-                        mIvImage1.setVisibility(View.VISIBLE);
-                        mIvImage2.setVisibility(View.VISIBLE);
-                        mIvImage3.setVisibility(View.VISIBLE);
-                        Picasso.with(this).load(new File(mImages.get(0))).into(mIvImage1);
-                        Picasso.with(this).load(new File(mImages.get(1))).into(mIvImage2);
-                        Picasso.with(this).load(new File(mImages.get(2))).into(mIvImage3);
+                    mIvImage1.setVisibility(View.VISIBLE);
+                    Picasso.with(this).load(new File(mImages.get(0))).into(mIvImage1);
+                    if (mIvImage2.getVisibility() == View.VISIBLE) {
+                        mIvImage2.setVisibility(View.INVISIBLE);
+                    }
+                    if (mIvImage3.getVisibility() == View.VISIBLE) {
+                        mIvImage3.setVisibility(View.INVISIBLE);
+                    }
+                } else if (mImages.size() == 2) {
+                    mIvImage1.setVisibility(View.VISIBLE);
+                    mIvImage2.setVisibility(View.VISIBLE);
+                    Picasso.with(this).load(new File(mImages.get(0))).into(mIvImage1);
+                    Picasso.with(this).load(new File(mImages.get(1))).into(mIvImage2);
+                    if (mIvImage3.getVisibility() == View.VISIBLE) {
+                        mIvImage3.setVisibility(View.INVISIBLE);
+                    }
+                } else if (mImages.size() == 3) {
+                    mIvImage1.setVisibility(View.VISIBLE);
+                    mIvImage2.setVisibility(View.VISIBLE);
+                    mIvImage3.setVisibility(View.VISIBLE);
+                    Picasso.with(this).load(new File(mImages.get(0))).into(mIvImage1);
+                    Picasso.with(this).load(new File(mImages.get(1))).into(mIvImage2);
+                    Picasso.with(this).load(new File(mImages.get(2))).into(mIvImage3);
                 }
             }
+        }
     }
-}
 
     @Override
     public void setPresenter(IIdleSaleContract.Presenter presenter) {
@@ -370,9 +367,10 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
     }
 
     @Override
-    public void setIdleSaleCategories() {
-        //忽略
+    public void setIdleSaleCategories(String[] type) {
+        mTitle = type;
     }
+
 
     @Override
     public void setIdleSaleMessageList(List<LeaveMessageInfo> idleSaleMessageList) {//忽略

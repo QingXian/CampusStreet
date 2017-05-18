@@ -161,6 +161,11 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
     }
 
     @Override
+    public void showNoPassMsg() {
+
+    }
+
+    @Override
     public void showSuccessfullyPush(String succcessMsg) {
         showMessage(succcessMsg);
         Intent intent = new Intent(this, BountyHallActivity.class);
@@ -168,10 +173,6 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
         this.finish();
     }
 
-    @Override
-    public void showfetchBountyHallCategoriesFailMsg(String errorMsg) {
-        showMessage(errorMsg);
-    }
 
     @Override
     public void setLoadingIndicator(boolean active) {

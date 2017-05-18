@@ -62,6 +62,8 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
     private IIdleSaleContract.Presenter mPresenter;
     private IdleSaleRecyclerViewAdapter mAdapter;
     private int mPi = 0;
+    private int mPostion = 0;
+    private String[] mTitle;
     private UserInfo mUserInfo;
 
     @Override
@@ -82,13 +84,11 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
                 onBackPressed();
             }
         });
-        mIvToolbarRight.setVisibility(View.VISIBLE);
-        mIvToolbarRight.setImageResource(R.drawable.ic_search);
         new IdleSalePresenter(IdleSaleImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
-
         initView();
         initEvent();
+        mPresenter.fetchIdleSaleCategories();
     }
 
     @Override
@@ -186,8 +186,32 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
     }
 
     @Override
-    public void setIdleSaleCategories() {
+    public void setIdleSaleCategories(String[] type) {
+        mTitle = type;
+        if (type != null) {
+            mTabLayout.addTab(mTabLayout.newTab().setText("全部"));
+            for (int i = 0; i < type.length; i++) {
+                mTabLayout.addTab(mTabLayout.newTab().setText(type[i]));
+            }
+            mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    mPi = 0;
+                    mPresenter.fetchIdleSaleList(tab.getPosition(), mPi);
+                    mPostion = tab.getPosition();
+                }
 
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+        }
     }
 
     @Override

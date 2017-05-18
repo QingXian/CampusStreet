@@ -60,10 +60,10 @@ public interface IBountyHallContract {
 
         void showErrorMsg(String errorMsg);
 
+        void showNoPassMsg();
+
         //赏金任务发布成功
         void showSuccessfullyPush(String successMsg);
-
-        void showfetchBountyHallCategoriesFailMsg(String errorMsg);
 
 
         /**

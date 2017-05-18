@@ -28,6 +28,7 @@ import com.campusstreet.entity.AssociationInfo;
 import com.campusstreet.entity.AssociationNumInfo;
 import com.campusstreet.entity.AssociationPostInfo;
 import com.campusstreet.entity.AssociationPostMessageInfo;
+import com.campusstreet.entity.UserAssociationInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.AssociationImpl;
 import com.campusstreet.presenter.AssociationPresenter;
@@ -189,6 +190,11 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
 
     @Override
     public void setAssociationList(List<AssociationInfo> associationList) {
+    }
+
+    @Override
+    public void setUserAssociationList(List<UserAssociationInfo> UserAssociationList) {
+
     }
 
     @Override

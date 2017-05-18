@@ -15,6 +15,7 @@ public class UserInfo implements Serializable{
      * sex : 2
      * major : 物机院
      * qq : 38537357
+     * userpic:
      */
 
     private String uid;
@@ -23,6 +24,16 @@ public class UserInfo implements Serializable{
     private String sex;
     private String major;
     private String qq;
+    private String userpic;
+
+
+    public String getUserpic() {
+        return userpic;
+    }
+
+    public void setUserpic(String userpic) {
+        this.userpic = userpic;
+    }
 
     public String getUid() {
         return uid;

@@ -16,10 +16,8 @@ public interface IIdleSaleBiz {
     //获取闲置商品列表
     void fetchIdleSaleList(int type,int pi,@NonNull LoadIdleSaleListCallback callback);
 
-    //搜索商品列表
-    void searchIdleSale(String picType, @NonNull searchIdleSaleCallback callback);
 
-    void fetchIdleSaleCategories(String picType, @NonNull LoadIdleSaleCategoriesCallback callback);
+    void fetchIdleSaleCategories(@NonNull LoadIdleSaleCategoriesCallback callback);
 
     void addIdleGoods(IdleSaleInfo idleSaleInfo ,@NonNull addIdleGoodsCallback callback);
 
@@ -32,13 +30,6 @@ public interface IIdleSaleBiz {
         void onAddSuccess();
 
         void onAddFailure(String errorMsg);
-    }
-
-    interface searchIdleSaleCallback {
-
-        void onSearchSuccess();
-
-        void onSearchFailure(String errorMsg);
     }
 
 
@@ -59,7 +50,7 @@ public interface IIdleSaleBiz {
     }
     interface LoadIdleSaleCategoriesCallback {
 
-        void onIdleSaleCategoriesLoaded();
+        void onIdleSaleCategoriesLoaded(String[] type);
 
         void onDataNotAvailable(String errorMsg);
     }

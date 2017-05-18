@@ -71,9 +71,8 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
     private IBountyHallContract.Presenter mPresenter;
     private JoinInfo mJoinInfo;
     private int mType;
-    private int mIsStart;
-    private int mTid;
     private UserInfo mUserInfo;
+    private BountyHallInfo mBountyHallInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +93,8 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
             }
         });
         mJoinInfo = (JoinInfo) getIntent().getSerializableExtra(Const.JOINNFO_EXTRA);
-        mIsStart = getIntent().getIntExtra(ISSTRAT, 0);
         mType = getIntent().getIntExtra(TYPE, 1);
-        mTid = getIntent().getIntExtra(TID_EXTRA, 0);
+        mBountyHallInfo = (BountyHallInfo) getIntent().getSerializableExtra(Const.BOUNTYHALLINFO_EXTRA);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
         initView();
@@ -112,7 +110,7 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
                 .load(AppConfig.AVATAR_SERVER_HOST + mJoinInfo.getUserpic())
                 .fit()
                 .into(mIvHead);
-        if (mType == 1 || mIsStart == 1) {
+        if (mType == 1 && mBountyHallInfo.getState() == 1) {
             mBtnAdopt.setVisibility(View.GONE);
         } else {
             mBtnAdopt.setVisibility(View.VISIBLE);
@@ -121,7 +119,7 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
 
     @OnClick(R.id.btn_adopt)
     public void onViewClicked() {
-        mPresenter.passJoinTask(mUserInfo.getUid(), mTid, mJoinInfo.getId());
+        mPresenter.passJoinTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId());
     }
 
     @Override
@@ -168,16 +166,16 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
 
     @Override
     public void showErrorMsg(String errorMsg) {
+        showMessage(errorMsg);
+    }
+
+    @Override
+    public void showNoPassMsg() {
 
     }
 
     @Override
     public void showSuccessfullyPush(String successMsg) {
-
-    }
-
-    @Override
-    public void showfetchBountyHallCategoriesFailMsg(String errorMsg) {
 
     }
 

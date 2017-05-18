@@ -134,12 +134,12 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
     }
 
     @Override
-    public void showSuccessfullyPush(String succcessMsg) {
+    public void showNoPassMsg() {
 
     }
 
     @Override
-    public void showfetchBountyHallCategoriesFailMsg(String errorMsg) {
+    public void showSuccessfullyPush(String succcessMsg) {
 
     }
 

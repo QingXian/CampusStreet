@@ -6,6 +6,7 @@ import com.campusstreet.entity.AssociationInfo;
 import com.campusstreet.entity.AssociationNumInfo;
 import com.campusstreet.entity.AssociationPostInfo;
 import com.campusstreet.entity.AssociationPostMessageInfo;
+import com.campusstreet.entity.UserAssociationInfo;
 import com.campusstreet.model.AssociationImpl;
 import com.campusstreet.model.IAssociationBiz;
 import com.campusstreet.model.IBuyZoneBiz;
@@ -107,9 +108,9 @@ public class AssociationPresenter implements IAssociationContract.Presenter {
     }
 
     @Override
-    public void fetchAssociationNumList(int pid, int pi, int ps) {
+    public void fetchAssociationNumList(int aid, int pi, int ps) {
         mView.setLoadingIndicator(true);
-        mAssociationImpl.fetchAssociationNumList(pid, pi, ps, new IAssociationBiz.LoadAssociationNumListCallback() {
+        mAssociationImpl.fetchAssociationNumList(aid, pi, ps, new IAssociationBiz.LoadAssociationNumListCallback() {
             @Override
             public void onAssociationNumListLoaded(List<AssociationNumInfo> associationNumInfos) {
                 mView.setAssociationNumList(associationNumInfos);
@@ -164,6 +165,23 @@ public class AssociationPresenter implements IAssociationContract.Presenter {
             @Override
             public void onAssociationPostDetailLoaded(AssociationPostInfo associationPostInfo) {
                 mView.setAssociationPostDetail(associationPostInfo);
+            }
+
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+                mView.setLoadingIndicator(false);
+            }
+        });
+    }
+
+    @Override
+    public void fetchUserAssociationList(int pi, String uid) {
+        mAssociationImpl.fetchUserAssociationList(pi, uid, new IAssociationBiz.LoadUserAssociationListCallback() {
+            @Override
+            public void onUserAssociationListLoaded(List<UserAssociationInfo> userAssociationInfos) {
+                mView.setUserAssociationList(userAssociationInfos);
+                mView.setLoadingIndicator(false);
             }
 
             @Override

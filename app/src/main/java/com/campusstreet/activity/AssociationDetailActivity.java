@@ -33,6 +33,7 @@ import com.campusstreet.entity.AssociationNumInfo;
 import com.campusstreet.entity.AssociationPostInfo;
 import com.campusstreet.entity.AssociationPostMessageInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.UserAssociationInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.AssociationImpl;
 import com.campusstreet.presenter.AssociationPresenter;
@@ -89,6 +90,7 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
     private IAssociationContract.Presenter mPresenter;
     private int mPi = 0;
     private AssociationInfo mAssociationInfo;
+    private UserAssociationInfo mUserAssociationInfo;
     private AssociationDetailRecyclerViewAdapter mAdapter;
     private UserInfo mUserInfo;
 
@@ -113,9 +115,12 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
         mIvToolbarRight.setVisibility(View.VISIBLE);
         mIvToolbarRight.setImageResource(R.drawable.ic_more);
         new AssociationPresenter(AssociationImpl.getInstance(getApplicationContext()), this);
+        mUserAssociationInfo = (UserAssociationInfo) getIntent().getSerializableExtra(Const.USERASSOCIATIONINFO_EXTRA);
         mAssociationInfo = (AssociationInfo) getIntent().getSerializableExtra(Const.ASSOCIATIONINFO_EXTRA);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(USERINFO_EXTRA);
-        mPresenter.fetchAssociationNumList(mAssociationInfo.getId(), mPi, 1000);
+        if (mAssociationInfo != null) {
+            mPresenter.fetchAssociationNumList(mAssociationInfo.getId(), mPi, 1000);
+        }
         initView();
         initEvent();
     }
@@ -133,28 +138,42 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
     }
 
     private void initView() {
-        mTvName.setText(mAssociationInfo.getName());
-        mTvIntroduce.setText(mAssociationInfo.getNote());
-        Picasso.with(this)
-                .load(AppConfig.PIC_ASSOCIATION_SERVER_HOST + mAssociationInfo.getClassimg())
-                .fit()
-                .into(mIvHead);
+        mBtnJoin.setVisibility(View.VISIBLE);
+        mFabAddTask.setVisibility(View.GONE);
+        if (mAssociationInfo != null) {
+            mTvName.setText(mAssociationInfo.getName());
+            mTvIntroduce.setText(mAssociationInfo.getNote());
+            Picasso.with(this)
+                    .load(AppConfig.PIC_ASSOCIATION_SERVER_HOST + mAssociationInfo.getClassimg())
+                    .fit()
+                    .into(mIvHead);
+            if (mUserInfo == null) {
+                mBtnJoin.setVisibility(View.GONE);
+                mFabAddTask.setVisibility(View.GONE);
+            }
+        } else {
+            mTvName.setText(mUserAssociationInfo.getAssnname());
+            mTvIntroduce.setText(mUserAssociationInfo.getNote());
+            Picasso.with(this)
+                    .load(AppConfig.PIC_ASSOCIATION_SERVER_HOST + mUserAssociationInfo.getClassimg())
+                    .fit()
+                    .into(mIvHead);
+            mBtnJoin.setVisibility(View.GONE);
+            mFabAddTask.setVisibility(View.VISIBLE);
+        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRvContent.setLayoutManager(linearLayoutManager);
         mAdapter = new AssociationDetailRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
-        if (mUserInfo == null) {
-            mBtnJoin.setVisibility(View.GONE);
-            mFabAddTask.setVisibility(View.GONE);
-        } else {
-            mBtnJoin.setVisibility(View.VISIBLE);
-            mFabAddTask.setVisibility(View.GONE);
-        }
     }
 
 
     protected void onStart() {
-        mPresenter.fetchAssociationPostList(mAssociationInfo.getId(), mPi);
+        if (mAssociationInfo != null) {
+            mPresenter.fetchAssociationPostList(mAssociationInfo.getId(), mPi);
+        } else {
+            mPresenter.fetchAssociationPostList(mUserAssociationInfo.getId(), mPi);
+        }
         super.onStart();
 
     }
@@ -208,22 +227,22 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
         for (AssociationNumInfo associationNumInfo :
                 associationNumList) {
             if (mUserInfo != null) {
-                if (associationNumInfo.getId() .equals(mUserInfo.getUid())) {
+                if (associationNumInfo.getUid().equals(mUserInfo.getUid())) {
                     mBtnJoin.setVisibility(View.GONE);
                     mFabAddTask.setVisibility(View.VISIBLE);
-                } else {
-                    mBtnJoin.setVisibility(View.VISIBLE);
-                    mFabAddTask.setVisibility(View.GONE);
+                    break;
                 }
-            } else {
-                mBtnJoin.setVisibility(View.VISIBLE);
-                mFabAddTask.setVisibility(View.GONE);
             }
         }
     }
 
     @Override
     public void setAssociationList(List<AssociationInfo> associationList) {
+
+    }
+
+    @Override
+    public void setUserAssociationList(List<UserAssociationInfo> UserAssociationList) {
 
     }
 

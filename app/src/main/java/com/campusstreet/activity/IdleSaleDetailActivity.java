@@ -276,8 +276,10 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     }
 
     @Override
-    public void setIdleSaleCategories() {//忽略
+    public void setIdleSaleCategories(String[] type) {
+
     }
+
 
     @Override
     public void setIdleSaleMessageList(List<LeaveMessageInfo> idleSaleMessageList) {

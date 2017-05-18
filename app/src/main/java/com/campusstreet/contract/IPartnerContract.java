@@ -1,8 +1,12 @@
 package com.campusstreet.contract;
 
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.NewInfo;
+import com.campusstreet.entity.PartnerInfo;
 
 import java.util.List;
+
+import static android.R.attr.type;
 
 /**
  * Created by Orange on 2017/4/24.
@@ -12,18 +16,21 @@ public interface IPartnerContract {
     
     interface Presenter extends BasePresenter {
 
-        void fetchPartnerList(int type, int pi);
-
-        void search(String keyWord);
+        void fetchPartnerList(String key,int type, int pi);
 
         void fetchPartnerCategories();
+
+        void fetchPartnerDetail(int pid);
 
     }
     interface View extends BaseView<Presenter> {
 
-        void setPartner();
 
-        void setPartnerCategories();
+        void setPartnerCategories(String[] type);
+
+        void setPartnerList(List<PartnerInfo> partnerList);
+
+        void setPartnerDetail(PartnerInfo partnerInfo);
 
         void showErrorMsg(String errorMsg);
 
