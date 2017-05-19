@@ -23,5 +23,5 @@ public interface CampusInformationClient {
 
     @FormUrlEncoded
     @POST("get_news_info")
-    Call<JsonObject> getNewDetail(@Field("pi") Integer pi);
+    Call<JsonObject> getNewDetail(@Field("nid") Integer nid);
 }

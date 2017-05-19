@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,14 +16,14 @@ import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.adapter.AssociationRecyclerViewAdapter;
-import com.campusstreet.adapter.BountyHallRecyclerViewAdapter;
+import com.campusstreet.adapter.UserAssociationrecyclerViewAdapter;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IAssociationContract;
 import com.campusstreet.entity.AssociationInfo;
 import com.campusstreet.entity.AssociationNumInfo;
 import com.campusstreet.entity.AssociationPostInfo;
 import com.campusstreet.entity.AssociationPostMessageInfo;
-import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.UserAssociationInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.AssociationImpl;
 import com.campusstreet.presenter.AssociationPresenter;
@@ -35,8 +33,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.campusstreet.R.id.view;
 
 /**
  * Created by Orange on 2017/4/6.
@@ -67,7 +63,9 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
     private IAssociationContract.Presenter mPresenter;
     private int mPi = 0;
     private AssociationRecyclerViewAdapter mAdapter;
+    private UserAssociationrecyclerViewAdapter mUserAssociationAdapter;
     private UserInfo mUserInfo;
+    private int mPostion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,12 +123,59 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
                 }, 500);
             }
         });
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getText().equals("推荐社团")) {
+                    mPi = 0;
+                    mPresenter.fetchAssociationList(mPi);
+                    mPostion = tab.getPosition();
+                } else {
+                    if (mUserInfo != null) {
+                        mPi = 0;
+                        mPostion = tab.getPosition();
+                        mPresenter.fetchUserAssociationList(mPi, mUserInfo.getUid());
+                    } else {
+                        showErrorMsg("您还未登录");
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        mUserAssociationAdapter.setOnItemClickListener(new UserAssociationrecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, UserAssociationInfo userAssociationInfo) {
+                Intent intent = new Intent(AssociationActivity.this, AssociationDetailActivity.class);
+                intent.putExtra(Const.USERASSOCIATIONINFO_EXTRA, userAssociationInfo);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                startActivity(intent);
+            }
+        });
     }
 
     protected void onStart() {
         super.onStart();
         mPi = 0;
-        mPresenter.fetchAssociationList(mPi);
+        setLoadingIndicator(true);
+        if (mPostion == 0) {
+            mPresenter.fetchAssociationList(mPi);
+        } else {
+            if (mUserInfo != null) {
+                mPresenter.fetchUserAssociationList(mPi, mUserInfo.getUid());
+            } else {
+                showErrorMsg("您还未登录");
+            }
+        }
         setLoadingIndicator(true);
 
     }
@@ -140,6 +185,7 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
         mTabLayout.addTab(mTabLayout.newTab().setText("我的社团"));
         mRvContent.setLinearLayout();
         mAdapter = new AssociationRecyclerViewAdapter(this, null);
+        mUserAssociationAdapter = new UserAssociationrecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
     }
 
@@ -172,13 +218,38 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
         }
         if (mPi != 0) {
             if (associationList != null) {
+                mRvContent.setAdapter(mAdapter);
                 mAdapter.addData(associationList);
                 mRvContent.setPullLoadMoreCompleted();
             }
         } else {
             mRvContent.setVisibility(View.VISIBLE);
             mTvError.setVisibility(View.GONE);
+            mRvContent.setAdapter(mAdapter);
             mAdapter.replaceData(associationList);
+            mRvContent.setPullLoadMoreCompleted();
+            setLoadingIndicator(false);
+        }
+    }
+
+    @Override
+    public void setUserAssociationList(List<UserAssociationInfo> userAssociationList) {
+        if (userAssociationList != null && userAssociationList.size() < 20) {
+            mRvContent.setPushRefreshEnable(false);
+        } else {
+            mRvContent.setPushRefreshEnable(true);
+        }
+        if (mPi != 0) {
+            if (userAssociationList != null) {
+                mRvContent.setAdapter(mUserAssociationAdapter);
+                mUserAssociationAdapter.addData(userAssociationList);
+                mRvContent.setPullLoadMoreCompleted();
+            }
+        } else {
+            mRvContent.setVisibility(View.VISIBLE);
+            mTvError.setVisibility(View.GONE);
+            mRvContent.setAdapter(mUserAssociationAdapter);
+            mUserAssociationAdapter.replaceData(userAssociationList);
             mRvContent.setPullLoadMoreCompleted();
             setLoadingIndicator(false);
         }

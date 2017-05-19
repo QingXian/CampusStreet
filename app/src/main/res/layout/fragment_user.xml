@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/colorGray"
+              android:orientation="vertical"
     >
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/rl_user_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
+        android:background="@drawable/bg_frag_user"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:visibility="gone">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_head"
@@ -82,96 +82,113 @@
     </RelativeLayout>
 
     <TextView
+        android:visibility="visible"
         android:id="@+id/tv_login"
-        android:gravity="center"
-        android:textColor="@color/colorPrimary"
-        android:background="@color/colorWhite"
-        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:text="@string/frag_user_login"/>
+        android:background="@drawable/bg_frag_user"
+        android:gravity="center"
+        android:text="@string/frag_user_login"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorGray"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/tv_balance"
-            android:background="@drawable/bg_frag_user_recharge"
-            android:padding="12dp"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
-            android:text="@string/frag_user_balance_hint"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_frag_user_recharge"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/frag_user_balance_hint"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"/>
+
         <TextView
             android:id="@+id/tv_recharge"
-            android:textSize="16sp"
-            android:background="@drawable/bg_frag_user_recharge"
-            android:padding="12dp"
-            android:gravity="center"
-            android:textColor="@color/colorBlack"
-            android:text="@string/frag_user_recharge"
-            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_frag_user_recharge"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="@string/frag_user_recharge"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"/>
     </LinearLayout>
+
     <TextView
-        android:drawablePadding="4dp"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/ic_bounty_mission"
         android:id="@+id/tv_bounty_mission"
-        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:background="@color/colorWhite"
-        android:textColor="@color/colorBlack"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/ic_bounty_mission"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="12dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
         android:text="@string/frag_user_bounty_mission"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"/>
+
     <TextView
-        android:drawablePadding="4dp"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/ic_detection_update"
         android:id="@+id/tv_detection_update"
-        android:padding="8dp"
-        android:background="@color/colorWhite"
-        android:textColor="@color/colorBlack"
-        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
+        android:background="@color/colorWhite"
+        android:drawableLeft="@drawable/ic_detection_update"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="12dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
         android:text="@string/frag_user_detection_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"/>
+
     <TextView
-        android:drawablePadding="4dp"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/ic_my_idle"
         android:id="@+id/tv_my_idle"
-        android:padding="8dp"
-        android:background="@color/colorWhite"
-        android:textColor="@color/colorBlack"
-        android:textSize="16sp"
-        android:layout_marginTop="1dp"
-        android:text="@string/frag_user_my_idle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <TextView
-        android:drawablePadding="4dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/colorWhite"
+        android:drawableLeft="@drawable/ic_my_idle"
+        android:drawablePadding="8dp"
         android:gravity="center_vertical"
-        android:drawableLeft="@drawable/ic_my_club"
-        android:id="@+id/tv_my_club"
-        android:padding="8dp"
-        android:background="@color/colorWhite"
+        android:paddingBottom="12dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
+        android:text="@string/frag_user_my_idle"
         android:textColor="@color/colorBlack"
-        android:textSize="16sp"
-        android:layout_marginTop="1dp"
-        android:text="@string/frag_user_my_club"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_my_club"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@color/colorWhite"
+        android:drawableLeft="@drawable/ic_my_club"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:paddingBottom="12dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
+        android:text="@string/frag_user_my_club"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/tv_about_us"
@@ -180,10 +197,13 @@
         android:layout_marginTop="1dp"
         android:background="@color/colorWhite"
         android:drawableLeft="@drawable/ic_about_us"
-        android:drawablePadding="4dp"
+        android:drawablePadding="8dp"
         android:gravity="center_vertical"
-        android:padding="8dp"
+        android:paddingBottom="12dp"
+        android:paddingLeft="8dp"
+        android:paddingTop="12dp"
         android:text="@string/frag_user_about_us"
+        android:layout_marginBottom="56dp"
         android:textColor="@color/colorBlack"
         android:textSize="16sp"/>
 </LinearLayout>

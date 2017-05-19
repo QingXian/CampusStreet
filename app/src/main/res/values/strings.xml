@@ -108,7 +108,7 @@
     <string name="act_bounty_hall_add_toolbar_title">任务发布</string>
     <string name="act_association_detail_toolbar_title">社团主页</string>
     <string name="act_partner_detail_profile">项目简介：</string>
-    <string name="act_partner_detail_company_name">公司名称：</string>
+    <string name="act_partner_detail_company_name">名称：</string>
     <string name="act_partner_detail_type">招募合伙人类型：</string>
     <string name="act_partner_detail_phone">联系方式：</string>
     <string name="act_partner_detail_place">地址：</string>

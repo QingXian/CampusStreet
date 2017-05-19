@@ -8,6 +8,7 @@ import com.campusstreet.entity.AssociationPostInfo;
 import com.campusstreet.entity.AssociationPostMessageInfo;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.UserAssociationInfo;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public interface IAssociationBiz {
     void onApplyJoinAssn(int pid, String uid, int st, String con, @NonNull onApplyJoinAssnCallback callback);
 
 
-    void fetchAssociationNumList(int pid, int pi, int ps, @NonNull LoadAssociationNumListCallback callback);
+    void fetchAssociationNumList(int aid, int pi, int ps, @NonNull LoadAssociationNumListCallback callback);
 
     //发布帖子
     void addAssociationPost(int aid, String uid, String con, String title, @NonNull addAssociationPostCallback callback);
@@ -44,6 +45,8 @@ public interface IAssociationBiz {
     void fetchAssociationPostMessageList(int pid, int pi, @NonNull LoadAssociationPostMessageCallback callback);
 
     void fetchAssociationPostDetail(int pid, @NonNull LoadAssociationPostDetailCallback callback);
+
+    void fetchUserAssociationList(int pi, String uid,@NonNull LoadUserAssociationListCallback callback);
 
     interface addAssociationPostCallback {
 
@@ -76,6 +79,13 @@ public interface IAssociationBiz {
     interface LoadAssociationListCallback {
 
         void onAssociationListLoaded(List<AssociationInfo> associationInfos);
+
+        void onDataNotAvailable(String errorMsg);
+    }
+
+    interface LoadUserAssociationListCallback {
+
+        void onUserAssociationListLoaded(List<UserAssociationInfo> userAssociationInfos);
 
         void onDataNotAvailable(String errorMsg);
     }

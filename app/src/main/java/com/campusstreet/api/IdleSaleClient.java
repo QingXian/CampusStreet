@@ -26,6 +26,8 @@ import retrofit2.http.QueryMap;
 public interface IdleSaleClient {
 
 
+    @POST("get_ewu_type")
+    Call<JsonObject> getIdleSaleType();
 
     @FormUrlEncoded
     @POST("get_ewu_goods")

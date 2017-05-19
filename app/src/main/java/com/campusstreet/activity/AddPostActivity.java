@@ -21,6 +21,7 @@ import com.campusstreet.entity.AssociationInfo;
 import com.campusstreet.entity.AssociationNumInfo;
 import com.campusstreet.entity.AssociationPostInfo;
 import com.campusstreet.entity.AssociationPostMessageInfo;
+import com.campusstreet.entity.UserAssociationInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.AssociationImpl;
 import com.campusstreet.presenter.AssociationPresenter;
@@ -137,6 +138,10 @@ public class AddPostActivity extends AppCompatActivity implements IAssociationCo
     }
 
     @Override
+    public void setUserAssociationList(List<UserAssociationInfo> UserAssociationList) {
+    }
+
+    @Override
     public void showSuccessfullyJoin(String succcessMsg) {
 
     }
@@ -161,7 +166,7 @@ public class AddPostActivity extends AppCompatActivity implements IAssociationCo
 
     @Override
     public void showErrorMsg(String errorMsg) {
-
+        showMessage(errorMsg);
     }
 
     @Override

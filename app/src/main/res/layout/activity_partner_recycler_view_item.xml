@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:padding="16dp"
+                android:background="@color/colorWhite"
                 android:layout_marginTop="4dp"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="48dp"
         android:id="@+id/iv_head"
@@ -13,6 +14,9 @@
     <TextView
         android:id="@+id/tv_title"
         android:padding="8dp"
+        android:maxEms="8"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:layout_toRightOf="@+id/iv_head"
         android:textColor="@color/colorBlack"
         android:layout_width="wrap_content"
@@ -20,9 +24,10 @@
         android:text="项目名称"
         android:textSize="16sp"/>
     <TextView
+
         android:id="@+id/tv_content"
         android:ellipsize="end"
-        android:maxLines="3"
+        android:maxLines="2"
         android:layout_below="@+id/tv_title"
         android:padding="8dp"
         android:layout_toRightOf="@+id/iv_head"

@@ -20,11 +20,6 @@
             app:tabSelectedTextColor="@color/colorPrimary"
             />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:background="@color/colorGray"/>
-
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/rv_content"
             android:layout_width="match_parent"

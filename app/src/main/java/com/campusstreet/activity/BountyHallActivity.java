@@ -255,14 +255,15 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
     }
 
     @Override
-    public void showSuccessfullyPush(String succcessMsg) {
+    public void showNoPassMsg() {
 
     }
 
     @Override
-    public void showfetchBountyHallCategoriesFailMsg(String errorMsg) {
-        showMessage(errorMsg);
+    public void showSuccessfullyPush(String succcessMsg) {
+
     }
+
 
     @Override
     public void setLoadingIndicator(boolean active) {

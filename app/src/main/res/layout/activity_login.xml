@@ -52,52 +52,47 @@
             </android.support.v7.widget.Toolbar>
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/ic_login"/>
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="24dp"-->
+        <!--android:background="@drawable/ic_login"/>-->
 
-        <android.support.design.widget.TextInputLayout
+
+        <EditText
+            android:id="@+id/et_login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="56dp"
-            android:paddingRight="56dp"
-            >
+            android:layout_marginLeft="56dp"
+            android:layout_marginRight="56dp"
+            android:layout_marginTop="100dp"
+            android:drawableLeft="@drawable/ic_login_username"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="@string/act_login_username"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingLeft="12dp"
+            android:singleLine="true"
+            android:textSize="16sp"
+            />
 
-            <AutoCompleteTextView
-                android:inputType="number"
-                android:id="@+id/et_login_username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:hint="@string/act_login_username"
-                android:maxLines="1"
-                android:paddingLeft="12dp"
-                android:singleLine="true"
-                android:textSize="16sp"
-                />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/et_login_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="56dp"
-            android:paddingRight="56dp">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/et_login_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:hint="@string/act_login_password"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:paddingLeft="12dp"
-                android:singleLine="true"
-                android:textSize="16sp"/>
-        </android.support.design.widget.TextInputLayout>
+            android:layout_marginLeft="56dp"
+            android:layout_marginRight="56dp"
+            android:drawableLeft="@drawable/ic_login_password"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="@string/act_login_password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:paddingLeft="12dp"
+            android:singleLine="true"
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/tv_forget_password"

@@ -9,12 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.request.target.AppWidgetTarget;
 import com.campusstreet.R;
 import com.campusstreet.common.Const;
 import com.campusstreet.entity.UserInfo;
@@ -28,20 +28,23 @@ import com.campusstreet.model.MessageImpl;
 import com.campusstreet.presenter.FindPresenter;
 import com.campusstreet.presenter.HomePresenter;
 import com.campusstreet.presenter.MessagePresenter;
+import com.campusstreet.utils.PermissionsManage;
+import com.campusstreet.utils.PreferencesUtil;
+import com.google.gson.GsonBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import com.campusstreet.utils.PermissionsManage;
-import com.campusstreet.utils.PreferencesUtil;
-import com.google.gson.GsonBuilder;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     @BindView(R.id.scrollview)
     NestedScrollView mScrollview;
+    @BindView(R.id.et_search)
+    EditText mEtSearch;
+    @BindView(R.id.toolbar_home)
+    Toolbar mToolbarHome;
     private HomeFragment mHomeFragment;
     private MessageFragment mMessageFragment;
     private FindFragment mFindFragment;
@@ -99,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
         mHomeFragment = mHomeFragment.newInstance(mUserInfo);
         setFragment(mHomeFragment);
         mScrollview.smoothScrollTo(0, 0);
+        mToolbarHome.setVisibility(View.VISIBLE);
+        mToolbar.setVisibility(View.GONE);
         new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
     }
 
@@ -123,6 +128,8 @@ public class MainActivity extends AppCompatActivity {
                 mScrollview.smoothScrollTo(0, 0);
                 mIvToolbarRight.setVisibility(View.GONE);
                 new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
+                mToolbarHome.setVisibility(View.VISIBLE);
+                mToolbar.setVisibility(View.GONE);
                 break;
             case R.id.tv_notice:
                 mToolbarTitle.setText(getString(R.string.bot_tv_message));
@@ -133,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
                 setFragment(mMessageFragment);
                 mScrollview.smoothScrollTo(0, 0);
                 mIvToolbarRight.setVisibility(View.GONE);
+                mToolbarHome.setVisibility(View.GONE);
+                mToolbar.setVisibility(View.VISIBLE);
                 new MessagePresenter(MessageImpl.getInstance(getApplicationContext()), mMessageFragment);
                 break;
             case R.id.tv_find:
@@ -144,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
                 setFragment(mFindFragment);
                 mScrollview.smoothScrollTo(0, 0);
                 mIvToolbarRight.setVisibility(View.GONE);
+                mToolbarHome.setVisibility(View.GONE);
+                mToolbar.setVisibility(View.VISIBLE);
                 new FindPresenter(FindImpl.getInstance(getApplicationContext()), mFindFragment);
                 break;
             case R.id.tv_user:
@@ -155,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 setFragment(mUserFragment);
                 mScrollview.smoothScrollTo(0, 0);
                 mIvToolbarRight.setVisibility(View.VISIBLE);
+                mToolbarHome.setVisibility(View.GONE);
+                mToolbar.setVisibility(View.VISIBLE);
                 mIvToolbarRight.setImageResource(R.drawable.ic_setting);
                 break;
             case R.id.iv_release:
@@ -175,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
         mTvNotice.setSelected(false);
         mTvFind.setSelected(false);
         mTvUser.setSelected(false);
-        mScrollview.smoothScrollTo(0, 0);
     }
 
     @Override

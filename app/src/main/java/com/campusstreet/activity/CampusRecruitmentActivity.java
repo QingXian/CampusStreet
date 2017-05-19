@@ -219,11 +219,10 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
     protected void onStart() {
         super.onStart();
         mPi = 0;
+        setLoadingIndicator(true);
         if (mPostion == 0) {
-            setLoadingIndicator(true);
             mPresenter.fetchCampusRecruitmentList(null, mPi);
         } else {
-            setLoadingIndicator(true);
             mPresenter.fetchStudyWorkList(null, mPi);
         }
     }
@@ -247,12 +246,14 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
         }
         if (mPi != 0) {
             if (recruitInfos != null) {
+                mRvContent.setAdapter(mRecruitAdapter);
                 mRecruitAdapter.addData(recruitInfos);
                 mRvContent.setPullLoadMoreCompleted();
             }
         } else {
             mRvContent.setVisibility(View.VISIBLE);
             mTvError.setVisibility(View.GONE);
+            mRvContent.setAdapter(mRecruitAdapter);
             mRecruitAdapter.replaceData(recruitInfos);
             mRvContent.setPullLoadMoreCompleted();
             setLoadingIndicator(false);
@@ -268,6 +269,7 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
         }
         if (mPi != 0) {
             if (studyWorkInfos != null) {
+                mRvContent.setAdapter(mStudyWorkAdapter);
                 mStudyWorkAdapter.addData(studyWorkInfos);
                 mRvContent.setPullLoadMoreCompleted();
             }

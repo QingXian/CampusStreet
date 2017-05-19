@@ -54,4 +54,8 @@ public interface AssociationClient {
     @FormUrlEncoded
     @POST("get_assnpostdetail")
     Call<JsonObject> getAssociationPostDetail(@Field("pid") Integer pid);
+
+    @FormUrlEncoded
+    @POST("get_myassn")
+    Call<JsonObject> getUserAssociation(@Field("pi") Integer pi,@Field("uid") String uid);
 }

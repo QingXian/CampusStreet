@@ -70,9 +70,11 @@ public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<R
 
     public void replaceData(List<RecruitInfo> recruitInfos) {
         //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);
+
         mList = recruitInfos;
         // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
         notifyDataSetChanged();
+
     }
 
 
@@ -87,13 +89,13 @@ public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<R
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
         RecruitInfo recruiInfo = mList.get(position);
-        if (recruiInfo!=null){
+        if (recruiInfo != null) {
 //            Picasso.with(mContext)
 //                    .load(AppConfig.AVATAR_SERVER_HOST + recruiInfo.get)
 //                    .fit()
 //                    .into(viewHolder.mIvHead);
             viewHolder.mTvTitle.setText(recruiInfo.getJobtitle());
-            viewHolder.mTvCompany.setText(recruiInfo.getComtypename());
+            viewHolder.mTvCompany.setText(recruiInfo.getComname());
             viewHolder.mTvReleaseTime.setText(recruiInfo.getPublishtime());
             viewHolder.mTvPlace.setText(recruiInfo.getJobplace());
             viewHolder.mTvRequirement.setText(recruiInfo.getJobeduname());

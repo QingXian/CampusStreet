@@ -11,4 +11,5 @@
     <color name="tv_color_defult">#7A7A7A</color>
     <color name="tv_color_peripheral_shop_detail_name">#83000000</color>
     <color name="progress_bar_background">#90000000</color>
+    <color name="colorGray_light">#f7f7f7</color>
 </resources>

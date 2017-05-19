@@ -40,7 +40,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
-                mView.showfetchBountyHallCategoriesFailMsg(errorMsg);
+                mView.showErrorMsg(errorMsg);
             }
         });
     }
@@ -113,7 +113,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
             @Override
             public void onPassJoinTaskFailure(String errorMsg) {
                 mView.setLoadingIndicator(false);
-                mView.showErrorMsg(errorMsg);
+                mView.showNoPassMsg();
             }
         });
     }

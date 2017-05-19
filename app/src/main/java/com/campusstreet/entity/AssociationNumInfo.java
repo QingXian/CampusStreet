@@ -8,8 +8,10 @@ import java.io.Serializable;
 
 public class AssociationNumInfo implements Serializable {
 
+
     /**
      * id : 3
+     * uid : Mw==
      * userpic : 3.jpg
      * username : 式微云雨
      * assnjob : 1
@@ -17,6 +19,7 @@ public class AssociationNumInfo implements Serializable {
      */
 
     private String id;
+    private String uid;
     private String userpic;
     private String username;
     private String assnjob;
@@ -28,6 +31,14 @@ public class AssociationNumInfo implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getUserpic() {

@@ -45,7 +45,7 @@ public class BountyHallDetailRecyclerViewAdapter extends RecyclerView.Adapter<Re
 
     public static interface OnRecyclerViewItemClickListener {
 
-        void onItemClick(View view, JoinInfo JoinInfo,int type,int isStrat);
+        void onItemClick(View view, JoinInfo JoinInfo,int type);
     }
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
@@ -62,9 +62,6 @@ public class BountyHallDetailRecyclerViewAdapter extends RecyclerView.Adapter<Re
       mType = type;
     }
 
-    public void startTask(int  isStart) {
-       mIsStart = isStart;
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -101,7 +98,7 @@ public class BountyHallDetailRecyclerViewAdapter extends RecyclerView.Adapter<Re
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             // 注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(v, (JoinInfo) v.getTag(),mType,mIsStart);
+            mOnItemClickListener.onItemClick(v, (JoinInfo) v.getTag(),mType);
         }
     }
 

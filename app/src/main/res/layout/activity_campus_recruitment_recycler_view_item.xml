@@ -1,83 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:padding="16dp"
                 android:background="@color/colorWhite"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+                android:orientation="vertical"
+                android:padding="16dp">
+
     <ImageView
+        android:background="@drawable/ic_head_test"
         android:id="@+id/iv_head"
         android:layout_width="56dp"
         android:layout_height="56dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"/>
+
     <TextView
-        android:hint="融金交易微信推广"
         android:id="@+id/tv_title"
-        android:paddingLeft="16dp"
-        android:textSize="16sp"
-        android:textColor="@color/colorBlack"
-        android:layout_width="140dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/iv_head"
         android:layout_toEndOf="@+id/iv_head"
-        android:singleLine="true"/>
-    <TextView
-        android:hint="厦门国企"
-        android:paddingTop="8dp"
-        android:paddingLeft="16dp"
-        android:layout_below="@+id/tv_title"
-        android:id="@+id/tv_company"
-        android:layout_toRightOf="@+id/iv_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:hint="8小时前"
-        android:paddingTop="8dp"
-        android:paddingLeft="16dp"
-        android:layout_below="@+id/tv_company"
-        android:id="@+id/tv_release_time"
-        android:layout_toRightOf="@+id/iv_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:hint="东肖"
-        android:paddingTop="8dp"
-        android:paddingLeft="16dp"
-        android:layout_below="@+id/tv_company"
-        android:id="@+id/tv_place"
-        android:layout_toRightOf="@+id/tv_release_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:hint="本科及以上"
-        android:paddingTop="8dp"
-        android:paddingLeft="16dp"
-        android:layout_below="@+id/tv_company"
-        android:id="@+id/tv_requirement"
-        android:layout_toRightOf="@+id/tv_place"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:textColor="@color/colorOrange"
-        android:text="@string/frag_campus_recruitment_wages_symbol"
         android:layout_toLeftOf="@+id/tv_wages"
+        android:layout_toRightOf="@+id/iv_head"
+        android:ellipsize="end"
+        android:hint="融金交易微信推广推广推"
+        android:maxEms="8"
+        android:maxLines="1"
+        android:paddingLeft="16dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_company"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_toRightOf="@+id/iv_head"
+        android:ellipsize="end"
+        android:hint="厦门国企"
+        android:maxLines="1"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
         />
+
     <TextView
-        android:textColor="@color/colorOrange"
-        android:hint="100~200"
-        android:layout_alignParentRight="true"
+        android:id="@+id/tv_release_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_company"
+        android:layout_toRightOf="@+id/iv_head"
+        android:hint="8小时前"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        />
+
+    <TextView
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:id="@+id/tv_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_release_time"
+        android:layout_toRightOf="@+id/iv_head"
+        android:hint="东肖"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_requirement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_company"
+        android:layout_toRightOf="@+id/tv_release_time"
+        android:hint="本科及以上"
+        android:maxLines="1"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        />
+
+    <TextView
         android:id="@+id/tv_wages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:hint="100~200"
+        android:textColor="@color/colorOrange"
         />
 </RelativeLayout>

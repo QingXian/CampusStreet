@@ -27,14 +27,13 @@ public interface IIdleSaleContract {
 
 
 
-
     }
 
     interface View extends BaseView<Presenter> {
 
         void setIdleSale(List<IdleSaleInfo> idleSaleInfoList);
 
-        void setIdleSaleCategories();
+        void setIdleSaleCategories(String[] type);
 
         void setIdleSaleMessageList(List<LeaveMessageInfo> idleSaleMessageList);
 
