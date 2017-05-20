@@ -1,6 +1,8 @@
 package com.campusstreet.contract;
 
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.PeripheralShopGoodInfo;
+import com.campusstreet.entity.PeripheralShopInfo;
 
 import java.util.List;
 
@@ -9,25 +11,25 @@ import java.util.List;
  */
 
 public interface IPeripheralShopContract {
-    
+
     interface Presenter extends BasePresenter {
 
-        void fetchPeriPheralShopList(int type , int pi);
+        void fetchPeriPheralShopList(int type, String key, int pi);
 
-        void searchShop(String keyWord);
+        void fetchShopCommodityList(int sid, int type, String key, int pi);
 
-        void fetchShopCommodityList(int id,int pi);
-
-
+        void fetchPeriPheralShopCategories();
 
 
     }
 
     interface View extends BaseView<Presenter> {
 
-        void setPeriPheralShop();
+        void setPeriPheralShop(List<PeripheralShopInfo> peripheralShopInfos);
 
-        void setShopCommodityList();
+        void setShopCommodityList(List<PeripheralShopGoodInfo> peripheralShopGoodInfos);
+
+        void setPeriPheralShopCategories(String[] type);
 
         void showErrorMsg(String errorMsg);
 

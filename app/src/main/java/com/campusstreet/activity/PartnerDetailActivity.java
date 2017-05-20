@@ -81,7 +81,7 @@ public class PartnerDetailActivity extends AppCompatActivity implements IPartner
         });
         new PartnerPresenter(PartnerImpl.getInstance(getApplicationContext()), this);
         mPartnerInfo = (PartnerInfo) getIntent().getSerializableExtra(Const.PARTNERINFO_EXTRA);
-//        mPresenter.fetchPartnerDetail();
+        mPresenter.fetchPartnerDetail(mPartnerInfo.getId());
         initView();
     }
 

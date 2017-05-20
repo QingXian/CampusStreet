@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:padding="16dp"
+                android:background="@color/colorWhite"
               android:layout_marginTop="1dp"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
     <ImageView
         android:src="@drawable/ic_head_test"
         android:id="@+id/iv_photo"
@@ -91,12 +92,13 @@
         android:textSize="12sp"
         android:textColor="@color/colorOrange"
         android:text="美食"
+        android:layout_below="@id/tv_business_hours"
         android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/tv_business_hours_hint"
         android:id="@+id/tv_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:visibility="gone"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:drawableLeft="@drawable/ic_discount"

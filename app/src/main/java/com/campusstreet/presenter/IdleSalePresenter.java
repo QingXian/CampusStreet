@@ -62,11 +62,6 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
 
 
     @Override
-    public void searchGoods(String keyWord) {
-
-    }
-
-    @Override
     public void pushGoods(IdleSaleInfo idleSaleInfo) {
         mView.setLoadingIndicator(true);
         mIdleSaleImpl.addIdleGoods(idleSaleInfo, new IIdleSaleBiz.addIdleGoodsCallback() {

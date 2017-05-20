@@ -26,5 +26,9 @@ public interface PeripheralShopClient {
 
     @FormUrlEncoded
     @POST("get_shopgoods")
-    Call<JsonObject> getShopGood(@Field("sid") Integer sid,@Field("type") Integer type,@Field("key") String key,@Field("pi") Integer pi);
+    Call<JsonObject> getShopGood(@Field("sid") Integer sid, @Field("type") Integer type, @Field("key") String key, @Field("pi") Integer pi);
+
+    @FormUrlEncoded
+    @POST("get_shopgoods")
+    Call<JsonObject> getShopGood(@Field("sid") Integer sid, @Field("type") Integer type, @Field("pi") Integer pi);
 }

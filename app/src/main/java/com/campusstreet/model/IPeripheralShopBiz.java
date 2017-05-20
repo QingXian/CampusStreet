@@ -3,6 +3,8 @@ package com.campusstreet.model;
 import android.support.annotation.NonNull;
 
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.PeripheralShopGoodInfo;
+import com.campusstreet.entity.PeripheralShopInfo;
 
 import java.util.List;
 
@@ -12,25 +14,25 @@ import java.util.List;
 
 public interface IPeripheralShopBiz {
 
-    void fetchPeripheralShopList(int type,int pi,@NonNull LoadPeripheralShopListCallback callback);
+    void fetchPeripheralShopList(int type,int pi,String key,@NonNull LoadPeripheralShopListCallback callback);
 
-    void searchPeripheralShop(String picType, @NonNull searchPeripheralShopCallback callback);
+    void fetchPeripheralCategories(@NonNull LoadPeripheralCategoriesCallback callback);
 
-    void fetchShopCommodityList(int id,int pi,@NonNull LoadShopCommodityListCallback callback);
+    void fetchShopGoodList(int sid,int type,String key,int pi,@NonNull LoadShopCommodityListCallback callback);
 
 
-    interface searchPeripheralShopCallback {
+    interface LoadPeripheralCategoriesCallback {
 
-        void onSearchSuccess();
+        void onPeripheralCategoriesLoad(String[] type);
 
-        void onSearchFailure(String errorMsg);
+        void onDataNotAvailable(String errorMsg);
     }
 
 
     interface LoadPeripheralShopListCallback {
 
         // 加载所有PeripheralShop
-        void onPeripheralShopListLoaded();
+        void onPeripheralShopListLoaded(List<PeripheralShopInfo> peripheralShopInfos);
 
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);
@@ -38,7 +40,7 @@ public interface IPeripheralShopBiz {
     interface LoadShopCommodityListCallback {
 
         // 加载所有PeripheralShopMessage
-        void onShopCommodityListLoaded();
+        void onShopCommodityListLoaded(List<PeripheralShopGoodInfo> peripheralShopGoodInfos);
 
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);
