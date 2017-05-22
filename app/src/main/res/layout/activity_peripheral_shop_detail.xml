@@ -5,90 +5,131 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+
+    <include
+        android:id="@id/apptoolbar"
+        layout="@layout/toolbar"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorGray"
-        android:orientation="vertical">
-
-        <include layout="@layout/toolbar"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_photo"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:background="@drawable/bg_test"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/iv_photo"
-                android:background="@color/tv_color_peripheral_shop_detail_name"
-                android:paddingBottom="8dp"
-                android:paddingLeft="40dp"
-                android:paddingTop="8dp"
-                android:text="蘑菇街"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"/>
-        </RelativeLayout>
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            app:tabIndicatorHeight="0dp"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/colorPrimary"
-            />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/apptoolbar">
 
         <LinearLayout
-            android:id="@+id/ll_shop_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_height="match_parent"
+            android:background="@color/colorGray"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_phone"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
-                android:padding="8dp"
-                android:text="电话：123213123"
-                android:textSize="16sp"/>
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@color/colorWhite"
-                android:padding="8dp">
+                <ImageView
+                    android:id="@+id/iv_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:background="@drawable/bg_test"/>
 
                 <TextView
-                    android:id="@+id/tv_position"
-                    android:layout_width="0dp"
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_alignBottom="@+id/iv_photo"
+                    android:background="@color/tv_color_peripheral_shop_detail_name"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="40dp"
+                    android:paddingTop="8dp"
+                    android:text="蘑菇街"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"/>
+            </RelativeLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/colorWhite"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/colorPrimary"
+                />
+
+            <LinearLayout
+                android:id="@+id/ll_shop_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:id="@+id/tv_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/colorWhite"
-                    android:text="地址：登高西路"
-                    android:textSize="16sp"/>
+                    android:padding="8dp"
+                    android:text="电话：123213123"
+                    android:textSize="15sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorWhite"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:textColor="@color/colorBlack"
+                        android:id="@+id/tv_position"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite"
+                        android:text="地址：登高西路"
+                        android:textSize="15sp"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_grade_content"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:layout_weight="1"
-                    android:gravity="right">
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    >
+
+                    <TextView
+                        android:textColor="@color/colorBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="评分："
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:textColor="@color/colorBlack"
+                        android:id="@+id/tv_grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:text="4.2"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:textColor="@color/colorBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/act_peripheral_shop_grade_symbol"
+                        android:textSize="15sp"/>
 
                     <ImageView
                         android:id="@+id/iv_star1"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
+                        android:layout_marginLeft="12dp"
                         android:src="@mipmap/ic_launcher"/>
 
                     <ImageView
@@ -115,50 +156,29 @@
                         android:layout_height="16dp"
                         android:src="@mipmap/ic_launcher"/>
 
-                    <TextView
-                        android:id="@+id/tv_grade"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="8dp"
-                        android:text="4.2"
-                        android:textSize="12sp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/act_peripheral_shop_grade_symbol"
-                        android:textSize="12sp"/>
                 </LinearLayout>
+
+                <TextView
+                    android:textColor="@color/colorBlack"
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/colorWhite"
+                    android:padding="8dp"
+                    android:text="营业时间 10:30——23:30"
+                    android:textSize="15sp"/>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_time"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@color/colorWhite"
-                android:padding="8dp"
-                android:text="营业时间 10:30——23:30"
-                android:textSize="16sp"/>
-
-            <TextView
-                android:id="@+id/tv_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@color/colorWhite"
-                android:padding="8dp"
-                android:text="营业类型：营业执照"
-                android:textSize="16sp"/>
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv_content"
+                android:background="@color/colorGray">
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_commodity_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-        </RelativeLayout>
-    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <include layout="@layout/progress_bar"></include>
 </RelativeLayout>

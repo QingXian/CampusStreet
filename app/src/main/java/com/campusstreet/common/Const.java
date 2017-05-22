@@ -44,6 +44,7 @@ public class Const {
     public static final String USERASSOCIATIONINFO_EXTRA = "userassociationinfo_extra";
     public static final String ASSOCIATIONPOSTINFO_EXTRA = "associationpostinfo_extra";
     public static final String PARTNERINFO_EXTRA = "partnerinfo_extra";
+    public static final String PERIPHERASHOPINFO_EXTRA = "peripherashoinfo_extra";
 
     /**
      * spinner数据源

@@ -17,7 +17,6 @@ public interface IIdleSaleContract {
 
         void fetchIdleSaleList(int type , int pi);
 
-        void searchGoods(String keyWord);
 
         void pushGoods(IdleSaleInfo idleSaleInfo);
 

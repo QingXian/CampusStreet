@@ -22,6 +22,7 @@ public class PartnerInfo implements Serializable {
      * mobile : 13635283686
      */
 
+    private int id;
     private String name;
     private String img;
     private String organizer;
@@ -33,6 +34,14 @@ public class PartnerInfo implements Serializable {
     private String needperson;
     private String cnstage;
     private String mobile;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
