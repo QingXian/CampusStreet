@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public class BuyZonePresenter implements IBuyZoneContract.Presenter {
-    
+
     public static final String TAG = "BuyZonePresenter";
 
     private BuyZoneImpl mBuyZoneImpl;
@@ -28,11 +28,29 @@ public class BuyZonePresenter implements IBuyZoneContract.Presenter {
 
         mView.setPresenter(this);
     }
+
     @Override
     public void fetchBuyZoneList(int pi) {
         mBuyZoneImpl.fetchBuyZoneList(pi, new IBuyZoneBiz.LoadBuyZoneListCallback() {
             @Override
             public void onBuyZoneListLoaded(List<BuyZoneInfo> buyZoneInfoList) {
+                mView.setBuyZone(buyZoneInfoList);
+                mView.setLoadingIndicator(false);
+            }
+
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+                mView.setLoadingIndicator(false);
+            }
+        });
+    }
+
+    @Override
+    public void fetchUserBuyZoneList(String uid, String key, int pi) {
+        mBuyZoneImpl.fetchUserBuyZoneList(uid, key, pi, new IBuyZoneBiz.LoadUserBuyZoneListCallback() {
+            @Override
+            public void onUserBuyZoneListLoaded(List<BuyZoneInfo> buyZoneInfoList) {
                 mView.setBuyZone(buyZoneInfoList);
                 mView.setLoadingIndicator(false);
             }
@@ -75,7 +93,7 @@ public class BuyZonePresenter implements IBuyZoneContract.Presenter {
 
             @Override
             public void onLeaveMessageFailure(String errorMsg) {
-                mView.showErrorMsg(errorMsg+"留言失败");
+                mView.showErrorMsg(errorMsg + "留言失败");
                 mView.setLoadingIndicator(false);
             }
         });

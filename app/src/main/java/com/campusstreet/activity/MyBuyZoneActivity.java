@@ -3,10 +3,8 @@ package com.campusstreet.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,16 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
-import com.campusstreet.adapter.CampusInformationRecyclerViewAdapter;
-import com.campusstreet.adapter.CampusRecruitmentRecyclerViewAdapter;
-import com.campusstreet.adapter.CampusStudyWorkRecyclerViewAdapter;
-import com.campusstreet.adapter.PartnerRecyclerViewAdapter;
+import com.campusstreet.adapter.BuyZoneRecyclerViewAdapter;
 import com.campusstreet.common.Const;
-import com.campusstreet.contract.IPartnerContract;
-import com.campusstreet.entity.NewInfo;
-import com.campusstreet.entity.PartnerInfo;
-import com.campusstreet.model.PartnerImpl;
-import com.campusstreet.presenter.PartnerPresenter;
+import com.campusstreet.contract.IBuyZoneContract;
+import com.campusstreet.entity.BuyZoneInfo;
+import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.UserInfo;
+import com.campusstreet.model.BuyZoneImpl;
+import com.campusstreet.presenter.BuyZonePresenter;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.List;
@@ -35,41 +31,39 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Orange on 2017/4/6.
+ * Created by Orange on 2017/5/23.
  */
 
-public class PartnerActivity extends AppCompatActivity implements IPartnerContract.View {
+public class MyBuyZoneActivity extends AppCompatActivity implements IBuyZoneContract.View {
+
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
     ImageView mIvToolbarRight;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.tab_layout)
-    TabLayout mTabLayout;
     @BindView(R.id.rv_content)
     PullLoadMoreRecyclerView mRvContent;
+    @BindView(R.id.tv_error)
+    TextView mTvError;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.progress_bar_title)
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
-    @BindView(R.id.tv_error)
-    TextView mTvError;
+    private IBuyZoneContract.Presenter mPresenter;
+    private BuyZoneRecyclerViewAdapter mAdapter;
     private int mPi = 0;
-    private int mPostion = 0;
-    private String[] mTitle;
-    private IPartnerContract.Presenter mPresenter;
-    private PartnerRecyclerViewAdapter mAdapter;
+    private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_partner);
+        setContentView(R.layout.activity_user_buy_zone);
         ButterKnife.bind(this);
         mToolbar.setTitle("");
-        mToolbarTitle.setText(getString(R.string.frag_home_partner));
+        mToolbarTitle.setText(getString(R.string.frag_user_buy_zone));
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -82,19 +76,26 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
             }
         });
         mIvToolbarRight.setVisibility(View.VISIBLE);
-        mIvToolbarRight.setImageResource(R.drawable.ic_search);
-        new PartnerPresenter(PartnerImpl.getInstance(getApplicationContext()), this);
+        mIvToolbarRight.setImageResource(R.drawable.ic_add);
+        new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         initView();
         initEvent();
-        mPresenter.fetchPartnerCategories();
+    }
+
+    private void initView() {
+        mRvContent.setLinearLayout();
+        mAdapter = new BuyZoneRecyclerViewAdapter(this, null);
+        mRvContent.setAdapter(mAdapter);
     }
 
     private void initEvent() {
-        mAdapter.setOnItemClickListener(new PartnerRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+        mAdapter.setOnItemClickListener(new BuyZoneRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onItemClick(View view, PartnerInfo partnerInfo) {
-                Intent intent = new Intent(PartnerActivity.this, PartnerDetailActivity.class);
-                intent.putExtra(Const.PARTNERINFO_EXTRA, partnerInfo);
+            public void onItemClick(View view, BuyZoneInfo buyZoneInfo) {
+                Intent intent = new Intent(MyBuyZoneActivity.this, BuyZoneDetailActivity.class);
+                intent.putExtra(Const.BUYZONEIINFO_EXTRA, buyZoneInfo);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
             }
         });
@@ -105,7 +106,7 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.fetchPartnerList(null, 0, mPi);
+                        mPresenter.fetchUserBuyZoneList(mUserInfo.getUid(), null, mPi);
                     }
                 }, 1500);
             }
@@ -115,82 +116,59 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.fetchPartnerList(null, 0, ++mPi);
+                        mPresenter.fetchUserBuyZoneList(mUserInfo.getUid(), null, ++mPi);
                     }
                 }, 500);
             }
         });
     }
 
+    @Override
+    protected void onStart() {
+        mPi = 0;
+        super.onStart();
+        mPresenter.fetchUserBuyZoneList(mUserInfo.getUid(), null, mPi);
+        setLoadingIndicator(true);
+    }
+
     @OnClick(R.id.iv_toolbar_right)
     public void onClick() {
-    }
-
-
-    private void initView() {
-        mRvContent.setLinearLayout();
-        mAdapter = new PartnerRecyclerViewAdapter(this, null);
-        mRvContent.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void setPresenter(IPartnerContract.Presenter presenter) {
-        mPresenter = presenter;
-    }
-
-
-    @Override
-    public void setPartnerCategories(String[] type) {
-        mTitle = type;
-        if (type != null) {
-            mTabLayout.addTab(mTabLayout.newTab().setText("全部"));
-            for (int i = 0; i < type.length; i++) {
-                mTabLayout.addTab(mTabLayout.newTab().setText(type[i]));
-            }
-            mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    mPi = 0;
-                    mPresenter.fetchPartnerList(null, tab.getPosition(), 0);
-                    mPostion = tab.getPosition();
-                }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-
-                }
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-
-                }
-            });
+        if (mUserInfo != null) {
+            Intent intent = new Intent(this, AddBuyZoneActivity.class);
+            startActivity(intent);
+        } else {
+            showMessage("您还未登录");
         }
     }
 
     @Override
-    public void setPartnerList(List<PartnerInfo> partnerList) {
-        if (partnerList != null && partnerList.size() < 20) {
+    public void setPresenter(IBuyZoneContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void setBuyZone(List<BuyZoneInfo> buyZoneInfoList) {
+        if (buyZoneInfoList != null && buyZoneInfoList.size() < 20) {
             mRvContent.setPushRefreshEnable(false);
         } else {
             mRvContent.setPushRefreshEnable(true);
         }
         if (mPi != 0) {
-            if (partnerList != null) {
-                mAdapter.addData(partnerList);
+            if (buyZoneInfoList != null) {
+                mAdapter.addData(buyZoneInfoList);
                 mRvContent.setPullLoadMoreCompleted();
             }
         } else {
             mRvContent.setVisibility(View.VISIBLE);
             mTvError.setVisibility(View.GONE);
-            mAdapter.replaceData(partnerList);
+            mAdapter.replaceData(buyZoneInfoList);
             mRvContent.setPullLoadMoreCompleted();
             setLoadingIndicator(false);
         }
     }
 
     @Override
-    public void setPartnerDetail(PartnerInfo partnerInfo) {
+    public void setBuyZoneMessageList(List<LeaveMessageInfo> BuyZoneMessageList) {
 
     }
 
@@ -208,6 +186,16 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
     }
 
     @Override
+    public void showSuccessfullyPush(String succcessMsg) {
+
+    }
+
+    @Override
+    public void showSuccessfullyleaveMessage(String succcessMsg) {
+
+    }
+
+    @Override
     public void setLoadingIndicator(boolean active) {
         if (mProgressBarContainer != null) {
             if (active) {
@@ -220,15 +208,6 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
                 }
             }
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPi = 0;
-        mPresenter.fetchPartnerList(null, mPostion, mPi);
-        setLoadingIndicator(true);
-
     }
 
     protected void showMessage(String msg) {

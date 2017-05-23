@@ -84,7 +84,6 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/tv_department"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -94,6 +93,7 @@
             android:textSize="16sp"/>
 
         <TextView
+            android:id="@+id/tv_department"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -125,6 +125,29 @@
             android:layout_centerVertical="true"
             android:paddingLeft="8dp"
             android:text="@string/act_user_setting_passwrod"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"/>
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_arrow_right"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_logout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/colorWhite"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="8dp"
+            android:text="@string/act_user_setting_logout"
             android:textColor="@color/colorBlack"
             android:textSize="16sp"/>
         <ImageView

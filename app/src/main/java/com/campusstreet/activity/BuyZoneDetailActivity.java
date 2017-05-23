@@ -39,6 +39,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.campusstreet.utils.DataUtil.getTimeRange;
+
 /**
  * Created by Orange on 2017/4/9.
  */
@@ -173,7 +175,8 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
 
         mTvExpectedPrice.setText(mBuyZoneInfo.getMoney());
         mTvName.setText(mBuyZoneInfo.getUsername());
-        mTvTime.setText(mBuyZoneInfo.getPubtime());
+        String time = getTimeRange(mBuyZoneInfo.getPubtime());
+        mTvTime.setText(time);
         mTvTitle.setText(mBuyZoneInfo.getName());
         mTvContent.setText(mBuyZoneInfo.getCon());
         mTvPhone.setText(mBuyZoneInfo.getMoney());

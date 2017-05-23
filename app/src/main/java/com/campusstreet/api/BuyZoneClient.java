@@ -24,9 +24,14 @@ public interface BuyZoneClient {
     @POST("get_wishs")
     Call<JsonObject> getBuyZone(@Field("pi") Integer pi);
 
+    @FormUrlEncoded
+    @POST("get_mywishs")
+    Call<JsonObject> getUserBuyZone(@Field("uid") String uid, @Field("key") String key, @Field("pi") Integer pi);
+
     @Multipart
     @POST("ins_wishs")
     Call<JsonObject> pushBuy(@PartMap Map<String, RequestBody> buyZone);
+
 
     @FormUrlEncoded
     @POST("get_wish_comment")
@@ -34,6 +39,6 @@ public interface BuyZoneClient {
 
     @FormUrlEncoded
     @POST("ins_wish_comment")
-    Call<JsonObject> LeaveMessage(@Field("wid") Integer wid, @Field("uid") String uid ,@Field("con") String con);
+    Call<JsonObject> LeaveMessage(@Field("wid") Integer wid, @Field("uid") String uid, @Field("con") String con);
 }
 

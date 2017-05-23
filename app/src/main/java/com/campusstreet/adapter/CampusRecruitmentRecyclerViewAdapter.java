@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.R.id.list;
+import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
  * Created by Orange on 2017/4/18.
@@ -90,13 +91,15 @@ public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<R
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
         RecruitInfo recruiInfo = mList.get(position);
         if (recruiInfo != null) {
-//            Picasso.with(mContext)
-//                    .load(AppConfig.AVATAR_SERVER_HOST + recruiInfo.get)
-//                    .fit()
-//                    .into(viewHolder.mIvHead);
+            Picasso.with(mContext)
+                    .load(AppConfig.AVATAR_SERVER_HOST )
+                    .fit()
+                    .error(R.drawable.ic_head_test)
+                    .into(viewHolder.mIvHead);
             viewHolder.mTvTitle.setText(recruiInfo.getJobtitle());
             viewHolder.mTvCompany.setText(recruiInfo.getComname());
-            viewHolder.mTvReleaseTime.setText(recruiInfo.getPublishtime());
+            String time = getTimeRange(recruiInfo.getPublishtime());
+            viewHolder.mTvReleaseTime.setText(time);
             viewHolder.mTvPlace.setText(recruiInfo.getJobplace());
             viewHolder.mTvRequirement.setText(recruiInfo.getJobeduname());
             viewHolder.mTvWages.setText(recruiInfo.getJobmoney());

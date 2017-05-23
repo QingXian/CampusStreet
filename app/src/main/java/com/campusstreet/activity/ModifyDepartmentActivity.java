@@ -75,7 +75,7 @@ public class ModifyDepartmentActivity extends AppCompatActivity implements ISett
         });
         new SettingPresenter(SettingImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
-        mTvDepartment.setText(mUserInfo.getUsername());
+        mTvDepartment.setText(mUserInfo.getMajor());
     }
 
     @OnClick({R.id.btn_save, R.id.tv_department, R.id.btn_department})

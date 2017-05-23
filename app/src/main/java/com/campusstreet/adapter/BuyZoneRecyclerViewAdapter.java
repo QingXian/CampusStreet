@@ -19,6 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.campusstreet.utils.DataUtil.getTimeRange;
+
 /**
  * Created by Orange on 2017/4/24.
  */
@@ -76,7 +78,8 @@ public class BuyZoneRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                     .fit()
                     .into(viewHolder.mIvHead);
             viewHolder.mTvName.setText(buyZoneInfo.getUsername());
-            viewHolder.mTvTime.setText(buyZoneInfo.getPubtime());
+            String time = getTimeRange(buyZoneInfo.getPubtime());
+            viewHolder.mTvTime.setText(time);
             viewHolder.mTvContent.setText(buyZoneInfo.getCon());
             viewHolder.mTvExpectedPrice.setText(buyZoneInfo.getMoney());
             viewHolder.mTvTitle.setText(buyZoneInfo.getName());

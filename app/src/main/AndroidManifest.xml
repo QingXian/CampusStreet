@@ -114,6 +114,8 @@
         </activity>
         <activity android:name=".activity.ReleaseLiveActivity">
         </activity>
+        <activity android:name=".activity.MyBuyZoneActivity">
+        </activity>
     </application>
 
 </manifest>

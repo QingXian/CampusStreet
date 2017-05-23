@@ -25,6 +25,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.campusstreet.utils.DataUtil.getTimeRange;
+
 /**
  * Created by Orange on 2017/5/4.
  */
@@ -74,7 +76,8 @@ public class CampusInformationDetailActivity extends AppCompatActivity implement
         mNewInfo = (NewInfo) getIntent().getSerializableExtra(Const.NEWINFO_EXTRA);
         mPresenter.fetchCampusInformationDetail(mNewInfo.getId());
         mTvTitle.setText(mNewInfo.getTitle());
-        mTvTime.setText(mNewInfo.getPubtime());
+        String time = getTimeRange(mNewInfo.getPubtime());
+        mTvTime.setText(time);
     }
 
 

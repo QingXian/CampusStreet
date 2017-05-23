@@ -8,6 +8,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private FindFragment mFindFragment;
     private UserFragment mUserFragment;
     private Drawable mTop;
+    private long mCurrentTimeMillis;
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 clearSeleted();
                 mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
                 mTvHome.setSelected(true);
+                mHomeFragment = mHomeFragment.newInstance(mUserInfo);
                 setFragment(mHomeFragment);
                 mScrollview.smoothScrollTo(0, 0);
                 mIvToolbarRight.setVisibility(View.GONE);
@@ -195,11 +198,38 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 //        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
 //        setFragment(mHomeFragment);
+        if (UserSettingActivity.mIsLogout) {
+            String userStr = PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
+                    .getString(Const.PREF_USERINFO_KEY, null);
+            if (userStr == null) {
+                mUserInfo = null;
+            }
+            mUserFragment = mUserFragment.newInstance(mUserInfo);
+            setFragment(mUserFragment);
+            UserSettingActivity.mIsLogout = false;
+        }
     }
 
     protected void showMessage(String msg) {
         if (this != null && !this.isFinishing()) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            long downTime = System.currentTimeMillis();
+            if (downTime - mCurrentTimeMillis > 2000) {
+                Toast.makeText(this, "再按一次返回键将退出应用", Toast.LENGTH_SHORT).show();
+                mCurrentTimeMillis = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

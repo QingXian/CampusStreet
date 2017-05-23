@@ -13,6 +13,7 @@
     <string name="frag_home_campus_recruitment">校园招聘</string>
     <string name="frag_home_idle_sale">闲置出售</string>
     <string name="frag_home_buy_zone">求购专区</string>
+    <string name="frag_user_buy_zone">我的求购</string>
     <string name="frag_home_bounty_hall">赏金大厅</string>
     <string name="frag_home_association">社团</string>
     <string name="frag_home_campus_information">校园资讯</string>
@@ -26,7 +27,7 @@
     <string name="frag_user_recharge">充值</string>
     <string name="frag_user_bounty_mission">赏金任务</string>
     <string name="frag_user_detection_update">检测更新</string>
-    <string name="frag_user_my_idle">我的闲置</string>
+    <string name="frag_user_my_buy">我的求购</string>
     <string name="frag_user_my_club">我的社团</string>
     <string name="frag_user_about_us">关于我们</string>
     <string name="toolbar_with_search_hint">搜索</string>
@@ -175,4 +176,5 @@
     <string name="act_modif_password_new_password">新密码</string>
     <string name="act_modif_password_new_password_again">确认密码</string>
     <string name="act_modify_password_toolbar_title">修改密码</string>
+    <string name="act_user_setting_logout">退出登录</string>
 </resources>

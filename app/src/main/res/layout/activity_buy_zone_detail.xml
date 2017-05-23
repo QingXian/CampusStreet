@@ -12,6 +12,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/apptoolbar">
 
         <RelativeLayout
@@ -127,9 +129,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/tv_expected_price"
-                    android:paddingTop="8dp"
+                    android:paddingTop="4dp"
                     android:text="@string/frag_campus_recruitment_wages_symbol"
                     android:textColor="@color/colorRed"
+                    android:textSize="16sp"
                     />
 
                 <TextView
@@ -160,7 +163,7 @@
                     android:layout_below="@+id/tv_phone"
                     android:paddingTop="8dp"
                     android:text="@string/act_idle_sale_detail_qq_hint"
-                   />
+                    />
 
                 <TextView
                     android:id="@+id/tv_qq"
@@ -185,10 +188,10 @@
                     android:layout_alignParentTop="true"
                     android:paddingLeft="4dp"
                     android:paddingRight="16dp"
-                    android:paddingTop="8dp"
+                    android:paddingTop="4dp"
                     android:text="100"
                     android:textColor="@color/colorRed"
-                    android:textSize="12sp"/>
+                    android:textSize="16sp"/>
             </RelativeLayout>
 
             <TextView
@@ -207,10 +210,10 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_content"
-                android:layout_marginBottom="48dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/tv_message_hint"
+                android:layout_marginBottom="48dp"
                 android:background="@color/colorGray">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>

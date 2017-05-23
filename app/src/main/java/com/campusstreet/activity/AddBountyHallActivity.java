@@ -1,10 +1,8 @@
 package com.campusstreet.activity;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -17,7 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,21 +23,17 @@ import com.campusstreet.R;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
-import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 
-import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.R.attr.data;
 
 /**
  * Created by Orange on 2017/4/10.
@@ -82,6 +76,10 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
     TextView mTvEndTime;
     @BindView(R.id.btn_end_time)
     Button mBtnEndTime;
+    @BindView(R.id.rl_task_type)
+    RelativeLayout mRlTaskType;
+    @BindView(R.id.rl_task_end_time)
+    RelativeLayout mRlTaskEndTime;
     private IBountyHallContract.Presenter mPresenter;
     private String[] mTitle;
     private String mType;
@@ -195,10 +193,10 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
         }
     }
 
-    @OnClick({R.id.tv_type, R.id.btn_type, R.id.tv_end_time, R.id.btn_end_time, R.id.tv_toolbar_right})
+    @OnClick({R.id.rl_task_end_time, R.id.tv_toolbar_right, R.id.rl_task_type})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_type:
+            case R.id.rl_task_type:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择类型")
                         .setSingleChoiceItems(mTitle, mIndex, new DialogInterface.OnClickListener() {
@@ -213,22 +211,7 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
                         .create()
                         .show();
                 break;
-            case R.id.btn_type:
-                new AlertDialog.Builder(this)
-                        .setTitle("请选择类型")
-                        .setSingleChoiceItems(mTitle, mIndex, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                mType = mTitle[i];
-                                mIndex = i;
-                                mTvType.setText(mTitle[i]);
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .create()
-                        .show();
-                break;
-            case R.id.tv_end_time:
+            case R.id.rl_task_end_time:
                 Calendar c = Calendar.getInstance();
                 new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -241,19 +224,6 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
 
-                break;
-            case R.id.btn_end_time:
-                c = Calendar.getInstance();
-                new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        mTvEndTime.setText(String.format("%d-%d-%d", year, monthOfYear, dayOfMonth));
-                        mEndTime = mTvEndTime.getText().toString();
-                        mYear = year;
-                        mMonth = monthOfYear;
-                        mDay = dayOfMonth;
-                    }
-                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)).show();
                 break;
             case R.id.tv_toolbar_right:
                 AddTask();
@@ -337,4 +307,5 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
         bountyHallInfo.setEndtime(mEndTime);
         mPresenter.addTask(bountyHallInfo);
     }
+
 }

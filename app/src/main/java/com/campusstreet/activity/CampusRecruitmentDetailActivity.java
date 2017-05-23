@@ -19,6 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.campusstreet.utils.DataUtil.getTimeRange;
+
 /**
  * Created by Orange on 2017/4/7.
  */
@@ -113,7 +115,8 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity {
             mTvDuty.setText(mRecruitInfo.getJobddes());
             mTvReq.setText(mRecruitInfo.getJobreq());
             mTvCompanyPhone.setText(mRecruitInfo.getComphone());
-            mTvTime.setText(mRecruitInfo.getPublishtime());
+            String time = getTimeRange(mRecruitInfo.getPublishtime());
+            mTvTime.setText(time);
         } else {
             showStudyWorkDetail();
             mTvTitle.setText(mStudyWorkInfo.getTitle());
@@ -123,7 +126,8 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity {
             mTvStudyworkRange.setText(mStudyWorkInfo.getJobtime());
             mTvStudyworkPhone.setText(mStudyWorkInfo.getPhone());
             mTvReq.setText(mStudyWorkInfo.getJobreq());
-            mTvTime.setText(mStudyWorkInfo.getPublishtime());
+            String time = getTimeRange(mStudyWorkInfo.getPublishtime());
+            mTvTime.setText(time);
             mTvDuty.setText(mStudyWorkInfo.getJobperson());
             mTvDutyHint.setText("需要人数");
             showStudyWorkDetail();
