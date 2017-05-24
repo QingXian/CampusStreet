@@ -72,5 +72,4 @@ public class Const {
     /**
      * recycler view可见项的阈值
      */
-    public static final int RECYCLER_VIEW_VISIBLE_THRESHOLD = 3;
 }

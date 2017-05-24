@@ -193,7 +193,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             mTvPrice.setText("面议");
         } else {
             double price = Double.parseDouble(mBountyHallInfo.getFee());
-            DecimalFormat df = new DecimalFormat("0.00");
+            DecimalFormat df = new DecimalFormat("0.0");
             String strprice = df.format(price);
             mTvPrice.setText(strprice);
         }
@@ -222,18 +222,21 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                 mRvContent.setVisibility(View.VISIBLE);
                 if (mBountyHallInfo.getState() == 3) {
                     mBtnEntel.setVisibility(View.VISIBLE);
-                    mBtnEntel.setText("完成任务");
+                    mBtnEntel.setEnabled(false);
+                    mBtnEntel.setText("任务关闭");
+                    mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 } else if (mBountyHallInfo.getState() == 1) {
-                    mBtnEntel.setVisibility(View.GONE);
+                    mBtnEntel.setVisibility(View.VISIBLE);
+                    mBtnEntel.setText("开始任务");
                 } else if (mBountyHallInfo.getState() == 2) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
-                    mBtnEntel.setText("任务关闭");
+                    mBtnEntel.setText("任务进行中");
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 } else if (mBountyHallInfo.getState() == 5) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
-                    mBtnEntel.setText("任务完成");
+                    mBtnEntel.setText("任务结束");
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 }
             } else {
@@ -242,12 +245,12 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                 if (mBountyHallInfo.getState() == 1) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setText("报名");
-                } else if (mBountyHallInfo.getState() == 3) {
+                } else if (mBountyHallInfo.getState() == 2) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务进行中");
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                } else if (mBountyHallInfo.getState() == 2) {
+                } else if (mBountyHallInfo.getState() == 3) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务关闭");
@@ -255,13 +258,13 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                 } else if (mBountyHallInfo.getState() == 5) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
-                    mBtnEntel.setText("任务完成");
+                    mBtnEntel.setText("任务结束");
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 }
             }
         }
-        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(gridLayoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRvContent.setLayoutManager(linearLayoutManager);
         mAdapter = new BountyHallDetailRecyclerViewAdapter(this, null, 0);
         mRvContent.setAdapter(mAdapter);
     }
@@ -320,7 +323,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     @Override
     public void showErrorMsg(String errorMsg) {
         if (mUserInfo != null) {
-            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid())) {
+            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
                 showMessage(errorMsg);
             }
         }
@@ -328,7 +331,8 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
 
     @Override
     public void showNoPassMsg() {
-        mBtnEntel.setVisibility(View.GONE);
+        showMessage("没有通过报名的数据");
+        mAdapter.replaceData(null);
     }
 
     @Override
@@ -369,7 +373,6 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             try {
                 c1.setTime(CurrentTime.parse(mBountyHallInfo.getEndtime()));
                 c2.setTime(CurrentTime.parse(dataStrNew));
-                //判断是否大于两天
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -384,7 +387,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                 intent.putExtra(USERINFO_EXTRA, mUserInfo);
                 startActivityForResult(intent, 1);
             }
-        } else {
+        } else if (mBtnEntel.getText().toString().equals("开始任务")) {
             mPresenter.startTask(mUserInfo.getUid(), mBountyHallInfo.getId());
         }
     }

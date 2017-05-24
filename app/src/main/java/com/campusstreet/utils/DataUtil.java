@@ -35,6 +35,7 @@ public class DataUtil {
      * @return
      */
     public static String getTimeRange(String mTime) {
+        mTime = mTime.replaceAll("-","/");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         /**获取当前时间*/
         Date curDate = new Date(System.currentTimeMillis());

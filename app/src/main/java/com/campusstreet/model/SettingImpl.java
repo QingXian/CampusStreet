@@ -122,7 +122,7 @@ public class SettingImpl implements  ISettingBiz {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 JsonObject bodyJson = response.body();
                 if (bodyJson != null) {
-                    int res = bodyJson.get(Const.EXT_KEY).getAsInt();
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
                     if (res == 1) {
                         callback.onChangePasswordSuccess();
                     } else {

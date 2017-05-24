@@ -1,28 +1,26 @@
 package com.campusstreet.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
-import com.campusstreet.adapter.CampusInformationRecyclerViewAdapter;
-import com.campusstreet.adapter.CampusRecruitmentRecyclerViewAdapter;
-import com.campusstreet.adapter.CampusStudyWorkRecyclerViewAdapter;
 import com.campusstreet.adapter.PartnerRecyclerViewAdapter;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IPartnerContract;
-import com.campusstreet.entity.NewInfo;
 import com.campusstreet.entity.PartnerInfo;
 import com.campusstreet.model.PartnerImpl;
 import com.campusstreet.presenter.PartnerPresenter;
@@ -34,29 +32,32 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.campusstreet.R.id.view;
+
 /**
  * Created by Orange on 2017/4/6.
  */
 
 public class PartnerActivity extends AppCompatActivity implements IPartnerContract.View {
-    @BindView(R.id.toolbar_title)
-    TextView mToolbarTitle;
-    @BindView(R.id.iv_toolbar_right)
-    ImageView mIvToolbarRight;
+
+    @BindView(R.id.et_search)
+    EditText mEtSearch;
+    @BindView(R.id.tv_toolbar_right)
+    TextView mTvToolbarRight;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.tab_layout)
     TabLayout mTabLayout;
     @BindView(R.id.rv_content)
     PullLoadMoreRecyclerView mRvContent;
+    @BindView(R.id.tv_error)
+    TextView mTvError;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.progress_bar_title)
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
-    @BindView(R.id.tv_error)
-    TextView mTvError;
     private int mPi = 0;
     private int mPostion = 0;
     private String[] mTitle;
@@ -69,7 +70,6 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
         setContentView(R.layout.activity_partner);
         ButterKnife.bind(this);
         mToolbar.setTitle("");
-        mToolbarTitle.setText(getString(R.string.frag_home_partner));
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -81,8 +81,6 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
                 onBackPressed();
             }
         });
-        mIvToolbarRight.setVisibility(View.VISIBLE);
-        mIvToolbarRight.setImageResource(R.drawable.ic_search);
         new PartnerPresenter(PartnerImpl.getInstance(getApplicationContext()), this);
         initView();
         initEvent();
@@ -105,7 +103,10 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.fetchPartnerList(null, 0, mPi);
+                        if (!mEtSearch.getText().equals(""))
+                            mPresenter.fetchPartnerList(mEtSearch.getText().toString(), mPostion, mPi);
+                        else
+                            mPresenter.fetchPartnerList(null, mPostion, mPi);
                     }
                 }, 1500);
             }
@@ -115,15 +116,35 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.fetchPartnerList(null, 0, ++mPi);
+                        if (!mEtSearch.getText().equals(""))
+                            mPresenter.fetchPartnerList(mEtSearch.getText().toString(), mPostion, ++mPi);
+                        else
+                            mPresenter.fetchPartnerList(null, mPostion, ++mPi);
                     }
-                }, 500);
+                }, 1500);
             }
         });
-    }
 
-    @OnClick(R.id.iv_toolbar_right)
-    public void onClick() {
+        mEtSearch.setOnKeyListener(new View.OnKeyListener() {
+
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    mPi = 0;
+                    if (!mEtSearch.getText().equals(""))
+                        mPresenter.fetchPartnerList(mEtSearch.getText().toString(), mPostion, mPi);
+                    else
+                        mPresenter.fetchPartnerList(null, mPostion, mPi);
+                    setLoadingIndicator(true);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
 
@@ -151,6 +172,7 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     mPi = 0;
+                    mEtSearch.setText("");
                     mPresenter.fetchPartnerList(null, tab.getPosition(), 0);
                     mPostion = tab.getPosition();
                 }
@@ -226,7 +248,10 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
     protected void onStart() {
         super.onStart();
         mPi = 0;
-        mPresenter.fetchPartnerList(null, mPostion, mPi);
+        if (!mEtSearch.getText().equals(""))
+            mPresenter.fetchPartnerList(mEtSearch.getText().toString(), mPostion, mPi);
+        else
+            mPresenter.fetchPartnerList(null, mPostion, mPi);
         setLoadingIndicator(true);
 
     }

@@ -207,6 +207,8 @@ public class MainActivity extends AppCompatActivity {
             mUserFragment = mUserFragment.newInstance(mUserInfo);
             setFragment(mUserFragment);
             UserSettingActivity.mIsLogout = false;
+            mToolbarHome.setVisibility(View.GONE);
+            mToolbar.setVisibility(View.VISIBLE);
         }
     }
 

@@ -28,6 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.R.attr.type;
 import static com.campusstreet.common.Const.MULTIPART_FORM_DATA;
 
 /**
@@ -73,6 +74,44 @@ public class IdleSaleImpl implements IIdleSaleBiz {
                                 IdleSaleInfoList.add(idleSaleInfo);
                             }
                             callback.onIdleSaleListLoaded(IdleSaleInfoList);
+                        } else {
+                            callback.onDataNotAvailable("暂时没有数据");
+                        }
+
+                    } else {
+                        callback.onDataNotAvailable(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onDataNotAvailable("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
+    @Override
+    public void fetchUserIdleSaleList(String uid, String key, int pi, @NonNull final LoadUserIdleSaleListCallback callback) {
+        Call<JsonObject> call = mIdleSaleClient.getUserIdleSale(uid, key, pi);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+                        if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
+                            JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            List<IdleSaleInfo> IdleSaleInfoList = new ArrayList<>();
+                            for (int i = 0; i < resultJsons.size(); i++) {
+                                JsonObject json = resultJsons.get(i).getAsJsonObject();
+                                IdleSaleInfo idleSaleInfo = gson.fromJson(json, IdleSaleInfo.class);
+                                IdleSaleInfoList.add(idleSaleInfo);
+                            }
+                            callback.onUserIdleSaleListLoaded(IdleSaleInfoList);
                         } else {
                             callback.onDataNotAvailable("暂时没有数据");
                         }

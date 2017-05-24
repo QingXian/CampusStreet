@@ -5,8 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.campusstreet.R;
@@ -20,8 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.R.attr.start;
-import static android.R.attr.type;
+import static com.campusstreet.common.Const.JOINNOTPASS;
 
 /**
  * Created by Orange on 2017/5/1.
@@ -36,7 +33,7 @@ public class BountyHallDetailRecyclerViewAdapter extends RecyclerView.Adapter<Re
     private int mType;
     private int mIsStart = 0;
 
-    public BountyHallDetailRecyclerViewAdapter(Context context, List<JoinInfo> list,int type) {
+    public BountyHallDetailRecyclerViewAdapter(Context context, List<JoinInfo> list, int type) {
         mContext = context;
         mList = list;
         mType = type;
@@ -45,7 +42,7 @@ public class BountyHallDetailRecyclerViewAdapter extends RecyclerView.Adapter<Re
 
     public static interface OnRecyclerViewItemClickListener {
 
-        void onItemClick(View view, JoinInfo JoinInfo,int type);
+        void onItemClick(View view, JoinInfo JoinInfo, int type);
     }
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
@@ -58,8 +55,9 @@ public class BountyHallDetailRecyclerViewAdapter extends RecyclerView.Adapter<Re
         // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
         notifyDataSetChanged();
     }
-    public void replaceType(int  type) {
-      mType = type;
+
+    public void replaceType(int type) {
+        mType = type;
     }
 
 
@@ -73,14 +71,28 @@ public class BountyHallDetailRecyclerViewAdapter extends RecyclerView.Adapter<Re
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
-        JoinInfo JoinInfo = mList.get(position);
-        if (JoinInfo != null) {
+        JoinInfo joinInfo = mList.get(position);
+        if (joinInfo != null) {
             Picasso.with(mContext)
-                    .load(AppConfig.AVATAR_SERVER_HOST + JoinInfo.getUserpic())
+                    .load(AppConfig.AVATAR_SERVER_HOST + joinInfo.getUserpic())
                     .fit()
                     .into(viewHolder.mIvHead);
-            viewHolder.mTvName.setText(JoinInfo.getUsername());
-            viewHolder.itemView.setTag(JoinInfo);
+            if (mType == JOINNOTPASS) {
+                viewHolder.mTvState.setVisibility(View.GONE);
+            } else {
+                viewHolder.mTvState.setVisibility(View.VISIBLE);
+                if (joinInfo.getState() == 3) {
+                    viewHolder.mTvState.setText("执行中");
+                } else if (joinInfo.getState() == 4) {
+                    viewHolder.mTvState.setText("待确认放弃");
+                } else if (joinInfo.getState() == 5) {
+                    viewHolder.mTvState.setText("待验收");
+                } else if (joinInfo.getState() == 9 && joinInfo.getState() == 10) {
+                    viewHolder.mTvState.setText("任务结束");
+                }
+            }
+            viewHolder.mTvName.setText(joinInfo.getUsername());
+            viewHolder.itemView.setTag(joinInfo);
         }
 
     }
@@ -98,7 +110,7 @@ public class BountyHallDetailRecyclerViewAdapter extends RecyclerView.Adapter<Re
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             // 注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(v, (JoinInfo) v.getTag(),mType);
+            mOnItemClickListener.onItemClick(v, (JoinInfo) v.getTag(), mType);
         }
     }
 
@@ -108,6 +120,8 @@ public class BountyHallDetailRecyclerViewAdapter extends RecyclerView.Adapter<Re
         CircleImageView mIvHead;
         @BindView(R.id.tv_name)
         TextView mTvName;
+        @BindView(R.id.tv_state)
+        TextView mTvState;
 
         private RecyclerItemViewHolder(View viewItem) {
             super(viewItem);

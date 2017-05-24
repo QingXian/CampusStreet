@@ -63,6 +63,7 @@ public class AddBuyZoneActivity extends AppCompatActivity implements IBuyZoneCon
     EditText mEtQq;
     private IBuyZoneContract.Presenter mPresenter;
     private UserInfo mUserInfo;
+    private int mIsUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,12 +84,13 @@ public class AddBuyZoneActivity extends AppCompatActivity implements IBuyZoneCon
             }
         });
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+        mIsUser = getIntent().getIntExtra(Const.TYPE, 0);
         new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
     }
 
     @OnClick(R.id.btn_release)
     public void onViewClicked() {
-      AddBuy();
+        AddBuy();
     }
 
     private void AddBuy() {
@@ -151,8 +153,14 @@ public class AddBuyZoneActivity extends AppCompatActivity implements IBuyZoneCon
     @Override
     public void showSuccessfullyPush(String succcessMsg) {
         showMessage(succcessMsg);
-        Intent intent = new Intent(this, BuyZoneActivity.class);
-        startActivity(intent);
+        if (mIsUser == 1) {
+            Intent intent = new Intent(this, MyBuyZoneActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, BuyZoneActivity.class);
+            startActivity(intent);
+        }
+
         this.finish();
     }
 

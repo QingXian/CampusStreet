@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
                 android:background="@color/colorWhite"
-              android:layout_marginTop="1dp"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+                android:orientation="horizontal"
+                android:padding="16dp">
+
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="32dp"
         android:id="@+id/iv_head"
-        android:src="@drawable/ic_head_test"
-        android:layout_height="32dp"/>
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_head_test"/>
+
     <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/iv_head"
         android:paddingLeft="8dp"
         android:paddingTop="8dp"
-        android:id="@+id/tv_name"
-        android:text="用户名"
+        android:text="用户名"/>
+
+    <TextView
+        android:id="@+id/tv_state"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:padding="8dp"
+        android:text="状态"
+        android:textColor="@color/colorOrange"/>
 </RelativeLayout>

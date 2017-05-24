@@ -112,7 +112,7 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
                 onBackPressed();
             }
         });
-        mIvToolbarRight.setVisibility(View.VISIBLE);
+        mIvToolbarRight.setVisibility(View.GONE);
         mIvToolbarRight.setImageResource(R.drawable.ic_more);
         new AssociationPresenter(AssociationImpl.getInstance(getApplicationContext()), this);
         mUserAssociationInfo = (UserAssociationInfo) getIntent().getSerializableExtra(Const.USERASSOCIATIONINFO_EXTRA);

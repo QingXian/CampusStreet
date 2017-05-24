@@ -43,7 +43,9 @@
             android:name=".activity.IdleSaleActivity"
             android:launchMode="singleTask">
         </activity>
-        <activity android:name=".activity.PartnerActivity">
+        <activity
+            android:name=".activity.PartnerActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
         </activity>
         <activity
             android:name=".activity.PeripheraShopActivity"
@@ -115,6 +117,8 @@
         <activity android:name=".activity.ReleaseLiveActivity">
         </activity>
         <activity android:name=".activity.MyBuyZoneActivity">
+        </activity>
+        <activity android:name=".activity.MyIdleSaleActivity">
         </activity>
     </application>
 
