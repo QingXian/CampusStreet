@@ -17,6 +17,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.campusstreet.utils.DataUtil.getTimeRange;
+
 /**
  * Created by Orange on 2017/5/3.
  */
@@ -82,7 +84,8 @@ public class CampusStudyWorkRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         if (studyWorkInfo != null) {
             viewHolder.mTvTitle.setText(studyWorkInfo.getTitle());
             viewHolder.mTvCompany.setText(studyWorkInfo.getJobcom());
-            viewHolder.mTvReleaseTime.setText(studyWorkInfo.getPublishtime());
+            String time = getTimeRange(studyWorkInfo.getPublishtime());
+            viewHolder.mTvReleaseTime.setText(time);
             viewHolder.mTvPlace.setText(studyWorkInfo.getJobplace());
             viewHolder.mTvWages.setText(studyWorkInfo.getJobmoney());
             viewHolder.itemView.setTag(studyWorkInfo);

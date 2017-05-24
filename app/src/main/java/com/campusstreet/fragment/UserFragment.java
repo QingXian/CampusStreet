@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.campusstreet.R;
 import com.campusstreet.activity.LoginActivity;
 import com.campusstreet.activity.MyBountyHallActivity;
+import com.campusstreet.activity.MyBuyZoneActivity;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.entity.UserInfo;
@@ -91,10 +92,11 @@ public class UserFragment extends Fragment {
     }
 
     private void initView() {
-//        Picasso.with(getActivity())
-//                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.get)
-//                .fit()
-//                .into(mIvHead);
+        Picasso.with(getActivity())
+                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.getUserpic())
+                .fit()
+                .error(R.drawable.ic_head_test)
+                .into(mIvHead);
         mTvDepartment.setText(mUserInfo.getMajor());
         mTvName.setText(mUserInfo.getUsername());
     }
@@ -118,6 +120,9 @@ public class UserFragment extends Fragment {
                 break;
             case R.id.tv_my_idle:
                 if (mUserInfo != null) {
+                    Intent intent = new Intent(getActivity(), MyBuyZoneActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    startActivity(intent);
                 } else {
                     showMessage("请先登录");
                 }

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +31,9 @@ import com.campusstreet.presenter.BountyHallPresenter;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,6 +49,7 @@ import static com.campusstreet.common.Const.STARTTASK;
 import static com.campusstreet.common.Const.TID_EXTRA;
 import static com.campusstreet.common.Const.TYPE;
 import static com.campusstreet.common.Const.USERINFO_EXTRA;
+import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
  * Created by Orange on 2017/4/9.
@@ -193,7 +198,8 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             mTvPrice.setText(strprice);
         }
         mTvName.setText(mBountyHallInfo.getUsername());
-        mTvTime.setText(mBountyHallInfo.getPubtime());
+        String time = getTimeRange(mBountyHallInfo.getPubtime());
+        mTvTime.setText(time);
         mTvTitle.setText(mBountyHallInfo.getTitle());
         mTvPeopleNum.setText(String.valueOf(mBountyHallInfo.getSperson()));
         mTvCompletionTime.setText(mBountyHallInfo.getEndtime());
@@ -211,7 +217,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             mTabLayout.setVisibility(View.GONE);
             mRvContent.setVisibility(View.GONE);
         } else {
-            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid())) {
+            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
                 mTabLayout.setVisibility(View.VISIBLE);
                 mRvContent.setVisibility(View.VISIBLE);
                 if (mBountyHallInfo.getState() == 3) {
@@ -313,8 +319,10 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        if (mUserInfo.getUid().equals(mBountyHallInfo.getUid())) {
-            showMessage(errorMsg);
+        if (mUserInfo != null) {
+            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid())) {
+                showMessage(errorMsg);
+            }
         }
     }
 
@@ -353,10 +361,29 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     @OnClick(R.id.btn_entel)
     public void onViewClicked() {
         if (mBtnEntel.getText().toString().equals("报名")) {
-            Intent intent = new Intent(this, RegistrationActivity.class);
-            intent.putExtra(TID_EXTRA, mBountyHallInfo.getId());
-            intent.putExtra(USERINFO_EXTRA, mUserInfo);
-            startActivityForResult(intent, 1);
+            java.util.Calendar c1 = java.util.Calendar.getInstance();
+            java.util.Calendar c2 = java.util.Calendar.getInstance();
+            SimpleDateFormat CurrentTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date curDate = new Date(System.currentTimeMillis());
+            String dataStrNew = CurrentTime.format(curDate);
+            try {
+                c1.setTime(CurrentTime.parse(mBountyHallInfo.getEndtime()));
+                c2.setTime(CurrentTime.parse(dataStrNew));
+                //判断是否大于两天
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            int result = c1.compareTo(c2);
+            if (result == 0) {
+                showMessage("任务已经过期");
+            } else if (result < 0) {
+                showMessage("任务已经过期");
+            } else {
+                Intent intent = new Intent(this, RegistrationActivity.class);
+                intent.putExtra(TID_EXTRA, mBountyHallInfo.getId());
+                intent.putExtra(USERINFO_EXTRA, mUserInfo);
+                startActivityForResult(intent, 1);
+            }
         } else {
             mPresenter.startTask(mUserInfo.getUid(), mBountyHallInfo.getId());
         }

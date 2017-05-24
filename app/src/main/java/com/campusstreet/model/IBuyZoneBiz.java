@@ -14,13 +14,15 @@ import java.util.List;
 public interface IBuyZoneBiz {
 
     //获取求购列表
-    void fetchBuyZoneList(int pi,@NonNull LoadBuyZoneListCallback callback);
+    void fetchBuyZoneList(int pi, @NonNull LoadBuyZoneListCallback callback);
+
+    void fetchUserBuyZoneList(String uid, String key, int pi, @NonNull LoadUserBuyZoneListCallback callback);
 
     void addBuy(BuyZoneInfo buyZoneInfo, @NonNull addIdleGoodsCallback callback);
 
-    void leaveMessagae(int gid ,String uid ,String con,@NonNull LeaveMessageCallback callback);
+    void leaveMessagae(int gid, String uid, String con, @NonNull LeaveMessageCallback callback);
 
-    void fetchBuyZoneMessageList(int id,int pi,@NonNull LoadBuyZoneMessageListCallback callback);
+    void fetchBuyZoneMessageList(int id, int pi, @NonNull LoadBuyZoneMessageListCallback callback);
 
     interface addIdleGoodsCallback {
 
@@ -30,9 +32,7 @@ public interface IBuyZoneBiz {
     }
 
 
-
-    interface LeaveMessageCallback
-    {
+    interface LeaveMessageCallback {
 
         void onLeaveMessageSuccess();
 
@@ -47,6 +47,16 @@ public interface IBuyZoneBiz {
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);
     }
+
+    interface LoadUserBuyZoneListCallback {
+
+        // 加载所有BuyZone
+        void onUserBuyZoneListLoaded(List<BuyZoneInfo> buyZoneInfoList);
+
+        // 获取数据失败的回调
+        void onDataNotAvailable(String errorMsg);
+    }
+
     interface LoadBuyZoneMessageListCallback {
 
         // 加载所有BuyZoneMessage

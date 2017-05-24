@@ -4,13 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <include layout="@layout/toolbar"/>
-
         <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
@@ -18,16 +16,14 @@
             android:background="@color/colorGray">
         </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
     </LinearLayout>
-
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_error"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="加载失败"
-        android:textSize="18sp"
-        android:visibility="gone"/>
-
+        android:text="加载失败"/>
     <include layout="@layout/progress_bar"></include>
 </RelativeLayout>

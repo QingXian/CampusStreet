@@ -19,6 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.campusstreet.utils.DataUtil.getTimeRange;
+
 /**
  * Created by Orange on 2017/5/8.
  */
@@ -62,7 +64,8 @@ public class PostDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                     .into(viewHolder.mIvHead);
             viewHolder.mTvName.setText(associationPostMessageInfo.getUsername());
             viewHolder.mTvContent.setText(associationPostMessageInfo.getCon());
-            viewHolder.mTvTime.setText(associationPostMessageInfo.getPubtime());
+            String time = getTimeRange(associationPostMessageInfo.getPubtime());
+            viewHolder.mTvTime.setText(time);
         }
     }
 

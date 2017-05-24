@@ -44,6 +44,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.campusstreet.utils.DataUtil.getTimeRange;
+
 /**
  * Created by Orange on 2017/4/7.
  */
@@ -185,6 +187,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         Picasso.with(this)
                 .load(AppConfig.AVATAR_SERVER_HOST + mIdleSaleInfo.getUserpic())
                 .fit()
+                .error(R.drawable.ic_head_test)
                 .into(mIvHead);
         mTvDegree.setText(mIdleSaleInfo.getBewrite());
         mTvContent.setText(mIdleSaleInfo.getContent());
@@ -194,8 +197,8 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         } else if (mIdleSaleInfo.getSelltype().equals(1)) {
             mTvSellType.setText("可小刀");
         }
-
-        mTvTime.setText(mIdleSaleInfo.getGpublishtime());
+        String time = getTimeRange(mIdleSaleInfo.getGpublishtime());
+        mTvTime.setText(time);
         if (mIdleSaleInfo.getTradetype().equals(0)) {
             mTvTradetype.setText("见面交易");
         }

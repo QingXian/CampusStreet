@@ -90,6 +90,44 @@ public class BuyZoneImpl implements IBuyZoneBiz {
     }
 
     @Override
+    public void fetchUserBuyZoneList(String uid, String key, int pi, @NonNull final LoadUserBuyZoneListCallback callback) {
+        Call<JsonObject> call = mBuyZoneClient.getUserBuyZone(uid, key, pi);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+                        if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
+                            JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            List<BuyZoneInfo> buyZoneInfoList = new ArrayList<>();
+                            for (int i = 0; i < resultJsons.size(); i++) {
+                                JsonObject json = resultJsons.get(i).getAsJsonObject();
+                                BuyZoneInfo buyZoneInfo = gson.fromJson(json, BuyZoneInfo.class);
+                                buyZoneInfoList.add(buyZoneInfo);
+                            }
+                            callback.onUserBuyZoneListLoaded(buyZoneInfoList);
+                        } else {
+                            callback.onDataNotAvailable("暂时没有数据");
+                        }
+
+                    } else {
+                        callback.onDataNotAvailable(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onDataNotAvailable("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
+    @Override
     public void addBuy(BuyZoneInfo buyZoneInfo, @NonNull final addIdleGoodsCallback callback) {
         Map<String, RequestBody> requestBodyMap = new HashMap<>();
         requestBodyMap.put("uid", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), String.valueOf(buyZoneInfo.getUid())));

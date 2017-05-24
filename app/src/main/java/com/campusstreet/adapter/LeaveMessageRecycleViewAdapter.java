@@ -19,6 +19,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.campusstreet.utils.DataUtil.getTimeRange;
+
 /**
  * Created by Orange on 2017/4/21.
  */
@@ -62,7 +64,8 @@ public class LeaveMessageRecycleViewAdapter extends RecyclerView.Adapter<Recycle
                     .into(viewHolder.mIvHead);
             viewHolder.mTvName.setText(leaveMessageInfo.getNick());
             viewHolder.mTvContent.setText(leaveMessageInfo.getCon());
-            viewHolder.mTvTime.setText(leaveMessageInfo.getAtime());
+            String time = getTimeRange(leaveMessageInfo.getAtime());
+            viewHolder.mTvTime.setText(time);
         }
     }
 

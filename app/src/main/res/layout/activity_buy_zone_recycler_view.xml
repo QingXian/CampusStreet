@@ -1,153 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:padding="16dp"
                 android:background="@color/colorWhite"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+                android:orientation="vertical"
+                android:padding="16dp">
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_head"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:src="@drawable/ic_head_test"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-    <TextView
-        android:textSize="16sp"
-        android:textColor="@color/colorBlack"
-        android:paddingLeft="8dp"
-        android:id="@+id/tv_name"
-        android:paddingTop="4dp"
-        android:layout_toRightOf="@+id/iv_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="昵称"/>
-    <ImageView
-        android:layout_alignBottom="@+id/tv_name"
-        android:layout_toRightOf="@id/tv_name"
-        android:id="@+id/iv_privilege"
-        android:layout_width="16dp"
-        android:layout_height="24dp"/>
-    <TextView
-        android:paddingLeft="8dp"
-        android:id="@+id/tv_time"
-        android:paddingTop="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="4小时"
-        android:layout_below="@+id/tv_name"
-        android:layout_toRightOf="@+id/iv_head"
-        android:layout_toEndOf="@+id/iv_head"/>
-    <TextView
-        android:id="@+id/tv_time_hint"
-        android:paddingTop="8dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/act_buy_zone_time_hint"
-        android:layout_below="@+id/tv_name"
-        android:layout_toRightOf="@+id/tv_time"
-        android:layout_toEndOf="@+id/tv_time"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_head_test"/>
 
     <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_head"
         android:paddingLeft="8dp"
-        android:text="标题"
-        android:textSize="16sp"
+        android:paddingTop="4dp"
+        android:text="昵称"
         android:textColor="@color/colorBlack"
-        android:id="@+id/tv_title"
+        android:textSize="16sp"/>
+
+    <ImageView
+        android:id="@+id/iv_privilege"
+        android:layout_width="16dp"
+        android:layout_height="24dp"
+        android:layout_alignBottom="@+id/tv_name"
+        android:layout_toRightOf="@id/tv_name"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_toEndOf="@+id/iv_head"
+        android:layout_toRightOf="@+id/iv_head"
+        android:paddingLeft="8dp"
         android:paddingTop="8dp"
-        android:maxLines="1"
+        android:text="4小时"/>
+
+    <TextView
+        android:id="@+id/tv_time_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_toEndOf="@+id/tv_time"
+        android:layout_toRightOf="@+id/tv_time"
+        android:paddingTop="8dp"
+        android:text="@string/act_buy_zone_time_hint"/>
+
+    <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_head"
-        />
-    <TextView
+        android:maxLines="1"
+        android:paddingLeft="8dp"
+        android:paddingTop="8dp"
+        android:text="标题"
         android:textColor="@color/colorBlack"
-        android:ellipsize="end"
+        android:textSize="16sp"
+        />
+
+    <TextView
         android:id="@+id/tv_content"
-        android:padding="16dp"
-        android:maxLines="3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="要求要求要求要求要求要求"
-        android:layout_below="@+id/tv_title"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_title"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:padding="16dp"
+        android:text="要求要求要求要求要求要求"
+        android:textColor="@color/colorBlack"/>
+
     <TextView
-        android:drawablePadding="8dp"
-        android:gravity="bottom"
-        android:drawableLeft="@drawable/ic_postion"
-        android:textColor="@color/colorBlack"
-        android:padding="8dp"
-        android:text="龙岩学院"
-        android:layout_below="@+id/tv_content"
         android:id="@+id/tv_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_content"
+        android:drawableLeft="@drawable/ic_postion"
+        android:drawablePadding="8dp"
+        android:gravity="bottom"
+        android:padding="8dp"
+        android:text="龙岩学院"
+        android:textColor="@color/colorBlack"
         android:visibility="gone"
         />
+
     <LinearLayout
-        android:layout_alignParentRight="true"
-        android:layout_alignBottom="@+id/tv_position"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_position"
+        android:layout_alignParentRight="true">
         <!--<TextView-->
-            <!--android:text="@string/act_buy_zone_liked"-->
-            <!--android:textColor="@color/colorBlack"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"/>-->
+        <!--android:text="@string/act_buy_zone_liked"-->
+        <!--android:textColor="@color/colorBlack"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"/>-->
         <!--<TextView-->
-            <!--android:text="2"-->
-            <!--android:id="@+id/tv_liked_num"-->
-            <!--android:textColor="@color/colorBlack"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"/>-->
+        <!--android:text="2"-->
+        <!--android:id="@+id/tv_liked_num"-->
+        <!--android:textColor="@color/colorBlack"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"/>-->
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingLeft="16dp"
-            android:visibility="gone"
             android:text="@string/act_buy_zone_message"
             android:textColor="@color/colorBlack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:visibility="gone"/>
+
         <TextView
-            android:text="2"
-            android:visibility="gone"
             android:id="@+id/tv_message_num"
-            android:textColor="@color/colorBlack"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textColor="@color/colorBlack"
+            android:visibility="gone"/>
     </LinearLayout>
+
     <TextView
-        android:layout_toLeftOf="@+id/tv_expected_price_symbol"
-        android:textColor="@color/colorBlack"
         android:id="@+id/tv_expected_price_hint"
-        android:padding="8dp"
-        android:text="@string/act_buy_zone_expected_price"
-        android:textSize="12sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:layout_toLeftOf="@+id/tv_expected_price_symbol"
+        android:paddingRight="8dp"
+        android:text="@string/act_buy_zone_expected_price"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp"/>
+
     <TextView
         android:id="@+id/tv_expected_price_symbol"
-        android:paddingTop="8dp"
-        android:textColor="@color/colorRed"
-        android:text="@string/frag_campus_recruitment_wages_symbol"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
         android:layout_toLeftOf="@+id/tv_expected_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <TextView
-        android:layout_alignBottom="@+id/tv_expected_price_symbol"
+        android:text="@string/frag_campus_recruitment_wages_symbol"
         android:textColor="@color/colorRed"
+        android:textSize="16sp"
+        />
+
+    <TextView
         android:id="@+id/tv_expected_price"
-        android:paddingTop="8dp"
-        android:paddingRight="16dp"
-        android:paddingLeft="4dp"
-        android:text="100"
-        android:textSize="12sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:paddingTop="4dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="16dp"
+        android:text="100"
+        android:textColor="@color/colorRed"
+        android:textSize="16sp"/>
 </RelativeLayout>

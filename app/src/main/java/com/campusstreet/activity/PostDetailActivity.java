@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.adapter.PostDetailRecyclerViewAdapter;
+import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IAssociationContract;
 import com.campusstreet.entity.AssociationInfo;
@@ -32,6 +33,7 @@ import com.campusstreet.entity.UserAssociationInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.AssociationImpl;
 import com.campusstreet.presenter.AssociationPresenter;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,6 +41,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
  * Created by Orange on 2017/4/10.
@@ -115,6 +119,15 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
     }
 
     private void initView() {
+        mTvName.setText(mAssociationPostInfo.getUsername());
+        String time = getTimeRange(mAssociationPostInfo.getAddtime());
+        Picasso.with(this)
+                .load(AppConfig.AVATAR_SERVER_HOST + mAssociationPostInfo.getUserpic())
+                .fit()
+                .error(R.drawable.ic_head_test)
+                .into(mIvHead);
+        mTvTime.setText(time);
+        mTvTitle.setText(mAssociationPostInfo.getTitle());
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRvContent.setLayoutManager(mLinearLayoutManager);
         mAdapter = new PostDetailRecyclerViewAdapter(this, null);

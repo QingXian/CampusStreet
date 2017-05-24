@@ -13,32 +13,35 @@ public interface IBuyZoneContract {
 
     interface Presenter extends BasePresenter {
 
-    void fetchBuyZoneList(int pi);
+        void fetchBuyZoneList(int pi);
 
-    void pushBuy(BuyZoneInfo buyZoneInfo);
+        void fetchUserBuyZoneList(String uid,String key,int pi);
 
-    void leaveMessage(String uid, int gid, String con);
+        void pushBuy(BuyZoneInfo buyZoneInfo);
 
-    void fetchBuyZoneMessageList(int id, int pi);
+        void leaveMessage(String uid, int gid, String con);
 
-}
-interface View extends BaseView<Presenter> {
+        void fetchBuyZoneMessageList(int id, int pi);
 
-    void setBuyZone(List<BuyZoneInfo> buyZoneInfoList);
+    }
 
-    void setBuyZoneMessageList(List<LeaveMessageInfo> BuyZoneMessageList);
+    interface View extends BaseView<Presenter> {
 
-    void showErrorMsg(String errorMsg);
+        void setBuyZone(List<BuyZoneInfo> buyZoneInfoList);
 
-    void showSuccessfullyPush(String succcessMsg);
+        void setBuyZoneMessageList(List<LeaveMessageInfo> BuyZoneMessageList);
 
-    void showSuccessfullyleaveMessage(String succcessMsg);
+        void showErrorMsg(String errorMsg);
 
-    /**
-     * 设置是否加载指示器
-     *
-     * @param active true表示显示，false不显示
-     */
-    void setLoadingIndicator(boolean active);
-}
+        void showSuccessfullyPush(String succcessMsg);
+
+        void showSuccessfullyleaveMessage(String succcessMsg);
+
+        /**
+         * 设置是否加载指示器
+         *
+         * @param active true表示显示，false不显示
+         */
+        void setLoadingIndicator(boolean active);
+    }
 }

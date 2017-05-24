@@ -17,12 +17,13 @@ import com.squareup.picasso.Picasso;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.R.attr.data;
+import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
  * Created by Orange on 2017/4/28.
@@ -80,14 +81,11 @@ public class BountyHallRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                     .load(AppConfig.AVATAR_SERVER_HOST + bountyHallInfo.getUserpic())
                     .fit()
                     .into(viewHolder.mIvHead);
+
             viewHolder.mTvName.setText(bountyHallInfo.getUsername());
-            viewHolder.mTvTime.setText(bountyHallInfo.getPubtime());
+            String time = getTimeRange(bountyHallInfo.getPubtime());
+            viewHolder.mTvTime.setText(time);
             String con = bountyHallInfo.getCon();
-            try {
-                con = java.net.URLDecoder.decode(con, "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
             viewHolder.mTvContent.setText(con);
             viewHolder.mTvTitle.setText(bountyHallInfo.getTitle());
             viewHolder.mTvNeedNum.setText(String.valueOf(bountyHallInfo.getPerson()));

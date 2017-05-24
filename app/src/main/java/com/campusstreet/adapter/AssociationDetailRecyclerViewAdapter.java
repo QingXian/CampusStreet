@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.campusstreet.common.AppConfig.AVATAR_SERVER_HOST;
+import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
  * Created by Orange on 2017/5/8.
@@ -80,7 +81,8 @@ public class AssociationDetailRecyclerViewAdapter extends RecyclerView.Adapter<R
                     .into(viewHolder.mIvHead);
             viewHolder.mTvTitle.setText(associationPostInfo.getTitle());
             viewHolder.mTvName.setText(associationPostInfo.getUsername());
-            viewHolder.mTvTime.setText(associationPostInfo.getAddtime());
+            String time = getTimeRange(associationPostInfo.getAddtime());
+            viewHolder.mTvTime.setText(time);
             viewHolder.mTvReadingTimes.setText(associationPostInfo.getViewnum());
             viewHolder.mTvMessage.setText(associationPostInfo.getReplynum());
             viewHolder.itemView.setTag(associationPostInfo);

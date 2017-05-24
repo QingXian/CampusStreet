@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,20 +18,15 @@ import android.widget.Toast;
 import com.campusstreet.R;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.ILoginContract;
-import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.UserImpl;
 import com.campusstreet.presenter.LoginPresenter;
 import com.campusstreet.utils.PreferencesUtil;
 import com.google.gson.GsonBuilder;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Created by Orange on 2017/4/26.
@@ -44,8 +40,10 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
     TextView mTvRegister;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.et_login_username)
+    EditText mEtLoginUsername;
     @BindView(R.id.et_login_password)
-    TextInputEditText mEtLoginPassword;
+    EditText mEtLoginPassword;
     @BindView(R.id.tv_forget_password)
     TextView mTvForgetPassword;
     @BindView(R.id.btn_login)
@@ -56,8 +54,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
-    @BindView(R.id.et_login_username)
-    AutoCompleteTextView mEtLoginUsername;
     private ILoginContract.Presenter mPresenter;
 
     @Override

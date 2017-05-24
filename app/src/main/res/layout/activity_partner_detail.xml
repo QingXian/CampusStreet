@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <RelativeLayout
+    <include
+        android:id="@+id/apptoolbar"
+        layout="@layout/toolbar"/>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/apptoolbar">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:layout_width="match_parent"
-                      android:layout_height="match_parent"
-                      android:orientation="vertical">
-
-            <include layout="@layout/toolbar"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/iv_pic"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"/>
+                android:layout_height="180dp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tv_entry_name"
@@ -37,12 +40,12 @@
                 android:text="@string/act_partner_detail_profile"/>
 
             <TextView
-                android:textColor="@color/colorBlack"
                 android:id="@+id/tv_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="负责负责负责负责负责负责负责负责负责负责负责负责负责负责负责负责"/>
+                android:text="负责负责负责负责负责负责负责负责负责负责负责负责负责负责负责负责"
+                android:textColor="@color/colorBlack"/>
 
             <View
                 android:layout_width="match_parent"
@@ -63,11 +66,11 @@
                     />
 
                 <TextView
-                    android:textColor="@color/colorBlack"
                     android:id="@+id/tv_company_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="阿里巴巴"
+                    android:textColor="@color/colorBlack"
                     />
             </LinearLayout>
 
@@ -84,11 +87,11 @@
                     />
 
                 <TextView
-                    android:textColor="@color/colorBlack"
                     android:id="@+id/tv_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="阿里巴巴"
+                    android:textColor="@color/colorBlack"
                     />
             </LinearLayout>
 
@@ -105,21 +108,21 @@
                     />
 
                 <TextView
-                    android:textColor="@color/colorBlack"
                     android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="01564746454"
+                    android:textColor="@color/colorBlack"
                     />
             </LinearLayout>
 
             <LinearLayout
 
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -154,14 +157,15 @@
                 android:background="@color/colorGray"/>
 
             <TextView
-                android:textColor="@color/colorBlack"
                 android:id="@+id/tv_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:padding="8dp"
-                android:text="详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:"/>
+                android:text="详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:"
+                android:textColor="@color/colorBlack"/>
         </LinearLayout>
-        <include layout="@layout/progress_bar"></include>
-    </RelativeLayout>
-</ScrollView>
+    </ScrollView>
+
+    <include layout="@layout/progress_bar"></include>
+</RelativeLayout>

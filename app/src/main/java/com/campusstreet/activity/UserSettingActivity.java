@@ -1,18 +1,24 @@
 package com.campusstreet.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.utils.PreferencesUtil;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class UserSettingActivity extends AppCompatActivity {
+    public static boolean mIsLogout = false;
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -45,6 +52,8 @@ public class UserSettingActivity extends AppCompatActivity {
     TextView mTvName;
     @BindView(R.id.tv_department)
     TextView mTvDepartment;
+    @BindView(R.id.rl_logout)
+    RelativeLayout mRlLogout;
     private UserInfo mUserInfo;
 
     @Override
@@ -71,15 +80,16 @@ public class UserSettingActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        //        Picasso.with(getActivity())
-//                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.)
-//                .fit()
-//                .into(mIvHead);
+        Picasso.with(this)
+                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.getUserpic())
+                .fit()
+                .error(R.drawable.ic_head_test)
+                .into(mIvHead);
         mTvDepartment.setText(mUserInfo.getMajor());
         mTvName.setText(mUserInfo.getUsername());
     }
 
-    @OnClick({R.id.rl_head, R.id.rl_name, R.id.rl_department, R.id.rl_password})
+    @OnClick({R.id.rl_head, R.id.rl_name, R.id.rl_department, R.id.rl_password, R.id.rl_logout})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_head:
@@ -102,6 +112,29 @@ public class UserSettingActivity extends AppCompatActivity {
                 intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
+            case R.id.rl_logout:
+                showAlertDialog("您确认要退出登录");
+                break;
         }
     }
+
+    private void showAlertDialog(String text) {
+        final EditText et = new EditText(this);
+        new AlertDialog.Builder(this).setTitle(text)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        PreferencesUtil.getDefaultPreferences(UserSettingActivity.this, Const.PREF_USER)
+                                .edit()
+                                .putString(Const.PREF_USERINFO_KEY, null)
+                                .apply();
+                        mIsLogout = true;
+                        Intent intent = new Intent(UserSettingActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        UserSettingActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
 }

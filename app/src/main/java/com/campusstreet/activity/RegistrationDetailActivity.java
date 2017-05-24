@@ -31,8 +31,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.campusstreet.common.Const.ISSTRAT;
-import static com.campusstreet.common.Const.TID_EXTRA;
 import static com.campusstreet.common.Const.TYPE;
 
 /**
@@ -40,28 +38,24 @@ import static com.campusstreet.common.Const.TYPE;
  */
 
 public class RegistrationDetailActivity extends AppCompatActivity implements IBountyHallContract.View {
-    @BindView(R.id.iv_head)
-    CircleImageView mIvHead;
-    @BindView(R.id.tv_name)
-    TextView mTvName;
-    @BindView(R.id.tv_department)
-    TextView mTvDepartment;
-    @BindView(R.id.tv_time)
-    TextView mTvTime;
-    @BindView(R.id.tv_remuneration)
-    TextView mTvRemuneration;
-    @BindView(R.id.tv_place)
-    TextView mTvPlace;
-    @BindView(R.id.tv_remarks)
-    TextView mTvRemarks;
-    @BindView(R.id.btn_adopt)
-    Button mBtnAdopt;
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
     ImageView mIvToolbarRight;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.iv_head)
+    CircleImageView mIvHead;
+    @BindView(R.id.tv_name)
+    TextView mTvName;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
+    @BindView(R.id.tv_remuneration)
+    TextView mTvRemuneration;
+    @BindView(R.id.tv_remarks)
+    TextView mTvRemarks;
+    @BindView(R.id.btn_adopt)
+    Button mBtnAdopt;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.progress_bar_title)
@@ -171,7 +165,7 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
 
     @Override
     public void showNoPassMsg() {
-
+        showMessage("通过失败");
     }
 
     @Override
