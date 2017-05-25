@@ -19,6 +19,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
+import static android.R.attr.type;
+
 /**
  * Created by Orange on 2017/4/19.
  */
@@ -32,6 +34,10 @@ public interface IdleSaleClient {
     @FormUrlEncoded
     @POST("get_ewu_goods")
     Call<JsonObject> getIdleSale(@Field("type") Integer type, @Field("pi") Integer pi);
+
+    @FormUrlEncoded
+    @POST("get_my_ewugoods")
+    Call<JsonObject> getUserIdleSale(@Field("uid") String uid,@Field("key") String key, @Field("pi") Integer pi);
 
     @Multipart
     @POST("ins_ewu_goods")

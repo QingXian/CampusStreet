@@ -89,7 +89,7 @@ public class ModifyPasswordActivity extends AppCompatActivity implements ISettin
 
     @Override
     public void showErrorMsg(String errorMsg) {
-
+        showMessage(errorMsg);
     }
 
     @Override

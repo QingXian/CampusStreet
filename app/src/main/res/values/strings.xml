@@ -26,7 +26,7 @@
     <string name="frag_user_balance_hint">余额：</string>
     <string name="frag_user_recharge">充值</string>
     <string name="frag_user_bounty_mission">赏金任务</string>
-    <string name="frag_user_detection_update">检测更新</string>
+    <string name="frag_user_my_idle">我的闲置</string>
     <string name="frag_user_my_buy">我的求购</string>
     <string name="frag_user_my_club">我的社团</string>
     <string name="frag_user_about_us">关于我们</string>
@@ -76,7 +76,7 @@
     <string name="act_idle_sale_add_describe_hint">简要描述</string>
     <string name="act_idle_sale_add_release">发布</string>
     <string name="act_buy_zone_place_hint">发布于</string>
-    <string name="act_buy_zone_time_hint">前来过</string>
+    <string name="act_buy_zone_time_hint">来过</string>
     <string name="act_buy_zone_message_hint">留言专区</string>
     <string name="act_buy_zone_add_toolbar_title">求购发布</string>
     <string name="act_my_bounty_hall_toolbar_title">我的赏金</string>
@@ -86,6 +86,7 @@
     <string name="act_my_bounty_hall_demand_unit">人</string>
     <string name="act_bounty_hall_detail_toolbar_title">任务详情</string>
     <string name="act_registration_detail_remuneration">报酬</string>
+    <string name="act_registration_detail_phone">联系方式</string>
     <string name="act_registration_detail_place">地点</string>
     <string name="act_registration_detail_evaluate">历史评价</string>
     <string name="act_registration_detail_remarks">备注</string>

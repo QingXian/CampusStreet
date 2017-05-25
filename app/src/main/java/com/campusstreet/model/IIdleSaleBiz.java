@@ -7,6 +7,8 @@ import com.campusstreet.entity.LeaveMessageInfo;
 
 import java.util.List;
 
+import static android.R.attr.type;
+
 /**
  * Created by Orange on 2017/4/19.
  */
@@ -14,16 +16,17 @@ import java.util.List;
 public interface IIdleSaleBiz {
 
     //获取闲置商品列表
-    void fetchIdleSaleList(int type,int pi,@NonNull LoadIdleSaleListCallback callback);
+    void fetchIdleSaleList(int type, int pi, @NonNull LoadIdleSaleListCallback callback);
 
+    void fetchUserIdleSaleList(String uid, String key, int pi, @NonNull LoadUserIdleSaleListCallback callback);
 
     void fetchIdleSaleCategories(@NonNull LoadIdleSaleCategoriesCallback callback);
 
-    void addIdleGoods(IdleSaleInfo idleSaleInfo ,@NonNull addIdleGoodsCallback callback);
+    void addIdleGoods(IdleSaleInfo idleSaleInfo, @NonNull addIdleGoodsCallback callback);
 
-    void leaveMessagae(int gid ,String uid ,String con,@NonNull LeaveMessageCallback callback);
+    void leaveMessagae(int gid, String uid, String con, @NonNull LeaveMessageCallback callback);
 
-    void fetchIdleSaleMessageList(int id,int pi,@NonNull LoadIdleSaleMessageListCallback callback);
+    void fetchIdleSaleMessageList(int id, int pi, @NonNull LoadIdleSaleMessageListCallback callback);
 
     interface addIdleGoodsCallback {
 
@@ -48,12 +51,23 @@ public interface IIdleSaleBiz {
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);
     }
+
+    interface LoadUserIdleSaleListCallback {
+
+        // 加载所有IdleSale
+        void onUserIdleSaleListLoaded(List<IdleSaleInfo> idleSaleInfoList);
+
+        // 获取数据失败的回调
+        void onDataNotAvailable(String errorMsg);
+    }
+
     interface LoadIdleSaleCategoriesCallback {
 
         void onIdleSaleCategoriesLoaded(String[] type);
 
         void onDataNotAvailable(String errorMsg);
     }
+
     interface LoadIdleSaleMessageListCallback {
 
         // 加载所有IdleSaleMessage

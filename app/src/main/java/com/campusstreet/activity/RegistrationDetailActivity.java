@@ -24,6 +24,7 @@ import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -62,6 +63,10 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    @BindView(R.id.tv_phone)
+    TextView mTvPhone;
+    @BindView(R.id.tv_state)
+    TextView mTvState;
     private IBountyHallContract.Presenter mPresenter;
     private JoinInfo mJoinInfo;
     private int mType;
@@ -98,22 +103,59 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
     private void initView() {
         mTvName.setText(mJoinInfo.getUsername());
         mTvTime.setText(mJoinInfo.getAddtime());
-        mTvRemuneration.setText(mJoinInfo.getFee());
+        mTvPhone.setText(mJoinInfo.getPhone());
+        double price = Double.parseDouble(mJoinInfo.getFee());
+        DecimalFormat df = new DecimalFormat("0.0");
+        String strprice = df.format(price);
+        mTvRemuneration.setText(strprice);
         mTvRemarks.setText(mJoinInfo.getSummary());
         Picasso.with(this)
                 .load(AppConfig.AVATAR_SERVER_HOST + mJoinInfo.getUserpic())
                 .fit()
                 .into(mIvHead);
-        if (mType == 1 && mBountyHallInfo.getState() == 1) {
-            mBtnAdopt.setVisibility(View.GONE);
+        if (mType == 0) {
+            if (mBountyHallInfo.getState() == 1) {
+                mTvState.setVisibility(View.GONE);
+                mBtnAdopt.setVisibility(View.VISIBLE);
+                mBtnAdopt.setText("通过");
+            } else {
+                mBtnAdopt.setVisibility(View.GONE);
+            }
         } else {
-            mBtnAdopt.setVisibility(View.VISIBLE);
+            if (mJoinInfo.getState() == 3) {
+                mBtnAdopt.setVisibility(View.GONE);
+                mTvState.setVisibility(View.VISIBLE);
+                mTvState.setText("进行中");
+            } else if (mJoinInfo.getState() == 4) {
+                mBtnAdopt.setVisibility(View.VISIBLE);
+                mBtnAdopt.setText("同意放弃");
+                mTvState.setVisibility(View.VISIBLE);
+                mTvState.setText("已放弃");
+            } else if (mJoinInfo.getState() == 5) {
+                mBtnAdopt.setVisibility(View.VISIBLE);
+                mBtnAdopt.setText("同意完成");
+                mTvState.setVisibility(View.VISIBLE);
+                mTvState.setText("已完成");
+            } else if (mJoinInfo.getState() == 9 && mJoinInfo.getState() == 10) {
+                mBtnAdopt.setVisibility(View.GONE);
+                mTvState.setVisibility(View.VISIBLE);
+                mTvState.setText("结束");
+            } else {
+                mBtnAdopt.setVisibility(View.GONE);
+                mTvState.setVisibility(View.GONE);
+            }
         }
     }
 
     @OnClick(R.id.btn_adopt)
     public void onViewClicked() {
-        mPresenter.passJoinTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId());
+        if (mBtnAdopt.getText().equals("通过")) {
+            mPresenter.passJoinTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId());
+        } else if (mBtnAdopt.getText().equals("同意放弃")) {
+
+        } else if (mBtnAdopt.getText().equals("同意完成")) {
+
+        }
     }
 
     @Override

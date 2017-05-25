@@ -10,6 +10,8 @@ import com.campusstreet.model.IBountyHallBiz;
 
 import java.util.List;
 
+import static com.campusstreet.common.Const.JOINNOTPASS;
+
 /**
  * Created by Orange on 2017/4/28.
  */
@@ -63,7 +65,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
     }
 
     @Override
-    public void fetchjoinTaskList(int tid, int state, int pi) {
+    public void fetchjoinTaskList(int tid, final int state, int pi) {
         mView.setLoadingIndicator(true);
         mBountyHallImpl.fetchjoinTaskList(tid, state, pi, new IBountyHallBiz.LoadJoinTaskListCallback() {
             @Override
@@ -75,7 +77,10 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
             @Override
             public void onDataNotAvailable(String errorMsg) {
                 mView.setLoadingIndicator(false);
-                mView.showErrorMsg(errorMsg);
+                if (state == JOINNOTPASS)
+                    mView.showErrorMsg("暂时没有人报名");
+                else
+                    mView.showNoPassMsg();
             }
         });
 

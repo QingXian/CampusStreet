@@ -5,6 +5,8 @@ import com.campusstreet.entity.LeaveMessageInfo;
 
 import java.util.List;
 
+import static android.R.attr.type;
+
 /**
  * Created by Orange on 2017/4/15.
  */
@@ -15,15 +17,15 @@ public interface IIdleSaleContract {
 
         void fetchIdleSaleCategories();
 
-        void fetchIdleSaleList(int type , int pi);
+        void fetchIdleSaleList(int type, int pi);
 
+        void fetchUserIdleSaleList(String uid, String key, int pi);
 
         void pushGoods(IdleSaleInfo idleSaleInfo);
 
-        void leaveMessage(String uid,int gid,String con);
+        void leaveMessage(String uid, int gid, String con);
 
-        void fetchIdleSaleMessageList(int id,int pi);
-
+        void fetchIdleSaleMessageList(int id, int pi);
 
 
     }

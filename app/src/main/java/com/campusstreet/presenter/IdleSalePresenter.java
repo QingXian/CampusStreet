@@ -9,6 +9,8 @@ import com.campusstreet.model.IdleSaleImpl;
 
 import java.util.List;
 
+import static android.R.attr.type;
+
 /**
  * Created by Orange on 2017/4/19.
  */
@@ -50,6 +52,23 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
             @Override
             public void onIdleSaleListLoaded(List<IdleSaleInfo> idleSaleInfoList) {
                 mView.setIdleSale(idleSaleInfoList);
+            }
+
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
+    }
+
+    @Override
+    public void fetchUserIdleSaleList(String uid, String key, int pi) {
+        mIdleSaleImpl.fetchUserIdleSaleList(uid,key,pi, new IIdleSaleBiz.LoadUserIdleSaleListCallback() {
+            @Override
+            public void onUserIdleSaleListLoaded(List<IdleSaleInfo> idleSaleInfoList) {
+                mView.setIdleSale(idleSaleInfoList);
+                mView.setLoadingIndicator(false);
             }
 
             @Override

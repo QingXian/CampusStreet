@@ -89,6 +89,7 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
     private int mYear;
     private int mMonth;
     private int mDay;
+    private int mIsUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +111,7 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
         });
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+        mIsUser = getIntent().getIntExtra(Const.TYPE, 0);
         mPresenter.fetchBountyHallCategories();
     }
 
@@ -166,8 +168,14 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
     @Override
     public void showSuccessfullyPush(String succcessMsg) {
         showMessage(succcessMsg);
-        Intent intent = new Intent(this, BountyHallActivity.class);
-        startActivity(intent);
+        if (mIsUser == 1) {
+            Intent intent = new Intent(this, MyBountyHallActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, BountyHallActivity.class);
+            startActivity(intent);
+        }
+
         this.finish();
     }
 

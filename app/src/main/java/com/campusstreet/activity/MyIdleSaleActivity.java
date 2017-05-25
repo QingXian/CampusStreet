@@ -3,14 +3,12 @@ package com.campusstreet.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -18,17 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
-import com.campusstreet.adapter.BuyZoneRecyclerViewAdapter;
 import com.campusstreet.adapter.IdleSaleRecyclerViewAdapter;
 import com.campusstreet.common.Const;
-import com.campusstreet.contract.IBuyZoneContract;
-import com.campusstreet.entity.BuyZoneInfo;
+import com.campusstreet.contract.IIdleSaleContract;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.UserInfo;
-import com.campusstreet.model.BuyZoneImpl;
 import com.campusstreet.model.IdleSaleImpl;
-import com.campusstreet.presenter.BuyZonePresenter;
 import com.campusstreet.presenter.IdleSalePresenter;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
@@ -38,13 +32,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.campusstreet.R.id.view;
-
 /**
- * Created by Orange on 2017/4/6.
+ * Created by Orange on 2017/5/24.
  */
 
-public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContract.View {
+public class MyIdleSaleActivity extends AppCompatActivity implements IIdleSaleContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -53,6 +45,8 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
     Toolbar mToolbar;
     @BindView(R.id.rv_content)
     PullLoadMoreRecyclerView mRvContent;
+    @BindView(R.id.btn_add)
+    Button mBtnAdd;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.progress_bar_title)
@@ -61,18 +55,20 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
     LinearLayout mProgressBarContainer;
     @BindView(R.id.tv_error)
     TextView mTvError;
-    private IBuyZoneContract.Presenter mPresenter;
-    private BuyZoneRecyclerViewAdapter mAdapter;
+    private IIdleSaleContract.Presenter mPresenter;
+    private IdleSaleRecyclerViewAdapter mAdapter;
     private int mPi = 0;
+    private int mPostion = 0;
+    private String[] mTitle;
     private UserInfo mUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_buy_zone);
+        setContentView(R.layout.activity_user_idle_sale);
         ButterKnife.bind(this);
         mToolbar.setTitle("");
-        mToolbarTitle.setText(getString(R.string.frag_home_buy_zone));
+        mToolbarTitle.setText(getString(R.string.frag_home_idle_sale));
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -84,34 +80,27 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
                 onBackPressed();
             }
         });
-        mIvToolbarRight.setVisibility(View.VISIBLE);
-        mIvToolbarRight.setImageResource(R.drawable.ic_add);
-        new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
+        new IdleSalePresenter(IdleSaleImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         initView();
         initEvent();
+        mPresenter.fetchIdleSaleCategories();
     }
 
     @Override
     protected void onStart() {
         mPi = 0;
         super.onStart();
-        mPresenter.fetchBuyZoneList(mPi);
+        mPresenter.fetchUserIdleSaleList(mUserInfo.getUid(), null, mPi);
         setLoadingIndicator(true);
     }
 
-    private void initView() {
-        mRvContent.setLinearLayout();
-        mAdapter = new BuyZoneRecyclerViewAdapter(this, null);
-        mRvContent.setAdapter(mAdapter);
-    }
-
     private void initEvent() {
-        mAdapter.setOnItemClickListener(new BuyZoneRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+        mAdapter.setOnItemClickListener(new IdleSaleRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onItemClick(View view, BuyZoneInfo buyZoneInfo) {
-                Intent intent = new Intent(BuyZoneActivity.this, BuyZoneDetailActivity.class);
-                intent.putExtra(Const.BUYZONEIINFO_EXTRA, buyZoneInfo);
+            public void onItemClick(View view, IdleSaleInfo idleSaleInfo) {
+                Intent intent = new Intent(MyIdleSaleActivity.this, IdleSaleDetailActivity.class);
+                intent.putExtra(Const.IDLESALEINFO_EXTRA, idleSaleInfo);
                 intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
             }
@@ -123,7 +112,7 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.fetchBuyZoneList(mPi);
+                        mPresenter.fetchUserIdleSaleList(mUserInfo.getUid(), null, mPi);
                     }
                 }, 1500);
             }
@@ -133,53 +122,72 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.fetchBuyZoneList(++mPi);
+                        mPresenter.fetchUserIdleSaleList(mUserInfo.getUid(), null, ++mPi);
                     }
                 }, 500);
             }
         });
     }
 
-    @OnClick(R.id.iv_toolbar_right)
-    public void onClick() {
-        if (mUserInfo != null) {
-            Intent intent = new Intent(this, AddBuyZoneActivity.class);
-            intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
-            startActivity(intent);
-        } else {
-            showMessage("您还未登录");
+
+    private void initView() {
+        mRvContent.setGridLayout(2);
+        mAdapter = new IdleSaleRecyclerViewAdapter(this, null);
+        mRvContent.setAdapter(mAdapter);
+    }
+
+
+    @OnClick({R.id.iv_toolbar_right, R.id.btn_add})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_toolbar_right:
+                break;
+            case R.id.btn_add:
+                if (mUserInfo != null) {
+                    Intent intent = new Intent(this, AddIdleSaleActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    intent.putExtra(Const.TYPE,1);
+                    startActivity(intent);
+                } else {
+                    showMessage("您还未登录");
+                }
+                break;
         }
     }
 
     @Override
-    public void setPresenter(IBuyZoneContract.Presenter presenter) {
+    public void setPresenter(IIdleSaleContract.Presenter presenter) {
         mPresenter = presenter;
     }
 
 
     @Override
-    public void setBuyZone(List<BuyZoneInfo> buyZoneInfoList) {
-        if (buyZoneInfoList != null && buyZoneInfoList.size() < 20) {
+    public void setIdleSale(List<IdleSaleInfo> idleSaleInfoList) {
+        if (idleSaleInfoList != null && idleSaleInfoList.size() < 20) {
             mRvContent.setPushRefreshEnable(false);
         } else {
             mRvContent.setPushRefreshEnable(true);
         }
         if (mPi != 0) {
-            if (buyZoneInfoList != null) {
-                mAdapter.addData(buyZoneInfoList);
+            if (idleSaleInfoList != null) {
+                mAdapter.addData(idleSaleInfoList);
                 mRvContent.setPullLoadMoreCompleted();
             }
         } else {
             mRvContent.setVisibility(View.VISIBLE);
             mTvError.setVisibility(View.GONE);
-            mAdapter.replaceData(buyZoneInfoList);
+            mAdapter.replaceData(idleSaleInfoList);
             mRvContent.setPullLoadMoreCompleted();
             setLoadingIndicator(false);
         }
     }
 
     @Override
-    public void setBuyZoneMessageList(List<LeaveMessageInfo> BuyZoneMessageList) {
+    public void setIdleSaleCategories(String[] type) {
+    }
+
+    @Override
+    public void setIdleSaleMessageList(List<LeaveMessageInfo> idleSaleMessageList) {
 
     }
 
@@ -189,7 +197,7 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
             mRvContent.setVisibility(View.GONE);
             mTvError.setText(errorMsg);
             mTvError.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             showMessage("没有数据了");
         }
         setLoadingIndicator(false);

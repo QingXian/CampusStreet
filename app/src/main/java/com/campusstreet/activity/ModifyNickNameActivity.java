@@ -1,6 +1,7 @@
 package com.campusstreet.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -82,11 +83,10 @@ public class ModifyNickNameActivity extends AppCompatActivity implements ISettin
     @Override
     public void showSuccessMsg(String successMsg) {
         showMessage(successMsg);
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
-                    0);
-        }
+        Intent data = new Intent(this, MainActivity.class);
+        mUserInfo.setUsername(mEditText.getText().toString());
+        data.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+        startActivity(data);
     }
 
     @Override
@@ -96,7 +96,6 @@ public class ModifyNickNameActivity extends AppCompatActivity implements ISettin
 
     @Override
     public void showSuccessfullyChangePassword() {
-
     }
 
     @Override

@@ -50,6 +50,7 @@ import me.iwf.photopicker.utils.PhotoPickerIntent;
 import static android.R.attr.data;
 import static android.R.attr.path;
 import static android.os.Build.ID;
+import static android.os.Build.TYPE;
 
 
 /**
@@ -114,6 +115,7 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
 
     private String[] mTitle;
     private String mType;
+    private int mIsUser;
     private int mIndex;
     private Set<File> mFiles;
     private ArrayList<String> mImages;
@@ -142,6 +144,7 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
         });
         new IdleSalePresenter(IdleSaleImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+        mIsUser = getIntent().getIntExtra(Const.TYPE, 0);
         mPresenter.fetchIdleSaleCategories();
     }
 
@@ -385,8 +388,14 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
     @Override
     public void showSuccessfullyPush(String succcessMsg) {
         showMessage(succcessMsg);
-        Intent intent = new Intent(this, IdleSaleActivity.class);
-        startActivity(intent);
+        if (mIsUser == 1) {
+            Intent intent = new Intent(this, MyIdleSaleActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, IdleSaleActivity.class);
+            startActivity(intent);
+        }
+
         this.finish();
     }
 

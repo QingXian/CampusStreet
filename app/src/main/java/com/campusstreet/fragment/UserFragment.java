@@ -15,6 +15,7 @@ import com.campusstreet.R;
 import com.campusstreet.activity.LoginActivity;
 import com.campusstreet.activity.MyBountyHallActivity;
 import com.campusstreet.activity.MyBuyZoneActivity;
+import com.campusstreet.activity.MyIdleSaleActivity;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.entity.UserInfo;
@@ -43,8 +44,6 @@ public class UserFragment extends Fragment {
     TextView mTvRecharge;
     @BindView(R.id.tv_bounty_mission)
     TextView mTvBountyMission;
-    @BindView(R.id.tv_detection_update)
-    TextView mTvDetectionUpdate;
     @BindView(R.id.tv_my_idle)
     TextView mTvMyIdle;
     @BindView(R.id.tv_my_club)
@@ -55,6 +54,8 @@ public class UserFragment extends Fragment {
     RelativeLayout mRlUserInfo;
     @BindView(R.id.tv_login)
     TextView mTvLogin;
+    @BindView(R.id.tv_user_idle)
+    TextView mTvUserIdle;
     private Unbinder mUnbinder;
     private UserInfo mUserInfo;
 
@@ -102,7 +103,7 @@ public class UserFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.tv_recharge, R.id.tv_bounty_mission, R.id.tv_detection_update, R.id.tv_my_idle, R.id.tv_my_club, R.id.tv_login})
+    @OnClick({R.id.tv_recharge, R.id.tv_bounty_mission, R.id.tv_user_idle, R.id.tv_my_idle, R.id.tv_my_club, R.id.tv_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_recharge:
@@ -116,7 +117,14 @@ public class UserFragment extends Fragment {
                     showMessage("请先登录");
                 }
                 break;
-            case R.id.tv_detection_update:
+            case R.id.tv_user_idle:
+                if (mUserInfo != null) {
+                    Intent intent = new Intent(getActivity(), MyIdleSaleActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    startActivity(intent);
+                } else {
+                    showMessage("请先登录");
+                }
                 break;
             case R.id.tv_my_idle:
                 if (mUserInfo != null) {

@@ -136,6 +136,8 @@ public class MyBountyHallActivity extends AppCompatActivity implements IBountyHa
     @OnClick(R.id.iv_toolbar_right)
     public void onClick() {
         Intent intent = new Intent(this, AddBountyHallActivity.class);
+        intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+        intent.putExtra(Const.TYPE,1);
         startActivity(intent);
     }
 

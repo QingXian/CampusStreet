@@ -91,7 +91,10 @@ public class PeripheraShopActivity extends AppCompatActivity implements IPeriphe
     protected void onStart() {
         mPi = 0;
         super.onStart();
-        mPresenter.fetchPeriPheralShopList(mPostion, null, mPi);
+        if (!mEtSearch.getText().equals(""))
+            mPresenter.fetchPeriPheralShopList(mPostion, mEtSearch.getText().toString(), mPi);
+        else
+            mPresenter.fetchPeriPheralShopList(mPostion, null, mPi);
         setLoadingIndicator(true);
     }
 
@@ -118,13 +121,10 @@ public class PeripheraShopActivity extends AppCompatActivity implements IPeriphe
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (mPostion == 0) {
-                            if (!mEtSearch.getText().equals(""))
-                                mPresenter.fetchPeriPheralShopList(mPostion, mEtSearch.getText().toString(), mPi);
-                            else
-                                mPresenter.fetchPeriPheralShopList(mPostion, null, mPi);
-
-                        }
+                        if (!mEtSearch.getText().equals(""))
+                            mPresenter.fetchPeriPheralShopList(mPostion, mEtSearch.getText().toString(), mPi);
+                        else
+                            mPresenter.fetchPeriPheralShopList(mPostion, null, mPi);
                     }
                 }, 1500);
             }
@@ -134,13 +134,10 @@ public class PeripheraShopActivity extends AppCompatActivity implements IPeriphe
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (mPostion == 0) {
-                            if (!mEtSearch.getText().equals(""))
-                                mPresenter.fetchPeriPheralShopList(mPostion, mEtSearch.getText().toString(), ++mPi);
-                            else
-                                mPresenter.fetchPeriPheralShopList(mPostion, null, ++mPi);
-                        }
-
+                        if (!mEtSearch.getText().equals(""))
+                            mPresenter.fetchPeriPheralShopList(mPostion, mEtSearch.getText().toString(), ++mPi);
+                        else
+                            mPresenter.fetchPeriPheralShopList(mPostion, null, ++mPi);
                     }
                 }, 1500);
             }

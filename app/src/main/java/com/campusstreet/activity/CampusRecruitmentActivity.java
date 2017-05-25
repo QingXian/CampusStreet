@@ -221,9 +221,15 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
         mPi = 0;
         setLoadingIndicator(true);
         if (mPostion == 0) {
-            mPresenter.fetchCampusRecruitmentList(null, mPi);
+            if (!mEtSearch.getText().equals(""))
+                mPresenter.fetchCampusRecruitmentList(mEtSearch.getText().toString(), mPi);
+            else
+                mPresenter.fetchCampusRecruitmentList(null, mPi);
         } else {
-            mPresenter.fetchStudyWorkList(null, mPi);
+            if (!mEtSearch.getText().equals(""))
+                mPresenter.fetchStudyWorkList(mEtSearch.getText().toString(), mPi);
+            else
+                mPresenter.fetchStudyWorkList(null, mPi);
         }
     }
 

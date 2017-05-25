@@ -135,6 +135,8 @@ public class MyBuyZoneActivity extends AppCompatActivity implements IBuyZoneCont
     public void onClick() {
         if (mUserInfo != null) {
             Intent intent = new Intent(this, AddBuyZoneActivity.class);
+            intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+            intent.putExtra(Const.TYPE,1);
             startActivity(intent);
         } else {
             showMessage("您还未登录");
