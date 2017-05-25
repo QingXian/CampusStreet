@@ -10,6 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.common.AppConfig;
+import com.campusstreet.entity.AssociationInfo;
+import com.campusstreet.entity.HomeDynamicInfo;
+import com.campusstreet.entity.IdleSaleInfo;
+import com.campusstreet.entity.RecruitInfo;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,49 +26,87 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.R.attr.path;
+import static android.R.id.home;
 import static android.R.id.list;
 
 /**
  * Created by Orange on 2017/4/14.
  */
 
-public class HomeFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private Context mContext;
-    private List<Map<String, Object>> mList;
+    private List<HomeDynamicInfo> mList;
+    private static HomeFragmentRecyclerViewAdapter.OnRecyclerViewItemClickListener mOnItemClickListener;
 
 
-    public HomeFragmentRecyclerViewAdapter(Context context, List<Map<String, Object>> list) {
+    public HomeFragmentRecyclerViewAdapter(Context context, List<HomeDynamicInfo> list) {
         mContext = context;
         mList = list;
+    }
+
+    public void replaceData(List<HomeDynamicInfo> homeDynamicInfos) {
+        mList = homeDynamicInfos;
+        // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
+        notifyDataSetChanged();
+    }
+
+    public static interface OnRecyclerViewItemClickListener {
+
+        void onItemClick(View view, HomeDynamicInfo homeDynamicInfo);
+
+    }
+
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mOnItemClickListener = listener;
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecyclerItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_recycler_view_item,null));
+        View viewItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_home_recycler_view_item, parent, false);
+        viewItem.setOnClickListener(this);
+        return new RecyclerItemViewHolder(viewItem);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
-        Map<String, Object> list = mList.get(position);
-        Picasso.with(mContext).load((Integer) list.get("head")).into(viewHolder.mIvHead);
-        viewHolder.mTvName.setText(list.get("name").toString());
-        viewHolder.mTvTitle.setText(list.get("title").toString());
-        viewHolder.mTvContent.setText(list.get("content").toString());
+        HomeDynamicInfo homeDynamicInfo = mList.get(position);
+        if (homeDynamicInfo != null) {
+            Picasso.with(mContext)
+                    .load(AppConfig.PIC_EWU_SERVER_HOST + homeDynamicInfo.getImg())
+                    .placeholder(R.drawable.ic_base_picture)
+                    .fit()
+                    .error(R.drawable.ic_pic_error)
+                    .into(viewHolder.mIvImage1);
+            viewHolder.mTvName.setText(homeDynamicInfo.getTname());
+            viewHolder.mTvTitle.setText(homeDynamicInfo.getTitle());
+            viewHolder.mTvContent.setText(homeDynamicInfo.getCon());
+            viewHolder.itemView.setTag(homeDynamicInfo);
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        if (mList != null) {
+            return mList.size();
+        } else
+            return 0;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (mOnItemClickListener != null) {
+            // 注意这里使用getTag方法获取数据
+            mOnItemClickListener.onItemClick(view, (HomeDynamicInfo) view.getTag());
+        }
     }
 
 
     static class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.iv_head)
-        CircleImageView mIvHead;
         @BindView(R.id.tv_name)
         TextView mTvName;
         @BindView(R.id.tv_title)
@@ -72,12 +115,6 @@ public class HomeFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         TextView mTvContent;
         @BindView(R.id.iv_image1)
         ImageView mIvImage1;
-        @BindView(R.id.iv_image2)
-        ImageView mIvImage2;
-        @BindView(R.id.iv_image3)
-        ImageView mIvImage3;
-        @BindView(R.id.image_content_ll)
-        LinearLayout mImageContentLl;
 
         private RecyclerItemViewHolder(View viewItem) {
             super(viewItem);

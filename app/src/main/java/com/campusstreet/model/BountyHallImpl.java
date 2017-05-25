@@ -205,8 +205,8 @@ public class BountyHallImpl implements IBountyHallBiz {
     }
 
     @Override
-    public void onPassJoinTask(String uid, int tid, int tpid, @NonNull final onPassJoinTaskCallback callback) {
-        Call<JsonObject> call = mBountyHallClient.passJoinTask(uid, tid, tpid);
+    public void onPassJoinTask(String uid, int tid, int tpid, int st, @NonNull final onPassJoinTaskCallback callback) {
+        Call<JsonObject> call = mBountyHallClient.passJoinTask(uid, tid, tpid, st);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -231,8 +231,85 @@ public class BountyHallImpl implements IBountyHallBiz {
     }
 
     @Override
-    public void onStartTask(String uid, int tid, @NonNull final onStartTaskCallback callback) {
-        Call<JsonObject> call = mBountyHallClient.StartTask(uid, tid);
+    public void onPublisherOpTask(String uid, int tpid, int taskid, int state, @NonNull final onPublisherOpTaskCallback callback) {
+        Call<JsonObject> call = mBountyHallClient.PublisherOpTask(uid, tpid, taskid, state);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+
+                        callback.onPublisherOpTaskSuccess();
+                    } else {
+                        callback.onPublisherOpTaskFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onPublisherOpTaskFailure("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
+    @Override
+    public void onCompleteTask(String uid, int tpid, int taskid, @NonNull final onCompleteTaskCallback callback) {
+        Call<JsonObject> call = mBountyHallClient.CompleteTask(uid, tpid, taskid);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+                        callback.onCompleteTaskSuccess();
+                    } else {
+                        callback.onCompleteTaskFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onCompleteTaskFailure("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
+    @Override
+    public void onGiveUpTask(String uid, int tpid, int taskid, @NonNull final onGiveUpTaskCallback callback) {
+        Call<JsonObject> call = mBountyHallClient.GiveUpTask(uid, tpid, taskid);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+
+                        callback.onGiveUpTaskSuccess();
+                    } else {
+                        callback.onGiveUpTaskFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onGiveUpTaskFailure("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
+    @Override
+    public void onStartTask(String uid, int tid, int state, @NonNull final onStartTaskCallback callback) {
+        Call<JsonObject> call = mBountyHallClient.StartTask(uid, tid, state);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -300,9 +377,9 @@ public class BountyHallImpl implements IBountyHallBiz {
     public void fetchUserTaskList(String uid, int tp, String key, int pi, final LoadUserTaskListCallback callback) {
         Call<JsonObject> call;
         if (key != null) {
-            call = mBountyHallClient.getUserTasks(uid,tp,key,pi);
+            call = mBountyHallClient.getUserTasks(uid, tp, key, pi);
         } else {
-            call = mBountyHallClient.getUserTasks(uid,tp,pi);
+            call = mBountyHallClient.getUserTasks(uid, tp, pi);
         }
         call.enqueue(new Callback<JsonObject>() {
             @Override

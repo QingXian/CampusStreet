@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.campusstreet.contract.IHomeContract;
 import com.campusstreet.entity.BannerInfo;
+import com.campusstreet.entity.HomeDynamicInfo;
 import com.campusstreet.model.HomeImpl;
 import com.campusstreet.model.IHomeBiz;
 
@@ -20,7 +21,6 @@ public class HomePresenter implements IHomeContract.Presenter {
 
     private HomeImpl mHomeImpl;
     private IHomeContract.View mView;
-
 
 
     public HomePresenter(HomeImpl homeImpl, IHomeContract.View view) {
@@ -41,7 +41,7 @@ public class HomePresenter implements IHomeContract.Presenter {
 
             @Override
             public void onFetchFailure(String errorMsg) {
-                mView.showErrorMsg(errorMsg);
+              mView.showFetchBannerFail(errorMsg);
             }
         });
     }
@@ -52,7 +52,21 @@ public class HomePresenter implements IHomeContract.Presenter {
     }
 
     @Override
-    public void fetchdynamicList() {
+    public void fetchdynamicList(String uid) {
+        mView.setLoadingIndicator(true);
+        mHomeImpl.getdynamicList(uid, new IHomeBiz.LoaddynamicListCallback() {
+            @Override
+            public void ondynamicListLoaded(List<HomeDynamicInfo> homeDynamicInfo) {
+                mView.setdynamicList(homeDynamicInfo);
+                mView.setLoadingIndicator(false);
+            }
 
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+                mView.setLoadingIndicator(false);
+            }
+        });
     }
+
 }

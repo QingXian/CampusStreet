@@ -1,6 +1,7 @@
 package com.campusstreet.contract;
 
 import com.campusstreet.entity.BannerInfo;
+import com.campusstreet.entity.HomeDynamicInfo;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface IHomeContract {
 
         void fetchAdvertisement();
 
-        void fetchdynamicList();
+        void fetchdynamicList(String uid);
 
     }
 
@@ -28,7 +29,9 @@ public interface IHomeContract {
 
         void setAdvertisement();
 
-        void setdynamicList  ();
+        void showFetchBannerFail(String errorMsg);
+
+        void setdynamicList  (List<HomeDynamicInfo> homeDynamicInfos);
 
         void showErrorMsg(String errorMsg);
 
@@ -38,8 +41,6 @@ public interface IHomeContract {
          * @param active true表示显示，false不显示
          */
         void setLoadingIndicator(boolean active);
-
-        void clearCookie();
 
 
     }

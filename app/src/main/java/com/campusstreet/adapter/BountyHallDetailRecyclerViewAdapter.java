@@ -89,6 +89,8 @@ public class BountyHallDetailRecyclerViewAdapter extends RecyclerView.Adapter<Re
                     viewHolder.mTvState.setText("待验收");
                 } else if (joinInfo.getState() == 9 && joinInfo.getState() == 10) {
                     viewHolder.mTvState.setText("任务结束");
+                } else {
+                    viewHolder.mTvState.setText("已选中");
                 }
             }
             viewHolder.mTvName.setText(joinInfo.getUsername());

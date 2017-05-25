@@ -33,6 +33,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -41,11 +42,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.R.attr.data;
+import static com.campusstreet.R.id.view;
 import static com.campusstreet.common.Const.BOUNTYHALLINFO_EXTRA;
-import static com.campusstreet.common.Const.ISSTRAT;
 import static com.campusstreet.common.Const.JOINNOTPASS;
 import static com.campusstreet.common.Const.JOINPASS;
-import static com.campusstreet.common.Const.STARTTASK;
 import static com.campusstreet.common.Const.TID_EXTRA;
 import static com.campusstreet.common.Const.TYPE;
 import static com.campusstreet.common.Const.USERINFO_EXTRA;
@@ -110,11 +111,16 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     LinearLayout mProgressBarContainer;
     @BindView(R.id.tv_phone)
     TextView mTvPhone;
+    @BindView(R.id.btn_giveup)
+    Button mBtnGiveup;
     private BountyHallInfo mBountyHallInfo;
     private IBountyHallContract.Presenter mPresenter;
     private BountyHallDetailRecyclerViewAdapter mAdapter;
     private int mPi = 0;
     private UserInfo mUserInfo;
+    private JoinInfo mJoinInfo;
+    private boolean mIsFrist = true;
+    private boolean mIsHavePass = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,10 +161,12 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getText().equals("报名申请")) {
                     //获取报名的列表数据
+                    mIsFrist = false;
                     mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
                     mAdapter.replaceType(JOINNOTPASS);
                 } else {
                     //获取通过报名的列表数据
+                    mIsFrist = false;
                     mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
                     mAdapter.replaceType(JOINPASS);
                 }
@@ -213,11 +221,13 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         mTabLayout.addTab(mTabLayout.newTab().setText("报名申请"));
         mTabLayout.addTab(mTabLayout.newTab().setText("已选择名单"));
         if (mUserInfo == null) {
+            mBtnGiveup.setVisibility(View.GONE);
             mBtnEntel.setVisibility(View.GONE);
             mTabLayout.setVisibility(View.GONE);
             mRvContent.setVisibility(View.GONE);
         } else {
             if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
+                mBtnGiveup.setVisibility(View.GONE);
                 mTabLayout.setVisibility(View.VISIBLE);
                 mRvContent.setVisibility(View.VISIBLE);
                 if (mBountyHallInfo.getState() == 3) {
@@ -245,20 +255,24 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                 if (mBountyHallInfo.getState() == 1) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setText("报名");
+                    mBtnGiveup.setVisibility(View.GONE);
                 } else if (mBountyHallInfo.getState() == 2) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务进行中");
+                    mBtnGiveup.setVisibility(View.VISIBLE);
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 } else if (mBountyHallInfo.getState() == 3) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务关闭");
+                    mBtnGiveup.setVisibility(View.GONE);
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 } else if (mBountyHallInfo.getState() == 5) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务结束");
+                    mBtnGiveup.setVisibility(View.GONE);
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 }
             }
@@ -299,6 +313,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                     mBtnEntel.setText("已报名");
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
                     mBtnEntel.setEnabled(false);
+                    break;
                 }
             }
         }
@@ -307,8 +322,65 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     }
 
     @Override
-    public void showSuccessfullpassJoinTask() {
+    public void setPassTaskList(List<JoinInfo> joinInfos) {
+        mIsHavePass = true;
+        for (JoinInfo joinInfo :
+                joinInfos) {
+            if (mUserInfo != null) {
+                if (joinInfo.getUid().equals(mUserInfo.getUid())) {
+                    if (joinInfo.getState() == 3) {
+                        mBtnGiveup.setVisibility(View.VISIBLE);
+                        mBtnEntel.setText("提交完成");
+                    } else if (joinInfo.getState() == 5) {
+                        mBtnGiveup.setVisibility(View.GONE);
+                        mBtnEntel.setText("已经提交等待验收");
+                        mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                        mBtnEntel.setEnabled(false);
+                    } else if (joinInfo.getState() == 4) {
+                        mBtnGiveup.setVisibility(View.GONE);
+                        mBtnEntel.setText("已经放弃等待同意");
+                        mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                        mBtnEntel.setEnabled(false);
+                    } else {
+                        mBtnGiveup.setVisibility(View.GONE);
+                        mBtnEntel.setText("任务结束");
+                        mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                        mBtnEntel.setEnabled(false);
+                    }
+                    mJoinInfo = joinInfo;
+                    break;
+                } else {
+                    mBtnGiveup.setVisibility(View.GONE);
+                }
+            }
+        }
+        if (!mIsFrist) {
+            mAdapter.replaceData(joinInfos);
+        }
+    }
 
+    @Override
+    public void showSuccessfullPassJoinTask() {
+
+    }
+
+    @Override
+    public void showSuccessfullPublisherOpTask() {
+
+    }
+
+    @Override
+    public void showSuccessfullCompleteTask() {
+        showMessage("已发起完成，等待确认");
+        mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+        setLoadingIndicator(true);
+    }
+
+    @Override
+    public void showSuccessfullGiveUpTask() {
+        showMessage("已发起放弃，等待确认");
+        mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+        setLoadingIndicator(true);
     }
 
     @Override
@@ -318,6 +390,11 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
 
     @Override
     public void showSuccessfullStartTask() {
+        mBtnEntel.setVisibility(View.VISIBLE);
+        mBtnEntel.setEnabled(false);
+        mBtnEntel.setText("任务进行中");
+        mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
+        mBountyHallInfo.setState(2);
     }
 
     @Override
@@ -327,11 +404,17 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                 showMessage(errorMsg);
             }
         }
+        mAdapter.replaceData(null);
     }
 
     @Override
     public void showNoPassMsg() {
-        showMessage("没有通过报名的数据");
+        mIsHavePass = false;
+        if (mUserInfo != null) {
+            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
+                showMessage("没有通过报名的数据");
+            }
+        }
         mAdapter.replaceData(null);
     }
 
@@ -362,33 +445,50 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         }
     }
 
-    @OnClick(R.id.btn_entel)
-    public void onViewClicked() {
-        if (mBtnEntel.getText().toString().equals("报名")) {
-            java.util.Calendar c1 = java.util.Calendar.getInstance();
-            java.util.Calendar c2 = java.util.Calendar.getInstance();
-            SimpleDateFormat CurrentTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date curDate = new Date(System.currentTimeMillis());
-            String dataStrNew = CurrentTime.format(curDate);
-            try {
-                c1.setTime(CurrentTime.parse(mBountyHallInfo.getEndtime()));
-                c2.setTime(CurrentTime.parse(dataStrNew));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            int result = c1.compareTo(c2);
-            if (result == 0) {
-                showMessage("任务已经过期");
-            } else if (result < 0) {
-                showMessage("任务已经过期");
-            } else {
-                Intent intent = new Intent(this, RegistrationActivity.class);
-                intent.putExtra(TID_EXTRA, mBountyHallInfo.getId());
-                intent.putExtra(USERINFO_EXTRA, mUserInfo);
-                startActivityForResult(intent, 1);
-            }
-        } else if (mBtnEntel.getText().toString().equals("开始任务")) {
-            mPresenter.startTask(mUserInfo.getUid(), mBountyHallInfo.getId());
+    @OnClick({R.id.btn_entel, R.id.btn_giveup})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_entel:
+                if (mBtnEntel.getText().toString().equals("报名")) {
+                    Calendar c1 = Calendar.getInstance();
+                    Calendar c2 = Calendar.getInstance();
+                    SimpleDateFormat CurrentTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date curDate = new Date(System.currentTimeMillis());
+                    String dataStrNew = CurrentTime.format(curDate);
+                    try {
+                        c1.setTime(CurrentTime.parse(mBountyHallInfo.getEndtime()));
+                        c2.setTime(CurrentTime.parse(dataStrNew));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    int result = c1.compareTo(c2);
+                    if (result == 0) {
+                        showMessage("任务已经过期");
+                    } else if (result < 0) {
+                        showMessage("任务已经过期");
+                    } else {
+                        Intent intent = new Intent(this, RegistrationActivity.class);
+                        intent.putExtra(TID_EXTRA, mBountyHallInfo.getId());
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
+                        startActivityForResult(intent, 1);
+                    }
+                } else if (mBtnEntel.getText().toString().equals("开始任务")) {
+                    //这里5表示开始任务
+                    if (mIsHavePass) {
+                        mPresenter.startTask(mUserInfo.getUid(), mBountyHallInfo.getId(), 5);
+                    } else {
+                        showMessage("没有通过的,无法开始");
+                    }
+                } else if (mBtnEntel.getText().toString().equals("提交完成")) {
+                    if (mJoinInfo != null)
+                        mPresenter.completeTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId());
+                }
+                break;
+            case R.id.btn_giveup:
+                if (mJoinInfo != null) {
+                    mPresenter.giveUpTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId());
+                }
+                break;
         }
     }
 
@@ -402,4 +502,5 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             mBtnEntel.setEnabled(false);
         }
     }
+
 }

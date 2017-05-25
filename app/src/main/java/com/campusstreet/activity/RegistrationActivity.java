@@ -110,9 +110,30 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
     }
 
     @Override
-    public void showSuccessfullpassJoinTask() {
+    public void setPassTaskList(List<JoinInfo> joinInfos) {
 
     }
+
+    @Override
+    public void showSuccessfullPassJoinTask() {
+
+    }
+
+    @Override
+    public void showSuccessfullPublisherOpTask() {
+
+    }
+
+    @Override
+    public void showSuccessfullCompleteTask() {
+
+    }
+
+    @Override
+    public void showSuccessfullGiveUpTask() {
+
+    }
+
 
     @Override
     public void showSuccessfullJointask(String successMsg) {

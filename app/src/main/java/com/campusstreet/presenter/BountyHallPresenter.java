@@ -70,8 +70,13 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
         mBountyHallImpl.fetchjoinTaskList(tid, state, pi, new IBountyHallBiz.LoadJoinTaskListCallback() {
             @Override
             public void onJoinTaskListLoaded(List<JoinInfo> joinInfos) {
-                mView.setLoadingIndicator(false);
-                mView.setJoinTaskList(joinInfos);
+                if (state == JOINNOTPASS) {
+                    mView.setLoadingIndicator(false);
+                    mView.setJoinTaskList(joinInfos);
+                } else {
+                    mView.setLoadingIndicator(false);
+                    mView.setPassTaskList(joinInfos);
+                }
             }
 
             @Override
@@ -106,13 +111,13 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
     }
 
     @Override
-    public void passJoinTask(String uid, int tid, int tpid) {
+    public void passJoinTask(String uid, int tid, int tpid, int st) {
         mView.setLoadingIndicator(true);
-        mBountyHallImpl.onPassJoinTask(uid, tid, tpid, new IBountyHallBiz.onPassJoinTaskCallback() {
+        mBountyHallImpl.onPassJoinTask(uid, tid, tpid, st, new IBountyHallBiz.onPassJoinTaskCallback() {
             @Override
             public void onPassJoinTaskSuccess() {
                 mView.setLoadingIndicator(false);
-                mView.showSuccessfullpassJoinTask();
+                mView.showSuccessfullPassJoinTask();
             }
 
             @Override
@@ -124,9 +129,9 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
     }
 
     @Override
-    public void startTask(String uid, int tid) {
+    public void startTask(String uid, int tid, int state) {
         mView.setLoadingIndicator(true);
-        mBountyHallImpl.onStartTask(uid, tid, new IBountyHallBiz.onStartTaskCallback() {
+        mBountyHallImpl.onStartTask(uid, tid, state, new IBountyHallBiz.onStartTaskCallback() {
             @Override
             public void onStartTaskSuccess() {
                 mView.setLoadingIndicator(false);
@@ -171,6 +176,60 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
+    }
+
+    @Override
+    public void publisherOpTask(String uid, int tpid, int taskid, int state) {
+        mView.setLoadingIndicator(true);
+        mBountyHallImpl.onPublisherOpTask(uid, tpid, taskid, state, new IBountyHallBiz.onPublisherOpTaskCallback() {
+            @Override
+            public void onPublisherOpTaskSuccess() {
+                mView.setLoadingIndicator(false);
+                mView.showSuccessfullPublisherOpTask();
+            }
+
+            @Override
+            public void onPublisherOpTaskFailure(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
+    }
+
+    @Override
+    public void completeTask(String uid, int tpid, int taskid) {
+        mView.setLoadingIndicator(true);
+        mBountyHallImpl.onCompleteTask(uid, tpid, taskid, new IBountyHallBiz.onCompleteTaskCallback() {
+            @Override
+            public void onCompleteTaskSuccess() {
+                mView.setLoadingIndicator(false);
+                mView.showSuccessfullCompleteTask();
+            }
+
+            @Override
+            public void onCompleteTaskFailure(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
+    }
+
+    @Override
+    public void giveUpTask(String uid, int tpid, int taskid) {
+        mView.setLoadingIndicator(true);
+        mBountyHallImpl.onCompleteTask(uid, tpid, taskid, new IBountyHallBiz.onCompleteTaskCallback() {
+            @Override
+            public void onCompleteTaskSuccess() {
+                mView.setLoadingIndicator(false);
+                mView.showSuccessfullCompleteTask();
+            }
+
+            @Override
+            public void onCompleteTaskFailure(String errorMsg) {
                 mView.setLoadingIndicator(false);
                 mView.showErrorMsg(errorMsg);
             }
