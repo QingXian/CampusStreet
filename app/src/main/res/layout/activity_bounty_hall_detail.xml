@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:background="@color/colorGray"
         android:orientation="vertical">
 
         <include layout="@layout/toolbar"/>
@@ -18,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
-            android:padding="16dp">
+            android:padding="8dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@id/iv_head"
@@ -160,7 +159,7 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:background="@color/colorWhite"
             android:padding="8dp"
             android:text="标题"
@@ -192,10 +191,10 @@
                     android:textSize="18sp"/>
 
                 <TextView
-                    android:maxLines="1"
                     android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxLines="1"
                     android:text="500"
                     android:textColor="@color/colorPrimary"
                     android:textSize="18sp"/>
@@ -287,6 +286,7 @@
                 android:layout_height="wrap_content"
                 android:text="张森"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
 
@@ -327,15 +327,43 @@
             android:padding="8dp"
             android:text="需要应用大量推荐人推荐人推荐人推荐人推荐人推荐人推荐人"/>
 
+        <Button
+            android:id="@+id/btn_entel"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorWhite"
+            android:text="报名"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/btn_giveup"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorWhite"
+            android:text="放弃任务"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
-            android:background="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
             android:visibility="gone"
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/colorPrimary"
             />
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_content"
@@ -345,15 +373,6 @@
             android:visibility="gone">
         </android.support.v7.widget.RecyclerView>
 
-        <Button
-            android:id="@+id/btn_entel"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="16dp"
-            android:background="@color/colorWhite"
-            android:text="报名"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"/>
     </LinearLayout>
 
     <include layout="@layout/progress_bar"></include>

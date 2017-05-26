@@ -1,6 +1,7 @@
 package com.campusstreet.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -120,7 +121,7 @@ public class ModifyDepartmentActivity extends AppCompatActivity implements ISett
             showMessage("请选择院系");
             return;
         }
-        mPresenter.reviseDepartment(mUserInfo.getUid(),mDepartment);
+        mPresenter.reviseDepartment(mUserInfo.getUid(), mDepartment);
     }
 
     @Override
@@ -131,6 +132,10 @@ public class ModifyDepartmentActivity extends AppCompatActivity implements ISett
     @Override
     public void showSuccessMsg(String successMsg) {
         showMessage(successMsg);
+        mUserInfo.setUsername(mTvDepartment.getText().toString());
+        Intent data = new Intent(this, MainActivity.class);
+        data.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+        startActivity(data);
     }
 
     @Override

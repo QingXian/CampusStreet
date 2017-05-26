@@ -8,11 +8,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,13 +25,17 @@ import com.campusstreet.activity.BuyZoneActivity;
 import com.campusstreet.activity.CampusInformationActivity;
 import com.campusstreet.activity.CampusRecruitmentActivity;
 import com.campusstreet.activity.IdleSaleActivity;
+import com.campusstreet.activity.IdleSaleDetailActivity;
 import com.campusstreet.activity.PartnerActivity;
 import com.campusstreet.activity.PeripheraShopActivity;
 import com.campusstreet.adapter.HomeFragmentRecyclerViewAdapter;
+import com.campusstreet.adapter.IdleSaleRecyclerViewAdapter;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IHomeContract;
 import com.campusstreet.entity.BannerInfo;
+import com.campusstreet.entity.HomeDynamicInfo;
+import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.UserInfo;
 import com.squareup.picasso.Picasso;
 import com.youth.banner.Banner;
@@ -43,14 +48,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static android.R.id.list;
 import static com.campusstreet.common.Const.BANNER_TITLE_EXTRA;
 import static com.campusstreet.common.Const.BANNER_URL_EXTRA;
 
@@ -83,6 +86,14 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
     ImageView mImageView;
     @BindView(R.id.rv_content)
     RecyclerView mRvContent;
+    @BindView(R.id.tv_error)
+    TextView mTvError;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.progress_bar_title)
+    TextView mProgressBarTitle;
+    @BindView(R.id.progress_bar_container)
+    LinearLayout mProgressBarContainer;
     private Unbinder mUnbinder;
     private HomeFragmentRecyclerViewAdapter mAdapter;
     private IHomeContract.Presenter mPresenter;
@@ -104,6 +115,11 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
         if (getArguments() != null) {
             mUserInfo = (UserInfo) getArguments().getSerializable(Const.USERINFO_EXTRA);
         }
+        if (mUserInfo != null) {
+            mPresenter.fetchdynamicList(mUserInfo.getUid());
+        } else {
+            mPresenter.fetchdynamicList(null);
+        }
     }
 
     @Nullable
@@ -119,6 +135,11 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
 
     private void initEvent() {
         mBanner.setOnBannerListener(this);
+        mAdapter.setOnItemClickListener(new HomeFragmentRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, HomeDynamicInfo homeDynamicInfo) {
+            }
+        });
     }
 
     private void initData() {
@@ -141,22 +162,13 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
             }).start();
         }
 
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i < 10; i++) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", "龙岩学院");
-            map.put("head", R.drawable.bg_test);
-            map.put("title", "震惊");
-            map.put("content", "特大新闻");
-            list.add(map);
-        }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRvContent.setLayoutManager(linearLayoutManager);
-        mAdapter = new HomeFragmentRecyclerViewAdapter(getActivity(), list);
+        mAdapter = new HomeFragmentRecyclerViewAdapter(getActivity(), null);
         mRvContent.addItemDecoration(new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL));
-        mRvContent.setNestedScrollingEnabled(false);
         mRvContent.setAdapter(mAdapter);
+        mRvContent.setNestedScrollingEnabled(false);
     }
 
 
@@ -242,22 +254,27 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
     }
 
     @Override
-    public void setdynamicList() {
-
-    }
-
-    @Override
-    public void showErrorMsg(String errorMsg) {
+    public void showFetchBannerFail(String errorMsg) {
         showMessage(errorMsg);
     }
 
     @Override
-    public void setLoadingIndicator(boolean active) {
-
+    public void setdynamicList(List<HomeDynamicInfo> homeDynamicInfos) {
+        mRvContent.setVisibility(View.VISIBLE);
+        mTvError.setVisibility(View.GONE);
+        mAdapter.replaceData(homeDynamicInfos);
+        setLoadingIndicator(false);
     }
 
     @Override
-    public void clearCookie() {
+    public void showErrorMsg(String errorMsg) {
+        mRvContent.setVisibility(View.GONE);
+        mTvError.setText(errorMsg);
+        mTvError.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
 
     }
 

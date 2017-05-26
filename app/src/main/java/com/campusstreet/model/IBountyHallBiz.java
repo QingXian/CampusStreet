@@ -9,6 +9,8 @@ import com.campusstreet.entity.LeaveMessageInfo;
 
 import java.util.List;
 
+import retrofit2.http.Field;
+
 /**
  * Created by Orange on 2017/4/27.
  */
@@ -28,10 +30,16 @@ public interface IBountyHallBiz {
     void onJoinTask(JoinInfo joinInfo, @NonNull onJoinTaskCallback callback);
 
     //通过报名请求
-    void onPassJoinTask(String uid, int tid, int tpid, @NonNull onPassJoinTaskCallback callback);
+    void onPassJoinTask(String uid, int tid, int tpid, int st, @NonNull onPassJoinTaskCallback callback);
+
+    void onPublisherOpTask(String uid, int tpid, int taskid, int state, @NonNull onPublisherOpTaskCallback callback);
+
+    void onCompleteTask(String uid, int tpid, int taskid, @NonNull onCompleteTaskCallback callback);
+
+    void onGiveUpTask(String uid, int tpid, int taskid, @NonNull onGiveUpTaskCallback callback);
 
     //确认开始服务
-    void onStartTask(String uid, int tid, @NonNull onStartTaskCallback callback);
+    void onStartTask(String uid, int tid, int state, @NonNull onStartTaskCallback callback);
 
     //发布赏金任务
     void addTask(BountyHallInfo bountyHallInfo, @NonNull addTaskCallback callback);
@@ -65,6 +73,27 @@ public interface IBountyHallBiz {
         void onStartTaskSuccess();
 
         void onStartTaskFailure(String errorMsg);
+    }
+
+    interface onPublisherOpTaskCallback {
+
+        void onPublisherOpTaskSuccess();
+
+        void onPublisherOpTaskFailure(String errorMsg);
+    }
+
+    interface onCompleteTaskCallback {
+
+        void onCompleteTaskSuccess();
+
+        void onCompleteTaskFailure(String errorMsg);
+    }
+
+    interface onGiveUpTaskCallback {
+
+        void onGiveUpTaskSuccess();
+
+        void onGiveUpTaskFailure(String errorMsg);
     }
 
     interface LoadBountyHallCategoriesCallback {

@@ -1,12 +1,15 @@
 package com.campusstreet.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -22,6 +25,7 @@ import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
+import com.campusstreet.utils.PreferencesUtil;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -128,12 +132,12 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
                 mTvState.setText("进行中");
             } else if (mJoinInfo.getState() == 4) {
                 mBtnAdopt.setVisibility(View.VISIBLE);
-                mBtnAdopt.setText("同意放弃");
+                mBtnAdopt.setText("对方发起放弃");
                 mTvState.setVisibility(View.VISIBLE);
                 mTvState.setText("已放弃");
             } else if (mJoinInfo.getState() == 5) {
                 mBtnAdopt.setVisibility(View.VISIBLE);
-                mBtnAdopt.setText("同意完成");
+                mBtnAdopt.setText("对方发起完成");
                 mTvState.setVisibility(View.VISIBLE);
                 mTvState.setText("已完成");
             } else if (mJoinInfo.getState() == 9 && mJoinInfo.getState() == 10) {
@@ -150,11 +154,12 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
     @OnClick(R.id.btn_adopt)
     public void onViewClicked() {
         if (mBtnAdopt.getText().equals("通过")) {
-            mPresenter.passJoinTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId());
-        } else if (mBtnAdopt.getText().equals("同意放弃")) {
-
-        } else if (mBtnAdopt.getText().equals("同意完成")) {
-
+            //状态1代表选中
+            mPresenter.passJoinTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId(), 1);
+        } else if (mBtnAdopt.getText().equals("对方发起放弃")) {
+            showAlertDialog("对方发起放弃");
+        } else if (mBtnAdopt.getText().equals("对方发起完成")) {
+            showAlertDialog("对方发起完成");
         }
     }
 
@@ -184,7 +189,30 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
     }
 
     @Override
-    public void showSuccessfullpassJoinTask() {
+    public void setPassTaskList(List<JoinInfo> joinInfos) {
+
+    }
+
+    @Override
+    public void showSuccessfullPublisherOpTask() {
+        showMessage("操作成功");
+        Intent intent = new Intent(this, BountyHallDetailActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
+
+    @Override
+    public void showSuccessfullCompleteTask() {
+
+    }
+
+    @Override
+    public void showSuccessfullGiveUpTask() {
+
+    }
+
+    @Override
+    public void showSuccessfullPassJoinTask() {
         Intent intent = new Intent(this, BountyHallDetailActivity.class);
         startActivity(intent);
         this.finish();
@@ -234,5 +262,23 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
         if (this != null && !this.isFinishing()) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showAlertDialog(String text) {
+        new AlertDialog.Builder(this).setTitle(text)
+                .setPositiveButton("同意", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //1代表同意
+                        mPresenter.publisherOpTask(mUserInfo.getUid(), mJoinInfo.getId(), mBountyHallInfo.getId(), 1);
+                    }
+                })
+                .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //2代表拒绝
+                        mPresenter.publisherOpTask(mUserInfo.getUid(), mJoinInfo.getId(), mBountyHallInfo.getId(), 2);
+                    }
+                })
+                .show();
     }
 }

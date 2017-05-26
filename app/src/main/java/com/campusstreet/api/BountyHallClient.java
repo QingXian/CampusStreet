@@ -48,11 +48,24 @@ public interface BountyHallClient {
 
     @FormUrlEncoded
     @POST("ins_tasktakeperson")
-    Call<JsonObject> passJoinTask(@Field("uid") String uid, @Field("tid") Integer tid, @Field("tpid") Integer tpid);
+    Call<JsonObject> passJoinTask(@Field("uid") String uid, @Field("tid") Integer tid, @Field("tpid") Integer tpid, @Field("st") Integer st);
+
 
     @FormUrlEncoded
-    @POST("ins_taskstart")
-    Call<JsonObject> StartTask(@Field("uid") String uid, @Field("tid") Integer tid);
+    @POST("publisher_op_task")
+    Call<JsonObject> StartTask(@Field("uid") String uid, @Field("taskid") Integer tid, @Field("state") Integer state);
+
+    @FormUrlEncoded
+    @POST("publisher_op_taskperson")
+    Call<JsonObject> PublisherOpTask(@Field("uid") String uid, @Field("tpid") Integer tpid, @Field("taskid") Integer tid, @Field("state") Integer state);
+
+    @FormUrlEncoded
+    @POST("taskperson_done")
+    Call<JsonObject> CompleteTask(@Field("uid") String uid, @Field("tpid") Integer tpid, @Field("taskid") Integer tid);
+
+    @FormUrlEncoded
+    @POST("taskperson_abandon")
+    Call<JsonObject> GiveUpTask(@Field("uid") String uid, @Field("tpid") Integer tpid, @Field("taskid") Integer tid);
 
     @Multipart
     @POST("ins_task")

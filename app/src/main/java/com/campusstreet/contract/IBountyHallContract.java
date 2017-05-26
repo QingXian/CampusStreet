@@ -1,5 +1,7 @@
 package com.campusstreet.contract;
 
+import android.support.annotation.NonNull;
+
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.JoinInfo;
 
@@ -25,16 +27,22 @@ public interface IBountyHallContract {
         void joinTask(JoinInfo joinInfo);
 
         //通过报名请求
-        void passJoinTask(String uid, int tid, int tpid);
+        void passJoinTask(String uid, int tid, int tpid, int st);
 
         //确认开始服务
-        void startTask(String uid, int tid);
+        void startTask(String uid, int tid, int state);
 
         //发布赏金任务
         void addTask(BountyHallInfo bountyHallInfo);
 
         //获取我的赏金任务
-        void fetchUserTaskList(String uid, int tp, int pi,String key);
+        void fetchUserTaskList(String uid, int tp, int pi, String key);
+
+        void publisherOpTask(String uid, int tpid, int taskid, int state);
+
+        void completeTask(String uid, int tpid, int taskid);
+
+        void giveUpTask(String uid, int tpid, int taskid);
 
 
     }
@@ -49,8 +57,16 @@ public interface IBountyHallContract {
 
         void setJoinTaskList(List<JoinInfo> joinInfos);
 
+        void setPassTaskList(List<JoinInfo> joinInfos);
+
         //报名通过成功
-        void showSuccessfullpassJoinTask();
+        void showSuccessfullPassJoinTask();
+
+        void showSuccessfullPublisherOpTask();
+
+        void showSuccessfullCompleteTask();
+
+        void showSuccessfullGiveUpTask();
 
         //报名成功
         void showSuccessfullJointask(String successMsg);

@@ -3,6 +3,7 @@ package com.campusstreet.model;
 import android.support.annotation.NonNull;
 
 import com.campusstreet.entity.BannerInfo;
+import com.campusstreet.entity.HomeDynamicInfo;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface IHomeBiz {
 
     void fetchAdImage(String picType, @NonNull GetAdImageCallback callback);
 
-    void getdynamicList(@NonNull LoaddynamicListCallback callback);
+    void getdynamicList(String uid,@NonNull LoaddynamicListCallback callback);
 
     interface GetBannerCallback {
         void onFetchSuccess(List<BannerInfo> bannerInfos);
@@ -33,7 +34,7 @@ public interface IHomeBiz {
     interface LoaddynamicListCallback {
 
         // 加载所有GoodDeeds
-        void ondynamicListLoaded();
+        void ondynamicListLoaded(List<HomeDynamicInfo> homeDynamicInfo);
 
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   xmlns:app="http://schemas.android.com/apk/res-auto"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
@@ -136,24 +144,38 @@
             android:layout_height="4dp"
             android:background="@color/colorGray"/>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"/>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"/>
 
-    <View
+        <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:background="@color/colorGray"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_content"
-            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorGray"
-            android:paddingBottom="48dp">
+            android:focusable="false"
+            android:paddingBottom="56dp">
         </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:padding="24dp"
+            android:id="@+id/tv_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="加载失败"
+            android:textSize="18sp"
+            android:visibility="gone"/>
     </LinearLayout>
+
+    <include layout="@layout/progress_bar"/>
+</RelativeLayout>
