@@ -47,6 +47,23 @@ public class BuyZonePresenter implements IBuyZoneContract.Presenter {
     }
 
     @Override
+    public void fetchBuyZoneDetail(int gid) {
+        mBuyZoneImpl.fetchBuyZoneDetail(gid, new IBuyZoneBiz.LoadBuyZoneDetailCallback() {
+            @Override
+            public void onBuyZoneListLoaded(BuyZoneInfo buyZoneInfo) {
+                mView.setBuyZoneDetail(buyZoneInfo);
+                mView.setLoadingIndicator(false);
+            }
+
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+                mView.setLoadingIndicator(false);
+            }
+        });
+    }
+
+    @Override
     public void fetchUserBuyZoneList(String uid, String key, int pi) {
         mBuyZoneImpl.fetchUserBuyZoneList(uid, key, pi, new IBuyZoneBiz.LoadUserBuyZoneListCallback() {
             @Override

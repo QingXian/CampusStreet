@@ -154,7 +154,7 @@ public class AssociationImpl implements IAssociationBiz {
 
     @Override
     public void onJoinAssociation(int aid, String uid, String con, @NonNull final onJoinAssociationCallback callback) {
-        Call<JsonObject> call = mAssociationClient.leaveMessage(aid, uid, con);
+        Call<JsonObject> call = mAssociationClient.JoinAssociation(aid,uid,con);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

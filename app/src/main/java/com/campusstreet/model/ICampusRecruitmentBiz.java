@@ -13,10 +13,13 @@ import java.util.List;
 
 public interface ICampusRecruitmentBiz {
 
-    void fetchCampusRecruitmentList(String key,int pi,@NonNull LoadCampusRecruitmentListCallback callback);
+    void fetchCampusRecruitmentList(String key, int pi, @NonNull LoadCampusRecruitmentListCallback callback);
 
-    void fetchStudyWorkList(String key,int pi, @NonNull LoadStudyWorkListCallback callback);
+    void fetchStudyWorkList(String key, int pi, @NonNull LoadStudyWorkListCallback callback);
 
+    void fetchCampusRecruitmentDetail(int swid, @NonNull LoadCampusRecruitmentDetailCallback callback);
+
+    void fetchStudyWorkDetail(int rid, @NonNull LoadStudyWorkDetailCallback callback);
 
 
     interface LoadStudyWorkListCallback {
@@ -26,9 +29,23 @@ public interface ICampusRecruitmentBiz {
         void onDataNotAvailable(String errorMsg);
     }
 
+    interface LoadStudyWorkDetailCallback {
+
+        void onStudyWorkDetailLoaded(StudyWorkInfo studyWorkInfo);
+
+        void onDataNotAvailable(String errorMsg);
+    }
+
     interface LoadCampusRecruitmentListCallback {
 
         void onCampusRecruitmentListLoaded(List<RecruitInfo> recruitInfos);
+
+        void onDataNotAvailable(String errorMsg);
+    }
+
+    interface LoadCampusRecruitmentDetailCallback {
+
+        void onCampusRecruitmentDetailLoaded(RecruitInfo recruitInfo);
 
         void onDataNotAvailable(String errorMsg);
     }

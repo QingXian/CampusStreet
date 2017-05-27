@@ -42,6 +42,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.campusstreet.common.Const.ID_EXTRA;
 import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
@@ -89,6 +90,7 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
     private UserInfo mUserInfo;
     private boolean mIsLoading;
     private boolean mIsNeedLoadMore = true;
+    private int mId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,30 +111,37 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
             }
         });
         new AssociationPresenter(AssociationImpl.getInstance(getApplicationContext()), this);
-        mAssociationPostInfo = (AssociationPostInfo) getIntent().getSerializableExtra(Const.ASSOCIATIONPOSTINFO_EXTRA);
-        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
-        mPresenter.fetchAssociationPostDetail(mAssociationPostInfo.getId());
-        mPresenter.fetchAssociationPostMessageList(mAssociationPostInfo.getId(), mPi);
-        setLoadingIndicator(true);
-        initView();
-        initEvent();
-    }
-
-    private void initView() {
-        mTvName.setText(mAssociationPostInfo.getUsername());
-        String time = getTimeRange(mAssociationPostInfo.getAddtime());
-        Picasso.with(this)
-                .load(AppConfig.AVATAR_SERVER_HOST + mAssociationPostInfo.getUserpic())
-                .fit()
-                .error(R.drawable.ic_head_test)
-                .into(mIvHead);
-        mTvTime.setText(time);
-        mTvTitle.setText(mAssociationPostInfo.getTitle());
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRvContent.setLayoutManager(mLinearLayoutManager);
         mAdapter = new PostDetailRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
         mRvContent.setNestedScrollingEnabled(false);
+        mAssociationPostInfo = (AssociationPostInfo) getIntent().getSerializableExtra(Const.ASSOCIATIONPOSTINFO_EXTRA);
+        mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+        mPresenter.fetchAssociationPostDetail(mAssociationPostInfo.getId());
+        if (mAssociationPostInfo == null) {
+            mId = getIntent().getIntExtra(ID_EXTRA, 0);
+            mPresenter.fetchAssociationPostDetail(mId);
+            mPresenter.fetchAssociationPostMessageList(mId, mPi);
+        } else {
+            initView(mAssociationPostInfo);
+            mPresenter.fetchAssociationPostMessageList(mAssociationPostInfo.getId(), mPi);
+        }
+        setLoadingIndicator(true);
+        initEvent();
+    }
+
+    private void initView(AssociationPostInfo associationPostInfo) {
+        mTvName.setText(associationPostInfo.getUsername());
+        String time = getTimeRange(associationPostInfo.getAddtime());
+        Picasso.with(this)
+                .load(AppConfig.AVATAR_SERVER_HOST + associationPostInfo.getUserpic())
+                .fit()
+                .error(R.drawable.ic_head_test)
+                .into(mIvHead);
+        mTvTime.setText(time);
+        mTvTitle.setText(associationPostInfo.getTitle());
+        mTvContent.setText(associationPostInfo.getCon());
     }
 
     private void initEvent() {
@@ -227,7 +236,8 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
 
     @Override
     public void setAssociationPostDetail(AssociationPostInfo associationPostInfo) {
-        mTvContent.setText(associationPostInfo.getCon());
+        mAssociationPostInfo = associationPostInfo;
+        initView(mAssociationPostInfo);
     }
 
     @Override

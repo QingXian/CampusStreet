@@ -45,6 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static android.R.attr.data;
 import static com.campusstreet.R.id.view;
 import static com.campusstreet.common.Const.BOUNTYHALLINFO_EXTRA;
+import static com.campusstreet.common.Const.ID_EXTRA;
 import static com.campusstreet.common.Const.JOINNOTPASS;
 import static com.campusstreet.common.Const.JOINPASS;
 import static com.campusstreet.common.Const.TID_EXTRA;
@@ -121,6 +122,8 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     private JoinInfo mJoinInfo;
     private boolean mIsFrist = true;
     private boolean mIsHavePass = false;
+    private int mId;
+    private int mPostion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +146,16 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         mBountyHallInfo = (BountyHallInfo) getIntent().getSerializableExtra(Const.BOUNTYHALLINFO_EXTRA);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
-        initView();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mRvContent.setLayoutManager(linearLayoutManager);
+        mAdapter = new BountyHallDetailRecyclerViewAdapter(this, null, 0);
+        mRvContent.setAdapter(mAdapter);
+        if (mBountyHallInfo == null) {
+            mId = getIntent().getIntExtra(ID_EXTRA, 0);
+            mPresenter.fetchTaskDetail(mId);
+        } else {
+            initView(mBountyHallInfo);
+        }
         initEvent();
 
     }
@@ -151,8 +163,12 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     @Override
     protected void onStart() {
         super.onStart();
-        mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
-        mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+        if (mIsFrist) {
+            mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
+            mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+        } else {
+            mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), mPostion, mPi);
+        }
     }
 
     private void initEvent() {
@@ -170,6 +186,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                     mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
                     mAdapter.replaceType(JOINPASS);
                 }
+                mPostion = tab.getPosition();
             }
 
             @Override
@@ -196,26 +213,26 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         });
     }
 
-    private void initView() {
-        if (mBountyHallInfo.getFee().equals(0)) {
+    private void initView(BountyHallInfo bountyHallInfo) {
+        if (bountyHallInfo.getFee().equals(0)) {
             mTvPrice.setText("面议");
         } else {
-            double price = Double.parseDouble(mBountyHallInfo.getFee());
+            double price = Double.parseDouble(bountyHallInfo.getFee());
             DecimalFormat df = new DecimalFormat("0.0");
             String strprice = df.format(price);
             mTvPrice.setText(strprice);
         }
-        mTvName.setText(mBountyHallInfo.getUsername());
-        String time = getTimeRange(mBountyHallInfo.getPubtime());
+        mTvName.setText(bountyHallInfo.getUsername());
+        String time = getTimeRange(bountyHallInfo.getPubtime());
         mTvTime.setText(time);
-        mTvTitle.setText(mBountyHallInfo.getTitle());
-        mTvPeopleNum.setText(String.valueOf(mBountyHallInfo.getSperson()));
-        mTvCompletionTime.setText(mBountyHallInfo.getEndtime());
-        mTvContactPeople.setText(mBountyHallInfo.getLinkman());
-        mTvDescribe.setText(mBountyHallInfo.getCon());
-        mTvPhone.setText(mBountyHallInfo.getMobile());
+        mTvTitle.setText(bountyHallInfo.getTitle());
+        mTvPeopleNum.setText(String.valueOf(bountyHallInfo.getSperson()));
+        mTvCompletionTime.setText(bountyHallInfo.getEndtime());
+        mTvContactPeople.setText(bountyHallInfo.getLinkman());
+        mTvDescribe.setText(bountyHallInfo.getCon());
+        mTvPhone.setText(bountyHallInfo.getMobile());
         Picasso.with(this)
-                .load(AppConfig.AVATAR_SERVER_HOST + mBountyHallInfo.getUserpic())
+                .load(AppConfig.AVATAR_SERVER_HOST + bountyHallInfo.getUserpic())
                 .fit()
                 .into(mIvHead);
         mTabLayout.addTab(mTabLayout.newTab().setText("报名申请"));
@@ -226,24 +243,24 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             mTabLayout.setVisibility(View.GONE);
             mRvContent.setVisibility(View.GONE);
         } else {
-            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
+            if (mUserInfo.getUid().equals(bountyHallInfo.getUid()) || bountyHallInfo.getUid() == null) {
                 mBtnGiveup.setVisibility(View.GONE);
                 mTabLayout.setVisibility(View.VISIBLE);
                 mRvContent.setVisibility(View.VISIBLE);
-                if (mBountyHallInfo.getState() == 3) {
+                if (bountyHallInfo.getState() == 3) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务关闭");
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                } else if (mBountyHallInfo.getState() == 1) {
+                } else if (bountyHallInfo.getState() == 1) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setText("开始任务");
-                } else if (mBountyHallInfo.getState() == 2) {
+                } else if (bountyHallInfo.getState() == 2) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务进行中");
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                } else if (mBountyHallInfo.getState() == 5) {
+                } else if (bountyHallInfo.getState() == 5) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务结束");
@@ -252,23 +269,23 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             } else {
                 mTabLayout.setVisibility(View.GONE);
                 mRvContent.setVisibility(View.GONE);
-                if (mBountyHallInfo.getState() == 1) {
+                if (bountyHallInfo.getState() == 1) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setText("报名");
                     mBtnGiveup.setVisibility(View.GONE);
-                } else if (mBountyHallInfo.getState() == 2) {
+                } else if (bountyHallInfo.getState() == 2) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务进行中");
                     mBtnGiveup.setVisibility(View.VISIBLE);
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                } else if (mBountyHallInfo.getState() == 3) {
+                } else if (bountyHallInfo.getState() == 3) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务关闭");
                     mBtnGiveup.setVisibility(View.GONE);
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                } else if (mBountyHallInfo.getState() == 5) {
+                } else if (bountyHallInfo.getState() == 5) {
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务结束");
@@ -277,10 +294,6 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                 }
             }
         }
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(linearLayoutManager);
-        mAdapter = new BountyHallDetailRecyclerViewAdapter(this, null, 0);
-        mRvContent.setAdapter(mAdapter);
     }
 
 
@@ -421,6 +434,12 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     @Override
     public void showSuccessfullyPush(String succcessMsg) {
 
+    }
+
+    @Override
+    public void setTaskDetail(BountyHallInfo bountyHallInfo) {
+        mBountyHallInfo = bountyHallInfo;
+        initView(mBountyHallInfo);
     }
 
 

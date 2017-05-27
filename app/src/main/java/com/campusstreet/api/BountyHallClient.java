@@ -38,6 +38,10 @@ public interface BountyHallClient {
     Call<JsonObject> getTasks(@Field("tp") Integer type, @Field("pi") Integer pi);
 
     @FormUrlEncoded
+    @POST("get_tasks_info")
+    Call<JsonObject> getTasksDetail(@Field("tid") Integer tid);
+
+    @FormUrlEncoded
     @POST("get_jointask")
     Call<JsonObject> getJoinTask(@Field("tid") Integer tid, @Field("state") Integer state, @Field("pi") Integer pi);
 

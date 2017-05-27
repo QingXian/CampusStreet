@@ -20,6 +20,8 @@ public interface IBountyHallContract {
         //获取赏金大厅列表数据
         void fetchTaskList(int tp, int pi, String key);
 
+        void fetchTaskDetail(int tid);
+
         //获取报名数据
         void fetchjoinTaskList(int tid, int state, int pi);
 
@@ -80,6 +82,8 @@ public interface IBountyHallContract {
 
         //赏金任务发布成功
         void showSuccessfullyPush(String successMsg);
+
+        void setTaskDetail(BountyHallInfo bountyHallInfo);
 
 
         /**

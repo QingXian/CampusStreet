@@ -53,6 +53,10 @@ public interface IdleSaleClient {
     Call<JsonObject> getIdleSaleMessage(@Field("gid") Integer id, @Field("pi") Integer pi);
 
     @FormUrlEncoded
+    @POST("get_ewu_goods_info")
+    Call<JsonObject> getIdleSaleDetail(@Field("gid") Integer id);
+
+    @FormUrlEncoded
     @POST("ins_ewu_comment")
     Call<JsonObject> LeaveMessage(@Field("gid") Integer gid, @Field("uid") String uid ,@Field("con") String con);
 

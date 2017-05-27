@@ -21,13 +21,18 @@ import com.campusstreet.R;
 import com.campusstreet.activity.AdActivity;
 import com.campusstreet.activity.AssociationActivity;
 import com.campusstreet.activity.BountyHallActivity;
+import com.campusstreet.activity.BountyHallDetailActivity;
 import com.campusstreet.activity.BuyZoneActivity;
+import com.campusstreet.activity.BuyZoneDetailActivity;
 import com.campusstreet.activity.CampusInformationActivity;
+import com.campusstreet.activity.CampusInformationDetailActivity;
 import com.campusstreet.activity.CampusRecruitmentActivity;
 import com.campusstreet.activity.IdleSaleActivity;
 import com.campusstreet.activity.IdleSaleDetailActivity;
 import com.campusstreet.activity.PartnerActivity;
+import com.campusstreet.activity.PartnerDetailActivity;
 import com.campusstreet.activity.PeripheraShopActivity;
+import com.campusstreet.activity.PostDetailActivity;
 import com.campusstreet.adapter.HomeFragmentRecyclerViewAdapter;
 import com.campusstreet.adapter.IdleSaleRecyclerViewAdapter;
 import com.campusstreet.common.AppConfig;
@@ -56,6 +61,8 @@ import butterknife.Unbinder;
 
 import static com.campusstreet.common.Const.BANNER_TITLE_EXTRA;
 import static com.campusstreet.common.Const.BANNER_URL_EXTRA;
+import static com.campusstreet.common.Const.ID_EXTRA;
+import static com.campusstreet.common.Const.TYPE;
 
 /**
  * Created by Orange on 2017/4/1.
@@ -138,6 +145,43 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
         mAdapter.setOnItemClickListener(new HomeFragmentRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, HomeDynamicInfo homeDynamicInfo) {
+                switch (homeDynamicInfo.getType()) {
+                    case 1:
+                        Intent intent = new Intent(getActivity(), IdleSaleDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case 2:
+                        intent = new Intent(getActivity(), BuyZoneDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case 3:
+                        intent = new Intent(getActivity(), IdleSaleDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case 4:
+                        intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case 5:
+                        intent = new Intent(getActivity(), PostDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case 6:
+                        intent = new Intent(getActivity(), CampusInformationDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case 7:
+                        intent = new Intent(getActivity(), PartnerDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                }
             }
         });
     }

@@ -28,6 +28,8 @@ public interface IIdleSaleBiz {
 
     void fetchIdleSaleMessageList(int id, int pi, @NonNull LoadIdleSaleMessageListCallback callback);
 
+    void fetchIdleSaleDetail(int gid, @NonNull LoadIdleSaleDetailCallback callback);
+
     interface addIdleGoodsCallback {
 
         void onAddSuccess();
@@ -47,6 +49,15 @@ public interface IIdleSaleBiz {
 
         // 加载所有IdleSale
         void onIdleSaleListLoaded(List<IdleSaleInfo> idleSaleInfoList);
+
+        // 获取数据失败的回调
+        void onDataNotAvailable(String errorMsg);
+    }
+
+    interface LoadIdleSaleDetailCallback {
+
+        // 加载所有IdleSale
+        void onIdleSaleDetailLoaded(IdleSaleInfo idleSaleInfo);
 
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);

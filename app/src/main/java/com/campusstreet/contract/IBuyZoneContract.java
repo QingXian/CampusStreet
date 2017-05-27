@@ -15,7 +15,9 @@ public interface IBuyZoneContract {
 
         void fetchBuyZoneList(int pi);
 
-        void fetchUserBuyZoneList(String uid,String key,int pi);
+        void fetchBuyZoneDetail(int gid);
+
+        void fetchUserBuyZoneList(String uid, String key, int pi);
 
         void pushBuy(BuyZoneInfo buyZoneInfo);
 
@@ -28,6 +30,8 @@ public interface IBuyZoneContract {
     interface View extends BaseView<Presenter> {
 
         void setBuyZone(List<BuyZoneInfo> buyZoneInfoList);
+
+        void setBuyZoneDetail(BuyZoneInfo buyZoneInfo);
 
         void setBuyZoneMessageList(List<LeaveMessageInfo> BuyZoneMessageList);
 

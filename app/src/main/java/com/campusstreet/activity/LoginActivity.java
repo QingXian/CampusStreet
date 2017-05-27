@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
                 .putString(Const.PREF_USERINFO_KEY, userinfo)
                 .apply();
 
-        UserSettingActivity.mIsLogout = false;
+        Const.mIsLogout = false;
         Intent data = new Intent(this, MainActivity.class);
         data.putExtra(Const.USERINFO_EXTRA, userInfo);
         data.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

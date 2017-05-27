@@ -9,6 +9,7 @@ import com.campusstreet.model.IdleSaleImpl;
 
 import java.util.List;
 
+import static android.R.attr.id;
 import static android.R.attr.type;
 
 /**
@@ -33,17 +34,17 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
 
     @Override
     public void fetchIdleSaleCategories() {
-       mIdleSaleImpl.fetchIdleSaleCategories(new IIdleSaleBiz.LoadIdleSaleCategoriesCallback() {
-           @Override
-           public void onIdleSaleCategoriesLoaded(String[] type) {
-               mView.setIdleSaleCategories(type);
-           }
+        mIdleSaleImpl.fetchIdleSaleCategories(new IIdleSaleBiz.LoadIdleSaleCategoriesCallback() {
+            @Override
+            public void onIdleSaleCategoriesLoaded(String[] type) {
+                mView.setIdleSaleCategories(type);
+            }
 
-           @Override
-           public void onDataNotAvailable(String errorMsg) {
-               mView.showErrorMsg(errorMsg);
-           }
-       });
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+            }
+        });
     }
 
     @Override
@@ -64,7 +65,7 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
 
     @Override
     public void fetchUserIdleSaleList(String uid, String key, int pi) {
-        mIdleSaleImpl.fetchUserIdleSaleList(uid,key,pi, new IIdleSaleBiz.LoadUserIdleSaleListCallback() {
+        mIdleSaleImpl.fetchUserIdleSaleList(uid, key, pi, new IIdleSaleBiz.LoadUserIdleSaleListCallback() {
             @Override
             public void onUserIdleSaleListLoaded(List<IdleSaleInfo> idleSaleInfoList) {
                 mView.setIdleSale(idleSaleInfoList);
@@ -100,20 +101,20 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
 
     @Override
     public void leaveMessage(String uid, int gid, String con) {
-        mIdleSaleImpl.leaveMessagae(gid, uid,con,
-        new IIdleSaleBiz.LeaveMessageCallback() {
-            @Override
-            public void onLeaveMessageSuccess() {
-                mView.showSuccessfullyleaveMessage("留言成功");
-                mView.setLoadingIndicator(false);
-            }
+        mIdleSaleImpl.leaveMessagae(gid, uid, con,
+                new IIdleSaleBiz.LeaveMessageCallback() {
+                    @Override
+                    public void onLeaveMessageSuccess() {
+                        mView.showSuccessfullyleaveMessage("留言成功");
+                        mView.setLoadingIndicator(false);
+                    }
 
-            @Override
-            public void onLeaveMessageFailure(String errorMsg) {
-                mView.showErrorMsg(errorMsg+"留言失败");
-                mView.setLoadingIndicator(false);
-            }
-        });
+                    @Override
+                    public void onLeaveMessageFailure(String errorMsg) {
+                        mView.showErrorMsg(errorMsg + "留言失败");
+                        mView.setLoadingIndicator(false);
+                    }
+                });
     }
 
 
@@ -123,6 +124,23 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
             @Override
             public void onIdleSaleMessageListLoaded(List<LeaveMessageInfo> leaveMessageInfos) {
                 mView.setIdleSaleMessageList(leaveMessageInfos);
+                mView.setLoadingIndicator(false);
+            }
+
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
+    }
+
+    @Override
+    public void fetchIdleSaleDetail(int gid) {
+        mIdleSaleImpl.fetchIdleSaleDetail(gid, new IIdleSaleBiz.LoadIdleSaleDetailCallback() {
+            @Override
+            public void onIdleSaleDetailLoaded(IdleSaleInfo idleSaleInfo) {
+                mView.setIdleSaleDetail(idleSaleInfo);
                 mView.setLoadingIndicator(false);
             }
 

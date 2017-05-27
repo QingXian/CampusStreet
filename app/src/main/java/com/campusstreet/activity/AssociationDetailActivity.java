@@ -150,16 +150,10 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
             if (mUserInfo == null) {
                 mBtnJoin.setVisibility(View.GONE);
                 mFabAddTask.setVisibility(View.GONE);
+            } else {
+                mBtnJoin.setVisibility(View.VISIBLE);
+                mFabAddTask.setVisibility(View.GONE);
             }
-        } else {
-            mTvName.setText(mUserAssociationInfo.getAssnname());
-            mTvIntroduce.setText(mUserAssociationInfo.getNote());
-            Picasso.with(this)
-                    .load(AppConfig.PIC_ASSOCIATION_SERVER_HOST + mUserAssociationInfo.getClassimg())
-                    .fit()
-                    .into(mIvHead);
-            mBtnJoin.setVisibility(View.GONE);
-            mFabAddTask.setVisibility(View.VISIBLE);
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRvContent.setLayoutManager(linearLayoutManager);
@@ -303,7 +297,11 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String input = et.getText().toString();
-                        mPresenter.onJoinAssociation(mAssociationInfo.getId(), mUserInfo.getUid(), input);
+                        if (!input.equals("")) {
+                            mPresenter.onJoinAssociation(mAssociationInfo.getId(), mUserInfo.getUid(), input);
+                        } else {
+                            showErrorMsg("备注信息不能为空");
+                        }
                     }
                 })
                 .setNegativeButton("取消", null)

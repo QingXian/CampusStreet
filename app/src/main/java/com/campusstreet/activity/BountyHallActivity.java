@@ -284,6 +284,11 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
 
     }
 
+    @Override
+    public void setTaskDetail(BountyHallInfo bountyHallInfo) {
+
+    }
+
 
     @Override
     public void setLoadingIndicator(boolean active) {

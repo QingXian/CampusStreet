@@ -26,6 +26,8 @@ public interface IBountyHallBiz {
     //获取报名数据
     void fetchjoinTaskList(int tp, int state, int pi, @NonNull LoadJoinTaskListCallback callback);
 
+    void fetchTaskDetail(int tid, @NonNull LoadTaskDetailCallback callback);
+
     //报名请求
     void onJoinTask(JoinInfo joinInfo, @NonNull onJoinTaskCallback callback);
 
@@ -107,6 +109,13 @@ public interface IBountyHallBiz {
     interface LoadUserTaskListCallback {
 
         void onUserTaskListLoaded(List<BountyHallInfo> bountyHallInfos);
+
+        void onDataNotAvailable(String errorMsg);
+    }
+
+    interface LoadTaskDetailCallback {
+
+        void onUserTaskDetailLoaded(BountyHallInfo bountyHallInfo);
 
         void onDataNotAvailable(String errorMsg);
     }

@@ -1,6 +1,7 @@
 package com.campusstreet.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
@@ -39,6 +40,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.campusstreet.common.Const.ID_EXTRA;
+import static com.campusstreet.common.Const.TYPE;
 import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
@@ -110,6 +113,7 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
     private int mLastVisibleItemPosition;
     private int mItemCount;
     private boolean mIsNeedLoadMore = true;
+    private int mId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,11 +135,22 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
         });
         mBuyZoneInfo = (BuyZoneInfo) getIntent().getSerializableExtra(Const.BUYZONEIINFO_EXTRA);
         new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
-        initView();
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRvContent.setLayoutManager(mLinearLayoutManager);
+        mAdapter = new LeaveMessageRecycleViewAdapter(this, null);
+        mRvContent.setAdapter(mAdapter);
+        mRvContent.setNestedScrollingEnabled(false);
+        if (mBuyZoneInfo == null) {
+            mId = getIntent().getIntExtra(ID_EXTRA,1);
+            mPresenter.fetchBuyZoneDetail(mId);
+            mPresenter.fetchBuyZoneMessageList(mId, mPi);
+        } else {
+            initView();
+            mPresenter.fetchBuyZoneMessageList(mBuyZoneInfo.getId(), mPi);
+        }
         initEvent();
         setLoadingIndicator(true);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
-        mPresenter.fetchBuyZoneMessageList(mBuyZoneInfo.getId(), mPi);
     }
 
     private void initEvent() {
@@ -190,11 +205,6 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
         } else {
             mTvQq.setVisibility(View.GONE);
         }
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(mLinearLayoutManager);
-        mAdapter = new LeaveMessageRecycleViewAdapter(this, null);
-        mRvContent.setAdapter(mAdapter);
-        mRvContent.setNestedScrollingEnabled(false);
     }
 
     @OnClick(R.id.btn_send_message)
@@ -219,6 +229,28 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
 
     @Override
     public void setBuyZone(List<BuyZoneInfo> buyZoneInfoList) {
+    }
+
+    @Override
+    public void setBuyZoneDetail(BuyZoneInfo buyZoneInfo) {
+        mTvExpectedPrice.setText(buyZoneInfo.getMoney());
+        mTvName.setText(buyZoneInfo.getUsername());
+        String time = getTimeRange(buyZoneInfo.getPubtime());
+        mTvTime.setText(time);
+        mTvTitle.setText(buyZoneInfo.getName());
+        mTvContent.setText(buyZoneInfo.getCon());
+        mTvPhone.setText(buyZoneInfo.getMoney());
+        Picasso.with(this)
+                .load(AppConfig.AVATAR_SERVER_HOST + buyZoneInfo.getUserpic())
+                .fit()
+                .into(mIvHead);
+        if (buyZoneInfo.getQq() != null) {
+            mTvQq.setVisibility(View.VISIBLE);
+            mTvQq.setText(buyZoneInfo.getQq());
+        } else {
+            mTvQq.setVisibility(View.GONE);
+        }
+        mBuyZoneInfo = buyZoneInfo;
     }
 
     @Override

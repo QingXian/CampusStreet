@@ -132,7 +132,7 @@ public class ModifyDepartmentActivity extends AppCompatActivity implements ISett
     @Override
     public void showSuccessMsg(String successMsg) {
         showMessage(successMsg);
-        mUserInfo.setUsername(mTvDepartment.getText().toString());
+        mUserInfo.setMajor(mTvDepartment.getText().toString());
         Intent data = new Intent(this, MainActivity.class);
         data.putExtra(Const.USERINFO_EXTRA, mUserInfo);
         startActivity(data);

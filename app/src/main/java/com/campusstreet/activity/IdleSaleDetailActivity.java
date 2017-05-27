@@ -44,6 +44,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.campusstreet.common.Const.ID_EXTRA;
 import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
@@ -118,6 +119,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     private int mLastVisibleItemPosition;
     private int mItemCount;
     private boolean mIsNeedLoadMore = true;
+    private int mId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,10 +141,20 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         });
         mIdleSaleInfo = (IdleSaleInfo) getIntent().getSerializableExtra(Const.IDLESALEINFO_EXTRA);
         new IdleSalePresenter(IdleSaleImpl.getInstance(getApplicationContext()), this);
-        initView();
+        mLinearLayoutManager = new LinearLayoutManager(this);
+        mRvContent.setLayoutManager(mLinearLayoutManager);
+        mAdapter = new LeaveMessageRecycleViewAdapter(this, null);
+        mRvContent.setAdapter(mAdapter);
+        mRvContent.setNestedScrollingEnabled(false);
+        if (mIdleSaleInfo == null) {
+            mId = getIntent().getIntExtra(ID_EXTRA, 0);
+            mPresenter.fetchIdleSaleDetail(mId);
+        } else {
+            initView();
+            mPresenter.fetchIdleSaleMessageList(mIdleSaleInfo.getId(), mPi);
+        }
         initEvent();
         setLoadingIndicator(true);
-        mPresenter.fetchIdleSaleMessageList(mIdleSaleInfo.getId(), mPi);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
     }
 
@@ -206,11 +218,6 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         mTvPhone.setText(mIdleSaleInfo.getMobile());
         mTvQq.setText(mIdleSaleInfo.getQq());
         initImage(mIdleSaleInfo.getImages());
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mRvContent.setLayoutManager(mLinearLayoutManager);
-        mAdapter = new LeaveMessageRecycleViewAdapter(this, null);
-        mRvContent.setAdapter(mAdapter);
-        mRvContent.setNestedScrollingEnabled(false);
     }
 
     private void initImage(String images) {
@@ -329,6 +336,37 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         }
         mEtMessage.setText("");
         mScrollView.smoothScrollTo(0, 0);
+    }
+
+    @Override
+    public void setIdleSaleDetail(IdleSaleInfo idleSaleInfo) {
+        mToolbarTitle.setText(idleSaleInfo.getName());
+        mTvPrice.setText(idleSaleInfo.getMoney());
+        mTvName.setText(idleSaleInfo.getUsername());
+        Picasso.with(this)
+                .load(AppConfig.AVATAR_SERVER_HOST + idleSaleInfo.getUserpic())
+                .fit()
+                .error(R.drawable.ic_head_test)
+                .into(mIvHead);
+        mTvDegree.setText(idleSaleInfo.getBewrite());
+        mTvContent.setText(idleSaleInfo.getContent());
+
+        if (idleSaleInfo.getSelltype().equals(0)) {
+            mTvSellType.setText("一口价");
+        } else if (idleSaleInfo.getSelltype().equals(1)) {
+            mTvSellType.setText("可小刀");
+        }
+        String time = getTimeRange(idleSaleInfo.getGpublishtime());
+        mTvTime.setText(time);
+        if (idleSaleInfo.getTradetype().equals(0)) {
+            mTvTradetype.setText("见面交易");
+        }
+        mTvPlace.setText(idleSaleInfo.getTradeplace());
+        mTvPhone.setText(idleSaleInfo.getMobile());
+        mTvQq.setText(idleSaleInfo.getQq());
+        initImage(idleSaleInfo.getImages());
+        mPresenter.fetchIdleSaleMessageList(idleSaleInfo.getId(), mPi);
+        mIdleSaleInfo = idleSaleInfo;
     }
 
     @Override

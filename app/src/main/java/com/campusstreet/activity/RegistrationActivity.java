@@ -165,6 +165,11 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
     }
 
     @Override
+    public void setTaskDetail(BountyHallInfo bountyHallInfo) {
+
+    }
+
+    @Override
     public void setLoadingIndicator(boolean active) {
         if (mProgressBarContainer != null) {
             if (active) {

@@ -179,6 +179,11 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
     }
 
     @Override
+    public void setBuyZoneDetail(BuyZoneInfo buyZoneInfo) {
+
+    }
+
+    @Override
     public void setBuyZoneMessageList(List<LeaveMessageInfo> BuyZoneMessageList) {
 
     }

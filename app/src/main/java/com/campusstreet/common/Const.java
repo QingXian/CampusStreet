@@ -64,7 +64,9 @@ public class Const {
     //赏金大厅通过报名
     public static final int JOINPASS = 1;
     public static final int STARTTASK = 1;
+    public static boolean mIsLogout = false;
     public static final String TID_EXTRA = "tid";
+    public static final String ID_EXTRA = "id";
     public static final String BANNER_TITLE_EXTRA = "banner_title_extra";
     public static final String BANNER_URL_EXTRA = "banner_url_extra";
     public static final String PHONE = "phone";

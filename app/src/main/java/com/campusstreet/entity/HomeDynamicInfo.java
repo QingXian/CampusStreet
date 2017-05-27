@@ -19,20 +19,20 @@ public class HomeDynamicInfo implements Serializable {
      * con : @xie: wo yao liuyan
      */
 
-    private String type;
+    private int type;
     private String tname;
     private String time;
     private String tid;
-    private String mainid;
+    private int mainid;
     private String title;
     private String img;
     private String con;
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -60,11 +60,11 @@ public class HomeDynamicInfo implements Serializable {
         this.tid = tid;
     }
 
-    public String getMainid() {
+    public int getMainid() {
         return mainid;
     }
 
-    public void setMainid(String mainid) {
+    public void setMainid(int mainid) {
         this.mainid = mainid;
     }
 
