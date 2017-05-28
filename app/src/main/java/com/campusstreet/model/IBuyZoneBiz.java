@@ -18,6 +18,8 @@ public interface IBuyZoneBiz {
 
     void fetchUserBuyZoneList(String uid, String key, int pi, @NonNull LoadUserBuyZoneListCallback callback);
 
+    void fetchBuyZoneDetail(int gid, @NonNull LoadBuyZoneDetailCallback callback);
+
     void addBuy(BuyZoneInfo buyZoneInfo, @NonNull addIdleGoodsCallback callback);
 
     void leaveMessagae(int gid, String uid, String con, @NonNull LeaveMessageCallback callback);
@@ -43,6 +45,15 @@ public interface IBuyZoneBiz {
 
         // 加载所有BuyZone
         void onBuyZoneListLoaded(List<BuyZoneInfo> buyZoneInfoList);
+
+        // 获取数据失败的回调
+        void onDataNotAvailable(String errorMsg);
+    }
+
+    interface LoadBuyZoneDetailCallback {
+
+
+        void onBuyZoneListLoaded(BuyZoneInfo buyZoneInfo);
 
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);

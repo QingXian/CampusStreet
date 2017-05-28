@@ -65,6 +65,24 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
     }
 
     @Override
+    public void fetchTaskDetail(int tid) {
+        mBountyHallImpl.fetchTaskDetail(tid, new IBountyHallBiz.LoadTaskDetailCallback() {
+            @Override
+            public void onUserTaskDetailLoaded(BountyHallInfo bountyHallInfo) {
+                mView.setLoadingIndicator(false);
+                mView.setTaskDetail(bountyHallInfo);
+            }
+
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+
+        });
+    }
+
+    @Override
     public void fetchjoinTaskList(int tid, final int state, int pi) {
         mView.setLoadingIndicator(true);
         mBountyHallImpl.fetchjoinTaskList(tid, state, pi, new IBountyHallBiz.LoadJoinTaskListCallback() {

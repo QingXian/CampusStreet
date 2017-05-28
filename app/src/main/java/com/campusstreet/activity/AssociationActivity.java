@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,7 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
     private UserAssociationrecyclerViewAdapter mUserAssociationAdapter;
     private UserInfo mUserInfo;
     private int mPostion;
+    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,7 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
         });
         new AssociationPresenter(AssociationImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+        mType = getIntent().getIntExtra(Const.TYPE, 0);
         initView();
         initEvent();
     }
@@ -183,6 +186,10 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
     private void initView() {
         mTabLayout.addTab(mTabLayout.newTab().setText("推荐社团"));
         mTabLayout.addTab(mTabLayout.newTab().setText("我的社团"));
+        if (mType == 1) {
+            mPostion = 1;
+            mTabLayout.getTabAt(mPostion).select();
+        }
         mRvContent.setLinearLayout();
         mAdapter = new AssociationRecyclerViewAdapter(this, null);
         mUserAssociationAdapter = new UserAssociationrecyclerViewAdapter(this, null);

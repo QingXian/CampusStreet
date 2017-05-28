@@ -243,6 +243,11 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
     }
 
     @Override
+    public void setIdleSaleDetail(IdleSaleInfo idleSaleInfo) {
+
+    }
+
+    @Override
     public void setLoadingIndicator(boolean active) {
         if (mProgressBarContainer != null) {
             if (active) {

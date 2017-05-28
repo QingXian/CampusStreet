@@ -171,6 +171,39 @@ public class BountyHallImpl implements IBountyHallBiz {
         });
     }
 
+    @Override
+    public void fetchTaskDetail(int tid, @NonNull final LoadTaskDetailCallback callback) {
+        Call<JsonObject> call = mBountyHallClient.getTasksDetail(tid);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+                        if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
+                            JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            BountyHallInfo bountyHallInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), BountyHallInfo.class);
+                            callback.onUserTaskDetailLoaded(bountyHallInfo);
+                        } else {
+                            callback.onDataNotAvailable("暂时没有数据");
+                        }
+
+                    } else {
+                        callback.onDataNotAvailable(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onDataNotAvailable("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
 
     @Override
     public void onJoinTask(JoinInfo joinInfo, @NonNull final onJoinTaskCallback callback) {

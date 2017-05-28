@@ -97,7 +97,7 @@ public class AssociationPresenter implements IAssociationContract.Presenter {
             @Override
             public void onJoinAssociationFailure(String errorMsg) {
                 mView.showErrorMsg(errorMsg);
-                mView.setLoadingIndicator(true);
+                mView.setLoadingIndicator(false);
             }
         });
     }

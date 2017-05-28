@@ -38,6 +38,10 @@ public interface BuyZoneClient {
     Call<JsonObject> getBuyZoneMessage(@Field("wid") Integer id, @Field("pi") Integer pi);
 
     @FormUrlEncoded
+    @POST("get_wishs_info")
+    Call<JsonObject> getBuyZoneDetail(@Field("wid") Integer id);
+
+    @FormUrlEncoded
     @POST("ins_wish_comment")
     Call<JsonObject> LeaveMessage(@Field("wid") Integer wid, @Field("uid") String uid, @Field("con") String con);
 }

@@ -13,9 +13,13 @@ public interface ICampusRecruitmentContract {
 
     interface Presenter extends BasePresenter {
 
-        void fetchCampusRecruitmentList(String key,int pi);
+        void fetchCampusRecruitmentList(String key, int pi);
 
-        void fetchStudyWorkList(String key,int pi);
+        void fetchStudyWorkList(String key, int pi);
+
+        void fetchCampusRecruitmentDetail(int swid);
+
+        void fetchStudyWorkDetail(int rid);
 
     }
 
@@ -27,6 +31,10 @@ public interface ICampusRecruitmentContract {
         void setStudyWorkList(List<StudyWorkInfo> studyWorkInfos);
 
         void showErrorMsg(String errorMsg);
+
+        void setCampusRecruitmentDetail(RecruitInfo recruitInfo);
+
+        void setStudyWorkDetail(StudyWorkInfo studyWorkInfo);
 
         /**
          * 设置是否加载指示器

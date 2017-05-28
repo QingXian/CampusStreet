@@ -7,25 +7,35 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.common.Const;
+import com.campusstreet.contract.ICampusRecruitmentContract;
 import com.campusstreet.entity.RecruitInfo;
 import com.campusstreet.entity.StudyWorkInfo;
+import com.campusstreet.model.CampusRecruitmentImpl;
+import com.campusstreet.presenter.CampusRecruitmentPresenter;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.campusstreet.common.Const.ID_EXTRA;
+import static com.campusstreet.common.Const.TID_EXTRA;
+import static com.campusstreet.common.Const.TYPE;
 import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
  * Created by Orange on 2017/4/7.
  */
 
-public class CampusRecruitmentDetailActivity extends AppCompatActivity {
+public class CampusRecruitmentDetailActivity extends AppCompatActivity implements ICampusRecruitmentContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -78,8 +88,17 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity {
     TextView mTvStudyworkPhone;
     @BindView(R.id.ll_studywork_detail)
     LinearLayout mLlStudyworkDetail;
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @BindView(R.id.progress_bar_title)
+    TextView mProgressBarTitle;
+    @BindView(R.id.progress_bar_container)
+    LinearLayout mProgressBarContainer;
     private RecruitInfo mRecruitInfo;
     private StudyWorkInfo mStudyWorkInfo;
+    private ICampusRecruitmentContract.Presenter mPresenter;
+    private int mId;
+    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +118,19 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        new CampusRecruitmentPresenter(CampusRecruitmentImpl.getInstance(getApplicationContext()), this);
         mRecruitInfo = (RecruitInfo) getIntent().getSerializableExtra(Const.RECRUITMENTNFO_EXTRA);
         mStudyWorkInfo = (StudyWorkInfo) getIntent().getSerializableExtra(Const.STUDYWORKINFO_EXTRA);
-        initView();
+        mId = getIntent().getIntExtra(ID_EXTRA, 0);
+        mType = getIntent().getIntExtra(TYPE, 0);
+        if (mType == 1) {
+            mPresenter.fetchCampusRecruitmentDetail(mId);
+        }
+        if (mType == 2) {
+            mPresenter.fetchStudyWorkDetail(mId);
+        } else {
+            initView();
+        }
     }
 
     private void initView() {
@@ -150,5 +179,79 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity {
 
     @OnClick(R.id.rl_company_info)
     public void onClick() {
+    }
+
+    @Override
+    public void setPresenter(ICampusRecruitmentContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    public void setCampusRecruitmentList(List<RecruitInfo> recruitInfos) {
+    }
+
+    @Override
+    public void setStudyWorkList(List<StudyWorkInfo> studyWorkInfos) {
+
+    }
+
+    @Override
+    public void showErrorMsg(String errorMsg) {
+        showMessage(errorMsg);
+    }
+
+    @Override
+    public void setCampusRecruitmentDetail(RecruitInfo recruitInfo) {
+        showRecriutDetail();
+        mTvTitle.setText(recruitInfo.getJobtitle());
+        mTvPlace.setText(recruitInfo.getJobplace());
+        mTvEducation.setText(recruitInfo.getJobeduname());
+        mTvWages.setText(recruitInfo.getJobmoney());
+        mTvCompanyName.setText(recruitInfo.getComname());
+        mTvCompanyRange.setText(recruitInfo.getComindustryname());
+        mTvCompanyType.setText(recruitInfo.getComtypename());
+        mTvDuty.setText(recruitInfo.getJobddes());
+        mTvReq.setText(recruitInfo.getJobreq());
+        mTvCompanyPhone.setText(recruitInfo.getComphone());
+        String time = getTimeRange(recruitInfo.getPublishtime());
+        mTvTime.setText(time);
+    }
+
+    @Override
+    public void setStudyWorkDetail(StudyWorkInfo studyWorkInfo) {
+        showStudyWorkDetail();
+        mTvTitle.setText(studyWorkInfo.getTitle());
+        mTvPlace.setText(studyWorkInfo.getJobplace());
+        mTvWages.setText(studyWorkInfo.getJobmoney());
+        mTvStudyworkType.setText(studyWorkInfo.getJobcom());
+        mTvStudyworkRange.setText(studyWorkInfo.getJobtime());
+        mTvStudyworkPhone.setText(studyWorkInfo.getPhone());
+        mTvReq.setText(studyWorkInfo.getJobreq());
+        String time = getTimeRange(studyWorkInfo.getPublishtime());
+        mTvTime.setText(time);
+        mTvDuty.setText(studyWorkInfo.getJobperson());
+        mTvDutyHint.setText("需要人数");
+        showStudyWorkDetail();
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        if (mProgressBarContainer != null) {
+            if (active) {
+                //设置滚动条可见
+                mProgressBarContainer.setVisibility(View.VISIBLE);
+                mProgressBarTitle.setText(R.string.loading_progress_bar_title);
+            } else {
+                if (mProgressBarContainer.getVisibility() == View.VISIBLE) {
+                    mProgressBarContainer.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
+
+    protected void showMessage(String msg) {
+        if (this != null && !this.isFinishing()) {
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        }
     }
 }

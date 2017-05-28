@@ -30,7 +30,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class UserSettingActivity extends AppCompatActivity {
-    public static boolean mIsLogout = false;
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -119,7 +118,6 @@ public class UserSettingActivity extends AppCompatActivity {
     }
 
     private void showAlertDialog(String text) {
-        final EditText et = new EditText(this);
         new AlertDialog.Builder(this).setTitle(text)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -127,7 +125,7 @@ public class UserSettingActivity extends AppCompatActivity {
                                 .edit()
                                 .putString(Const.PREF_USERINFO_KEY, null)
                                 .apply();
-                        mIsLogout = true;
+                        Const.mIsLogout = true;
                         Intent intent = new Intent(UserSettingActivity.this, LoginActivity.class);
                         startActivity(intent);
                         UserSettingActivity.this.finish();

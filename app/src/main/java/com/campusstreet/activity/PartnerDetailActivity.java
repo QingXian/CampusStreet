@@ -25,6 +25,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.R.attr.type;
+import static com.campusstreet.common.Const.ID_EXTRA;
+
 /**
  * Created by Orange on 2017/4/10.
  */
@@ -60,6 +63,7 @@ public class PartnerDetailActivity extends AppCompatActivity implements IPartner
     LinearLayout mProgressBarContainer;
     private IPartnerContract.Presenter mPresenter;
     private PartnerInfo mPartnerInfo;
+    private int mId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,20 +85,14 @@ public class PartnerDetailActivity extends AppCompatActivity implements IPartner
         });
         new PartnerPresenter(PartnerImpl.getInstance(getApplicationContext()), this);
         mPartnerInfo = (PartnerInfo) getIntent().getSerializableExtra(Const.PARTNERINFO_EXTRA);
-        mPresenter.fetchPartnerDetail(mPartnerInfo.getId());
-        initView();
+        if (mPartnerInfo == null) {
+            mId = getIntent().getIntExtra(ID_EXTRA, 0);
+            mPresenter.fetchPartnerDetail(mId);
+        } else {
+            mPresenter.fetchPartnerDetail(mPartnerInfo.getId());
+        }
     }
 
-    private void initView() {
-        Picasso.with(this)
-                .load(AppConfig.PIC_HOME_BANNER_SERVER_HOST + mPartnerInfo.getImg())
-                .fit()
-                .into(mIvPic);
-        mTvEntryName.setText(mPartnerInfo.getName());
-        mTvProfile.setText(mPartnerInfo.getSketch());
-        mTvCompanyName.setText(mPartnerInfo.getOrganizer());
-
-    }
 
     @Override
     public void setPartnerCategories(String[] type) {
@@ -111,6 +109,13 @@ public class PartnerDetailActivity extends AppCompatActivity implements IPartner
         mTvType.setText(partnerInfo.getNeedperson());
         mTvPhone.setText(partnerInfo.getMobile());
         mTvDetail.setText(partnerInfo.getSummary());
+        Picasso.with(this)
+                .load(AppConfig.PIC_HOME_BANNER_SERVER_HOST + mPartnerInfo.getImg())
+                .fit()
+                .into(mIvPic);
+        mTvEntryName.setText(mPartnerInfo.getName());
+        mTvProfile.setText(mPartnerInfo.getSketch());
+        mTvCompanyName.setText(mPartnerInfo.getOrganizer());
     }
 
     @Override

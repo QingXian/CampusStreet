@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.activity.AssociationActivity;
 import com.campusstreet.activity.LoginActivity;
 import com.campusstreet.activity.MyBountyHallActivity;
 import com.campusstreet.activity.MyBuyZoneActivity;
@@ -137,6 +138,10 @@ public class UserFragment extends Fragment {
                 break;
             case R.id.tv_my_club:
                 if (mUserInfo != null) {
+                    Intent intent = new Intent(getActivity(), AssociationActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    intent.putExtra(Const.TYPE,1);
+                    startActivity(intent);
                 } else {
                     showMessage("请先登录");
                 }

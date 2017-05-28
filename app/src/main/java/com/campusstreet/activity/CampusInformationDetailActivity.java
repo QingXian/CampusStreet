@@ -25,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.campusstreet.common.Const.ID_EXTRA;
 import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
@@ -53,6 +54,7 @@ public class CampusInformationDetailActivity extends AppCompatActivity implement
     LinearLayout mProgressBarContainer;
     private ICampusInformationContract.Presenter mPresenter;
     private NewInfo mNewInfo;
+    private int mId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,10 +76,12 @@ public class CampusInformationDetailActivity extends AppCompatActivity implement
         });
         new CampusInformationPresenter(CampusInformationImpl.getInstance(getApplicationContext()), this);
         mNewInfo = (NewInfo) getIntent().getSerializableExtra(Const.NEWINFO_EXTRA);
-        mPresenter.fetchCampusInformationDetail(mNewInfo.getId());
-        mTvTitle.setText(mNewInfo.getTitle());
-        String time = getTimeRange(mNewInfo.getPubtime());
-        mTvTime.setText(time);
+        if (mNewInfo == null) {
+            mId = getIntent().getIntExtra(ID_EXTRA, 0);
+            mPresenter.fetchCampusInformationDetail(mId);
+        } else {
+            mPresenter.fetchCampusInformationDetail(mNewInfo.getId());
+        }
     }
 
 
@@ -94,6 +98,9 @@ public class CampusInformationDetailActivity extends AppCompatActivity implement
 
     @Override
     public void setCampusInformationDetail(NewInfo newInfo) {
+        mTvTitle.setText(mNewInfo.getTitle());
+        String time = getTimeRange(mNewInfo.getPubtime());
+        mTvTime.setText(time);
         mTvContent.setText(newInfo.getSummary());
     }
 
@@ -117,6 +124,7 @@ public class CampusInformationDetailActivity extends AppCompatActivity implement
             }
         }
     }
+
     protected void showMessage(String msg) {
         if (this != null && !this.isFinishing()) {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

@@ -244,6 +244,11 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
     }
 
     @Override
+    public void setTaskDetail(BountyHallInfo bountyHallInfo) {
+
+    }
+
+    @Override
     public void setLoadingIndicator(boolean active) {
         if (mProgressBarContainer != null) {
             if (active) {

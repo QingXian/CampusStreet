@@ -9,6 +9,7 @@ import com.campusstreet.api.CampusRecruitmentClient;
 import com.campusstreet.api.ServiceGenerator;
 import com.campusstreet.common.Const;
 import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.NewInfo;
 import com.campusstreet.entity.RecruitInfo;
 import com.campusstreet.entity.StudyWorkInfo;
 import com.google.gson.Gson;
@@ -29,12 +30,11 @@ import static android.R.attr.type;
  * Created by Orange on 2017/4/18.
  */
 
-public class CampusRecruitmentImpl implements ICampusRecruitmentBiz{
+public class CampusRecruitmentImpl implements ICampusRecruitmentBiz {
 
     private final String TAG = this.getClass().getSimpleName();
     private static CampusRecruitmentImpl sCampusRecruitmentImple;
     private CampusRecruitmentClient mCampusRecruitmentClient;
-
 
 
     private CampusRecruitmentImpl(Context context) {
@@ -117,6 +117,72 @@ public class CampusRecruitmentImpl implements ICampusRecruitmentBiz{
                                 studyWorkInfos.add(studyWorkInfo);
                             }
                             callback.onStudyWorkListLoaded(studyWorkInfos);
+                        } else {
+                            callback.onDataNotAvailable("暂时没有数据");
+                        }
+
+                    } else {
+                        callback.onDataNotAvailable(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onDataNotAvailable("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
+    @Override
+    public void fetchCampusRecruitmentDetail(int swid, @NonNull final LoadCampusRecruitmentDetailCallback callback) {
+        Call<JsonObject> call = mCampusRecruitmentClient.getRecruitDetail(swid);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+                        if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
+                            JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            RecruitInfo recruitInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), RecruitInfo.class);
+                            callback.onCampusRecruitmentDetailLoaded(recruitInfo);
+                        } else {
+                            callback.onDataNotAvailable("暂时没有数据");
+                        }
+
+                    } else {
+                        callback.onDataNotAvailable(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onDataNotAvailable("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
+    @Override
+    public void fetchStudyWorkDetail(int rid, @NonNull final LoadStudyWorkDetailCallback callback) {
+        Call<JsonObject> call = mCampusRecruitmentClient.getStudyWorkDetail(rid);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+                        if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
+                            JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            StudyWorkInfo studyWorkInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), StudyWorkInfo.class);
+                            callback.onStudyWorkDetailLoaded(studyWorkInfo);
                         } else {
                             callback.onDataNotAvailable("暂时没有数据");
                         }

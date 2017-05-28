@@ -1,6 +1,7 @@
 package com.campusstreet.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import com.campusstreet.contract.ISettingContract;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.SettingImpl;
 import com.campusstreet.presenter.SettingPresenter;
+import com.campusstreet.utils.PreferencesUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,11 +97,14 @@ public class ModifyPasswordActivity extends AppCompatActivity implements ISettin
     @Override
     public void showSuccessfullyChangePassword() {
         showMessage("更改密码成功");
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(),
-                    0);
-        }
+        PreferencesUtil.getDefaultPreferences(ModifyPasswordActivity.this, Const.PREF_USER)
+                .edit()
+                .putString(Const.PREF_USERINFO_KEY, null)
+                .apply();
+        Const.mIsLogout = true;
+        Intent intent = new Intent(ModifyPasswordActivity.this, LoginActivity.class);
+        startActivity(intent);
+        ModifyPasswordActivity.this.finish();
     }
 
     @Override

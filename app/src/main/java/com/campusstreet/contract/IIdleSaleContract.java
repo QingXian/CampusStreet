@@ -27,6 +27,8 @@ public interface IIdleSaleContract {
 
         void fetchIdleSaleMessageList(int id, int pi);
 
+        void fetchIdleSaleDetail(int gid);
+
 
     }
 
@@ -43,6 +45,8 @@ public interface IIdleSaleContract {
         void showSuccessfullyPush(String succcessMsg);
 
         void showSuccessfullyleaveMessage(String succcessMsg);
+
+        void setIdleSaleDetail(IdleSaleInfo idleSaleInfo);
 
         /**
          * 设置是否加载指示器

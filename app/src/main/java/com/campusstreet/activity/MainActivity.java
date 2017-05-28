@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 //        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
 //        setFragment(mHomeFragment);
-        if (UserSettingActivity.mIsLogout) {
+        if (Const.mIsLogout) {
             String userStr = PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
                     .getString(Const.PREF_USERINFO_KEY, null);
             if (userStr == null) {
@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
             }
             mUserFragment = mUserFragment.newInstance(mUserInfo);
             setFragment(mUserFragment);
-            UserSettingActivity.mIsLogout = false;
+            Const.mIsLogout = false;
             mToolbarHome.setVisibility(View.GONE);
             mToolbar.setVisibility(View.VISIBLE);
         }

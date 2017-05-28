@@ -304,6 +304,16 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
     }
 
     @Override
+    public void setCampusRecruitmentDetail(RecruitInfo recruitInfo) {
+
+    }
+
+    @Override
+    public void setStudyWorkDetail(StudyWorkInfo studyWorkInfo) {
+
+    }
+
+    @Override
     public void setLoadingIndicator(boolean active) {
         if (mProgressBarContainer != null) {
             if (active) {

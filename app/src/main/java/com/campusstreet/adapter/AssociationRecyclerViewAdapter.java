@@ -81,7 +81,7 @@ public class AssociationRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
                     .fit()
                     .into(viewHolder.mIvHead);
             viewHolder.mTvName.setText(associationInfo.getName());
-            viewHolder.mTvAssociationNum.setText(associationInfo.getFollownum());
+            viewHolder.mTvAssociationNum.setText(associationInfo.getMemnum());
             viewHolder.itemView.setTag(associationInfo);
     }
     }
