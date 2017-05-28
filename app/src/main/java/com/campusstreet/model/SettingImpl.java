@@ -31,7 +31,7 @@ import retrofit2.Response;
  * Created by Orange on 2017/4/17.
  */
 
-public class SettingImpl implements  ISettingBiz {
+public class SettingImpl implements ISettingBiz {
 
     private final String TAG = this.getClass().getSimpleName();
     private static SettingImpl sSettingImpl;
@@ -41,7 +41,7 @@ public class SettingImpl implements  ISettingBiz {
 
     private SettingImpl(Context context) {
         mModifyInfoClient = ServiceGenerator.createService(context, ModifyInfoClient.class);
-        mUserClient = ServiceGenerator.createService(context,UserClient.class);
+        mUserClient = ServiceGenerator.createService(context, UserClient.class);
     }
 
 
@@ -64,8 +64,7 @@ public class SettingImpl implements  ISettingBiz {
                     int res = bodyJson.get(Const.RES_KEY).getAsInt();
                     if (res == 1) {
                         callback.onUserInfoReviseSuccess();
-                    }
-                    else {
+                    } else {
                         callback.onUserInfoReviseFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
                     }
                 }
@@ -74,7 +73,7 @@ public class SettingImpl implements  ISettingBiz {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 callback.onUserInfoReviseFailure("网络异常");
-                Log.d(TAG, "onFailure: "+t);
+                Log.d(TAG, "onFailure: " + t);
             }
         });
     }
@@ -110,13 +109,17 @@ public class SettingImpl implements  ISettingBiz {
             });
         }
     }
+
     @Override
     public void changePassword(String userId, String oldPassword, String newPassword, @NonNull final ChangePasswordCallback callback) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("uid", userId);
-        params.put("oldpwd", oldPassword);
-        params.put("newpwd", newPassword);
-        Call<JsonObject> call = mUserClient.changePassword(params);
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+        requestBodyMap.put("uid", RequestBody.create(MediaType.parse("multipart/form-data"),
+                userId));
+        requestBodyMap.put("oldpwd", RequestBody.create(MediaType.parse("multipart/form-data"),
+                oldPassword));
+        requestBodyMap.put("newpwd", RequestBody.create(MediaType.parse("multipart/form-data"),
+                newPassword));
+        Call<JsonObject> call = mUserClient.changePassword(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

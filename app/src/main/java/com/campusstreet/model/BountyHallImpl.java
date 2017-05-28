@@ -341,7 +341,7 @@ public class BountyHallImpl implements IBountyHallBiz {
     }
 
     @Override
-    public void onStartTask(String uid, int tid, int state, @NonNull final onStartTaskCallback callback) {
+    public void onStartTask(String uid, int tid, String state, @NonNull final onStartTaskCallback callback) {
         Call<JsonObject> call = mBountyHallClient.StartTask(uid, tid, state);
         call.enqueue(new Callback<JsonObject>() {
             @Override

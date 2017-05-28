@@ -27,6 +27,7 @@ import com.campusstreet.activity.BuyZoneDetailActivity;
 import com.campusstreet.activity.CampusInformationActivity;
 import com.campusstreet.activity.CampusInformationDetailActivity;
 import com.campusstreet.activity.CampusRecruitmentActivity;
+import com.campusstreet.activity.CampusRecruitmentDetailActivity;
 import com.campusstreet.activity.IdleSaleActivity;
 import com.campusstreet.activity.IdleSaleDetailActivity;
 import com.campusstreet.activity.PartnerActivity;
@@ -157,7 +158,8 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                         startActivity(intent);
                         break;
                     case 3:
-                        intent = new Intent(getActivity(), IdleSaleDetailActivity.class);
+                        intent = new Intent(getActivity(), CampusRecruitmentActivity.class);
+                        intent.putExtra(TYPE,homeDynamicInfo.getType());
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
@@ -178,6 +180,12 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                         break;
                     case 7:
                         intent = new Intent(getActivity(), PartnerDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case 8:
+                        intent = new Intent(getActivity(), CampusRecruitmentDetailActivity.class);
+                        intent.putExtra(TYPE,homeDynamicInfo.getType());
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;

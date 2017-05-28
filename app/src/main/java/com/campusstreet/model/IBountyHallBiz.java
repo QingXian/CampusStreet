@@ -41,7 +41,7 @@ public interface IBountyHallBiz {
     void onGiveUpTask(String uid, int tpid, int taskid, @NonNull onGiveUpTaskCallback callback);
 
     //确认开始服务
-    void onStartTask(String uid, int tid, int state, @NonNull onStartTaskCallback callback);
+    void onStartTask(String uid, int tid, String state, @NonNull onStartTaskCallback callback);
 
     //发布赏金任务
     void addTask(BountyHallInfo bountyHallInfo, @NonNull addTaskCallback callback);

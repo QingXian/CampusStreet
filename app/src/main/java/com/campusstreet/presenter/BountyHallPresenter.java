@@ -147,7 +147,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
     }
 
     @Override
-    public void startTask(String uid, int tid, int state) {
+    public void startTask(String uid, int tid, String state) {
         mView.setLoadingIndicator(true);
         mBountyHallImpl.onStartTask(uid, tid, state, new IBountyHallBiz.onStartTaskCallback() {
             @Override
@@ -243,7 +243,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
             @Override
             public void onCompleteTaskSuccess() {
                 mView.setLoadingIndicator(false);
-                mView.showSuccessfullCompleteTask();
+                mView.showSuccessfullGiveUpTask();
             }
 
             @Override

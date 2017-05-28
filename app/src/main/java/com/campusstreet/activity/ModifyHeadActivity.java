@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.ISettingContract;
 import com.campusstreet.entity.UserInfo;
@@ -84,10 +85,10 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
         });
         new SettingPresenter(SettingImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
-        //        Picasso.with(getActivity())
-//                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.)
-//                .fit()
-//                .into(mIvHead);
+        Picasso.with(this)
+                .load(AppConfig.AVATAR_SERVER_HOST + mUserInfo.getUserpic())
+                .fit()
+                .into(mIvHead);
     }
 
     @OnClick({R.id.tv_toolbar_right, R.id.btn_choice_head})

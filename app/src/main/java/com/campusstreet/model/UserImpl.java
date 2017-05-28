@@ -22,6 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.R.attr.password;
 import static com.campusstreet.common.Const.MULTIPART_FORM_DATA;
 
 /**
@@ -78,7 +79,7 @@ public class UserImpl implements IUserBiz {
     }
 
     @Override
-    public void onResgister(UserInfo userInfo,String password,String code, @NonNull final onResgisterCallback callback) {
+    public void onResgister(UserInfo userInfo, String password, String code, @NonNull final onResgisterCallback callback) {
         Map<String, RequestBody> requestBodyMap = new HashMap<>();
         requestBodyMap.put("mobile", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), userInfo.getMobile()));
         requestBodyMap.put("mcode", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), code));
@@ -113,8 +114,8 @@ public class UserImpl implements IUserBiz {
     }
 
     @Override
-    public void fetchCaptcha(String mt,String mc, String phone, @NonNull final GetCaptchaCallback callback) {
-        Call<JsonObject> call = mUserClient.fetchCaptcha(mt,mc, phone);
+    public void fetchCaptcha(String mt, String mc, String phone, @NonNull final GetCaptchaCallback callback) {
+        Call<JsonObject> call = mUserClient.fetchCaptcha(mt, mc, phone);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -166,7 +167,7 @@ public class UserImpl implements IUserBiz {
 
     @Override
     public void getforgetPasswordrMc(String phone, @NonNull final GetRForgetPasswordMcCallback callback) {
-        Call<JsonObject> call = mUserClient.getRegMc(phone);
+        Call<JsonObject> call = mUserClient.getForgetMc(phone);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -192,7 +193,16 @@ public class UserImpl implements IUserBiz {
 
     @Override
     public void forgetPassword(Map<String, Object> params, @NonNull final ForgetPasswordCallback callback) {
-        Call<JsonObject> call = mUserClient.forgetPassword(params);
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+        requestBodyMap.put("mobile", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA),
+                params.get("mobile").toString()));
+        requestBodyMap.put("mcode", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA),
+                params.get("mcode").toString()));
+        requestBodyMap.put("newpwd", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA),
+                params.get("newpwd").toString()));
+        requestBodyMap.put("newpwd2", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA),
+                params.get("newpwd2").toString()));
+        Call<JsonObject> call = mUserClient.forgetPassword(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
