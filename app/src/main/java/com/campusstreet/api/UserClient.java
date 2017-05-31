@@ -33,11 +33,11 @@ public interface UserClient {
 
     @Multipart
     @POST("upd_userpwd")
-    Call<JsonObject> changePassword(@PartMap Map<String, Object> params);
+    Call<JsonObject> changePassword(@PartMap Map<String,RequestBody> params);
 
     @Multipart
     @POST("upd_forgotpwd")
-    Call<JsonObject> forgetPassword(@PartMap Map<String, Object> params);
+    Call<JsonObject> forgetPassword(@PartMap Map<String,RequestBody> params);
 
     @FormUrlEncoded
     @POST("get_regmc")
@@ -45,7 +45,7 @@ public interface UserClient {
 
     @FormUrlEncoded
     @POST("get_forgotmc")
-    Call<JsonObject> getForgetmc(@Field("mobile") String phone);
+    Call<JsonObject> getForgetMc(@Field("mobile") String phone);
 
 }
 

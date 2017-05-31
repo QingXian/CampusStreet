@@ -58,7 +58,7 @@ public class LoginPresenter implements ILoginContract.Presenter {
         params.put("mobile", phone);
         params.put("mcode", inputCaptcha);
         params.put("newpwd", password);
-        params.put("Newpwd2", passwordAgain);
+        params.put("newpwd2", passwordAgain);
         mUserImpl.forgetPassword(params, new IUserBiz.ForgetPasswordCallback() {
             @Override
             public void onForgetPasswordSuccess() {

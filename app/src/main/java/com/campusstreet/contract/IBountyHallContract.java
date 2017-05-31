@@ -32,7 +32,7 @@ public interface IBountyHallContract {
         void passJoinTask(String uid, int tid, int tpid, int st);
 
         //确认开始服务
-        void startTask(String uid, int tid, int state);
+        void startTask(String uid, int tid, String state);
 
         //发布赏金任务
         void addTask(BountyHallInfo bountyHallInfo);

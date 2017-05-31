@@ -19,6 +19,8 @@ import com.campusstreet.common.Const;
 import com.campusstreet.contract.ILoginContract;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.model.UserImpl;
+import com.campusstreet.presenter.LoginPresenter;
 import com.campusstreet.utils.TimeCountUtil;
 
 import java.util.List;
@@ -76,6 +78,7 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ILoginC
             }
         });
         mTimeCountUtil = new TimeCountUtil(80000, 1000, mBtnFetchCaptcha);
+        new LoginPresenter(UserImpl.getInstance(getApplicationContext()), this);
     }
 
     @OnClick({R.id.btn_fetch_captcha, R.id.btn_next})

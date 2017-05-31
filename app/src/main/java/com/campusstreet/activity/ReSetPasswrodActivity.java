@@ -19,6 +19,8 @@ import com.campusstreet.R;
 import com.campusstreet.contract.ILoginContract;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.model.UserImpl;
+import com.campusstreet.presenter.LoginPresenter;
 
 import java.util.List;
 
@@ -77,6 +79,7 @@ public class ReSetPasswrodActivity extends AppCompatActivity implements ILoginCo
         });
         mPhone = getIntent().getStringExtra(PHONE);
         mCaptcha = getIntent().getStringExtra(CAPTCHA);
+        new LoginPresenter(UserImpl.getInstance(getApplicationContext()), this);
     }
 
     @OnClick(R.id.btn_entel)

@@ -277,7 +277,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                     mBtnEntel.setVisibility(View.VISIBLE);
                     mBtnEntel.setEnabled(false);
                     mBtnEntel.setText("任务进行中");
-                    mBtnGiveup.setVisibility(View.VISIBLE);
+                    mBtnGiveup.setVisibility(View.GONE);
                     mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 } else if (bountyHallInfo.getState() == 3) {
                     mBtnEntel.setVisibility(View.VISIBLE);
@@ -414,7 +414,8 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     public void showErrorMsg(String errorMsg) {
         if (mUserInfo != null) {
             if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
-                showMessage(errorMsg);
+                if (mBountyHallInfo.getState() == 1)
+                    showMessage(errorMsg);
             }
         }
         mAdapter.replaceData(null);
@@ -425,7 +426,8 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         mIsHavePass = false;
         if (mUserInfo != null) {
             if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
-                showMessage("没有通过报名的数据");
+                if (mBountyHallInfo.getState() == 1)
+                    showMessage("没有通过报名的数据");
             }
         }
         mAdapter.replaceData(null);
@@ -492,9 +494,9 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                         startActivityForResult(intent, 1);
                     }
                 } else if (mBtnEntel.getText().toString().equals("开始任务")) {
-                    //这里5表示开始任务
+                    //这里005表示开始任务
                     if (mIsHavePass) {
-                        mPresenter.startTask(mUserInfo.getUid(), mBountyHallInfo.getId(), 5);
+                        mPresenter.startTask(mUserInfo.getUid(), mBountyHallInfo.getId(), "005");
                     } else {
                         showMessage("没有通过的,无法开始");
                     }

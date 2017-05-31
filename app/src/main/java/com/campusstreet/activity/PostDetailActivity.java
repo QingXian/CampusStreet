@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -133,6 +134,7 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
 
     private void initView(AssociationPostInfo associationPostInfo) {
         mTvName.setText(associationPostInfo.getUsername());
+        Log.d("initView: ", "initView: " + associationPostInfo.getAddtime());
         String time = getTimeRange(associationPostInfo.getAddtime());
         Picasso.with(this)
                 .load(AppConfig.AVATAR_SERVER_HOST + associationPostInfo.getUserpic())

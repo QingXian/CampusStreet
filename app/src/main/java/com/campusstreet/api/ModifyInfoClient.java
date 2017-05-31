@@ -27,7 +27,7 @@ public interface ModifyInfoClient {
     Call<JsonObject> ModifyInfo(@FieldMap Map<String, Object> params);
 
     @Multipart
-    @POST("user")
+    @POST("upd_user")
     Call<JsonObject> ModifyAvatar(@PartMap Map<String, RequestBody> partMap,
                                   @Part MultipartBody.Part file);
 }

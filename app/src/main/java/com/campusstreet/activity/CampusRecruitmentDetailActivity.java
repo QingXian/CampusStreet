@@ -123,10 +123,10 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity implement
         mStudyWorkInfo = (StudyWorkInfo) getIntent().getSerializableExtra(Const.STUDYWORKINFO_EXTRA);
         mId = getIntent().getIntExtra(ID_EXTRA, 0);
         mType = getIntent().getIntExtra(TYPE, 0);
-        if (mType == 1) {
+        if (mType == 3) {
             mPresenter.fetchCampusRecruitmentDetail(mId);
         }
-        if (mType == 2) {
+        if (mType == 8) {
             mPresenter.fetchStudyWorkDetail(mId);
         } else {
             initView();
