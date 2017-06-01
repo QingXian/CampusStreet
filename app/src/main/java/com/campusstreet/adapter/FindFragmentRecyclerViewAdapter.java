@@ -10,10 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.campusstreet.R;
-import com.squareup.picasso.Picasso;
+import com.campusstreet.entity.IdleSaleInfo;
+import com.campusstreet.entity.LiveInfo;
 
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,35 +23,72 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Orange on 2017/4/17.
  */
 
-public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
 
     private Context mContext;
-    private List<Map<String, Object>> mList;
+    private List<LiveInfo> mList;
+    private static OnRecyclerViewItemClickListener mOnItemClickListener;
 
 
-    public FindFragmentRecyclerViewAdapter(Context context, List<Map<String, Object>> list) {
+    public FindFragmentRecyclerViewAdapter(Context context, List<LiveInfo> list) {
         mContext = context;
         mList = list;
+    }
+
+    public void replaceData(List<LiveInfo> liveInfos) {
+        mList = liveInfos;
+        // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<LiveInfo> liveInfos) {
+        mList.addAll(liveInfos);
+        notifyDataSetChanged();
+    }
+
+    public static interface OnRecyclerViewItemClickListener {
+
+        void onItemClick(View view, LiveInfo liveInfo);
+
+    }
+
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mOnItemClickListener = listener;
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecyclerItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_find_recycler_view_item, null));
+        View viewItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_find_recycler_view_item, parent, false);
+        viewItem.setOnClickListener(this);
+        return new RecyclerItemViewHolder(viewItem);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
-        Map<String, Object> list = mList.get(position);
-        Picasso.with(mContext).load((Integer) list.get("head")).into(viewHolder.mIvHead);
-        viewHolder.mTvContent.setText(list.get("content").toString());
+        LiveInfo liveInfo = mList.get(position);
+        if (liveInfo != null) {
+//            Picasso.with(mContext).load((Integer) list.get("head")).into(viewHolder.mIvHead);
+//            viewHolder.mTvContent.setText(list.get("content").toString());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        if (mList != null) {
+            return mList.size();
+        } else
+            return 0;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (mOnItemClickListener != null) {
+            // 注意这里使用getTag方法获取数据
+            mOnItemClickListener.onItemClick(v, (LiveInfo) v.getTag());
+        }
     }
 
 
