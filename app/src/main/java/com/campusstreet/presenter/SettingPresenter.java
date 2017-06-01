@@ -41,8 +41,8 @@ public class SettingPresenter implements ISettingContract.Presenter {
         mView.setLoadingIndicator(true);
         mSettingImpl.avatarRevise(params, new ISettingBiz.AvatarReviseCallback() {
             @Override
-            public void onAvatarReviseSuccess() {
-                mView.showSuccessMsg("更改头像成功");
+            public void onAvatarReviseSuccess(String picName) {
+                mView.showSuccessMsg(picName);
                 mView.setLoadingIndicator(false);
             }
 

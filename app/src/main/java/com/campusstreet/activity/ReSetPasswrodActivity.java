@@ -113,7 +113,8 @@ public class ReSetPasswrodActivity extends AppCompatActivity implements ILoginCo
 
     @Override
     public void showSuccessfullyForgetPasswrod() {
-        Intent data = new Intent(this, MainActivity.class);
+        showMessage("修改成功");
+        Intent data = new Intent(this, LoginActivity.class);
         data.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(data);
         this.finish();

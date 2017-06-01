@@ -160,7 +160,6 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
                 Intent intent = new Intent(AssociationActivity.this, AssociationDetailActivity.class);
                 intent.putExtra(Const.USERASSOCIATIONINFO_EXTRA, userAssociationInfo);
                 intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
-                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
             }
         });

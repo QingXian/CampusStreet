@@ -154,7 +154,7 @@ public class AssociationImpl implements IAssociationBiz {
 
     @Override
     public void onJoinAssociation(int aid, String uid, String con, @NonNull final onJoinAssociationCallback callback) {
-        Call<JsonObject> call = mAssociationClient.JoinAssociation(aid,uid,con);
+        Call<JsonObject> call = mAssociationClient.JoinAssociation(aid, uid, con);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -207,7 +207,7 @@ public class AssociationImpl implements IAssociationBiz {
 
     @Override
     public void fetchAssociationNumList(int aid, int pi, int ps, @NonNull final LoadAssociationNumListCallback callback) {
-        Call<JsonObject> call = mAssociationClient.getAssociationNumber(aid, pi,ps);
+        Call<JsonObject> call = mAssociationClient.getAssociationNumber(aid, pi, ps);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -244,8 +244,28 @@ public class AssociationImpl implements IAssociationBiz {
     }
 
     @Override
-    public void addAssociationPost(int aid, String uid, String con, String title, @NonNull addAssociationPostCallback callback) {
+    public void addAssociationPost(int aid, String uid, String con, String title, @NonNull final addAssociationPostCallback callback) {
+        Call<JsonObject> call = mAssociationClient.addAssociationPost(aid, uid, con, title);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 0) {
+                        callback.onAddSuccess();
+                    } else {
+                        callback.onAddFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onAddFailure("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
     }
 
     @Override
@@ -321,7 +341,7 @@ public class AssociationImpl implements IAssociationBiz {
 
     @Override
     public void fetchUserAssociationList(int pi, String uid, @NonNull final LoadUserAssociationListCallback callback) {
-        Call<JsonObject> call = mAssociationClient.getUserAssociation(pi,uid);
+        Call<JsonObject> call = mAssociationClient.getUserAssociation(pi, uid);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

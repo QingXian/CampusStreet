@@ -104,6 +104,8 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ILoginC
                 Intent intent = new Intent(this, ReSetPasswrodActivity.class);
                 intent.putExtra(PHONE, mEtPhone.getText().toString());
                 intent.putExtra(CAPTCHA, mEtCaptcha.getText().toString());
+                startActivity(intent);
+                this.finish();
                 break;
         }
     }

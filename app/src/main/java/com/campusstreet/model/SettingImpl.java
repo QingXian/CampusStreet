@@ -94,7 +94,9 @@ public class SettingImpl implements ISettingBiz {
                     if (bodyJson != null) {
                         int res = bodyJson.get(Const.RES_KEY).getAsInt();
                         if (res == 1) {
-                            callback.onAvatarReviseSuccess();
+                            JsonArray resultJsons = bodyJson.get(Const.EXT_KEY).getAsJsonArray();
+                            JsonObject json = resultJsons.get(0).getAsJsonObject();
+                            callback.onAvatarReviseSuccess(json.get("pic").getAsString());
                         } else {
                             callback.onAvatarReviseFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
                         }
