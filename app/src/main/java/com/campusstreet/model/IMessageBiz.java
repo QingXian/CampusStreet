@@ -2,18 +2,22 @@ package com.campusstreet.model;
 
 import android.support.annotation.NonNull;
 
+import com.campusstreet.entity.MessageInfo;
+
+import java.util.List;
+
 /**
  * Created by Orange on 2017/4/16.
  */
 
 public interface IMessageBiz {
 
-    void getMessageList(@NonNull LoadMessageListCallback callback);
+    void getMessageList(String uid, int pi, @NonNull LoadMessageListCallback callback);
 
     interface LoadMessageListCallback {
 
         // 加载所有GoodDeeds
-        void onMessageListLoaded();
+        void onMessageListLoaded(List<MessageInfo> messageInfos);
 
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);

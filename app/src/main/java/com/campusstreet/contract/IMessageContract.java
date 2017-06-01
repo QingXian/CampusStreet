@@ -1,5 +1,9 @@
 package com.campusstreet.contract;
 
+import com.campusstreet.entity.MessageInfo;
+
+import java.util.List;
+
 /**
  * Created by Orange on 2017/4/15.
  */
@@ -8,14 +12,14 @@ public interface IMessageContract {
 
     interface Presenter extends BasePresenter {
 
-        void fetchMessageList();
+        void fetchMessageList(String uid, int pi);
 
     }
 
     interface View extends BaseView<Presenter> {
 
 
-        void setMessageList();
+        void setMessageList(List<MessageInfo> messageInfo);
 
         void showErrorMsg(String errorMsg);
 

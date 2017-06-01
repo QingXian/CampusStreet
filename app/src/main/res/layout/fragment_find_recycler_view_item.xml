@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:layout_marginTop="4dp"
               android:background="@color/colorWhite"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:orientation="vertical">
+
     <RelativeLayout
-        android:padding="8dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_head"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/ic_head_test"/>
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_head"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/ic_head_test"/>
+
         <TextView
-            android:hint="昵称"
-            android:layout_marginLeft="16dp"
-            android:layout_centerInParent="true"
-            android:layout_toRightOf="@+id/iv_head"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/iv_head"
+            android:hint="昵称"/>
+
         <TextView
-            android:paddingTop="16dp"
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:hint="19小时前"
-            android:layout_alignParentRight="true"/>
+            android:paddingTop="16dp"/>
     </RelativeLayout>
 
     <TextView
-        android:ellipsize="end"
         android:id="@+id/tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/iv_head"
-        android:maxLines="3"
-        android:padding="8dp"
+        android:ellipsize="end"
         android:hint="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
+        android:maxLength="100"
+        android:maxLines="5"
+        android:padding="8dp"
         android:textSize="16sp"/>
 
     <LinearLayout
@@ -54,8 +59,8 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
-            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
 
             />
 
@@ -66,8 +71,8 @@
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:layout_weight="1"
-            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
 
             />
 
@@ -76,8 +81,8 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
-            android:scaleType="centerCrop"
             android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
 
             />
     </LinearLayout>

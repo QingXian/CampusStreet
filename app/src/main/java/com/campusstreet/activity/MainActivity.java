@@ -135,17 +135,21 @@ public class MainActivity extends AppCompatActivity {
                 mToolbar.setVisibility(View.GONE);
                 break;
             case R.id.tv_notice:
-                mToolbarTitle.setText(getString(R.string.bot_tv_message));
-                clearSeleted();
-                mTvNotice.setTextColor(getResources().getColor(R.color.colorPrimary));
-                mTvNotice.setSelected(true);
-                mMessageFragment = new MessageFragment();
-                setFragment(mMessageFragment);
-                mScrollview.smoothScrollTo(0, 0);
-                mIvToolbarRight.setVisibility(View.GONE);
-                mToolbarHome.setVisibility(View.GONE);
-                mToolbar.setVisibility(View.VISIBLE);
-                new MessagePresenter(MessageImpl.getInstance(getApplicationContext()), mMessageFragment);
+                if (mUserInfo == null) {
+                    showMessage("请您先登录");
+                } else {
+                    mToolbarTitle.setText(getString(R.string.bot_tv_message));
+                    clearSeleted();
+                    mTvNotice.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    mTvNotice.setSelected(true);
+                    mMessageFragment = mMessageFragment.newInstance(mUserInfo);
+                    setFragment(mMessageFragment);
+                    mScrollview.smoothScrollTo(0, 0);
+                    mIvToolbarRight.setVisibility(View.GONE);
+                    mToolbarHome.setVisibility(View.GONE);
+                    mToolbar.setVisibility(View.VISIBLE);
+                    new MessagePresenter(MessageImpl.getInstance(getApplicationContext()), mMessageFragment);
+                }
                 break;
             case R.id.tv_find:
                 mToolbarTitle.setText(getString(R.string.bot_tv_find));
@@ -174,6 +178,13 @@ public class MainActivity extends AppCompatActivity {
                 mIvToolbarRight.setImageResource(R.drawable.ic_setting);
                 break;
             case R.id.iv_release:
+                if (mUserInfo != null) {
+                    Intent intent = new Intent(this, ReleaseLiveActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    startActivity(intent);
+                } else {
+                    showMessage("请您先登录");
+                }
                 break;
         }
     }

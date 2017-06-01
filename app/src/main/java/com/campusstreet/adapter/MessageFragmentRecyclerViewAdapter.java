@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.campusstreet.R;
+import com.campusstreet.entity.IdleSaleInfo;
+import com.campusstreet.entity.MessageInfo;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -17,40 +19,80 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.R.id.list;
+
 /**
  * Created by Orange on 2017/4/17.
  */
 
-public class MessageFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MessageFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
     private Context mContext;
-    private List<Map<String, Object>> mList;
+    private List<MessageInfo> mList;
+    private static OnRecyclerViewItemClickListener mOnItemClickListener;
 
 
-    public MessageFragmentRecyclerViewAdapter(Context context, List<Map<String, Object>> list) {
+    public MessageFragmentRecyclerViewAdapter(Context context, List<MessageInfo> list) {
         mContext = context;
         mList = list;
     }
 
+    @Override
+    public void onClick(View v) {
+        if (mOnItemClickListener != null) {
+            // 注意这里使用getTag方法获取数据
+            mOnItemClickListener.onItemClick(v, (MessageInfo) v.getTag());
+        }
+    }
 
+    public static interface OnRecyclerViewItemClickListener {
+
+        void onItemClick(View view, MessageInfo messageInfo);
+
+    }
+
+    public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
+
+
+    public void replaceData(List<MessageInfo> messageInfos) {
+        //Log.d(TAG, "replaceData: assistanceType <== " + assistanceType);
+        mList = messageInfos;
+        // 调用以下方法更新后，会依次调用getItemViewType和onBindViewHolder方法
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<MessageInfo> messageInfos) {
+        mList.addAll(messageInfos);
+        notifyDataSetChanged();
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new RecyclerItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_message_recycler_view_item,null));
+        View viewItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_message_recycler_view_item, parent, false);
+        viewItem.setOnClickListener(this);
+        return new RecyclerItemViewHolder(viewItem);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
-        Map<String, Object> list = mList.get(position);
-        Picasso.with(mContext).load((Integer) list.get("head")).into(viewHolder.mIvHead);
-        viewHolder.mTvTitle.setText(list.get("title").toString());
-        viewHolder.mTvContent.setText(list.get("content").toString());
+        MessageInfo messageInfo = mList.get(position);
+        if (messageInfo != null) {
+
+//        Picasso.with(mContext).load(mList.get()).into(viewHolder.mIvHead);
+//        viewHolder.mTvTitle.setText(mList.get().toString());
+//        viewHolder.mTvContent.setText(mList.get().toString());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        if (mList != null) {
+            return mList.size();
+        } else
+            return 0;
     }
 
 
