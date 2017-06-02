@@ -208,7 +208,7 @@ public class UserImpl implements IUserBiz {
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 JsonObject bodyJson = response.body();
                 if (bodyJson != null) {
-                    int res = bodyJson.get(Const.EXT_KEY).getAsInt();
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
                     if (res == 1) {
                         callback.onForgetPasswordSuccess();
                     } else {

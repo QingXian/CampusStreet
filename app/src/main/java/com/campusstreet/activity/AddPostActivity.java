@@ -32,6 +32,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.campusstreet.common.Const.ASSOCIATIONINFO_EXTRA;
+import static com.campusstreet.common.Const.USERASSOCIATIONINFO_EXTRA;
 import static com.campusstreet.common.Const.USERINFO_EXTRA;
 
 /**
@@ -68,6 +70,7 @@ public class AddPostActivity extends AppCompatActivity implements IAssociationCo
     private UserInfo mUserInfo;
     private IAssociationContract.Presenter mPresenter;
     private AssociationInfo mAssociationInfo;
+    private UserAssociationInfo mUserAssociationInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,7 @@ public class AddPostActivity extends AppCompatActivity implements IAssociationCo
         new AssociationPresenter(AssociationImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(USERINFO_EXTRA);
         mAssociationInfo = (AssociationInfo) getIntent().getSerializableExtra(Const.ASSOCIATIONINFO_EXTRA);
+        mUserAssociationInfo = (UserAssociationInfo) getIntent().getSerializableExtra(Const.USERASSOCIATIONINFO_EXTRA);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +109,11 @@ public class AddPostActivity extends AppCompatActivity implements IAssociationCo
                     showMessage("请填写内容");
                     return;
                 }
-                mPresenter.addAssociationPost(mAssociationInfo.getId(), mUserInfo.getUid(), mEtTitle.getText().toString(), mEtDetail.getText().toString());
+                if (mAssociationInfo != null) {
+                    mPresenter.addAssociationPost(mAssociationInfo.getId(), mUserInfo.getUid(), mEtDetail.getText().toString(), mEtTitle.getText().toString());
+                } else {
+                    mPresenter.addAssociationPost(mUserAssociationInfo.getAssnid(), mUserInfo.getUid(), mEtDetail.getText().toString(), mEtTitle.getText().toString());
+                }
                 break;
             case R.id.iv_add_img:
                 break;
@@ -155,6 +163,8 @@ public class AddPostActivity extends AppCompatActivity implements IAssociationCo
     public void showSuccessfullyPushPost(String succcessMsg) {
         showMessage(succcessMsg);
         Intent intent = new Intent(this, AssociationDetailActivity.class);
+        intent.putExtra(ASSOCIATIONINFO_EXTRA, mAssociationInfo);
+        intent.putExtra(USERASSOCIATIONINFO_EXTRA, mUserAssociationInfo);
         startActivity(intent);
         this.finish();
     }

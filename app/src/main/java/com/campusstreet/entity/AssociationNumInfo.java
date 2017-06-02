@@ -22,7 +22,7 @@ public class AssociationNumInfo implements Serializable {
     private String uid;
     private String userpic;
     private String username;
-    private String assnjob;
+    private int assnjob;
     private String jointime;
 
     public String getId() {
@@ -57,11 +57,11 @@ public class AssociationNumInfo implements Serializable {
         this.username = username;
     }
 
-    public String getAssnjob() {
+    public int getAssnjob() {
         return assnjob;
     }
 
-    public void setAssnjob(String assnjob) {
+    public void setAssnjob(int assnjob) {
         this.assnjob = assnjob;
     }
 

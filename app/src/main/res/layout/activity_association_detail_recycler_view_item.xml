@@ -12,9 +12,11 @@
         android:layout_height="48dp"
         android:src="@drawable/ic_head_test"/>
     <TextView
+        android:textColor="@color/colorBlack"
         android:id="@+id/tv_title"
         android:paddingLeft="24dp"
         android:maxLines="1"
+        android:maxLength="10"
         android:ellipsize="end"
         android:layout_toRightOf="@+id/iv_head"
         android:layout_width="match_parent"

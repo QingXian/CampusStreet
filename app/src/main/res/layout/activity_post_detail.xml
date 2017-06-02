@@ -84,9 +84,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/tv_title"
                 android:background="@color/colorWhite"
-                android:ellipsize="end"
-                android:lines="3"
-                android:maxLines="3"
                 android:padding="8dp"
                 android:text="内容内容内容内容内容类"/>
 

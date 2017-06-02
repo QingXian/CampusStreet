@@ -120,7 +120,11 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
 
     @Override
     public void showSuccessMsg(String successMsg) {
-        showMessage(successMsg);
+        showMessage("修改头像成功");
+        Intent data = new Intent(this, MainActivity.class);
+        mUserInfo.setUserpic(successMsg);
+        data.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+        startActivity(data);
     }
 
     @Override

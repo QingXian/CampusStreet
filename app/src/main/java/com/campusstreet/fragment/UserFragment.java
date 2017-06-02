@@ -17,6 +17,7 @@ import com.campusstreet.activity.LoginActivity;
 import com.campusstreet.activity.MyBountyHallActivity;
 import com.campusstreet.activity.MyBuyZoneActivity;
 import com.campusstreet.activity.MyIdleSaleActivity;
+import com.campusstreet.activity.PayActivity;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.entity.UserInfo;
@@ -108,6 +109,13 @@ public class UserFragment extends Fragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_recharge:
+                if (mUserInfo != null) {
+                    Intent intent = new Intent(getActivity(), PayActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    startActivity(intent);
+                } else {
+                    showMessage("请先登录");
+                }
                 break;
             case R.id.tv_bounty_mission:
                 if (mUserInfo != null) {
@@ -140,7 +148,7 @@ public class UserFragment extends Fragment {
                 if (mUserInfo != null) {
                     Intent intent = new Intent(getActivity(), AssociationActivity.class);
                     intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
-                    intent.putExtra(Const.TYPE,1);
+                    intent.putExtra(Const.TYPE, 1);
                     startActivity(intent);
                 } else {
                     showMessage("请先登录");

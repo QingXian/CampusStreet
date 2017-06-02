@@ -48,6 +48,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.campusstreet.R.id.view;
+import static com.campusstreet.common.Const.USERASSOCIATIONINFO_EXTRA;
 import static com.campusstreet.common.Const.USERINFO_EXTRA;
 
 /**
@@ -120,6 +121,8 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(USERINFO_EXTRA);
         if (mAssociationInfo != null) {
             mPresenter.fetchAssociationNumList(mAssociationInfo.getId(), mPi, 1000);
+        } else {
+            mPresenter.fetchAssociationNumList(mUserAssociationInfo.getAssnid(), mPi, 1000);
         }
         initView();
         initEvent();
@@ -138,6 +141,7 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
     }
 
     private void initView() {
+        mTvIntroduce.setEnabled(false);
         mBtnJoin.setVisibility(View.VISIBLE);
         mFabAddTask.setVisibility(View.GONE);
         if (mAssociationInfo != null) {
@@ -154,6 +158,15 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
                 mBtnJoin.setVisibility(View.VISIBLE);
                 mFabAddTask.setVisibility(View.GONE);
             }
+        } else if (mUserAssociationInfo != null) {
+            mTvName.setText(mUserAssociationInfo.getAssnname());
+            mTvIntroduce.setText(mUserAssociationInfo.getNote());
+            Picasso.with(this)
+                    .load(AppConfig.PIC_ASSOCIATION_SERVER_HOST + mUserAssociationInfo.getClassimg())
+                    .fit()
+                    .into(mIvHead);
+            mBtnJoin.setVisibility(View.GONE);
+            mFabAddTask.setVisibility(View.VISIBLE);
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRvContent.setLayoutManager(linearLayoutManager);
@@ -166,7 +179,7 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
         if (mAssociationInfo != null) {
             mPresenter.fetchAssociationPostList(mAssociationInfo.getId(), mPi);
         } else {
-            mPresenter.fetchAssociationPostList(mUserAssociationInfo.getId(), mPi);
+            mPresenter.fetchAssociationPostList(mUserAssociationInfo.getAssnid(), mPi);
         }
         super.onStart();
 
@@ -192,6 +205,7 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
                 if (mUserInfo != null) {
                     intent = new Intent(this, AddPostActivity.class);
                     intent.putExtra(USERINFO_EXTRA, mUserInfo);
+                    intent.putExtra(USERASSOCIATIONINFO_EXTRA, mUserAssociationInfo);
                     intent.putExtra(Const.ASSOCIATIONINFO_EXTRA, mAssociationInfo);
                     startActivity(intent);
                 } else {
@@ -222,6 +236,9 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
                 associationNumList) {
             if (mUserInfo != null) {
                 if (associationNumInfo.getUid().equals(mUserInfo.getUid())) {
+                    if (associationNumInfo.getAssnjob() == 1 || associationNumInfo.getAssnjob() == 2) {
+                        mTvIntroduce.setEnabled(true);
+                    }
                     mBtnJoin.setVisibility(View.GONE);
                     mFabAddTask.setVisibility(View.VISIBLE);
                     break;

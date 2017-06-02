@@ -26,7 +26,7 @@ public interface ISettingBiz {
     }
 
     interface AvatarReviseCallback {
-        void onAvatarReviseSuccess();
+        void onAvatarReviseSuccess(String picName);
 
         void onAvatarReviseFailure(String errorMsg);
 
