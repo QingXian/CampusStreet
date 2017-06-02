@@ -84,6 +84,9 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
                 onBackPressed();
             }
         });
+        mBtnAdd.setVisibility(View.GONE);
+        mIvToolbarRight.setVisibility(View.VISIBLE);
+        mIvToolbarRight.setImageResource(R.drawable.ic_add);
         new IdleSalePresenter(IdleSaleImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         initView();
@@ -145,8 +148,6 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_toolbar_right:
-                break;
-            case R.id.btn_add:
                 if (mUserInfo != null) {
                     Intent intent = new Intent(this, AddIdleSaleActivity.class);
                     intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
@@ -154,6 +155,8 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
                 } else {
                     showMessage("您还未登录");
                 }
+                break;
+            case R.id.btn_add:
                 break;
         }
     }
