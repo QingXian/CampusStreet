@@ -199,7 +199,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
         // 设置图片加载器
         mBanner.setImageLoader(new PicassoImageLoader());
         // 设置banner动画效果
-        mBanner.setBannerAnimation(Transformer.DepthPage);
+        mBanner.setBannerAnimation(Transformer.Default);
         // 设置标题集合（当banner样式有显示title时）
         // mBanner.setBannerTitles(Arrays.asList(mTitles));
         // 设置指示器位置（当banner模式中有指示器时）

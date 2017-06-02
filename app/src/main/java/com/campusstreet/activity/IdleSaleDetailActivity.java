@@ -251,7 +251,7 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         // 设置图片加载器
         mIvPhoto.setImageLoader(new PicassoImageLoader());
         // 设置banner动画效果
-        mIvPhoto.setBannerAnimation(Transformer.DepthPage);
+        mIvPhoto.setBannerAnimation(Transformer.Default);
         // 设置标题集合（当banner样式有显示title时）
         // mBanner.setBannerTitles(Arrays.asList(mTitles));
         // 设置指示器位置（当banner模式中有指示器时）

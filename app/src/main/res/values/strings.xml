@@ -148,8 +148,8 @@
     <string name="act_idle_sale_add_qq_hint">QQ</string>
     <string name="act_login">登录</string>
     <string name="act_register">注册</string>
-    <string name="act_login_username">手机号</string>
-    <string name="act_login_password">密码</string>
+    <string name="act_login_username">请输入手机号</string>
+    <string name="act_login_password">请输入密码</string>
     <string name="act_login_forget_password">忘记密码？</string>
     <string name="act_register_phone">请输入手机号</string>
     <string name="act_register_fetch_captcha">获取验证码</string>

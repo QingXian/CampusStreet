@@ -53,7 +53,7 @@
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             >
 
             <EditText
@@ -70,7 +70,7 @@
             <Button
                 android:id="@+id/btn_fetch_captcha"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
                 android:text="@string/act_register_fetch_captcha"
@@ -80,9 +80,9 @@
         <EditText
             android:singleLine="true"
             android:id="@+id/et_captcha"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/colorWhite"
             android:hint="@string/act_register_captcha"
             android:padding="10dp"
@@ -90,9 +90,9 @@
         <EditText
             android:singleLine="true"
             android:id="@+id/et_password"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/colorWhite"
             android:hint="@string/act_register_password"
             android:padding="10dp"
@@ -102,9 +102,9 @@
             android:singleLine="true"
             android:id="@+id/et_password_again"
             android:inputType="textPassword"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/colorWhite"
             android:hint="@string/act_register_password_again"
             android:padding="10dp"
@@ -112,9 +112,9 @@
         <EditText
             android:singleLine="true"
             android:id="@+id/et_nickname"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/colorWhite"
             android:hint="@string/act_register_nickname"
             android:padding="10dp"
@@ -122,10 +122,10 @@
         <LinearLayout
             android:id="@+id/ll_department"
             android:background="@color/colorWhite"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="1dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             >
 
             <TextView

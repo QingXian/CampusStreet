@@ -49,7 +49,11 @@ public class DataUtil {
             e.printStackTrace();
         }
         /**除以1000是为了转换成秒*/
-         long between = (curDate.getTime() - startTime.getTime()) / 1000;
+         long between = 0;
+        if (startTime!=null)
+        {
+            between = (curDate.getTime() - startTime.getTime()) / 1000;
+        }
         int elapsedTime = (int) (between);
         if (elapsedTime < seconds_of_1minute) {
 
