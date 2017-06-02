@@ -12,7 +12,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/colorGray"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,21 +36,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/act_login"
+                    android:text="火蚁账号登入"
                     android:textColor="@color/colorWhite"
                     android:textSize="20sp"/>
 
-                <TextView
-                    android:id="@+id/tv_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:text="@string/act_register"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="20sp"
-                    />
             </android.support.v7.widget.Toolbar>
         </LinearLayout>
 
@@ -60,64 +51,94 @@
         <!--android:background="@drawable/ic_login"/>-->
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        >
         <EditText
             android:id="@+id/et_login_username"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="56dp"
-            android:layout_marginRight="56dp"
-            android:layout_marginTop="100dp"
-            android:drawableLeft="@drawable/ic_login_username"
-            android:drawablePadding="8dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:gravity="center_vertical"
             android:hint="@string/act_login_username"
+            android:background="@drawable/bg_act_idle_sale_detail_et"
             android:inputType="number"
             android:maxLines="1"
             android:paddingLeft="12dp"
+            android:padding="1dp"
             android:singleLine="true"
             android:textSize="16sp"
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/colorGray"
+            android:layout_height="1dp">
+        </LinearLayout>
+
         <EditText
             android:id="@+id/et_login_password"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="56dp"
-            android:layout_marginRight="56dp"
-            android:drawableLeft="@drawable/ic_login_password"
-            android:drawablePadding="8dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:gravity="center_vertical"
             android:hint="@string/act_login_password"
+            android:background="@drawable/bg_act_idle_sale_detail_et"
             android:inputType="textPassword"
             android:maxLines="1"
             android:paddingLeft="12dp"
+            android:padding="1dp"
             android:singleLine="true"
             android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/tv_forget_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:foreground="?android:selectableItemBackground"
-            android:paddingBottom="8dp"
-            android:paddingRight="64dp"
-            android:paddingTop="8dp"
-            android:text="@string/act_login_forget_password"
-            android:textColor="@color/colorPrimary"
-            />
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="72dp"
-            android:layout_marginRight="72dp"
-            android:background="@color/colorPrimary"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_act_association_join_btn"
+
             android:text="@string/act_login"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
             />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingTop="15dp">
+
+            <TextView
+                android:id="@+id/tv_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:text="@string/act_register"
+                android:textColor="@color/colorPrimary"
+                />
+
+            <TextView
+                android:id="@+id/tv_forget_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?android:selectableItemBackground"
+                android:text="@string/act_login_forget_password"
+                android:textColor="@color/colorPrimary"
+                android:layout_toRightOf="@+id/tv_register"
+                android:layout_marginLeft="120dp"
+                />
+        </RelativeLayout>
+
     </LinearLayout>
 
     <include layout="@layout/progress_bar"></include>

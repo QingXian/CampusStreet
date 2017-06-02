@@ -80,7 +80,7 @@
         <EditText
             android:singleLine="true"
             android:id="@+id/et_captcha"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
@@ -90,7 +90,7 @@
         <EditText
             android:singleLine="true"
             android:id="@+id/et_password"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
@@ -102,7 +102,7 @@
             android:singleLine="true"
             android:id="@+id/et_password_again"
             android:inputType="textPassword"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
@@ -112,7 +112,7 @@
         <EditText
             android:singleLine="true"
             android:id="@+id/et_nickname"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
@@ -122,7 +122,7 @@
         <LinearLayout
             android:id="@+id/ll_department"
             android:background="@color/colorWhite"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="2dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -148,14 +148,15 @@
                 android:textSize="16sp"/>
         </LinearLayout>
 
+
         <Button
             android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="48dp"
-            android:layout_marginRight="48dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
             android:layout_marginTop="24dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/bg_act_association_join_btn"
             android:text="@string/entel"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
