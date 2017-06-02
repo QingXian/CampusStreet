@@ -74,12 +74,17 @@ public class HomeFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
         HomeDynamicInfo homeDynamicInfo = mList.get(position);
         if (homeDynamicInfo != null) {
-            Picasso.with(mContext)
-                    .load(AppConfig.PIC_EWU_SERVER_HOST + homeDynamicInfo.getImg())
-                    .placeholder(R.drawable.ic_base_picture)
-                    .fit()
-                    .error(R.drawable.ic_pic_error)
-                    .into(viewHolder.mIvImage1);
+            if (!homeDynamicInfo.getImg().equals("")) {
+                Picasso.with(mContext)
+                        .load(AppConfig.PIC_EWU_SERVER_HOST + homeDynamicInfo.getImg())
+                        .placeholder(R.drawable.ic_base_picture)
+                        .fit()
+                        .error(R.drawable.ic_pic_error)
+                        .into(viewHolder.mIvImage1);
+            } else {
+                viewHolder.mIvImage1.setVisibility(View.GONE);
+            }
+
             viewHolder.mTvName.setText(homeDynamicInfo.getTname());
             viewHolder.mTvTitle.setText(homeDynamicInfo.getTitle());
             viewHolder.mTvContent.setText(homeDynamicInfo.getCon());

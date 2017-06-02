@@ -158,7 +158,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                         startActivity(intent);
                         break;
                     case 3:
-                        intent = new Intent(getActivity(), CampusRecruitmentActivity.class);
+                        intent = new Intent(getActivity(), CampusRecruitmentDetailActivity.class);
                         intent.putExtra(TYPE,homeDynamicInfo.getType());
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);

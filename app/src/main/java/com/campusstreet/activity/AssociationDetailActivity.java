@@ -2,13 +2,12 @@ package com.campusstreet.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,7 +23,6 @@ import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.adapter.AssociationDetailRecyclerViewAdapter;
-import com.campusstreet.adapter.AssociationRecyclerViewAdapter;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IAssociationContract;
@@ -32,13 +30,11 @@ import com.campusstreet.entity.AssociationInfo;
 import com.campusstreet.entity.AssociationNumInfo;
 import com.campusstreet.entity.AssociationPostInfo;
 import com.campusstreet.entity.AssociationPostMessageInfo;
-import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserAssociationInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.AssociationImpl;
 import com.campusstreet.presenter.AssociationPresenter;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -47,7 +43,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.campusstreet.R.id.view;
 import static com.campusstreet.common.Const.USERASSOCIATIONINFO_EXTRA;
 import static com.campusstreet.common.Const.USERINFO_EXTRA;
 
@@ -88,12 +83,16 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
     LinearLayout mProgressBarContainer;
     @BindView(R.id.iv_association_content_bg)
     ImageView mIvAssociationContentBg;
+    @BindView(R.id.scrollView)
+    NestedScrollView mScrollView;
     private IAssociationContract.Presenter mPresenter;
     private int mPi = 0;
     private AssociationInfo mAssociationInfo;
     private UserAssociationInfo mUserAssociationInfo;
     private AssociationDetailRecyclerViewAdapter mAdapter;
     private UserInfo mUserInfo;
+    private boolean mIsLoading;
+    private boolean mIsNeedLoadMore = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +128,22 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
     }
 
     private void initEvent() {
+        mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                View contentView = mScrollView.getChildAt(0);
+                if (mIsNeedLoadMore && !mIsLoading && contentView.getMeasuredHeight() <= mScrollView.getScrollY() + mScrollView.getHeight()) {
+                    if (mAssociationInfo != null) {
+                        mPresenter.fetchAssociationPostList(mAssociationInfo.getId(), ++mPi);
+                    } else {
+                        mPresenter.fetchAssociationPostList(mUserAssociationInfo.getAssnid(), ++mPi);
+                    }
+                    mIsLoading = true;
+                }
+
+            }
+
+        });
         mAdapter.setOnItemClickListener(new AssociationDetailRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, AssociationPostInfo associationPostInfo) {
@@ -172,6 +187,7 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
         mRvContent.setLayoutManager(linearLayoutManager);
         mAdapter = new AssociationDetailRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
+        mRvContent.setNestedScrollingEnabled(false);
     }
 
 
@@ -227,7 +243,20 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
 
     @Override
     public void setAssociationPostList(List<AssociationPostInfo> associationPostList) {
-        mAdapter.replaceData(associationPostList);
+        if (associationPostList != null && associationPostList.size() < 20) {
+            mIsNeedLoadMore = false;
+        } else {
+            mIsNeedLoadMore = true;
+        }
+        if (mPi != 0) {
+            if (associationPostList != null) {
+                mAdapter.addData(associationPostList);
+                mIsLoading = false;
+            }
+        } else {
+            mAdapter.replaceData(associationPostList);
+            setLoadingIndicator(false);
+        }
     }
 
     @Override
@@ -278,7 +307,12 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        showMessage(errorMsg);
+        if (mPi == 0) {
+            showMessage(errorMsg);
+        } else {
+            showMessage("没有数据了");
+        }
+        setLoadingIndicator(false);
     }
 
     @Override
