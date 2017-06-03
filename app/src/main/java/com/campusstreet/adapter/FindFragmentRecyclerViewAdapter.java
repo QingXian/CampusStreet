@@ -10,14 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.campusstreet.R;
-import com.campusstreet.entity.IdleSaleInfo;
+import com.campusstreet.common.AppConfig;
 import com.campusstreet.entity.LiveInfo;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.campusstreet.R.id.view;
+import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
  * Created by Orange on 2017/4/17.
@@ -26,6 +31,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
 
+    private int mImageNum = 0;
+    private String[] mImages;
     private Context mContext;
     private List<LiveInfo> mList;
     private static OnRecyclerViewItemClickListener mOnItemClickListener;
@@ -70,8 +77,67 @@ public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
         LiveInfo liveInfo = mList.get(position);
         if (liveInfo != null) {
-//            Picasso.with(mContext).load((Integer) list.get("head")).into(viewHolder.mIvHead);
-//            viewHolder.mTvContent.setText(list.get("content").toString());
+            viewHolder.mTvName.setText(liveInfo.getUsername());
+            viewHolder.mTvContent.setText(liveInfo.getCon());
+            String time = getTimeRange(liveInfo.getPubtime());
+            viewHolder.mTvTime.setText(time);
+            Picasso.with(mContext)
+                    .load(AppConfig.AVATAR_SERVER_HOST + liveInfo.getUserpic())
+                    .fit()
+                    .into(viewHolder.mIvHead);
+            initImage(liveInfo, liveInfo.getImages(), viewHolder);
+            viewHolder.itemView.setTag(liveInfo);
+        }
+    }
+
+    private void initImage(LiveInfo liveInfo, String images, RecyclerItemViewHolder viewHolder) {
+        if (images != null) {
+            for (int i = 0; i <= images.length() - 1; i++) {
+                String getstr = images.substring(i, i + 1);
+                if (getstr.equals(",")) {
+                    mImageNum++;
+                }
+            }
+            if (mImageNum == 0) {
+                viewHolder.mIvImage1.setVisibility(View.VISIBLE);
+                viewHolder.mIvImage2.setVisibility(View.GONE);
+                viewHolder.mIvImage3.setVisibility(View.GONE);
+                Picasso.with(mContext)
+                        .load(AppConfig.PIC_LIVE_SERVER_HOST + images)
+                        .fit()
+                        .into(viewHolder.mIvHead);
+
+            } else if (mImageNum == 1) {
+                mImages = images.split(",");
+                viewHolder.mIvImage1.setVisibility(View.VISIBLE);
+                viewHolder.mIvImage2.setVisibility(View.VISIBLE);
+                viewHolder.mIvImage3.setVisibility(View.GONE);
+                Picasso.with(mContext)
+                        .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[0])
+                        .fit()
+                        .into(viewHolder.mIvHead);
+                Picasso.with(mContext)
+                        .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[1])
+                        .fit()
+                        .into(viewHolder.mIvHead);
+            } else if (mImageNum == 2) {
+                mImages = images.split(",");
+                viewHolder.mIvImage1.setVisibility(View.VISIBLE);
+                viewHolder.mIvImage2.setVisibility(View.VISIBLE);
+                viewHolder.mIvImage3.setVisibility(View.VISIBLE);
+                Picasso.with(mContext)
+                        .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[0])
+                        .fit()
+                        .into(viewHolder.mIvHead);
+                Picasso.with(mContext)
+                        .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[1])
+                        .fit()
+                        .into(viewHolder.mIvHead);
+                Picasso.with(mContext)
+                        .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[2])
+                        .fit()
+                        .into(viewHolder.mIvHead);
+            }
         }
     }
 
@@ -96,6 +162,8 @@ public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
 
         @BindView(R.id.iv_head)
         CircleImageView mIvHead;
+        @BindView(R.id.tv_name)
+        TextView mTvName;
         @BindView(R.id.tv_time)
         TextView mTvTime;
         @BindView(R.id.tv_content)

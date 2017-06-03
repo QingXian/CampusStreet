@@ -1,5 +1,6 @@
 package com.campusstreet.contract;
 
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.NewInfo;
 import com.campusstreet.entity.PartnerInfo;
@@ -26,7 +27,7 @@ public interface IPartnerContract {
     interface View extends BaseView<Presenter> {
 
 
-        void setPartnerCategories(String[] type);
+        void setPartnerCategories(List<CategoriesInfo> categories);
 
         void setPartnerList(List<PartnerInfo> partnerList);
 

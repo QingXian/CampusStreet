@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.campusstreet.R;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IIdleSaleContract;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.UserInfo;
@@ -114,6 +115,8 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
     public static final int REQUEST_CODE = 1;
 
     private String[] mTitle;
+    private int[] mPostions;
+    private int mPostion;
     private String mType;
     private int mIsUser;
     private int mIndex;
@@ -206,11 +209,12 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
             case R.id.tv_goods_type:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择商品类型")
-                        .setSingleChoiceItems(mTitle, mIndex, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(mTitle, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mType = mTitle[i];
-                                mIndex = i;
+                                mPostion = i;
+                                mIndex = mPostions[i];
                                 mTvGoodsType.setText(mTitle[i]);
                                 dialogInterface.dismiss();
                             }
@@ -221,10 +225,11 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
             case R.id.tv_mode:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择讨价类型")
-                        .setSingleChoiceItems(Const.SELLTYPE, mIndex, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(Const.SELLTYPE, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mSelltype = Const.SELLTYPE[i];
+                                mPostion = i;
                                 mTvMode.setText(Const.SELLTYPE[i]);
                                 dialogInterface.dismiss();
                             }
@@ -235,10 +240,11 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
             case R.id.tv_trade_type:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择交易方式")
-                        .setSingleChoiceItems(Const.TRADETYPE, mIndex, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(Const.TRADETYPE, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mTradetype = Const.TRADETYPE[i];
+                                mPostion = i;
                                 mTvTradeType.setText(Const.TRADETYPE[i]);
                                 dialogInterface.dismiss();
                             }
@@ -311,7 +317,7 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
         idlSaleInfo.setMoney(mEtPrice.getText().toString());
         idlSaleInfo.setBewrite(mEtDegree.getText().toString());
         idlSaleInfo.setContent(mEtDescribe.getText().toString());
-        idlSaleInfo.setGoodstype(String.valueOf(mIndex + 1));
+        idlSaleInfo.setGoodstype(String.valueOf(mIndex));
         idlSaleInfo.setTradetype(mTradetype);
         idlSaleInfo.setSelltype(mSelltype);
         idlSaleInfo.setTradeplace(mEtPlace.getText().toString());
@@ -370,8 +376,13 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
     }
 
     @Override
-    public void setIdleSaleCategories(String[] type) {
-        mTitle = type;
+    public void setIdleSaleCategories(List<CategoriesInfo> categories) {
+        mTitle = new String[categories.size()];
+        mPostions = new int[categories.size()];
+        for (int i = 0; i < categories.size(); i++) {
+            mTitle[i] = categories.get(i).getName();
+            mPostions[i] = categories.get(i).getId();
+        }
     }
 
 

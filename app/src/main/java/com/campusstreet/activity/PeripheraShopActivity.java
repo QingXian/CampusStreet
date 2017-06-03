@@ -21,6 +21,7 @@ import com.campusstreet.R;
 import com.campusstreet.adapter.PeripheralShopRecyclerViewAdapter;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IPeripheralShopContract;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.PeripheralShopGoodInfo;
 import com.campusstreet.entity.PeripheralShopInfo;
 import com.campusstreet.model.PeripheralShopImpl;
@@ -32,6 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.R.attr.type;
 import static com.campusstreet.R.id.view;
 
 /**
@@ -63,6 +65,7 @@ public class PeripheraShopActivity extends AppCompatActivity implements IPeriphe
     private int mPostion = 0;
     private String[] mTitle;
     private PeripheralShopInfo mPeripheralShopInfo;
+    private int[] mPostions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,25 +201,25 @@ public class PeripheraShopActivity extends AppCompatActivity implements IPeriphe
     }
 
     @Override
-    public void setPeriPheralShopCategories(String[] type) {
-        mTitle = type;
-        if (type != null) {
+    public void setPeriPheralShopCategories(List<CategoriesInfo> categories) {
+        mTitle = new String[categories.size() + 1];
+        mPostions = new int[categories.size() + 1];
+        for (int i = 0; i < categories.size(); i++) {
+            mTitle[i + 1] = categories.get(i).getName();
+            mPostions[i + 1] = categories.get(i).getId();
+        }
+        if (mTitle != null) {
             mTabLayout.addTab(mTabLayout.newTab().setText("全部"));
-            for (int i = 0; i < type.length; i++) {
-                mTabLayout.addTab(mTabLayout.newTab().setText(type[i]));
+            for (int i = 1; i < mTitle.length; i++) {
+                mTabLayout.addTab(mTabLayout.newTab().setText(mTitle[i]));
             }
             mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     mPi = 0;
                     mEtSearch.setText("");
-                    if (tab.getText().equals("全部")) {
-                        mPresenter.fetchPeriPheralShopList(0, null, mPi);
-                        mPostion = 0;
-                    } else {
-                        mPresenter.fetchPeriPheralShopList(tab.getPosition() + 1, null, mPi);
-                        mPostion = tab.getPosition() + 1;
-                    }
+                    mPresenter.fetchPeriPheralShopList(mPostions[tab.getPosition()], null, mPi);
+                    mPostion = mPostions[tab.getPosition()];
                 }
 
                 @Override
@@ -230,7 +233,9 @@ public class PeripheraShopActivity extends AppCompatActivity implements IPeriphe
                 }
             });
         }
+
     }
+
 
     @Override
     public void showErrorMsg(String errorMsg) {

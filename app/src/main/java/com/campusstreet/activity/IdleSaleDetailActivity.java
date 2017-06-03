@@ -25,6 +25,7 @@ import com.campusstreet.adapter.LeaveMessageRecycleViewAdapter;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IIdleSaleContract;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.UserInfo;
@@ -286,10 +287,9 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     }
 
     @Override
-    public void setIdleSaleCategories(String[] type) {
+    public void setIdleSaleCategories(List<CategoriesInfo> categories) {
 
     }
-
 
     @Override
     public void setIdleSaleMessageList(List<LeaveMessageInfo> idleSaleMessageList) {

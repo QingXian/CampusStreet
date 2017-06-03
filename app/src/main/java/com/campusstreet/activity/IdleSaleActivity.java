@@ -21,6 +21,7 @@ import com.campusstreet.R;
 import com.campusstreet.adapter.IdleSaleRecyclerViewAdapter;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IIdleSaleContract;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.UserInfo;
@@ -33,6 +34,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.R.attr.type;
 
 /**
  * Created by Orange on 2017/4/6.
@@ -63,6 +66,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
     private IdleSaleRecyclerViewAdapter mAdapter;
     private int mPi = 0;
     private int mPostion = 0;
+    private int[] mPostions;
     private String[] mTitle;
     private UserInfo mUserInfo;
 
@@ -98,7 +102,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
     protected void onStart() {
         mPi = 0;
         super.onStart();
-        mPresenter.fetchIdleSaleList(0, mPi);
+        mPresenter.fetchIdleSaleList(mPostion, mPi);
         setLoadingIndicator(true);
     }
 
@@ -189,19 +193,24 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
     }
 
     @Override
-    public void setIdleSaleCategories(String[] type) {
-        mTitle = type;
-        if (type != null) {
+    public void setIdleSaleCategories(List<CategoriesInfo> categories) {
+        mTitle = new String[categories.size() + 1];
+        mPostions = new int[categories.size() + 1];
+        for (int i = 0; i < categories.size(); i++) {
+            mTitle[i + 1] = categories.get(i).getName();
+            mPostions[i + 1] = categories.get(i).getId();
+        }
+        if (mTitle != null) {
             mTabLayout.addTab(mTabLayout.newTab().setText("全部"));
-            for (int i = 0; i < type.length; i++) {
-                mTabLayout.addTab(mTabLayout.newTab().setText(type[i]));
+            for (int i = 1; i < mTitle.length; i++) {
+                mTabLayout.addTab(mTabLayout.newTab().setText(mTitle[i]));
             }
             mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     mPi = 0;
-                    mPresenter.fetchIdleSaleList(tab.getPosition(), mPi);
-                    mPostion = tab.getPosition();
+                    mPresenter.fetchIdleSaleList(mPostions[tab.getPosition()], mPi);
+                    mPostion = mPostions[tab.getPosition()];
                 }
 
                 @Override
@@ -211,6 +220,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
 
                 @Override
                 public void onTabReselected(TabLayout.Tab tab) {
+
 
                 }
             });
@@ -228,7 +238,7 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
             mRvContent.setVisibility(View.GONE);
             mTvError.setText(errorMsg);
             mTvError.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             showMessage("没有数据了");
         }
         setLoadingIndicator(false);

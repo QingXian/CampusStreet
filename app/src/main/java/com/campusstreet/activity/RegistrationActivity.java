@@ -19,6 +19,7 @@ import com.campusstreet.R;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
@@ -95,12 +96,7 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
     }
 
     @Override
-    public void setUserTaskList(List<BountyHallInfo> bountyHallInfos) {
-
-    }
-
-    @Override
-    public void setBountyHallCategories(String[] type) {
+    public void setBountyHallCategories(List<CategoriesInfo> categories) {
 
     }
 

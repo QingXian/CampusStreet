@@ -1,6 +1,7 @@
 package com.campusstreet.presenter;
 
 import com.campusstreet.contract.IPeripheralShopContract;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.PeripheralShopGoodInfo;
 import com.campusstreet.entity.PeripheralShopInfo;
 import com.campusstreet.model.IPeripheralShopBiz;
@@ -65,8 +66,8 @@ public class PeripheralShopPresenter implements IPeripheralShopContract.Presente
     public void fetchPeriPheralShopCategories() {
         mPeripheralShopImpl.fetchPeripheralCategories(new IPeripheralShopBiz.LoadPeripheralCategoriesCallback() {
             @Override
-            public void onPeripheralCategoriesLoad(String[] type) {
-                mView.setPeriPheralShopCategories(type);
+            public void onPeripheralCategoriesLoad(List<CategoriesInfo> categoriesInfos) {
+                mView.setPeriPheralShopCategories(categoriesInfos);
                 mView.setLoadingIndicator(false);
             }
 

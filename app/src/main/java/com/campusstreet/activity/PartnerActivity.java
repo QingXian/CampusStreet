@@ -21,6 +21,7 @@ import com.campusstreet.R;
 import com.campusstreet.adapter.PartnerRecyclerViewAdapter;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IPartnerContract;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.PartnerInfo;
 import com.campusstreet.model.PartnerImpl;
 import com.campusstreet.presenter.PartnerPresenter;
@@ -32,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.type;
 import static com.campusstreet.R.id.view;
 
 /**
@@ -63,6 +65,7 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
     private String[] mTitle;
     private IPartnerContract.Presenter mPresenter;
     private PartnerRecyclerViewAdapter mAdapter;
+    private int[] mPostions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,20 +164,25 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
 
 
     @Override
-    public void setPartnerCategories(String[] type) {
-        mTitle = type;
-        if (type != null) {
+    public void setPartnerCategories(List<CategoriesInfo> categories) {
+        mTitle = new String[categories.size() + 1];
+        mPostions = new int[categories.size() + 1];
+        for (int i = 0; i < categories.size(); i++) {
+            mTitle[i + 1] = categories.get(i).getName();
+            mPostions[i + 1] = categories.get(i).getId();
+        }
+        if (mTitle != null) {
             mTabLayout.addTab(mTabLayout.newTab().setText("全部"));
-            for (int i = 0; i < type.length; i++) {
-                mTabLayout.addTab(mTabLayout.newTab().setText(type[i]));
+            for (int i = 1; i < mTitle.length; i++) {
+                mTabLayout.addTab(mTabLayout.newTab().setText(mTitle[i]));
             }
             mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     mPi = 0;
                     mEtSearch.setText("");
-                    mPresenter.fetchPartnerList(null, tab.getPosition(), 0);
-                    mPostion = tab.getPosition();
+                    mPresenter.fetchPartnerList(null, mPostions[tab.getPosition()], 0);
+                    mPostion = mPostions[tab.getPosition()];
                 }
 
                 @Override

@@ -136,8 +136,7 @@ public class CampusRecruitmentDetailActivity extends AppCompatActivity implement
         mType = getIntent().getIntExtra(TYPE, 0);
         if (mType == 3) {
             mPresenter.fetchCampusRecruitmentDetail(mId);
-        }
-        if (mType == 8) {
+        } else if (mType == 8) {
             mPresenter.fetchStudyWorkDetail(mId);
         } else {
             initView();

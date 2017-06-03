@@ -2,6 +2,7 @@ package com.campusstreet.presenter;
 
 import com.campusstreet.contract.IPartnerContract;
 import com.campusstreet.contract.IPartnerContract;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.PartnerInfo;
 import com.campusstreet.model.IPartnerBiz;
 import com.campusstreet.model.PartnerImpl;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 
 public class PartnerPresenter implements IPartnerContract.Presenter {
-    
+
     public static final String TAG = "PartnerPresenter";
 
     private PartnerImpl mPartnerImpl;
@@ -48,8 +49,8 @@ public class PartnerPresenter implements IPartnerContract.Presenter {
     public void fetchPartnerCategories() {
         mPartnerImpl.fetchPartnerCategories(new IPartnerBiz.LoadPartnerCategoriesCallback() {
             @Override
-            public void onPartnerCategoriesLoaded(String[] type) {
-                mView.setPartnerCategories(type);
+            public void onPartnerCategoriesLoaded(List<CategoriesInfo> categoriesInfos) {
+                mView.setPartnerCategories(categoriesInfos);
                 mView.setLoadingIndicator(true);
             }
 

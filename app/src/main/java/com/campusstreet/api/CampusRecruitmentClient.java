@@ -24,8 +24,8 @@ public interface CampusRecruitmentClient {
     Call<JsonObject> getRecruitList(@Field("pi") Integer pi);
 
     @FormUrlEncoded
-    @POST("get_studywork_info")
-    Call<JsonObject> getRecruitDetail(@Field("swid") int swid);
+    @POST("get_recruit_info")
+    Call<JsonObject> getRecruitDetail(@Field("rid") int swid);
 
     @FormUrlEncoded
     @POST("get_studywork")
@@ -36,6 +36,6 @@ public interface CampusRecruitmentClient {
     Call<JsonObject> getStudyWorkList(@Field("pi") Integer pi);
 
     @FormUrlEncoded
-    @POST("get_recruit_info")
-    Call<JsonObject> getStudyWorkDetail(@Field("rid") int rid);
+    @POST("get_studywork_info")
+    Call<JsonObject> getStudyWorkDetail(@Field("swid") int rid);
 }

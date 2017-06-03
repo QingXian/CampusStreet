@@ -20,6 +20,7 @@ import com.campusstreet.adapter.PeripheralShopDetailRecyclerViewAdapter;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IPeripheralShopContract;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.PeripheralShopGoodInfo;
 import com.campusstreet.entity.PeripheralShopInfo;
 import com.campusstreet.model.PeripheralShopImpl;
@@ -236,9 +237,10 @@ public class PeripheralShopDetailActivity extends AppCompatActivity implements I
     }
 
     @Override
-    public void setPeriPheralShopCategories(String[] type) {
+    public void setPeriPheralShopCategories(List<CategoriesInfo> categories) {
 
     }
+
 
     @Override
     public void showErrorMsg(String errorMsg) {

@@ -4,6 +4,7 @@ import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.model.IBountyHallBiz;
@@ -36,8 +37,8 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
     public void fetchBountyHallCategories() {
         mBountyHallImpl.fetchBountyHallCategories(new IBountyHallBiz.LoadBountyHallCategoriesCallback() {
             @Override
-            public void onBountyHallCategoriesLoaded(String[] type) {
-                mView.setBountyHallCategories(type);
+            public void onBountyHallCategoriesLoaded(List<CategoriesInfo> categoriesInfos) {
+                mView.setBountyHallCategories(categoriesInfos);
             }
 
             @Override

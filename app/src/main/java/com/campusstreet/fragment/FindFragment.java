@@ -57,9 +57,9 @@ public class FindFragment extends Fragment implements IFindContract.View {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mPi = 0;
-//        mPresenter.fetchFindList(mPi);
-//        setLoadingIndicator(true);
+        mPi = 0;
+        mPresenter.fetchFindList(mPi);
+        setLoadingIndicator(true);
     }
 
     @Nullable

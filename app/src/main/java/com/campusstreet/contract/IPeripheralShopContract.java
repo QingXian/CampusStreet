@@ -1,5 +1,6 @@
 package com.campusstreet.contract;
 
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.PeripheralShopGoodInfo;
 import com.campusstreet.entity.PeripheralShopInfo;
@@ -29,7 +30,7 @@ public interface IPeripheralShopContract {
 
         void setShopCommodityList(List<PeripheralShopGoodInfo> peripheralShopGoodInfos);
 
-        void setPeriPheralShopCategories(String[] type);
+        void setPeriPheralShopCategories(List<CategoriesInfo> categories);
 
         void showErrorMsg(String errorMsg);
 

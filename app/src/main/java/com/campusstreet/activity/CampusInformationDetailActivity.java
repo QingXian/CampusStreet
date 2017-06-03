@@ -98,6 +98,7 @@ public class CampusInformationDetailActivity extends AppCompatActivity implement
 
     @Override
     public void setCampusInformationDetail(NewInfo newInfo) {
+        mNewInfo = newInfo;
         mTvTitle.setText(mNewInfo.getTitle());
         String time = getTimeRange(mNewInfo.getPubtime());
         mTvTime.setText(time);

@@ -2,6 +2,7 @@ package com.campusstreet.model;
 
 import android.support.annotation.NonNull;
 
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.PartnerInfo;
 
@@ -41,7 +42,7 @@ public interface IPartnerBiz {
 
     interface LoadPartnerCategoriesCallback {
 
-        void onPartnerCategoriesLoaded(String[] type);
+        void onPartnerCategoriesLoaded(List<CategoriesInfo> categoriesInfos);
 
         void onDataNotAvailable(String errorMsg);
     }

@@ -2,6 +2,7 @@ package com.campusstreet.model;
 
 import android.support.annotation.NonNull;
 
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 
@@ -74,7 +75,7 @@ public interface IIdleSaleBiz {
 
     interface LoadIdleSaleCategoriesCallback {
 
-        void onIdleSaleCategoriesLoaded(String[] type);
+        void onIdleSaleCategoriesLoaded(List<CategoriesInfo> categoriesInfos);
 
         void onDataNotAvailable(String errorMsg);
     }

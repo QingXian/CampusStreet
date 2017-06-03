@@ -24,6 +24,7 @@ import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.BuyZoneInfo;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
@@ -37,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.type;
 import static android.R.id.message;
 
 /**
@@ -69,6 +71,7 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
     private List<BountyHallInfo> mBountyHallInfoList;
     private int mPi = 0;
     private int mPostion = 0;
+    private int[] mPostions;
     private UserInfo mUserInfo;
 
 
@@ -187,24 +190,24 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
     }
 
     @Override
-    public void setUserTaskList(List<BountyHallInfo> bountyHallInfos) {
-
-    }
-
-    @Override
-    public void setBountyHallCategories(String[] type) {
-        mTitle = type;
-        if (type != null) {
+    public void setBountyHallCategories(List<CategoriesInfo> categories) {
+        mTitle = new String[categories.size() + 1];
+        mPostions = new int[categories.size() + 1];
+        for (int i = 0; i < categories.size(); i++) {
+            mTitle[i + 1] = categories.get(i).getName();
+            mPostions[i + 1] = categories.get(i).getId();
+        }
+        if (mTitle != null) {
             mTabLayout.addTab(mTabLayout.newTab().setText("全部"));
-            for (int i = 0; i < type.length; i++) {
-                mTabLayout.addTab(mTabLayout.newTab().setText(type[i]));
+            for (int i = 1; i < mTitle.length; i++) {
+                mTabLayout.addTab(mTabLayout.newTab().setText(mTitle[i]));
             }
             mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     mPi = 0;
-                    mPresenter.fetchTaskList(tab.getPosition(), mPi, null);
-                    mPostion = tab.getPosition();
+                    mPresenter.fetchTaskList(mPostions[tab.getPosition()], mPi, null);
+                    mPostion = mPostions[tab.getPosition()];
                 }
 
                 @Override
@@ -218,7 +221,6 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
                 }
             });
         }
-
     }
 
     @Override

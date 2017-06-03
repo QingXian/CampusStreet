@@ -7,6 +7,7 @@ import android.util.Log;
 import com.campusstreet.api.IdleSaleClient;
 import com.campusstreet.api.ServiceGenerator;
 import com.campusstreet.common.Const;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.StudyWorkInfo;
@@ -143,12 +144,14 @@ public class IdleSaleImpl implements IIdleSaleBiz {
                     if (res == 1) {
                         if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
                             JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
-                            String[] type = new String[resultJsons.size()];
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            List<CategoriesInfo> categoriesInfos = new ArrayList<>();
                             for (int i = 0; i < resultJsons.size(); i++) {
                                 JsonObject json = resultJsons.get(i).getAsJsonObject();
-                                type[i] = json.get("name").getAsString();
+                                CategoriesInfo categoriesInfo = gson.fromJson(json, CategoriesInfo.class);
+                                categoriesInfos.add(categoriesInfo);
                             }
-                            callback.onIdleSaleCategoriesLoaded(type);
+                            callback.onIdleSaleCategoriesLoaded(categoriesInfos);
                         } else {
                             callback.onDataNotAvailable("暂时没有数据");
                         }

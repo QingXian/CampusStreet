@@ -1,6 +1,7 @@
 package com.campusstreet.presenter;
 
 import com.campusstreet.contract.IIdleSaleContract;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.model.IBountyHallBiz;
@@ -36,8 +37,8 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
     public void fetchIdleSaleCategories() {
         mIdleSaleImpl.fetchIdleSaleCategories(new IIdleSaleBiz.LoadIdleSaleCategoriesCallback() {
             @Override
-            public void onIdleSaleCategoriesLoaded(String[] type) {
-                mView.setIdleSaleCategories(type);
+            public void onIdleSaleCategoriesLoaded(List<CategoriesInfo> categoriesInfos) {
+                mView.setIdleSaleCategories(categoriesInfos);
             }
 
             @Override

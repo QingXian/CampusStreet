@@ -2,6 +2,7 @@ package com.campusstreet.model;
 
 import android.support.annotation.NonNull;
 
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.PeripheralShopGoodInfo;
 import com.campusstreet.entity.PeripheralShopInfo;
@@ -23,7 +24,7 @@ public interface IPeripheralShopBiz {
 
     interface LoadPeripheralCategoriesCallback {
 
-        void onPeripheralCategoriesLoad(String[] type);
+        void onPeripheralCategoriesLoad(List<CategoriesInfo> categoriesInfos);
 
         void onDataNotAvailable(String errorMsg);
     }

@@ -23,6 +23,7 @@ import com.campusstreet.R;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IBountyHallContract;
 import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.BountyHallImpl;
@@ -90,7 +91,8 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
     private int mMonth;
     private int mDay;
     private int mIsUser;
-
+    private int[] mPostions;
+    private int mPostion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,14 +128,15 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
     }
 
     @Override
-    public void setUserTaskList(List<BountyHallInfo> bountyHallInfos) {
-
+    public void setBountyHallCategories(List<CategoriesInfo> categories) {
+        mTitle = new String[categories.size()];
+        mPostions = new int[categories.size()];
+        for (int i = 0; i < categories.size(); i++) {
+            mTitle[i] = categories.get(i).getName();
+            mPostions[i] = categories.get(i).getId();
+        }
     }
 
-    @Override
-    public void setBountyHallCategories(String[] type) {
-        mTitle = type;
-    }
 
     @Override
     public void setJoinTaskList(List<JoinInfo> joinInfos) {
@@ -232,11 +235,12 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
             case R.id.rl_task_type:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择类型")
-                        .setSingleChoiceItems(mTitle, mIndex, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(mTitle, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mType = mTitle[i];
-                                mIndex = i;
+                                mPostion = i;
+                                mIndex = mPostions[i];
                                 mTvType.setText(mTitle[i]);
                                 dialogInterface.dismiss();
                             }
@@ -331,7 +335,7 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
         bountyHallInfo.setFee(mEtBounty.getText().toString());
         bountyHallInfo.setCon(mEtDetail.getText().toString());
         bountyHallInfo.setKey(mEtKey.getText().toString());
-        bountyHallInfo.setType(String.valueOf(mIndex + 1));
+        bountyHallInfo.setType(String.valueOf(mIndex));
         bountyHallInfo.setMobile(mEtPhone.getText().toString());
         bountyHallInfo.setLinkman(mEtLinkman.getText().toString());
         bountyHallInfo.setPerson(Integer.valueOf(mEtNum.getText().toString()));

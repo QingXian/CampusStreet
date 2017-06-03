@@ -9,6 +9,7 @@ import com.campusstreet.api.ServiceGenerator;
 import com.campusstreet.common.Const;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.BuyZoneInfo;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -109,12 +110,14 @@ public class BountyHallImpl implements IBountyHallBiz {
                     if (res == 1) {
                         if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
                             JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
-                            String[] type = new String[resultJsons.size()];
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            List<CategoriesInfo> categoriesInfos = new ArrayList<>();
                             for (int i = 0; i < resultJsons.size(); i++) {
                                 JsonObject json = resultJsons.get(i).getAsJsonObject();
-                                type[i] = json.get("name").getAsString();
+                                CategoriesInfo categoriesInfo = gson.fromJson(json, CategoriesInfo.class);
+                                categoriesInfos.add(categoriesInfo);
                             }
-                            callback.onBountyHallCategoriesLoaded(type);
+                            callback.onBountyHallCategoriesLoaded(categoriesInfos);
                         } else {
                             callback.onDataNotAvailable("暂时没有数据");
                         }

@@ -19,4 +19,5 @@ public final class AppConfig {
     public static final String PIC_EWU_SERVER_HOST = "http://ifireant.com/d/ewu/";
     public static final String PIC_HOME_BANNER_SERVER_HOST = "http://ifireant.com/d/";
     public static final String PIC_ASSOCIATION_SERVER_HOST = "http://ifireant.com/eassn/images/ico/";
+    public static final String PIC_LIVE_SERVER_HOST = "http://ifireant.com/eassn/d/dis";
 }

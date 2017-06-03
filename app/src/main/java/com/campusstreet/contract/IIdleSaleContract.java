@@ -1,5 +1,6 @@
 package com.campusstreet.contract;
 
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 
@@ -36,7 +37,7 @@ public interface IIdleSaleContract {
 
         void setIdleSale(List<IdleSaleInfo> idleSaleInfoList);
 
-        void setIdleSaleCategories(String[] type);
+        void setIdleSaleCategories(List<CategoriesInfo> categories);
 
         void setIdleSaleMessageList(List<LeaveMessageInfo> idleSaleMessageList);
 

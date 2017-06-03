@@ -3,6 +3,7 @@ package com.campusstreet.model;
 import android.support.annotation.NonNull;
 
 import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
@@ -100,7 +101,7 @@ public interface IBountyHallBiz {
 
     interface LoadBountyHallCategoriesCallback {
 
-        void onBountyHallCategoriesLoaded(String[] type);
+        void onBountyHallCategoriesLoaded(List<CategoriesInfo> categoriesInfos);
 
         void onDataNotAvailable(String errorMsg);
     }

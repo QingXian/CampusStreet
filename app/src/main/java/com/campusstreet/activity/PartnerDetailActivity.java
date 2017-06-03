@@ -15,6 +15,7 @@ import com.campusstreet.R;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IPartnerContract;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.PartnerInfo;
 import com.campusstreet.model.PartnerImpl;
 import com.campusstreet.presenter.PartnerPresenter;
@@ -93,9 +94,8 @@ public class PartnerDetailActivity extends AppCompatActivity implements IPartner
         }
     }
 
-
     @Override
-    public void setPartnerCategories(String[] type) {
+    public void setPartnerCategories(List<CategoriesInfo> categories) {
 
     }
 

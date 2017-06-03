@@ -3,6 +3,7 @@ package com.campusstreet.contract;
 import android.support.annotation.NonNull;
 
 import com.campusstreet.entity.BountyHallInfo;
+import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
 
 import java.util.List;
@@ -53,9 +54,7 @@ public interface IBountyHallContract {
 
         void setTaskList(List<BountyHallInfo> bountyHallInfos);
 
-        void setUserTaskList(List<BountyHallInfo> bountyHallInfos);
-
-        void setBountyHallCategories(String[] type);
+        void setBountyHallCategories(List<CategoriesInfo> categories);
 
         void setJoinTaskList(List<JoinInfo> joinInfos);
 
