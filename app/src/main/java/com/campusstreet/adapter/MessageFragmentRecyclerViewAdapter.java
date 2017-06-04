@@ -80,10 +80,10 @@ public class MessageFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         final RecyclerItemViewHolder viewHolder = (RecyclerItemViewHolder) holder;
         MessageInfo messageInfo = mList.get(position);
         if (messageInfo != null) {
-
-//        Picasso.with(mContext).load(mList.get()).into(viewHolder.mIvHead);
-//        viewHolder.mTvTitle.setText(mList.get().toString());
-//        viewHolder.mTvContent.setText(mList.get().toString());
+            viewHolder.mTvTitle.setText(messageInfo.getTitle());
+            viewHolder.mTvContent.setText(messageInfo.getCon());
+            viewHolder.mTvTime.setText(messageInfo.getTime());
+            viewHolder.itemView.setTag(messageInfo);
         }
     }
 
@@ -98,8 +98,6 @@ public class MessageFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Rec
 
     static class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.iv_head)
-        CircleImageView mIvHead;
         @BindView(R.id.tv_title)
         TextView mTvTitle;
         @BindView(R.id.tv_content)

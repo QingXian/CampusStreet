@@ -311,6 +311,7 @@ public class AssociationDetailActivity extends AppCompatActivity implements IAss
             showMessage(errorMsg);
         } else {
             showMessage("没有数据了");
+            mIsLoading = false;
         }
         setLoadingIndicator(false);
     }

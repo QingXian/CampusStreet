@@ -277,6 +277,7 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
             showMessage(errorMsg);
         } else {
             showMessage("没有数据了");
+            mIsLoading = false;
         }
         setLoadingIndicator(false);
     }

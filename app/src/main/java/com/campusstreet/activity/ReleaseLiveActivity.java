@@ -19,6 +19,7 @@ import com.campusstreet.common.Const;
 import com.campusstreet.contract.IFindContract;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LiveInfo;
+import com.campusstreet.entity.LiveReplyInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.FindImpl;
 import com.campusstreet.presenter.FindPresenter;
@@ -108,6 +109,26 @@ public class ReleaseLiveActivity extends AppCompatActivity implements IFindContr
     }
 
     @Override
+    public void setLiveReplyList(List<LiveReplyInfo> liveReplyList) {
+
+    }
+
+    @Override
+    public void showDeleteSuccess() {
+
+    }
+
+    @Override
+    public void showReplySuccess() {
+
+    }
+
+    @Override
+    public void showOperationError(String errorMsg) {
+
+    }
+
+    @Override
     public void setFindList(List<LiveInfo> liveInfos) {
 
     }
@@ -180,6 +201,9 @@ public class ReleaseLiveActivity extends AppCompatActivity implements IFindContr
             mFiles.add(new File(mImages.get(i)));
         }
         LiveInfo liveinfo = new LiveInfo();
+        liveinfo.setUid(mUserInfo.getUid());
+        liveinfo.setCon(mTvContent.getText().toString());
+        liveinfo.setFiles(mFiles);
         mPresenter.pushLive(liveinfo);
     }
 

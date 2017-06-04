@@ -14,6 +14,6 @@ import retrofit2.http.POST;
 public interface MessageClient {
 
     @FormUrlEncoded
-    @POST("")
+    @POST("get_mysms")
     Call<JsonObject> getMessage(@Field("uid") String uid, @Field("pi") Integer pi);
 }

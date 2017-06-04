@@ -316,8 +316,9 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
             showMessage(errorMsg);
         } else {
             showMessage("没有数据了");
+            mIsLoading = false;
         }
-        setLoadingIndicator(false);
+
     }
 
     @Override

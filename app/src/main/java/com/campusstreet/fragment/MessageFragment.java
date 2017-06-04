@@ -65,8 +65,8 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
         }
         if (mUserInfo != null) {
             mPi = 0;
-//            mPresenter.fetchMessageList(mUserInfo.getUid(), mPi);
-//            setLoadingIndicator(true);
+            mPresenter.fetchMessageList(mUserInfo.getUid(), mPi);
+            setLoadingIndicator(true);
         }
 
     }

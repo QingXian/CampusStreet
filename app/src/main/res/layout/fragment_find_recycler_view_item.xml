@@ -43,7 +43,7 @@
         android:ellipsize="end"
         android:hint="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
         android:maxLength="100"
-        android:maxLines="5"
+        android:maxLines="3"
         android:padding="8dp"
         android:textSize="16sp"/>
 

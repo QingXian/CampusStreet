@@ -1,18 +1,30 @@
 package com.campusstreet.entity;
 
+import java.io.File;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by Orange on 2017/5/31.
  */
 
 public class LiveInfo implements Serializable {
+    private String uid;
     private int id;
     private String username;
     private String userpic;
     private String con;
     private String images;
     private String pubtime;
+    private Set<File> mFiles;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public int getId() {
         return id;
@@ -60,5 +72,13 @@ public class LiveInfo implements Serializable {
 
     public void setPubtime(String pubtime) {
         this.pubtime = pubtime;
+    }
+
+    public Set<File> getFiles() {
+        return mFiles;
+    }
+
+    public void setFiles(Set<File> files) {
+        mFiles = files;
     }
 }

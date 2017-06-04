@@ -5,6 +5,7 @@ import android.util.Log;
 import com.campusstreet.contract.IFindContract;
 import com.campusstreet.contract.IFindContract;
 import com.campusstreet.entity.LiveInfo;
+import com.campusstreet.entity.LiveReplyInfo;
 import com.campusstreet.model.FindImpl;
 import com.campusstreet.model.IFindBiz;
 
@@ -64,6 +65,59 @@ public class FindPresenter implements IFindContract.Presenter {
             @Override
             public void onAddFailure(String errorMsg) {
                 mView.showErrorMsg(errorMsg);
+                mView.setLoadingIndicator(false);
+            }
+        });
+    }
+
+    @Override
+    public void fetchLiveReplyList(int did, int pi) {
+        mFindImpl.fetchLiveReplyList(did, pi, new IFindBiz.LoadLiveReplyListCallback() {
+            @Override
+            public void onFindListLoaded(List<LiveReplyInfo> liveReplyInfos) {
+                mView.setLiveReplyList(liveReplyInfos);
+                mView.setLoadingIndicator(false);
+            }
+
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+                mView.setLoadingIndicator(false);
+            }
+        });
+    }
+
+    @Override
+    public void replyLive(String uid, int did, String con) {
+        mView.setLoadingIndicator(true);
+        mFindImpl.onReplyLive(uid, did, con, new IFindBiz.onReplyLiveCallback() {
+            @Override
+            public void onReplyLiveSuccess() {
+                mView.showReplySuccess();
+                mView.setLoadingIndicator(false);
+            }
+
+            @Override
+            public void onReplyLiveFailure(String errorMsg) {
+                mView.showOperationError(errorMsg);
+                mView.setLoadingIndicator(false);
+            }
+        });
+    }
+
+    @Override
+    public void deleteLive(String uid, int did) {
+        mView.setLoadingIndicator(true);
+        mFindImpl.onDeleteLive(uid, did, new IFindBiz.onDeleteLiveCallback() {
+            @Override
+            public void onDeleteLiveSuccess() {
+                mView.showDeleteSuccess();
+                mView.setLoadingIndicator(false);
+            }
+
+            @Override
+            public void onDeleteLiveFailure(String errorMsg) {
+                mView.showOperationError(errorMsg);
                 mView.setLoadingIndicator(false);
             }
         });

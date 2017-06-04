@@ -248,6 +248,7 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
             showMessage(errorMsg);
         } else {
             showMessage("没有数据了");
+            mIsLoading = false;
         }
         setLoadingIndicator(false);
     }

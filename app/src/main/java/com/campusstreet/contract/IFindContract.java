@@ -1,6 +1,7 @@
 package com.campusstreet.contract;
 
 import com.campusstreet.entity.LiveInfo;
+import com.campusstreet.entity.LiveReplyInfo;
 
 import java.util.List;
 
@@ -18,10 +19,24 @@ public interface IFindContract {
 
         void pushLive(LiveInfo liveInfo);
 
+        void fetchLiveReplyList(int did, int pi);
+
+        void replyLive(String uid, int did, String con);
+
+        void deleteLive(String uid, int did);
+
     }
 
     interface View extends BaseView<Presenter> {
 
+
+        void setLiveReplyList(List<LiveReplyInfo> liveReplyList);
+
+        void showDeleteSuccess();
+
+        void showReplySuccess();
+
+        void showOperationError(String errorMsg);
 
         void setFindList(List<LiveInfo> liveInfos);
 

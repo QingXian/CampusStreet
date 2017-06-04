@@ -14,6 +14,7 @@ public interface IMessageContract {
 
         void fetchMessageList(String uid, int pi);
 
+
     }
 
     interface View extends BaseView<Presenter> {

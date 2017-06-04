@@ -1,9 +1,10 @@
 package com.campusstreet.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,10 +18,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.activity.LiveDetailActivity;
+import com.campusstreet.activity.PeripheraShopActivity;
+import com.campusstreet.activity.PeripheralShopDetailActivity;
 import com.campusstreet.adapter.FindFragmentRecyclerViewAdapter;
-import com.campusstreet.adapter.MessageFragmentRecyclerViewAdapter;
+import com.campusstreet.adapter.LeaveMessageRecycleViewAdapter;
+import com.campusstreet.common.Const;
 import com.campusstreet.contract.IFindContract;
 import com.campusstreet.entity.LiveInfo;
+import com.campusstreet.entity.LiveReplyInfo;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.List;
@@ -45,8 +51,12 @@ public class FindFragment extends Fragment implements IFindContract.View {
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    @BindView(R.id.scrollview)
+    NestedScrollView mScrollView;
     @BindView(R.id.rv_content)
-    PullLoadMoreRecyclerView mRvContent;
+    RecyclerView mRvContent;
+    private boolean mIsLoading;
+    private boolean mIsNeedLoadMore = true;
 
     private Unbinder mUnbinder;
     private IFindContract.Presenter mPresenter;
@@ -73,30 +83,37 @@ public class FindFragment extends Fragment implements IFindContract.View {
     }
 
     private void initEvent() {
-        mRvContent.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+        mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
-            public void onRefresh() {
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                View contentView = mScrollView.getChildAt(0);
+                if (mIsNeedLoadMore && !mIsLoading && contentView.getMeasuredHeight() <= mScrollView.getScrollY() + mScrollView.getHeight()) {
+                    mPresenter.fetchFindList(mPi++);
+                    mIsLoading = true;
+                }
+
             }
 
+        });
+        mAdapter.setOnItemClickListener(new FindFragmentRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onLoadMore() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPresenter.fetchFindList(++mPi);
-                    }
-                }, 500);
+            public void onItemClick(View view, LiveInfo liveInfo) {
+                Intent intent = new Intent(getActivity(), LiveDetailActivity.class);
+                intent.putExtra(Const.LIVEINFO_EXTRA, liveInfo);
+                startActivity(intent);
             }
         });
     }
 
     private void initView() {
-        mRvContent.setLinearLayout();
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mRvContent.setLayoutManager(mLinearLayoutManager);
         mAdapter = new FindFragmentRecyclerViewAdapter(getActivity(), null);
+        mRvContent.setAdapter(mAdapter);
+        mRvContent.setNestedScrollingEnabled(false);
         mRvContent.addItemDecoration(new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL));
-        mRvContent.setAdapter(mAdapter);
-        mRvContent.setPushRefreshEnable(false);
+        mRvContent.setNestedScrollingEnabled(false);
     }
 
     @Override
@@ -111,22 +128,40 @@ public class FindFragment extends Fragment implements IFindContract.View {
     }
 
     @Override
+    public void setLiveReplyList(List<LiveReplyInfo> liveReplyList) {
+
+    }
+
+    @Override
+    public void showDeleteSuccess() {
+
+    }
+
+    @Override
+    public void showReplySuccess() {
+
+    }
+
+    @Override
+    public void showOperationError(String errorMsg) {
+    }
+
+    @Override
     public void setFindList(List<LiveInfo> liveInfos) {
         if (liveInfos != null && liveInfos.size() < 20) {
-            mRvContent.setPushRefreshEnable(false);
+            mIsNeedLoadMore = false;
         } else {
-            mRvContent.setPushRefreshEnable(true);
+            mIsNeedLoadMore = true;
         }
         if (mPi != 0) {
             if (liveInfos != null) {
                 mAdapter.addData(liveInfos);
-                mRvContent.setPullLoadMoreCompleted();
+                mIsLoading = false;
             }
         } else {
             mRvContent.setVisibility(View.VISIBLE);
             mTvError.setVisibility(View.GONE);
             mAdapter.replaceData(liveInfos);
-            mRvContent.setPullLoadMoreCompleted();
             setLoadingIndicator(false);
         }
     }
@@ -144,9 +179,9 @@ public class FindFragment extends Fragment implements IFindContract.View {
             mTvError.setVisibility(View.VISIBLE);
         } else {
             showMessage("没有数据了");
+            mIsLoading = false;
         }
         setLoadingIndicator(false);
-        mRvContent.setPullLoadMoreCompleted();
     }
 
     @Override

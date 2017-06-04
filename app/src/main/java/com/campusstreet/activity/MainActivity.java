@@ -40,8 +40,6 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    @BindView(R.id.scrollview)
-    NestedScrollView mScrollview;
     @BindView(R.id.et_search)
     EditText mEtSearch;
     @BindView(R.id.toolbar_home)
@@ -103,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
 //        setFragment(mHomeFragment);
         mHomeFragment = mHomeFragment.newInstance(mUserInfo);
         setFragment(mHomeFragment);
-        mScrollview.smoothScrollTo(0, 0);
         mToolbarHome.setVisibility(View.VISIBLE);
         mToolbar.setVisibility(View.GONE);
         new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
@@ -122,62 +119,67 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.tv_home:
-                mToolbarTitle.setText(getString(R.string.bot_tv_home));
-                clearSeleted();
-                mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
-                mTvHome.setSelected(true);
-                mHomeFragment = mHomeFragment.newInstance(mUserInfo);
-                setFragment(mHomeFragment);
-                mScrollview.smoothScrollTo(0, 0);
-                mIvToolbarRight.setVisibility(View.GONE);
-                new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
-                mToolbarHome.setVisibility(View.VISIBLE);
-                mToolbar.setVisibility(View.GONE);
+                if (!mToolbarTitle.getText().equals(getString(R.string.bot_tv_home))) {
+                    mToolbarTitle.setText(getString(R.string.bot_tv_home));
+                    clearSeleted();
+                    mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    mTvHome.setSelected(true);
+                    mHomeFragment = mHomeFragment.newInstance(mUserInfo);
+                    setFragment(mHomeFragment);
+                    mIvToolbarRight.setVisibility(View.GONE);
+                    new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
+                    mToolbarHome.setVisibility(View.VISIBLE);
+                    mToolbar.setVisibility(View.GONE);
+                }
                 break;
             case R.id.tv_notice:
-                if (mUserInfo == null) {
-                    showMessage("请您先登录");
-                } else {
-                    mToolbarTitle.setText(getString(R.string.bot_tv_message));
-                    clearSeleted();
-                    mTvNotice.setTextColor(getResources().getColor(R.color.colorPrimary));
-                    mTvNotice.setSelected(true);
-                    mMessageFragment = mMessageFragment.newInstance(mUserInfo);
-                    setFragment(mMessageFragment);
-                    mScrollview.smoothScrollTo(0, 0);
-                    mIvToolbarRight.setVisibility(View.GONE);
-                    mToolbarHome.setVisibility(View.GONE);
-                    mToolbar.setVisibility(View.VISIBLE);
-                    new MessagePresenter(MessageImpl.getInstance(getApplicationContext()), mMessageFragment);
+                if (!mToolbarTitle.getText().equals(getString(R.string.bot_tv_message))) {
+                    if (mUserInfo == null) {
+                        showMessage("请您先登录");
+                    } else {
+                        mToolbarTitle.setText(getString(R.string.bot_tv_message));
+                        clearSeleted();
+                        mTvNotice.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        mTvNotice.setSelected(true);
+                        mMessageFragment = mMessageFragment.newInstance(mUserInfo);
+                        setFragment(mMessageFragment);
+                        mIvToolbarRight.setVisibility(View.GONE);
+                        mToolbarHome.setVisibility(View.GONE);
+                        mToolbar.setVisibility(View.VISIBLE);
+                        new MessagePresenter(MessageImpl.getInstance(getApplicationContext()), mMessageFragment);
+                    }
                 }
                 break;
             case R.id.tv_find:
-                mToolbarTitle.setText(getString(R.string.bot_tv_find));
-                clearSeleted();
-                mTvFind.setTextColor(getResources().getColor(R.color.colorPrimary));
-                mTvFind.setSelected(true);
-                mFindFragment = new FindFragment();
-                setFragment(mFindFragment);
-                mScrollview.smoothScrollTo(0, 0);
-                mIvToolbarRight.setVisibility(View.GONE);
-                mToolbarHome.setVisibility(View.GONE);
-                mToolbar.setVisibility(View.VISIBLE);
-                new FindPresenter(FindImpl.getInstance(getApplicationContext()), mFindFragment);
+                if (!mToolbarTitle.getText().equals(getString(R.string.bot_tv_find))) {
+                    mToolbarTitle.setText(getString(R.string.bot_tv_find));
+                    clearSeleted();
+                    mTvFind.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    mTvFind.setSelected(true);
+                    mFindFragment = new FindFragment();
+                    setFragment(mFindFragment);
+                    mIvToolbarRight.setVisibility(View.GONE);
+                    mToolbarHome.setVisibility(View.GONE);
+                    mToolbar.setVisibility(View.VISIBLE);
+                    new FindPresenter(FindImpl.getInstance(getApplicationContext()), mFindFragment);
+                }
                 break;
             case R.id.tv_user:
-                mToolbarTitle.setText(getString(R.string.bot_tv_user));
-                clearSeleted();
-                mTvUser.setTextColor(getResources().getColor(R.color.colorPrimary));
-                mTvUser.setSelected(true);
-                mUserFragment = mUserFragment.newInstance(mUserInfo);
-                setFragment(mUserFragment);
-                mScrollview.smoothScrollTo(0, 0);
-                mIvToolbarRight.setVisibility(View.VISIBLE);
-                mToolbarHome.setVisibility(View.GONE);
-                mToolbar.setVisibility(View.VISIBLE);
-                mIvToolbarRight.setImageResource(R.drawable.ic_setting);
+                if (!mToolbarTitle.getText().equals(getString(R.string.bot_tv_user))) {
+                    mToolbarTitle.setText(getString(R.string.bot_tv_user));
+                    clearSeleted();
+                    mTvUser.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    mTvUser.setSelected(true);
+                    mUserFragment = mUserFragment.newInstance(mUserInfo);
+                    setFragment(mUserFragment);
+                    mIvToolbarRight.setVisibility(View.VISIBLE);
+                    mToolbarHome.setVisibility(View.GONE);
+                    mToolbar.setVisibility(View.VISIBLE);
+                    mIvToolbarRight.setImageResource(R.drawable.ic_setting);
+                }
                 break;
             case R.id.iv_release:
+
                 if (mUserInfo != null) {
                     Intent intent = new Intent(this, ReleaseLiveActivity.class);
                     intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
