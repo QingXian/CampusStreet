@@ -1,9 +1,13 @@
 package com.campusstreet.activity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -102,7 +106,11 @@ public class CampusInformationDetailActivity extends AppCompatActivity implement
         mTvTitle.setText(mNewInfo.getTitle());
         String time = getTimeRange(mNewInfo.getPubtime());
         mTvTime.setText(time);
-        mTvContent.setText(newInfo.getSummary());
+
+//        String html="<font color='red'>样式一</font> <br>";
+        CharSequence charSequence = Html.fromHtml(mNewInfo.getSummary());
+        mTvContent.setText(charSequence);
+
     }
 
     @Override

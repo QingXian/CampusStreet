@@ -8,12 +8,12 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="36dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
+        android:minHeight="36dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <TextView
@@ -131,7 +131,7 @@
                 android:background="@color/colorGray"/>
 
             <TextView
-                android:id="@+id/tv_tradetype"
+                android:id="@+id/tv_tradetype_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/view"
@@ -139,8 +139,27 @@
                 android:layout_toRightOf="@+id/iv_head"
                 android:paddingRight="16dp"
                 android:paddingTop="8dp"
+                android:text="交易方式:"/>
+            <TextView
+                android:id="@+id/tv_tradetype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/view"
+                android:layout_toRightOf="@+id/tv_tradetype_title"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
                 android:text="见面交易"/>
 
+
+            <TextView
+                android:id="@+id/tv_degree_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_head"
+                android:layout_below="@+id/tv_tradetype_title"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:text="新旧程度:"/>
             <TextView
                 android:id="@+id/tv_degree"
                 android:layout_width="wrap_content"
@@ -153,11 +172,21 @@
                 android:text="九成新"/>
 
             <TextView
-                android:id="@+id/tv_content"
+                android:id="@+id/tv_content_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_degree"
                 android:layout_toRightOf="@+id/iv_head"
+                android:paddingBottom="8dp"
+                android:paddingRight="16dp"
+                android:paddingTop="8dp"
+                android:text="描述内容:"/>
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_degree"
+                android:layout_toRightOf="@+id/tv_content_title"
                 android:paddingBottom="8dp"
                 android:paddingRight="16dp"
                 android:paddingTop="8dp"
@@ -170,11 +199,19 @@
                 android:background="@color/colorGray"/>
 
             <TextView
-                android:id="@+id/tv_place"
+                android:id="@+id/tv_place_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_content"
                 android:layout_toRightOf="@+id/iv_head"
+                android:paddingTop="8dp"
+                android:text="地点:"/>
+            <TextView
+                android:id="@+id/tv_place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_content"
+                android:layout_toRightOf="@+id/tv_place_title"
                 android:paddingTop="8dp"
                 android:text="二组食堂"/>
 
@@ -182,8 +219,8 @@
                 android:id="@+id/tv_phone_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tv_place"
-                android:layout_alignStart="@+id/tv_place"
+                android:layout_alignLeft="@+id/tv_place_title"
+                android:layout_alignStart="@+id/tv_place_title"
                 android:layout_below="@+id/tv_place"
                 android:paddingTop="8dp"
                 android:text="@string/act_idle_sale_detail_phone_hint"/>
@@ -203,8 +240,8 @@
                 android:id="@+id/tv_qq_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/tv_place"
-                android:layout_alignStart="@+id/tv_place"
+                android:layout_alignLeft="@+id/tv_place_title"
+                android:layout_alignStart="@+id/tv_place_title"
                 android:layout_below="@+id/tv_phone"
                 android:paddingTop="8dp"
                 android:text="@string/act_idle_sale_detail_qq_hint"/>

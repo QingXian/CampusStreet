@@ -102,7 +102,9 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
             public void onDataNotAvailable(String errorMsg) {
                 mView.setLoadingIndicator(false);
                 if (state == JOINNOTPASS)
-                    mView.showErrorMsg("暂时没有人报名");
+                {
+                    //                    mView.showErrorMsg("暂时没有人报名");
+                }
                 else
                     mView.showNoPassMsg();
             }

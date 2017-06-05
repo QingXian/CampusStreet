@@ -9,8 +9,8 @@
         android:background="@color/colorPrimary"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
+        android:layout_height="36dp"
+        android:minHeight="36dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         >
         <TextView

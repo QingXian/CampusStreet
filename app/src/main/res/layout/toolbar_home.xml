@@ -10,8 +10,8 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_home"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
+        android:layout_height="36dp"
+        android:minHeight="36dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         >
 
@@ -29,22 +29,22 @@
             android:drawableLeft="@drawable/ic_home_search"
             android:id="@+id/et_search"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_marginRight="24dp"
             android:background="@drawable/bg_toolbar_home_et"
             android:hint="@string/toolbar_with_search_hint"
             android:imeOptions="actionSearch"
             android:padding="8dp"
             android:singleLine="true"
-            android:textSize="15sp"/>
+            android:textSize="13sp"/>
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.Toolbar
         android:visibility="gone"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
+        android:layout_height="36dp"
+        android:minHeight="36dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         >
 

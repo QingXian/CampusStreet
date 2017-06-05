@@ -3,15 +3,15 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="56dp"
+              android:layout_height="36dp"
               android:background="@color/colorPrimary"
     >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
+        android:layout_height="36dp"
+        android:minHeight="36dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         >
 
@@ -20,14 +20,14 @@
             android:singleLine="true"
             android:id="@+id/et_search"
             android:layout_width="220dp"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_gravity="center"
             android:background="@drawable/bg_toolbar_et"
             android:drawableLeft="@drawable/ic_search"
             android:drawablePadding="8dp"
             android:padding="8dp"
             android:hint="@string/toolbar_with_search_hint"
-            android:textSize="15sp"/>
+            android:textSize="13sp"/>
 
         <TextView
             android:visibility="gone"
