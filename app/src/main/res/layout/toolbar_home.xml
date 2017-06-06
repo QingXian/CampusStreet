@@ -26,15 +26,15 @@
 
         <EditText
             android:drawablePadding="8dp"
-            android:layout_marginLeft="70dp"
             android:drawableLeft="@drawable/ic_home_search"
             android:id="@+id/et_search"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="32dp"
             android:background="@drawable/bg_toolbar_home_et"
             android:hint="@string/toolbar_with_search_hint"
             android:imeOptions="actionSearch"
             android:padding="8dp"
+            android:layout_marginRight="12dp"
             android:singleLine="true"
             android:textSize="13sp"/>
     </android.support.v7.widget.Toolbar>
