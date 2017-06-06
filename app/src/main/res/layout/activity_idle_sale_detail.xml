@@ -259,18 +259,32 @@
                 android:text="156567898"/>
 
             <View
+                android:id="@+id/view_message_line"
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
                 android:layout_below="@+id/tv_qq"
                 android:background="@color/colorGray"/>
+            <TextView
+                android:id="@+id/tv_message_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view_message_line"
+                android:background="@color/colorWhite"
+                android:paddingBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:drawableLeft="@drawable/ic_message_left"
+                android:drawablePadding="8dp"
+                android:text="@string/act_buy_zone_message_hint"
+                android:textColor="@color/colorBlack"
+                android:textSize="16sp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/tv_qq"
+                android:layout_below="@+id/tv_message_hint"
                 android:layout_marginBottom="48dp"
-                android:layout_marginTop="8dp"
                 android:background="@color/colorGray">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>

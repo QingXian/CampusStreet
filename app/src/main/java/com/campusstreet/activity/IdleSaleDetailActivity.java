@@ -107,6 +107,8 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
     View mView;
     @BindView(R.id.scrollView)
     NestedScrollView mScrollView;
+    @BindView(R.id.tv_message_hint)
+    TextView mMessageHint;
     private LinearLayoutManager mLinearLayoutManager;
     private IIdleSaleContract.Presenter mPresenter;
     private LeaveMessageRecycleViewAdapter mAdapter;
@@ -306,6 +308,11 @@ public class IdleSaleDetailActivity extends AppCompatActivity implements IIdleSa
         } else {
             mAdapter.replaceData(idleSaleMessageList);
             setLoadingIndicator(false);
+        }
+
+        if (mAdapter != null)
+        {
+            mMessageHint.setText("留言 ● "+ mAdapter.getItemCount());
         }
     }
 
