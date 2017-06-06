@@ -2,6 +2,7 @@ package com.campusstreet.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,14 +82,46 @@ public class HomeFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
                         .fit()
                         .error(R.drawable.ic_pic_error)
                         .into(viewHolder.mIvImage1);
+                viewHolder.mIvImage1.setVisibility(View.VISIBLE);
+                viewHolder.mTvContent.setVisibility(View.GONE);
             } else {
                 viewHolder.mIvImage1.setVisibility(View.GONE);
+                viewHolder.mTvContent.setVisibility(View.VISIBLE);
+                viewHolder.mTvContent.setText(homeDynamicInfo.getCon());
+                if (homeDynamicInfo.getType() == 6) //校园资讯不显示内容
+                {
+                    viewHolder.mTvContent.setVisibility(View.GONE);
+                }
             }
 
             viewHolder.mTvName.setText(homeDynamicInfo.getTname());
+            viewHolder.mTvTime.setText(homeDynamicInfo.getTime());
             viewHolder.mTvTitle.setText(homeDynamicInfo.getTitle());
-            viewHolder.mTvContent.setText(homeDynamicInfo.getCon());
             viewHolder.itemView.setTag(homeDynamicInfo);
+            switch (homeDynamicInfo.getType())
+            {
+                case 1:
+                    viewHolder.mIvHeadIcon.setImageResource(R.drawable.ic_idle_sale);
+                    break;
+                case 2:
+                    viewHolder.mIvHeadIcon.setImageResource(R.drawable.ic_buy_zone);
+                    break;
+                case 3:
+                    viewHolder.mIvHeadIcon.setImageResource(R.drawable.ic_campus_recruitment);
+                    break;
+                case 4:
+                    viewHolder.mIvHeadIcon.setImageResource(R.drawable.ic_bounty_hall);
+                    break;
+                case 5:
+                    viewHolder.mIvHeadIcon.setImageResource(R.drawable.ic_association);
+                    break;
+                case 6:
+                    viewHolder.mIvHeadIcon.setImageResource(R.drawable.ic_campus_information);
+                    break;
+                case 7:
+                    viewHolder.mIvHeadIcon.setImageResource(R.drawable.ic_partner);
+                    break;
+            }
         }
 
     }
@@ -112,8 +145,12 @@ public class HomeFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
 
     static class RecyclerItemViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.iv_head_icon)
+        ImageView mIvHeadIcon;
         @BindView(R.id.tv_name)
         TextView mTvName;
+        @BindView(R.id.tv_time)
+        TextView mTvTime;
         @BindView(R.id.tv_title)
         TextView mTvTitle;
         @BindView(R.id.tv_content)

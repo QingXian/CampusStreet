@@ -8,19 +8,35 @@
     android:padding="8dp">
 
 
+    <ImageView
+        android:id="@+id/iv_head_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_campus_information"
+        />
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:layout_toRightOf="@+id/iv_head_icon"
+        android:padding="4dp"
         android:text="龙岩学院"
-        android:textColor="@color/colorBlack"/>
+        android:textColor="@color/tv_color_defult"/>
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_head_icon"
+        android:layout_below="@+id/tv_name"
+        android:padding="2dp"
+        android:text="5小时前"
+        android:textColor="@color/tv_color_defult"/>
 
     <View
         android:id="@+id/view_pos"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/tv_name"
+        android:layout_below="@+id/iv_head_icon"
         android:layout_marginTop="8dp"
         android:background="@color/colorGray"/>
 

@@ -13,8 +13,8 @@
         android:src="@drawable/ic_head_test"/>
     <TextView
         android:id="@+id/tv_name"
-        android:paddingTop="16dp"
-        android:paddingLeft="24dp"
+        android:paddingTop="3dp"
+        android:paddingLeft="6dp"
         android:layout_toRightOf="@+id/iv_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

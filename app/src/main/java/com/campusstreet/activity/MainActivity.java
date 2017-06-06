@@ -1,18 +1,25 @@
 package com.campusstreet.activity;
 
+import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +29,7 @@ import com.campusstreet.entity.UserInfo;
 import com.campusstreet.fragment.FindFragment;
 import com.campusstreet.fragment.HomeFragment;
 import com.campusstreet.fragment.MessageFragment;
+import com.campusstreet.fragment.ReleasePopupWindow;
 import com.campusstreet.fragment.UserFragment;
 import com.campusstreet.model.FindImpl;
 import com.campusstreet.model.HomeImpl;
@@ -33,11 +41,13 @@ import com.campusstreet.utils.PermissionsManage;
 import com.campusstreet.utils.PreferencesUtil;
 import com.google.gson.GsonBuilder;
 
+import java.security.cert.CertPathValidatorException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ReleasePopupWindow.OnItemClickListener {
 
     private static final String TAG = "MainActivity";
     @BindView(R.id.et_search)
@@ -72,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
     PermissionsManage mPermissionsManage;
     private UserInfo mUserInfo;
     private boolean mIsLogined = false;
+
+    private ReleasePopupWindow mPop;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +192,61 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.iv_release:
+                showPopupWindow();
+//                if (mUserInfo != null) {
+//                    Intent intent = new Intent(this, ReleaseLiveActivity.class);
+//                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+//                    startActivity(intent);
+//                } else {
+//                    showMessage("请您先登录");
+//                }
+                break;
+        }
+    }
 
+    private  void showPopupWindow()
+    {
+        mPop=new ReleasePopupWindow(this);
+        mPop.showAtLocation(this.findViewById(R.id.bottom_navigation), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        mPop.setUserInfo(mUserInfo);
+        mPop.setOnItemClickListener(this);
+
+    }
+
+    @Override
+    public void setOnItemClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_release_bounty: {
+                if (mUserInfo != null) {
+                    Intent intent = new Intent(this, AddBountyHallActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    startActivity(intent);
+                } else {
+                    showMessage("您还未登录");
+                }
+            }
+            break;
+            case R.id.btn_release_buy: {
+                if (mUserInfo != null) {
+                    Intent intent = new Intent(this, AddBuyZoneActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    startActivity(intent);
+                } else {
+                    showMessage("您还未登录");
+                }
+            }
+            break;
+            case R.id.btn_release_idl: {
+                if (mUserInfo != null) {
+                    Intent intent = new Intent(this, AddIdleSaleActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    startActivity(intent);
+                } else {
+                    showMessage("您还未登录");
+                }
+            }
+            break;
+            case R.id.btn_release_live: {
                 if (mUserInfo != null) {
                     Intent intent = new Intent(this, ReleaseLiveActivity.class);
                     intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
@@ -187,9 +254,13 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     showMessage("请您先登录");
                 }
+            }
                 break;
         }
     }
+
+
+
 
     private void setFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.main_content, fragment).commit();
@@ -247,4 +318,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

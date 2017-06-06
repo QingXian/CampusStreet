@@ -17,9 +17,8 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
+            style="@style/toolbar_height"
             android:background="@color/colorPrimary"
-            android:minHeight="36dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             >
 

@@ -269,6 +269,11 @@ public class BuyZoneDetailActivity extends AppCompatActivity implements IBuyZone
             mAdapter.replaceData(BuyZoneMessageList);
             setLoadingIndicator(false);
         }
+
+        if (mAdapter!=null)
+        {
+            mTvMessageHint.setText("留言 ● "+ mAdapter.getItemCount());
+        }
     }
 
     @Override
