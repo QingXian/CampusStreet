@@ -84,4 +84,30 @@ public class MessageImpl implements IMessageBiz {
             }
         });
     }
+
+    @Override
+    public void onReadMessage(String uid, int smsids, @NonNull final onReadMessageCallback callback) {
+        Call<JsonObject> call = mMessageClient.readMessage(uid,smsids);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+
+                        callback.onReadMessageSuccess();
+                    } else {
+                        callback.onReadMessageFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onReadMessageFailure("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
 }

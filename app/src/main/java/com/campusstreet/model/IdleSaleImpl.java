@@ -276,7 +276,7 @@ public class IdleSaleImpl implements IIdleSaleBiz {
                             }
                             callback.onIdleSaleMessageListLoaded(leaveMessageInfoList);
                         } else {
-//                            callback.onDataNotAvailable("暂时没有人留言");
+                            callback.onDataNotAvailable("暂时没有人留言");
                         }
 
                     } else {

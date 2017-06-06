@@ -180,28 +180,6 @@ public class AssociationImpl implements IAssociationBiz {
 
     @Override
     public void onApplyJoinAssn(int pid, String uid, int st, String con, @NonNull final onApplyJoinAssnCallback callback) {
-        Call<JsonObject> call = mAssociationClient.leaveMessage(pid, uid, con);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                JsonObject bodyJson = response.body();
-                if (bodyJson != null) {
-                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
-                    if (res == 1) {
-
-                        callback.onApplyJoinAssnSuccess();
-                    } else {
-                        callback.onApplyJoinAssnFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                callback.onApplyJoinAssnFailure("网络异常");
-                Log.d(TAG, "onFailure: " + t);
-            }
-        });
     }
 
 

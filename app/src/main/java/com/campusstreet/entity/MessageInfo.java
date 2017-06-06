@@ -2,6 +2,8 @@ package com.campusstreet.entity;
 
 import java.io.Serializable;
 
+import static android.R.attr.type;
+
 /**
  * Created by Orange on 2017/5/31.
  */
@@ -12,11 +14,12 @@ public class MessageInfo implements Serializable {
     private String userpic;
     private int tid;
     private int mainid;
-    private int type;
+    private String typecode;
     private String title;
     private String con;
     private String time;
-    private String isread;
+    private boolean isread;
+
 
     public int getId() {
         return id;
@@ -58,13 +61,6 @@ public class MessageInfo implements Serializable {
         this.mainid = mainid;
     }
 
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
 
     public String getTitle() {
         return title;
@@ -90,11 +86,20 @@ public class MessageInfo implements Serializable {
         this.time = time;
     }
 
-    public String getIsread() {
+    public boolean getIsread() {
         return isread;
     }
 
-    public void setIsread(String isread) {
+    public void setIsread(boolean isread) {
         this.isread = isread;
     }
+
+    public String getTypecode() {
+        return typecode;
+    }
+
+    public void setTypecode(String typecode) {
+        this.typecode = typecode;
+    }
+
 }

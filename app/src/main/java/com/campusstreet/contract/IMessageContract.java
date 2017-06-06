@@ -14,6 +14,7 @@ public interface IMessageContract {
 
         void fetchMessageList(String uid, int pi);
 
+        void readMessage(String uid,int smsids);
 
     }
 
@@ -23,6 +24,8 @@ public interface IMessageContract {
         void setMessageList(List<MessageInfo> messageInfo);
 
         void showErrorMsg(String errorMsg);
+
+        void showReadMessageSuccess();
 
         /**
          * 设置是否加载指示器

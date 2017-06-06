@@ -27,6 +27,7 @@ import com.campusstreet.common.Const;
 import com.campusstreet.contract.IFindContract;
 import com.campusstreet.entity.LiveInfo;
 import com.campusstreet.entity.LiveReplyInfo;
+import com.campusstreet.entity.UserInfo;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.List;
@@ -57,6 +58,7 @@ public class FindFragment extends Fragment implements IFindContract.View {
     RecyclerView mRvContent;
     private boolean mIsLoading;
     private boolean mIsNeedLoadMore = true;
+    private UserInfo mUserInfo;
 
     private Unbinder mUnbinder;
     private IFindContract.Presenter mPresenter;
@@ -64,9 +66,20 @@ public class FindFragment extends Fragment implements IFindContract.View {
     private int mPi;
 
 
+    public static FindFragment newInstance(UserInfo userInfo) {
+        Bundle args = new Bundle();
+        args.putSerializable(Const.USERINFO_EXTRA, userInfo);
+        FindFragment findFragment = new FindFragment();
+        findFragment.setArguments(args);
+        return findFragment;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mUserInfo = (UserInfo) getArguments().getSerializable(Const.USERINFO_EXTRA);
+        }
         mPi = 0;
         mPresenter.fetchFindList(mPi);
         setLoadingIndicator(true);
@@ -100,6 +113,7 @@ public class FindFragment extends Fragment implements IFindContract.View {
             public void onItemClick(View view, LiveInfo liveInfo) {
                 Intent intent = new Intent(getActivity(), LiveDetailActivity.class);
                 intent.putExtra(Const.LIVEINFO_EXTRA, liveInfo);
+                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
             }
         });
@@ -110,9 +124,6 @@ public class FindFragment extends Fragment implements IFindContract.View {
         mRvContent.setLayoutManager(mLinearLayoutManager);
         mAdapter = new FindFragmentRecyclerViewAdapter(getActivity(), null);
         mRvContent.setAdapter(mAdapter);
-        mRvContent.setNestedScrollingEnabled(false);
-        mRvContent.addItemDecoration(new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL));
         mRvContent.setNestedScrollingEnabled(false);
     }
 

@@ -1,10 +1,14 @@
 package com.campusstreet.fragment;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +18,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.activity.BountyHallDetailActivity;
+import com.campusstreet.activity.BuyZoneDetailActivity;
+import com.campusstreet.activity.CampusInformationDetailActivity;
+import com.campusstreet.activity.CampusRecruitmentActivity;
+import com.campusstreet.activity.CampusRecruitmentDetailActivity;
+import com.campusstreet.activity.IdleSaleDetailActivity;
+import com.campusstreet.activity.PartnerDetailActivity;
+import com.campusstreet.activity.PostDetailActivity;
 import com.campusstreet.adapter.MessageFragmentRecyclerViewAdapter;
+import com.campusstreet.api.AssociationClient;
+import com.campusstreet.api.ServiceGenerator;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.IMessageContract;
 import com.campusstreet.entity.MessageInfo;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.model.AssociationImpl;
+import com.google.gson.JsonObject;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.List;
@@ -26,6 +42,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.campusstreet.common.Const.ID_EXTRA;
+import static com.campusstreet.common.Const.TYPE;
 
 /**
  * Created by Orange on 2017/4/1.
@@ -43,6 +66,7 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    private AssociationClient mAssociationClient;
     private IMessageContract.Presenter mPresenter;
     private MessageFragmentRecyclerViewAdapter mAdapter;
     private Unbinder mUnbinder;
@@ -80,8 +104,6 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
 
         mRvContent.setLinearLayout();
         mAdapter = new MessageFragmentRecyclerViewAdapter(getActivity(), null);
-        mRvContent.addItemDecoration(new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL));
         mRvContent.setAdapter(mAdapter);
         initView();
         initEvent();
@@ -92,49 +114,53 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
         mAdapter.setOnItemClickListener(new MessageFragmentRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, MessageInfo messageInfo) {
-//                switch (messageInfo.getType()) {
-//                    case 1:
-//                        Intent intent = new Intent(getActivity(), IdleSaleDetailActivity.class);
-//                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
-//                        startActivity(intent);
-//                        break;
-//                    case 2:
-//                        intent = new Intent(getActivity(), BuyZoneDetailActivity.class);
-//                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
-//                        startActivity(intent);
-//                        break;
-//                    case 3:
-//                        intent = new Intent(getActivity(), CampusRecruitmentActivity.class);
-//                        intent.putExtra(TYPE, messageInfo.getType());
-//                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
-//                        startActivity(intent);
-//                        break;
-//                    case 4:
-//                        intent = new Intent(getActivity(), BountyHallDetailActivity.class);
-//                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
-//                        startActivity(intent);
-//                        break;
-//                    case 5:
-//                        intent = new Intent(getActivity(), PostDetailActivity.class);
-//                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
-//                        startActivity(intent);
-//                        break;
-//                    case 6:
-//                        intent = new Intent(getActivity(), CampusInformationDetailActivity.class);
-//                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
-//                        startActivity(intent);
-//                        break;
-//                    case 7:
-//                        intent = new Intent(getActivity(), PartnerDetailActivity.class);
-//                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
-//                        startActivity(intent);
-//                        break;
-//                    case 8:
-//                        intent = new Intent(getActivity(), CampusRecruitmentDetailActivity.class);
-//                        intent.putExtra(TYPE, messageInfo.getType());
-//                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
-//                        startActivity(intent);
-//                        break;
+                mPresenter.readMessage(mUserInfo.getUid(), messageInfo.getId());
+                switch (messageInfo.getTypecode()) {
+                    case "join_assn":
+                        showAlertDialog(messageInfo);
+                        break;
+                    case "ewu_reply":
+                        Intent intent = new Intent(getActivity(), IdleSaleDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case "wish_reply":
+                        intent = new Intent(getActivity(), BuyZoneDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case "task_join":
+                        intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case "task_accept":
+                        intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case "task_execute":
+                        intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case "task_done":
+                        intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case "task_success":
+                        intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
+                        startActivity(intent);
+                        break;
+                    case "recruit_push":
+                        intent = new Intent(getActivity(), CampusRecruitmentDetailActivity.class);
+                        intent.putExtra(ID_EXTRA, messageInfo.getMainid());
+                        intent.putExtra(TYPE, 3);
+                        startActivity(intent);
+                        break;
+                }
             }
         });
         mRvContent.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
@@ -210,6 +236,11 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
     }
 
     @Override
+    public void showReadMessageSuccess() {
+
+    }
+
+    @Override
     public void setLoadingIndicator(boolean active) {
         if (mProgressBarContainer != null) {
             if (active) {
@@ -233,5 +264,64 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
     @Override
     public void setPresenter(IMessageContract.Presenter presenter) {
         mPresenter = presenter;
+    }
+
+    private void showAlertDialog(final MessageInfo messageInfo) {
+        new AlertDialog.Builder(getActivity()).setTitle(messageInfo.getUsername() + "请求加入社团")
+                .setMessage("备注：" + messageInfo.getCon())
+                .setPositiveButton("同意", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        mAssociationClient = ServiceGenerator.createService(getActivity(), AssociationClient.class);
+                        Call<JsonObject> call = mAssociationClient.applyJoinAssn(messageInfo.getMainid(), mUserInfo.getUid(), 1, "");
+                        call.enqueue(new Callback<JsonObject>() {
+                            @Override
+                            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                JsonObject bodyJson = response.body();
+                                if (bodyJson != null) {
+                                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                                    if (res == 1) {
+                                        showMessage("已同意");
+                                    } else {
+                                        showMessage(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<JsonObject> call, Throwable t) {
+                                showMessage("网络异常");
+                            }
+                        });
+
+                    }
+                })
+                .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mAssociationClient = ServiceGenerator.createService(getActivity(), AssociationClient.class);
+                        Call<JsonObject> call = mAssociationClient.applyJoinAssn(messageInfo.getMainid(), mUserInfo.getUid(), -1, "");
+                        call.enqueue(new Callback<JsonObject>() {
+                            @Override
+                            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                JsonObject bodyJson = response.body();
+                                if (bodyJson != null) {
+                                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                                    if (res == 1) {
+                                        showMessage("已拒绝");
+                                    } else {
+                                        showMessage(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<JsonObject> call, Throwable t) {
+                                showMessage("网络异常");
+                            }
+                        });
+
+                    }
+                })
+                .show();
     }
 }

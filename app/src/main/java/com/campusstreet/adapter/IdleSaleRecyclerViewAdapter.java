@@ -82,6 +82,7 @@ public class IdleSaleRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVi
                     .into(viewHolder.mIvImage);
             viewHolder.mTvTitle.setText(idleSaleInfo.getName());
             viewHolder.mTvPrice.setText(idleSaleInfo.getMoney());
+            viewHolder.mTvPlace.setText(idleSaleInfo.getTradeplace());
             viewHolder.itemView.setTag(idleSaleInfo);
         }
     }

@@ -126,7 +126,6 @@ public class FindImpl implements IFindBiz {
         requestBodyMap.put("con", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA),
                 liveInfo.getCon()));
         Call<JsonObject> call = mLiveClient.pushLive(requestBodyMap, files);
-//        Call<JsonObject> call = mIdleSaleClient.pushIdlegoods(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -152,7 +151,7 @@ public class FindImpl implements IFindBiz {
 
     @Override
     public void fetchLiveReplyList(int did, int pi, @NonNull final LoadLiveReplyListCallback callback) {
-        Call<JsonObject> call = mLiveClient.getLive(pi);
+        Call<JsonObject> call = mLiveClient.getLivereply(did,pi);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -171,7 +170,7 @@ public class FindImpl implements IFindBiz {
                             }
                             callback.onFindListLoaded(liveReplyInfos);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
+                            callback.onDataNotAvailable("暂时没有人留言");
                         }
 
                     } else {

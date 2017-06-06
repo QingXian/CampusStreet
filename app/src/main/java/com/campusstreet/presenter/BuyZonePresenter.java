@@ -127,7 +127,7 @@ public class BuyZonePresenter implements IBuyZoneContract.Presenter {
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
-                mView.showErrorMsg(errorMsg);
+//                mView.showErrorMsg(errorMsg);
                 mView.setLoadingIndicator(false);
             }
         });

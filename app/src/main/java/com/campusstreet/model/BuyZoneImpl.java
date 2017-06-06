@@ -242,7 +242,7 @@ public class BuyZoneImpl implements IBuyZoneBiz {
                             }
                             callback.onBuyZoneMessageListLoaded(leaveMessageInfoList);
                         } else {
-//                            callback.onDataNotAvailable("暂时没有人留言");
+                            callback.onDataNotAvailable("暂时没有人留言");
                         }
 
                     } else {

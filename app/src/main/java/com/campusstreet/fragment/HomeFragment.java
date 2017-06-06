@@ -217,8 +217,6 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mRvContent.setLayoutManager(linearLayoutManager);
         mAdapter = new HomeFragmentRecyclerViewAdapter(getActivity(), null);
-        mRvContent.addItemDecoration(new DividerItemDecoration(getActivity(),
-                DividerItemDecoration.VERTICAL));
         mRvContent.setAdapter(mAdapter);
         mRvContent.setNestedScrollingEnabled(false);
     }

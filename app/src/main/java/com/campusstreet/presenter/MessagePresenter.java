@@ -46,4 +46,19 @@ public class MessagePresenter implements IMessageContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void readMessage(String uid, int smsids) {
+        mMessageImpl.onReadMessage(uid, smsids, new IMessageBiz.onReadMessageCallback() {
+            @Override
+            public void onReadMessageSuccess() {
+                mView.showReadMessageSuccess();
+            }
+
+            @Override
+            public void onReadMessageFailure(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+            }
+        });
+    }
 }

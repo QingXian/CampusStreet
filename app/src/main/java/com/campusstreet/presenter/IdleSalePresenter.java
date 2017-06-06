@@ -131,7 +131,7 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
             @Override
             public void onDataNotAvailable(String errorMsg) {
                 mView.setLoadingIndicator(false);
-                mView.showErrorMsg(errorMsg);
+//                mView.showErrorMsg(errorMsg);
             }
         });
     }

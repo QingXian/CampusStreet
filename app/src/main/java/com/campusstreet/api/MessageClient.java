@@ -16,4 +16,9 @@ public interface MessageClient {
     @FormUrlEncoded
     @POST("get_mysms")
     Call<JsonObject> getMessage(@Field("uid") String uid, @Field("pi") Integer pi);
+
+    @FormUrlEncoded
+    @POST("read_mysms")
+    Call<JsonObject> readMessage(@Field("uid") String uid, @Field("smsids") Integer pi);
+
 }

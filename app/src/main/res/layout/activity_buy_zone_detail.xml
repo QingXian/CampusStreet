@@ -232,6 +232,8 @@
         android:paddingTop="4dp">
 
         <EditText
+            android:maxLength="200"
+            android:singleLine="true"
             android:id="@+id/et_message"
             android:layout_width="0dp"
             android:layout_height="32dp"

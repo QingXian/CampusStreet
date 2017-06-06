@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                     clearSeleted();
                     mTvFind.setTextColor(getResources().getColor(R.color.colorPrimary));
                     mTvFind.setSelected(true);
-                    mFindFragment = new FindFragment();
+                    mFindFragment = mFindFragment.newInstance(mUserInfo);
                     setFragment(mFindFragment);
                     mIvToolbarRight.setVisibility(View.GONE);
                     mToolbarHome.setVisibility(View.GONE);

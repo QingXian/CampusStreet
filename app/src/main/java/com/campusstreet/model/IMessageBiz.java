@@ -14,6 +14,8 @@ public interface IMessageBiz {
 
     void getMessageList(String uid, int pi, @NonNull LoadMessageListCallback callback);
 
+    void onReadMessage(String uid,int smsids,@NonNull onReadMessageCallback callback);
+
     interface LoadMessageListCallback {
 
         // 加载所有GoodDeeds
@@ -21,5 +23,11 @@ public interface IMessageBiz {
 
         // 获取数据失败的回调
         void onDataNotAvailable(String errorMsg);
+    }
+    interface onReadMessageCallback {
+
+        void onReadMessageSuccess();
+
+        void onReadMessageFailure(String errorMsg);
     }
 }

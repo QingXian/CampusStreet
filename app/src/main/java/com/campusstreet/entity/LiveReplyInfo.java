@@ -8,17 +8,25 @@ import java.io.Serializable;
 
 public class LiveReplyInfo implements Serializable {
 
-    private String nick;
+    private String username;
     private String userpic;
     private String con;
-    private String atime;
+    private String addtime;
 
-    public String getNick() {
-        return nick;
+    public String getAddtime() {
+        return addtime;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
+    public void setAddtime(String addtime) {
+        this.addtime = addtime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getUserpic() {
@@ -37,11 +45,4 @@ public class LiveReplyInfo implements Serializable {
         this.con = con;
     }
 
-    public String getAtime() {
-        return atime;
-    }
-
-    public void setAtime(String atime) {
-        this.atime = atime;
-    }
 }

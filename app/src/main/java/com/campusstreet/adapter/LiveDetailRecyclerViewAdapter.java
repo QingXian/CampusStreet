@@ -62,9 +62,9 @@ public class LiveDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                     .load(AppConfig.AVATAR_SERVER_HOST + liveReplyInfo.getUserpic())
                     .fit()
                     .into(viewHolder.mIvHead);
-            viewHolder.mTvName.setText(liveReplyInfo.getNick());
+            viewHolder.mTvName.setText(liveReplyInfo.getUsername());
             viewHolder.mTvContent.setText(liveReplyInfo.getCon());
-            String time = getTimeRange(liveReplyInfo.getAtime());
+            String time = getTimeRange(liveReplyInfo.getAddtime());
             viewHolder.mTvTime.setText(time);
         }
     }

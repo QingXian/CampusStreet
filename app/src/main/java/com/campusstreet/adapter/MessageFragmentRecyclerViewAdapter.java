@@ -8,18 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.campusstreet.R;
-import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.MessageInfo;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.R.id.list;
 
 /**
  * Created by Orange on 2017/4/17.
@@ -84,6 +78,11 @@ public class MessageFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Rec
             viewHolder.mTvContent.setText(messageInfo.getCon());
             viewHolder.mTvTime.setText(messageInfo.getTime());
             viewHolder.itemView.setTag(messageInfo);
+            if (messageInfo.getIsread()) {
+                viewHolder.mTvIsread.setVisibility(View.GONE);
+            } else {
+                viewHolder.mTvIsread.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -104,6 +103,8 @@ public class MessageFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         TextView mTvContent;
         @BindView(R.id.tv_time)
         TextView mTvTime;
+        @BindView(R.id.tv_isread)
+        TextView mTvIsread;
 
         private RecyclerItemViewHolder(View viewItem) {
             super(viewItem);

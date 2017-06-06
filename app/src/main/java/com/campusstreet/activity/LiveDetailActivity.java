@@ -155,7 +155,11 @@ public class LiveDetailActivity extends AppCompatActivity implements IFindContra
                 .load(AppConfig.AVATAR_SERVER_HOST + mLiveInfo.getUserpic())
                 .fit()
                 .into(mIvHead);
-        initImage(mLiveInfo.getImages());
+        if (!mLiveInfo.getImages().equals("")) {
+            initImage(mLiveInfo.getImages());
+        } else {
+            mImageContentLl.setVisibility(View.GONE);
+        }
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRvContent.setLayoutManager(mLinearLayoutManager);
         mAdapter = new LiveDetailRecyclerViewAdapter(this, null);
@@ -173,26 +177,26 @@ public class LiveDetailActivity extends AppCompatActivity implements IFindContra
             }
             if (mImageNum == 0) {
                 mIvImage1.setVisibility(View.VISIBLE);
-                mIvImage2.setVisibility(View.GONE);
-                mIvImage3.setVisibility(View.GONE);
+                mIvImage2.setVisibility(View.INVISIBLE);
+                mIvImage3.setVisibility(View.INVISIBLE);
                 Picasso.with(this)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + images)
                         .fit()
-                        .into(mIvHead);
+                        .into(mIvImage1);
 
             } else if (mImageNum == 1) {
                 mImages = images.split(",");
                 mIvImage1.setVisibility(View.VISIBLE);
                 mIvImage2.setVisibility(View.VISIBLE);
-                mIvImage3.setVisibility(View.GONE);
+                mIvImage3.setVisibility(View.INVISIBLE);
                 Picasso.with(this)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[0])
                         .fit()
-                        .into(mIvHead);
+                        .into(mIvImage1);
                 Picasso.with(this)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[1])
                         .fit()
-                        .into(mIvHead);
+                        .into(mIvImage2);
             } else if (mImageNum == 2) {
                 mImages = images.split(",");
                 mIvImage1.setVisibility(View.VISIBLE);
@@ -201,15 +205,15 @@ public class LiveDetailActivity extends AppCompatActivity implements IFindContra
                 Picasso.with(this)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[0])
                         .fit()
-                        .into(mIvHead);
+                        .into(mIvImage1);
                 Picasso.with(this)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[1])
                         .fit()
-                        .into(mIvHead);
+                        .into(mIvImage2);
                 Picasso.with(this)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[2])
                         .fit()
-                        .into(mIvHead);
+                        .into(mIvImage3);
             }
         }
     }
@@ -337,7 +341,6 @@ public class LiveDetailActivity extends AppCompatActivity implements IFindContra
                 .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
                     }
                 })
                 .show();

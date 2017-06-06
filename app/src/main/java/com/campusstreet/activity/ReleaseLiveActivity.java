@@ -193,12 +193,14 @@ public class ReleaseLiveActivity extends AppCompatActivity implements IFindContr
             showMessage("请填写内容");
             return;
         }
-        if (mImages == null) {
-            showMessage("请选择一张图片");
-            return;
-        }
-        for (int i = 0; i < mImages.size(); i++) {
-            mFiles.add(new File(mImages.get(i)));
+//        if (mImages == null) {
+//            showMessage("请选择一张图片");
+//            return;
+//        }
+        if (mImages != null) {
+            for (int i = 0; i < mImages.size(); i++) {
+                mFiles.add(new File(mImages.get(i)));
+            }
         }
         LiveInfo liveinfo = new LiveInfo();
         liveinfo.setUid(mUserInfo.getUid());

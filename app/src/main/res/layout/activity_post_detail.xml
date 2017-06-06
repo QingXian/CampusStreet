@@ -89,10 +89,10 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_content"
-                android:layout_marginBottom="48dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/tv_content"
+                android:layout_marginBottom="48dp"
                 android:background="@color/colorGray">
             </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
@@ -117,6 +117,8 @@
             android:layout_gravity="center"
             android:layout_weight="5"
             android:background="@drawable/bg_act_idle_sale_detail_et"
+            android:maxLength="200"
+            android:singleLine="true"
             android:textSize="16sp"/>
 
         <Button

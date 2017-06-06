@@ -85,7 +85,11 @@ public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
                     .load(AppConfig.AVATAR_SERVER_HOST + liveInfo.getUserpic())
                     .fit()
                     .into(viewHolder.mIvHead);
-            initImage(liveInfo, liveInfo.getImages(), viewHolder);
+            if (!liveInfo.getImages().equals("")) {
+                initImage(liveInfo, liveInfo.getImages(), viewHolder);
+            } else {
+                viewHolder.mImageContentLl.setVisibility(View.GONE);
+            }
             viewHolder.itemView.setTag(liveInfo);
         }
     }
@@ -100,26 +104,26 @@ public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
             }
             if (mImageNum == 0) {
                 viewHolder.mIvImage1.setVisibility(View.VISIBLE);
-                viewHolder.mIvImage2.setVisibility(View.GONE);
-                viewHolder.mIvImage3.setVisibility(View.GONE);
+                viewHolder.mIvImage2.setVisibility(View.INVISIBLE);
+                viewHolder.mIvImage3.setVisibility(View.INVISIBLE);
                 Picasso.with(mContext)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + images)
                         .fit()
-                        .into(viewHolder.mIvHead);
+                        .into(viewHolder.mIvImage1);
 
             } else if (mImageNum == 1) {
                 mImages = images.split(",");
                 viewHolder.mIvImage1.setVisibility(View.VISIBLE);
                 viewHolder.mIvImage2.setVisibility(View.VISIBLE);
-                viewHolder.mIvImage3.setVisibility(View.GONE);
+                viewHolder.mIvImage3.setVisibility(View.INVISIBLE);
                 Picasso.with(mContext)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[0])
                         .fit()
-                        .into(viewHolder.mIvHead);
+                        .into(viewHolder.mIvImage1);
                 Picasso.with(mContext)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[1])
                         .fit()
-                        .into(viewHolder.mIvHead);
+                        .into(viewHolder.mIvImage2);
             } else if (mImageNum == 2) {
                 mImages = images.split(",");
                 viewHolder.mIvImage1.setVisibility(View.VISIBLE);
@@ -128,15 +132,15 @@ public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
                 Picasso.with(mContext)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[0])
                         .fit()
-                        .into(viewHolder.mIvHead);
+                        .into(viewHolder.mIvImage1);
                 Picasso.with(mContext)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[1])
                         .fit()
-                        .into(viewHolder.mIvHead);
+                        .into(viewHolder.mIvImage2);
                 Picasso.with(mContext)
                         .load(AppConfig.PIC_LIVE_SERVER_HOST + mImages[2])
                         .fit()
-                        .into(viewHolder.mIvHead);
+                        .into(viewHolder.mIvImage3);
             }
         }
     }

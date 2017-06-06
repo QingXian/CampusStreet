@@ -289,6 +289,7 @@
         android:paddingTop="4dp">
 
         <EditText
+            android:singleLine="true"
             android:id="@+id/et_message"
             android:layout_width="0dp"
             android:layout_height="32dp"
@@ -296,7 +297,6 @@
             android:layout_weight="5"
             android:background="@drawable/bg_act_idle_sale_detail_et"
             android:maxLength="200"
-            android:maxLines="2"
             android:textSize="16sp"/>
 
         <Button
