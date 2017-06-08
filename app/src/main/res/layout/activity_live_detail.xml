@@ -12,19 +12,17 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/apptoolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorWhite"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
                 android:padding="8dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
@@ -40,14 +38,13 @@
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@+id/iv_head"
-                    android:hint="昵称"/>
+                   />
 
                 <TextView
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:hint="19小时前"
                     android:paddingTop="16dp"/>
             </RelativeLayout>
 
@@ -56,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/iv_head"
-                android:hint="内容内容内容"
+                android:background="@color/colorWhite"
                 android:padding="8dp"
                 android:textSize="16sp"/>
 
@@ -64,6 +61,7 @@
                 android:id="@+id/image_content_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
                 android:padding="8dp"
                 android:visibility="visible"
                 >
@@ -102,14 +100,14 @@
             </LinearLayout>
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:padding="8dp"
                 android:text="删除"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary"
+                android:visibility="gone"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_content"
@@ -135,14 +133,14 @@
         android:paddingTop="4dp">
 
         <EditText
-            android:maxLength="200"
-            android:singleLine="true"
             android:id="@+id/et_message"
             android:layout_width="0dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
             android:layout_weight="5"
             android:background="@drawable/bg_act_idle_sale_detail_et"
+            android:maxLength="200"
+            android:singleLine="true"
             android:textSize="16sp"/>
 
         <Button

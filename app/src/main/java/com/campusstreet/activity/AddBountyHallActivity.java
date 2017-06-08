@@ -26,6 +26,7 @@ import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.entity.UserJoinTaskInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 
@@ -125,6 +126,10 @@ public class AddBountyHallActivity extends AppCompatActivity implements IBountyH
     @Override
     public void setTaskList(List<BountyHallInfo> bountyHallInfos) {
 
+    }
+
+    @Override
+    public void setUserJoinTaskList(List<UserJoinTaskInfo> userJoinTaskList) {
     }
 
     @Override

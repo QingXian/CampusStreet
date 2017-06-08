@@ -27,6 +27,7 @@ import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.entity.UserJoinTaskInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -187,6 +188,11 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
             mRvContent.setPullLoadMoreCompleted();
             setLoadingIndicator(false);
         }
+    }
+
+    @Override
+    public void setUserJoinTaskList(List<UserJoinTaskInfo> userJoinTaskList) {
+
     }
 
     @Override

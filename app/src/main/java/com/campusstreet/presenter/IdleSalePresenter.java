@@ -138,6 +138,7 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
 
     @Override
     public void fetchIdleSaleDetail(int gid) {
+        mView.setLoadingIndicator(true);
         mIdleSaleImpl.fetchIdleSaleDetail(gid, new IIdleSaleBiz.LoadIdleSaleDetailCallback() {
             @Override
             public void onIdleSaleDetailLoaded(IdleSaleInfo idleSaleInfo) {

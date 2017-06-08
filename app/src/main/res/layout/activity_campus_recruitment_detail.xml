@@ -29,7 +29,6 @@
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="融金交易微信推广"
                     android:textColor="@color/colorBlack"
                     android:textSize="18sp"/>
 
@@ -46,7 +45,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:hint="100~200"
                     android:textColor="@color/colorOrange"
                     />
 
@@ -68,7 +66,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_feedback"
-                    android:hint="本科及以上"
                     android:paddingLeft="2dp"
                     android:paddingTop="8dp"
                     />
@@ -79,7 +76,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_feedback"
                     android:layout_toRightOf="@+id/tv_education"
-                    android:hint="2017-10-2"
                     android:paddingLeft="16dp"
                     android:paddingTop="8dp"
                     />
@@ -107,7 +103,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_toRightOf="@+id/iv_head"
-                    android:text="厦门某企业"
                     android:textColor="@color/colorBlack"
                     android:textSize="18sp"/>
 
@@ -145,7 +140,6 @@
                         android:layout_marginLeft="8dp"
                         android:layout_toRightOf="@+id/tv_company_type"
                         android:padding="1dp"
-                        android:text="IT服务"
                         android:textSize="12sp"/>
 
                     <TextView
@@ -164,7 +158,6 @@
                         android:layout_below="@+id/tv_company_type"
                         android:layout_toRightOf="@id/tv_title_com_phone"
                         android:padding="1dp"
-                        android:text="12334567432"
                         android:textSize="12sp"/>
 
                     <TextView
@@ -183,7 +176,6 @@
                         android:layout_below="@+id/tv_title_com_phone"
                         android:layout_toRightOf="@id/tv_title_com_add"
                         android:padding="1dp"
-                        android:text="龙岩新罗区"
                         android:textSize="12sp"/>
                 </RelativeLayout>
 
@@ -218,7 +210,6 @@
                     android:id="@+id/tv_studywork_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="私营"
                     android:padding="2dp"
                     android:textColor="@color/colorBlack"
                     android:textSize="18dp"/>
@@ -238,7 +229,6 @@
                     android:layout_below="@id/tv_studywork_type"
                     android:layout_toRightOf="@+id/tv_title_position"
                     android:padding="2dp"
-                    android:text="新罗"
                     />
 
                 <TextView
@@ -257,8 +247,6 @@
                     android:layout_below="@+id/tv_title_position"
                     android:layout_toRightOf="@+id/tv_title_worktime"
                     android:padding="2dp"
-
-                    android:text="IT服务"
                     />
 
                 <TextView
@@ -277,7 +265,6 @@
                     android:layout_below="@id/tv_title_worktime"
                     android:layout_toRightOf="@+id/tv_title_phone"
                     android:padding="2dp"
-                    android:text="12334567432"
                     />
             </RelativeLayout>
 
@@ -310,7 +297,6 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp"
-                    android:text="1、负责平台的设计和开发工作"
                     android:textColor="@color/colorBlack"/>
 
                 <TextView
@@ -327,7 +313,6 @@
                     android:layout_height="wrap_content"
                     android:paddingBottom="16dp"
                     android:paddingLeft="16dp"
-                    android:text="1、3年以上"
                     android:textColor="@color/colorBlack"/>
             </LinearLayout>
         </LinearLayout>

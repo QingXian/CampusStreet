@@ -27,7 +27,6 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingTop="16dp"
-                android:text="标题"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"/>
 
@@ -38,7 +37,6 @@
                 android:lines="1"
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
-                android:text="2016-10-12"
                 android:textSize="12sp"/>
 
             <TextView

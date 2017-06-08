@@ -24,6 +24,7 @@ import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.entity.UserJoinTaskInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 import com.campusstreet.utils.PreferencesUtil;
@@ -133,18 +134,22 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
                 mTvState.setText("进行中");
             } else if (mJoinInfo.getState() == 4) {
                 mBtnAdopt.setVisibility(View.VISIBLE);
-                mBtnAdopt.setText("对方发起放弃");
+                mBtnAdopt.setText("是否同意放弃");
                 mTvState.setVisibility(View.VISIBLE);
-                mTvState.setText("已放弃");
+                mTvState.setText("对方发起放弃");
             } else if (mJoinInfo.getState() == 5) {
                 mBtnAdopt.setVisibility(View.VISIBLE);
-                mBtnAdopt.setText("对方发起完成");
+                mBtnAdopt.setText("是否同意完成");
                 mTvState.setVisibility(View.VISIBLE);
-                mTvState.setText("已完成");
-            } else if (mJoinInfo.getState() == 9 && mJoinInfo.getState() == 10) {
+                mTvState.setText("对方发起完成");
+            } else if (mJoinInfo.getState() == 9) {
                 mBtnAdopt.setVisibility(View.GONE);
                 mTvState.setVisibility(View.VISIBLE);
-                mTvState.setText("结束");
+                mTvState.setText("已放弃");
+            } else if (mJoinInfo.getState() == 10) {
+                mBtnAdopt.setVisibility(View.GONE);
+                mTvState.setVisibility(View.VISIBLE);
+                mTvState.setText("已完成");
             } else {
                 mBtnAdopt.setVisibility(View.GONE);
                 mTvState.setVisibility(View.GONE);
@@ -171,6 +176,11 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
 
     @Override
     public void setTaskList(List<BountyHallInfo> bountyHallInfos) {
+
+    }
+
+    @Override
+    public void setUserJoinTaskList(List<UserJoinTaskInfo> userJoinTaskList) {
 
     }
 
@@ -250,7 +260,7 @@ public class RegistrationDetailActivity extends AppCompatActivity implements IBo
             if (active) {
                 //设置滚动条可见
                 mProgressBarContainer.setVisibility(View.VISIBLE);
-                mProgressBarTitle.setText(R.string.pushing_progress_bar_title);
+                mProgressBarTitle.setText(R.string.operating_progress_bar_title);
             } else {
                 if (mProgressBarContainer.getVisibility() == View.VISIBLE) {
                     mProgressBarContainer.setVisibility(View.GONE);

@@ -25,7 +25,6 @@
         android:layout_toLeftOf="@+id/tv_wages"
         android:layout_toRightOf="@+id/iv_head"
         android:ellipsize="end"
-        android:hint="融金交易微信推广推广推"
         android:maxEms="8"
         android:maxLines="1"
         android:paddingLeft="16dp"
@@ -39,7 +38,6 @@
         android:layout_below="@+id/tv_title"
         android:layout_toRightOf="@+id/iv_head"
         android:ellipsize="end"
-        android:hint="厦门国企"
         android:maxLines="1"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
@@ -51,7 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_company"
         android:layout_toRightOf="@+id/iv_head"
-        android:hint="8小时前"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
         />
@@ -64,7 +61,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_release_time"
         android:layout_toRightOf="@+id/iv_head"
-        android:hint="东肖"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
         />
@@ -75,7 +71,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_company"
         android:layout_toRightOf="@+id/tv_release_time"
-        android:hint="本科及以上"
         android:maxLines="1"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
@@ -86,7 +81,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:hint="100~200"
         android:textColor="@color/colorOrange"
         />
 </RelativeLayout>

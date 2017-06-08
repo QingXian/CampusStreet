@@ -23,7 +23,6 @@
         android:layout_toRightOf="@+id/iv_head"
         android:paddingLeft="8dp"
         android:paddingTop="4dp"
-        android:text="昵称"
         android:textColor="@color/colorBlack"
         android:textSize="16sp"/>
 
@@ -43,7 +42,7 @@
         android:layout_toRightOf="@+id/iv_head"
         android:paddingLeft="8dp"
         android:paddingTop="8dp"
-        android:text="4小时"/>
+        />
 
     <TextView
         android:id="@+id/tv_time_hint"
@@ -63,7 +62,6 @@
         android:maxLines="1"
         android:paddingLeft="8dp"
         android:paddingTop="8dp"
-        android:text="标题"
         android:textColor="@color/colorBlack"
         android:textSize="16sp"
         />
@@ -78,7 +76,6 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:padding="16dp"
-        android:text="要求要求要求要求要求要求"
         android:textColor="@color/colorBlack"/>
 
     <TextView
@@ -159,7 +156,6 @@
         android:paddingTop="4dp"
         android:paddingLeft="4dp"
         android:paddingRight="16dp"
-        android:text="100"
         android:textColor="@color/colorRed"
         android:textSize="16sp"/>
 </RelativeLayout>

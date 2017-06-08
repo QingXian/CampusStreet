@@ -35,6 +35,7 @@ public class Const {
     public static final String IDLESALEINFO_EXTRA = "idlesaleinfo_extra";
     public static final String BUYZONEIINFO_EXTRA = "buyzoneinfo_extra";
     public static final String BOUNTYHALLINFO_EXTRA = "bountyhallinfo_extra";
+    public static final String USERJOINTASKINFO_EXTRA = "userjointaskinfo_extra";
     public static final String JOINNFO_EXTRA = "joininfo_extra";
     public static final String RECRUITMENTNFO_EXTRA = "recruitmentinfo_extra";
     public static final String STUDYWORKINFO_EXTRA = "studyworkinfo_extra";

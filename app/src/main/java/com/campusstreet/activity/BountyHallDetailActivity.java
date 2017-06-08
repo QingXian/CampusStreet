@@ -27,6 +27,7 @@ import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.entity.UserJoinTaskInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
 import com.squareup.picasso.Picasso;
@@ -121,6 +122,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     private int mPi = 0;
     private UserInfo mUserInfo;
     private JoinInfo mJoinInfo;
+    private UserJoinTaskInfo mUserJoinTaskInfo;
     private boolean mIsFrist = true;
     private boolean mIsHavePass = false;
     private int mId;
@@ -145,6 +147,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
             }
         });
         mBountyHallInfo = (BountyHallInfo) getIntent().getSerializableExtra(Const.BOUNTYHALLINFO_EXTRA);
+        mUserJoinTaskInfo = (UserJoinTaskInfo) getIntent().getSerializableExtra(Const.USERJOINTASKINFO_EXTRA);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -152,8 +155,12 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         mAdapter = new BountyHallDetailRecyclerViewAdapter(this, null, 0);
         mRvContent.setAdapter(mAdapter);
         if (mBountyHallInfo == null) {
-            mId = getIntent().getIntExtra(ID_EXTRA, 0);
-            mPresenter.fetchTaskDetail(mId);
+            if (mUserJoinTaskInfo != null) {
+                mPresenter.fetchTaskDetail(mUserJoinTaskInfo.getTaskid());
+            } else {
+                mId = getIntent().getIntExtra(ID_EXTRA, 0);
+                mPresenter.fetchTaskDetail(mId);
+            }
         } else {
             initView(mBountyHallInfo);
         }
@@ -165,8 +172,10 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     protected void onStart() {
         super.onStart();
         if (mIsFrist) {
-            mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
-            mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+            if (mBountyHallInfo != null) {
+                mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
+                mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+            }
         } else {
             mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), mPostion, mPi);
         }
@@ -309,6 +318,11 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     }
 
     @Override
+    public void setUserJoinTaskList(List<UserJoinTaskInfo> userJoinTaskList) {
+
+    }
+
+    @Override
     public void setBountyHallCategories(List<CategoriesInfo> categories) {
 
     }
@@ -340,6 +354,8 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                     if (joinInfo.getState() == 3) {
                         mBtnGiveup.setVisibility(View.VISIBLE);
                         mBtnEntel.setText("提交完成");
+                        mBtnEntel.setEnabled(true);
+                        mBtnEntel.setBackgroundColor(Color.parseColor("#ffffff"));
                     } else if (joinInfo.getState() == 5) {
                         mBtnGiveup.setVisibility(View.GONE);
                         mBtnEntel.setText("已经提交等待验收");
@@ -408,13 +424,7 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        if (mUserInfo != null) {
-            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
-                if (mBountyHallInfo.getState() == 1)
-                    showMessage(errorMsg);
-            }
-        }
-        mAdapter.replaceData(null);
+        showMessage(errorMsg);
     }
 
     @Override
@@ -422,8 +432,9 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
         mIsHavePass = false;
         if (mUserInfo != null) {
             if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
-                if (mBountyHallInfo.getState() == 1)
-                    showMessage("没有通过报名的数据");
+                if (mBountyHallInfo.getState() == 1) {
+                    //                    showMessage("没有通过报名的数据");
+                }
             }
         }
         mAdapter.replaceData(null);
@@ -437,6 +448,8 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
     @Override
     public void setTaskDetail(BountyHallInfo bountyHallInfo) {
         mBountyHallInfo = bountyHallInfo;
+        mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
+        mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
         initView(mBountyHallInfo);
     }
 
@@ -498,12 +511,12 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                     }
                 } else if (mBtnEntel.getText().toString().equals("提交完成")) {
                     if (mJoinInfo != null)
-                        mPresenter.completeTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId());
+                        mPresenter.completeTask(mUserInfo.getUid(), mJoinInfo.getId(),mBountyHallInfo.getId());
                 }
                 break;
             case R.id.btn_giveup:
                 if (mJoinInfo != null) {
-                    mPresenter.giveUpTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId());
+                    mPresenter.giveUpTask(mUserInfo.getUid(), mJoinInfo.getId(), mBountyHallInfo.getId());
                 }
                 break;
         }

@@ -29,7 +29,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="项目名称"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"/>
 
@@ -44,7 +43,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="负责负责负责负责负责负责负责负责负责负责负责负责负责负责负责负责"
                 android:textColor="@color/colorBlack"/>
 
             <View
@@ -69,7 +67,6 @@
                     android:id="@+id/tv_company_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="阿里巴巴"
                     android:textColor="@color/colorBlack"
                     />
             </LinearLayout>
@@ -90,7 +87,6 @@
                     android:id="@+id/tv_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="阿里巴巴"
                     android:textColor="@color/colorBlack"
                     />
             </LinearLayout>
@@ -111,7 +107,6 @@
                     android:id="@+id/tv_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="01564746454"
                     android:textColor="@color/colorBlack"
                     />
             </LinearLayout>
@@ -162,7 +157,6 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:padding="8dp"
-                android:text="详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:详细说明:"
                 android:textColor="@color/colorBlack"/>
         </LinearLayout>
     </ScrollView>

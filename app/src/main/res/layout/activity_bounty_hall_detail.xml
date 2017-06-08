@@ -32,7 +32,6 @@
                 android:layout_gravity="center"
                 android:layout_toRightOf="@+id/iv_head"
                 android:paddingLeft="16dp"
-                android:text="昵称"
                 android:textSize="16sp"/>
 
             <ImageView
@@ -162,7 +161,6 @@
             android:layout_marginTop="4dp"
             android:background="@color/colorWhite"
             android:padding="8dp"
-            android:text="标题"
             android:textSize="18sp"/>
 
         <LinearLayout
@@ -195,7 +193,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
-                    android:text="500"
                     android:textColor="@color/colorRed"
                     android:textSize="18sp"/>
             </LinearLayout>
@@ -213,7 +210,6 @@
                     android:drawableLeft="@drawable/ic_peoloe"
                     android:drawablePadding="4dp"
                     android:gravity="bottom"
-                    android:text="0"
                     android:textSize="12sp"/>
 
                 <TextView
@@ -233,7 +229,6 @@
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="19:30"
                     android:textSize="12sp"/>
 
                 <TextView
@@ -262,7 +257,7 @@
                 android:id="@+id/tv_completion_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2017-03-22"/>
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -284,7 +279,7 @@
                 android:id="@+id/tv_contact_people"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="张森"/>
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -306,7 +301,7 @@
                 android:id="@+id/tv_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="张森"/>
+                />
         </LinearLayout>
 
         <TextView
@@ -325,7 +320,7 @@
             android:lineSpacingExtra="4dp"
             android:maxLines="3"
             android:padding="8dp"
-            android:text="需要应用大量推荐人推荐人推荐人推荐人推荐人推荐人推荐人"/>
+            />
 
         <Button
             android:id="@+id/btn_entel"

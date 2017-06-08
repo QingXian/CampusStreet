@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.activity.AssociationActivity;
+import com.campusstreet.activity.JoinTaskActivity;
 import com.campusstreet.activity.LoginActivity;
 import com.campusstreet.activity.MyBountyHallActivity;
 import com.campusstreet.activity.MyBuyZoneActivity;
@@ -58,6 +59,8 @@ public class UserFragment extends Fragment {
     TextView mTvLogin;
     @BindView(R.id.tv_user_idle)
     TextView mTvUserIdle;
+    @BindView(R.id.tv_join_task)
+    TextView mTvJoinTask;
     private Unbinder mUnbinder;
     private UserInfo mUserInfo;
 
@@ -105,7 +108,7 @@ public class UserFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.tv_recharge, R.id.tv_bounty_mission, R.id.tv_user_idle, R.id.tv_my_idle, R.id.tv_my_club, R.id.tv_login})
+    @OnClick({R.id.tv_recharge, R.id.tv_bounty_mission, R.id.tv_user_idle, R.id.tv_my_idle, R.id.tv_my_club, R.id.tv_login, R.id.tv_join_task})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_recharge:
@@ -158,6 +161,16 @@ public class UserFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
+                break;
+            case R.id.tv_join_task:
+                if (mUserInfo != null) {
+                    intent = new Intent(getActivity(), JoinTaskActivity.class);
+                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                    intent.putExtra(Const.TYPE, 1);
+                    startActivity(intent);
+                } else {
+                    showMessage("请先登录");
+                }
                 break;
         }
     }

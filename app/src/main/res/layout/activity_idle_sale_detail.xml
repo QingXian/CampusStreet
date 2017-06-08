@@ -67,7 +67,6 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/tv_symbol"
                     android:paddingLeft="8dp"
-                    android:text="300"
                     android:textColor="@color/colorOrange"
                     android:textSize="18sp"
                     />
@@ -89,7 +88,6 @@
                     android:layout_toRightOf="@+id/tv_time_hint"
                     android:paddingLeft="8dp"
                     android:paddingTop="8dp"
-                    android:text="2017.12.03"
                     android:textColor="@color/colorWhite"/>
 
                 <TextView
@@ -98,7 +96,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:text="一口价"
                     android:textColor="@color/colorWhite"/>
             </RelativeLayout>
 
@@ -119,7 +116,6 @@
                 android:layout_below="@+id/rl_commodity_content"
                 android:layout_marginTop="32dp"
                 android:layout_toRightOf="@+id/iv_head"
-                android:text="昵称"
                 android:textSize="16sp"/>
 
             <View
@@ -147,7 +143,7 @@
                 android:layout_toRightOf="@+id/tv_tradetype_title"
                 android:paddingRight="16dp"
                 android:paddingTop="8dp"
-                android:text="见面交易"/>
+              />
 
 
             <TextView
@@ -168,7 +164,7 @@
                 android:layout_below="@+id/tv_tradetype"
                 android:paddingRight="16dp"
                 android:paddingTop="8dp"
-                android:text="九成新"/>
+              />
 
             <TextView
                 android:id="@+id/tv_content_title"
@@ -189,7 +185,7 @@
                 android:paddingBottom="8dp"
                 android:paddingRight="16dp"
                 android:paddingTop="8dp"
-                android:text="内容内容"/>
+                />
 
             <View
                 android:layout_width="match_parent"
@@ -212,7 +208,7 @@
                 android:layout_below="@+id/tv_content"
                 android:layout_toRightOf="@+id/tv_place_title"
                 android:paddingTop="8dp"
-                android:text="二组食堂"/>
+               />
 
             <TextView
                 android:id="@+id/tv_phone_hint"
@@ -233,7 +229,7 @@
                 android:layout_toEndOf="@+id/tv_phone_hint"
                 android:layout_toRightOf="@+id/tv_phone_hint"
                 android:paddingTop="8dp"
-                android:text="156456789645"/>
+                />
 
             <TextView
                 android:id="@+id/tv_qq_hint"
@@ -255,7 +251,7 @@
                 android:layout_toRightOf="@+id/tv_qq_hint"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
-                android:text="156567898"/>
+                />
 
             <View
                 android:id="@+id/view_message_line"

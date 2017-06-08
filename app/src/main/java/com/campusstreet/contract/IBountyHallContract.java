@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.UserJoinTaskInfo;
 
 import java.util.List;
 
@@ -47,12 +48,16 @@ public interface IBountyHallContract {
 
         void giveUpTask(String uid, int tpid, int taskid);
 
+        void fetchUserJoinTaskList(String uid, int pi );
+
 
     }
 
     interface View extends BaseView<Presenter> {
 
         void setTaskList(List<BountyHallInfo> bountyHallInfos);
+
+        void setUserJoinTaskList(List<UserJoinTaskInfo> userJoinTaskList);
 
         void setBountyHallCategories(List<CategoriesInfo> categories);
 

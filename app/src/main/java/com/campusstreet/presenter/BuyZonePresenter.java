@@ -48,6 +48,7 @@ public class BuyZonePresenter implements IBuyZoneContract.Presenter {
 
     @Override
     public void fetchBuyZoneDetail(int gid) {
+        mView.setLoadingIndicator(true);
         mBuyZoneImpl.fetchBuyZoneDetail(gid, new IBuyZoneBiz.LoadBuyZoneDetailCallback() {
             @Override
             public void onBuyZoneListLoaded(BuyZoneInfo buyZoneInfo) {

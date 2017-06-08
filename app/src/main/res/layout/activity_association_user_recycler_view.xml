@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="事件消息"/>
+        />
     <TextView
         android:drawablePadding="8dp"
         android:id="@+id/tv_association_num_hint"
@@ -40,5 +40,5 @@
         android:layout_toRightOf="@+id/tv_association_num_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="120"/>
+       />
 </RelativeLayout>

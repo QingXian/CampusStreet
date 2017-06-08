@@ -6,6 +6,7 @@ import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.UserJoinTaskInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.model.IBountyHallBiz;
 
@@ -67,6 +68,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
 
     @Override
     public void fetchTaskDetail(int tid) {
+        mView.setLoadingIndicator(true);
         mBountyHallImpl.fetchTaskDetail(tid, new IBountyHallBiz.LoadTaskDetailCallback() {
             @Override
             public void onUserTaskDetailLoaded(BountyHallInfo bountyHallInfo) {
@@ -101,11 +103,9 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
             @Override
             public void onDataNotAvailable(String errorMsg) {
                 mView.setLoadingIndicator(false);
-                if (state == JOINNOTPASS)
-                {
-                    //                    mView.showErrorMsg("暂时没有人报名");
-                }
-                else
+                if (state == JOINNOTPASS) {
+                    mView.showNoPassMsg();
+                } else
                     mView.showNoPassMsg();
             }
         });
@@ -180,7 +180,6 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
             @Override
             public void onAddFailure(String errorMsg) {
                 mView.setLoadingIndicator(false);
-                mView.showErrorMsg(errorMsg);
             }
         });
     }
@@ -242,15 +241,33 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
     @Override
     public void giveUpTask(String uid, int tpid, int taskid) {
         mView.setLoadingIndicator(true);
-        mBountyHallImpl.onCompleteTask(uid, tpid, taskid, new IBountyHallBiz.onCompleteTaskCallback() {
+        mBountyHallImpl.onGiveUpTask(uid, tpid, taskid, new IBountyHallBiz.onGiveUpTaskCallback() {
             @Override
-            public void onCompleteTaskSuccess() {
+            public void onGiveUpTaskSuccess() {
                 mView.setLoadingIndicator(false);
                 mView.showSuccessfullGiveUpTask();
             }
 
             @Override
-            public void onCompleteTaskFailure(String errorMsg) {
+            public void onGiveUpTaskFailure(String errorMsg) {
+                mView.setLoadingIndicator(false);
+                mView.showErrorMsg(errorMsg);
+            }
+        });
+    }
+
+    @Override
+    public void fetchUserJoinTaskList(String uid, int pi) {
+        mView.setLoadingIndicator(true);
+        mBountyHallImpl.fetchUserJoinTaskList(uid, pi, new IBountyHallBiz.LoadUserJoinTaskListCallback() {
+            @Override
+            public void onUserJoinTaskListLoaded(List<UserJoinTaskInfo> userJoinTaskInfos) {
+                mView.setLoadingIndicator(false);
+                mView.setUserJoinTaskList(userJoinTaskInfos);
+            }
+
+            @Override
+            public void onDataNotAvailable(String errorMsg) {
                 mView.setLoadingIndicator(false);
                 mView.showErrorMsg(errorMsg);
             }

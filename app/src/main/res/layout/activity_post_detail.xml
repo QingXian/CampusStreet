@@ -40,7 +40,6 @@
                     android:layout_toEndOf="@+id/iv_head"
                     android:layout_toRightOf="@+id/iv_head"
                     android:padding="16dp"
-                    android:text="昵称"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -60,7 +59,7 @@
                     android:layout_alignParentTop="true"
                     android:paddingLeft="4dp"
                     android:paddingTop="16dp"
-                    android:text="2017-03-22 09:23"/>
+                   />
             </RelativeLayout>
 
             <TextView
@@ -72,7 +71,7 @@
                 android:background="@color/colorWhite"
                 android:maxLines="1"
                 android:padding="8dp"
-                android:text="标题"
+
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"/>
 
@@ -85,7 +84,7 @@
                 android:layout_below="@+id/tv_title"
                 android:background="@color/colorWhite"
                 android:padding="8dp"
-                android:text="内容内容内容内容内容类"/>
+                />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_content"

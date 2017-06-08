@@ -23,7 +23,7 @@
         android:layout_toRightOf="@+id/iv_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="昵称"/>
+        />
     <ImageView
         android:layout_alignBottom="@+id/tv_name"
         android:layout_toRightOf="@id/tv_name"
@@ -36,7 +36,6 @@
         android:paddingTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="前天09:56"
         android:layout_below="@+id/tv_name"
         android:layout_toRightOf="@+id/iv_head"
         android:layout_toEndOf="@+id/iv_head"/>
@@ -54,7 +53,6 @@
     <TextView
         android:textColor="@color/colorBlack"
         android:paddingTop="8dp"
-        android:text="标题标题标题"
         android:layout_below="@id/iv_head"
         android:id="@+id/tv_title"
         android:textSize="18sp"
@@ -68,7 +66,6 @@
         android:paddingTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="内容"
         android:layout_below="@+id/tv_title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
@@ -131,7 +128,7 @@
             android:id="@+id/tv_need_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"/>
+           />
         <View
             android:layout_marginTop="2dp"
             android:layout_marginLeft="4dp"
@@ -148,7 +145,7 @@
             android:id="@+id/tv_sign_up_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"/>
+            />
         <View
             android:layout_marginTop="2dp"
             android:layout_marginRight="4dp"
@@ -165,7 +162,7 @@
             android:id="@+id/tv_selected_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"/>
+            />
     </LinearLayout>
     <View
         android:id="@+id/View_separate"
@@ -186,7 +183,6 @@
         android:layout_alignBottom="@+id/iv_ic_time"
         android:layout_toRightOf="@+id/iv_ic_time"
         android:id="@+id/tv_surplus_time"
-        android:text="还剩5天3小时"
         android:textColor="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

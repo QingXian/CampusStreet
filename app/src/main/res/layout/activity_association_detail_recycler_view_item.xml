@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="标题"/>
+       />
     <TextView
         android:id="@+id/tv_name"
         android:paddingTop="8dp"
@@ -31,7 +31,7 @@
         android:layout_toRightOf="@+id/iv_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="来源"/>
+        />
     <TextView
         android:paddingTop="8dp"
         android:id="@+id/tv_time"
@@ -41,7 +41,7 @@
         android:layout_toRightOf="@+id/iv_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2017-03-22 12:00"/>
+        />
     <LinearLayout
         android:layout_alignParentRight="true"
         android:layout_alignBottom="@+id/tv_time"
@@ -50,7 +50,6 @@
         <TextView
             android:drawablePadding="4dp"
             android:drawableLeft="@drawable/ic_visit"
-            android:text="10000"
             android:id="@+id/tv_reading_times"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -58,7 +57,6 @@
             android:drawablePadding="4dp"
             android:drawableLeft="@drawable/ic_comment"
             android:paddingLeft="16dp"
-            android:text="10000"
             android:id="@+id/tv_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

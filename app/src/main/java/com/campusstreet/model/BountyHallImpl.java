@@ -11,6 +11,7 @@ import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.JoinInfo;
+import com.campusstreet.entity.UserJoinTaskInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -434,6 +435,44 @@ public class BountyHallImpl implements IBountyHallBiz {
                                 bountyHallInfos.add(bountyHallInfo);
                             }
                             callback.onUserTaskListLoaded(bountyHallInfos);
+                        } else {
+                            callback.onDataNotAvailable("暂时没有数据");
+                        }
+
+                    } else {
+                        callback.onDataNotAvailable(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onDataNotAvailable("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
+    @Override
+    public void fetchUserJoinTaskList(String uid, int pi, @NonNull final LoadUserJoinTaskListCallback callback) {
+        Call<JsonObject> call = mBountyHallClient.getUserJoinTasks(uid, pi);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+                        if (bodyJson.get(Const.TOTAL_KEY).getAsInt() != 0) {
+                            JsonArray resultJsons = bodyJson.get(Const.DATA_KEY).getAsJsonArray();
+                            Gson gson = new GsonBuilder().setLenient().create();
+                            List<UserJoinTaskInfo> userJoinTaskInfoss = new ArrayList<>();
+                            for (int i = 0; i < resultJsons.size(); i++) {
+                                JsonObject json = resultJsons.get(i).getAsJsonObject();
+                                UserJoinTaskInfo userJoinTaskInfo = gson.fromJson(json, UserJoinTaskInfo.class);
+                                userJoinTaskInfoss.add(userJoinTaskInfo);
+                            }
+                            callback.onUserJoinTaskListLoaded(userJoinTaskInfoss);
                         } else {
                             callback.onDataNotAvailable("暂时没有数据");
                         }

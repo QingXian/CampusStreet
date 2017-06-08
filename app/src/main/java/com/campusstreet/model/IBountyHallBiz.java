@@ -7,6 +7,7 @@ import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.JoinInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
+import com.campusstreet.entity.UserJoinTaskInfo;
 
 import java.util.List;
 
@@ -49,6 +50,8 @@ public interface IBountyHallBiz {
 
     //获取我的赏金任务
     void fetchUserTaskList(String uid, int tp, String key, int pi, LoadUserTaskListCallback callback);
+
+    void fetchUserJoinTaskList(String uid,int pi, @NonNull LoadUserJoinTaskListCallback callback);
 
     interface addTaskCallback {
 
@@ -110,6 +113,13 @@ public interface IBountyHallBiz {
     interface LoadUserTaskListCallback {
 
         void onUserTaskListLoaded(List<BountyHallInfo> bountyHallInfos);
+
+        void onDataNotAvailable(String errorMsg);
+    }
+
+    interface LoadUserJoinTaskListCallback {
+
+        void onUserJoinTaskListLoaded(List<UserJoinTaskInfo> userJoinTaskInfos);
 
         void onDataNotAvailable(String errorMsg);
     }

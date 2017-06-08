@@ -86,4 +86,7 @@ public interface BountyHallClient {
     @POST("get_mytasks")
     Call<JsonObject> getUserTasks(@Field("uid") String uid, @Field("tp") Integer type, @Field("pi") Integer pi);
 
+    @FormUrlEncoded
+    @POST("get_myjointasks")
+    Call<JsonObject> getUserJoinTasks(@Field("uid") String uid, @Field("pi") Integer pi);
 }

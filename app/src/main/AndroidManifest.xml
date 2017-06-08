@@ -126,6 +126,8 @@
         </activity>
         <activity android:name=".activity.LiveDetailActivity">
         </activity>
+        <activity android:name=".activity.JoinTaskActivity">
+        </activity>
     </application>
 
 </manifest>

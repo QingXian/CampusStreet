@@ -21,7 +21,6 @@
         android:textColor="@color/colorBlack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="项目名称"
         android:textSize="16sp"/>
     <TextView
 
@@ -33,7 +32,6 @@
         android:layout_toRightOf="@+id/iv_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="要求要求要求要求"
         />
     <TextView
         android:id="@+id/tv_name"
@@ -41,6 +39,5 @@
         android:padding="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="用户名"
         />
 </RelativeLayout>
