@@ -16,6 +16,7 @@ import com.campusstreet.entity.AssociationInfo;
 import com.campusstreet.entity.HomeDynamicInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.RecruitInfo;
+import com.campusstreet.utils.DataUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -95,7 +96,7 @@ public class HomeFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
             }
 
             viewHolder.mTvName.setText(homeDynamicInfo.getTname());
-            viewHolder.mTvTime.setText(homeDynamicInfo.getTime());
+            viewHolder.mTvTime.setText(DataUtil.formatDateTime(homeDynamicInfo.getTime()));
             viewHolder.mTvTitle.setText(homeDynamicInfo.getTitle());
             viewHolder.itemView.setTag(homeDynamicInfo);
             switch (homeDynamicInfo.getType())

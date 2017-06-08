@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/iv_head_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:src="@drawable/ic_campus_information"
         />
     <TextView
@@ -19,8 +19,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/iv_head_icon"
-        android:padding="4dp"
         android:text="龙岩学院"
+        android:paddingLeft="8dp"
         android:textColor="@color/tv_color_defult"/>
     <TextView
         android:id="@+id/tv_time"
@@ -28,16 +28,16 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/iv_head_icon"
         android:layout_below="@+id/tv_name"
-        android:padding="2dp"
         android:text="5小时前"
+        android:paddingLeft="8dp"
         android:textColor="@color/tv_color_defult"/>
 
     <View
         android:id="@+id/view_pos"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/iv_head_icon"
-        android:layout_marginTop="8dp"
+        android:layout_below="@+id/tv_time"
+        android:layout_marginTop="2dp"
         android:background="@color/colorGray"/>
 
     <TextView

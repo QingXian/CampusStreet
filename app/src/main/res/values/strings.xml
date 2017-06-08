@@ -77,7 +77,7 @@
     <string name="act_idle_sale_add_release">发布</string>
     <string name="act_buy_zone_place_hint">发布于</string>
     <string name="act_buy_zone_time_hint">来过</string>
-    <string name="act_buy_zone_message_hint">留言专区</string>
+    <string name="act_buy_zone_message_hint">留言</string>
     <string name="act_buy_zone_add_toolbar_title">求购发布</string>
     <string name="act_my_bounty_hall_toolbar_title">我的赏金</string>
     <string name="act_my_bounty_hall_demand">需求：</string>
