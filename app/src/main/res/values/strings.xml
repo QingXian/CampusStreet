@@ -161,6 +161,7 @@
     <string name="act_register_nickname">请输入昵称</string>
     <string name="act_register_department">请选择院系</string>
     <string name="act_forget_password_captcha">请输入手机收到的验证码</string>
+    <string name="act_random_code_captcha">随机验证码</string>
     <string name="next">下一步</string>
     <string name="entel">确认</string>
     <string name="act_forget_passwrod_toolbar_title">找回密码</string>

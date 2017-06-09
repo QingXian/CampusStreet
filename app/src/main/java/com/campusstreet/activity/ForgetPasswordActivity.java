@@ -6,9 +6,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.UserImpl;
 import com.campusstreet.presenter.LoginPresenter;
+import com.campusstreet.utils.CreateRandomCodeValidate;
 import com.campusstreet.utils.TimeCountUtil;
 
 import java.util.List;
@@ -56,8 +59,14 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ILoginC
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    @BindView(R.id.et_random_code)
+    EditText mEtRandomCode;
+    @BindView(R.id.ib_random_code)
+    ImageButton mIbRandomCode;
     private ILoginContract.Presenter mPresenter;
     private TimeCountUtil mTimeCountUtil;
+
+    CreateRandomCodeValidate randomCodeValidate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +88,12 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ILoginC
         });
         mTimeCountUtil = new TimeCountUtil(80000, 1000, mBtnFetchCaptcha);
         new LoginPresenter(UserImpl.getInstance(getApplicationContext()), this);
+
+        randomCodeValidate = new CreateRandomCodeValidate();
+        mIbRandomCode.setImageBitmap(randomCodeValidate.createRandomBitmap());
     }
 
-    @OnClick({R.id.btn_fetch_captcha, R.id.btn_next})
+    @OnClick({R.id.btn_fetch_captcha, R.id.btn_next, R.id.ib_random_code})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_fetch_captcha:
@@ -101,11 +113,19 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ILoginC
                     showMessage("请填写验证码");
                     return;
                 }
+                if (mEtRandomCode.getText().toString().equalsIgnoreCase(randomCodeValidate.getRandomCode()) ==false)
+                {
+                    showMessage("随机验证码错误");
+                    return;
+                }
                 Intent intent = new Intent(this, ReSetPasswrodActivity.class);
                 intent.putExtra(PHONE, mEtPhone.getText().toString());
                 intent.putExtra(CAPTCHA, mEtCaptcha.getText().toString());
                 startActivity(intent);
                 this.finish();
+                break;
+            case R.id.ib_random_code:
+                mIbRandomCode.setImageBitmap(randomCodeValidate.createRandomBitmap());
                 break;
         }
     }
