@@ -47,7 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements ReleasePopupWindow.OnItemClickListener {
+public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnItemClickListener {
 
     private static final String TAG = "MainActivity";
     @BindView(R.id.et_search)
@@ -296,11 +296,6 @@ public class MainActivity extends AppCompatActivity implements ReleasePopupWindo
         }
     }
 
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

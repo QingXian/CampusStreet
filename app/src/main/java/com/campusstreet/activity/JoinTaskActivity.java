@@ -39,7 +39,7 @@ import static com.campusstreet.R.id.view;
  * Created by Orange on 2017/6/7.
  */
 
-public class JoinTaskActivity extends AppCompatActivity implements IBountyHallContract.View {
+public class JoinTaskActivity extends BaseActivity implements IBountyHallContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -256,9 +256,4 @@ public class JoinTaskActivity extends AppCompatActivity implements IBountyHallCo
         }
     }
 
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
-    }
 }

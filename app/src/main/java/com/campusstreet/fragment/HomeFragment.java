@@ -72,6 +72,7 @@ import static com.campusstreet.common.Const.TYPE;
 
 public class HomeFragment extends Fragment implements OnBannerListener, IHomeContract.View {
 
+    private Toast mToast;
     @BindView(R.id.banner)
     Banner mBanner;
     @BindView(R.id.tv_campus_recruitment)
@@ -94,8 +95,6 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
     ImageView mImageView;
     @BindView(R.id.rv_content)
     RecyclerView mRvContent;
-    @BindView(R.id.tv_error)
-    TextView mTvError;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.progress_bar_title)
@@ -311,16 +310,13 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
     @Override
     public void setdynamicList(List<HomeDynamicInfo> homeDynamicInfos) {
         mRvContent.setVisibility(View.VISIBLE);
-        mTvError.setVisibility(View.GONE);
         mAdapter.replaceData(homeDynamicInfos);
         setLoadingIndicator(false);
     }
 
     @Override
     public void showErrorMsg(String errorMsg) {
-        mRvContent.setVisibility(View.GONE);
-        mTvError.setText(errorMsg);
-        mTvError.setVisibility(View.VISIBLE);
+        showMessage(errorMsg);
     }
 
     @Override
@@ -352,6 +348,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
     public void onStop() {
         super.onStop();
         mBanner.isAutoPlay(false);
+        cancelToast();
     }
 
     @Override
@@ -360,9 +357,19 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
         mUnbinder.unbind();
     }
 
-    protected void showMessage(String msg) {
-        if (getActivity() != null && !getActivity().isFinishing()) {
-            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    public void showMessage(String text) {
+        if (mToast == null) {
+            mToast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+        } else {
+            mToast.setText(text);
+            mToast.setDuration(Toast.LENGTH_SHORT);
+        }
+        mToast.show();
+    }
+
+    public void cancelToast() {
+        if (mToast != null) {
+            mToast.cancel();
         }
     }
 }

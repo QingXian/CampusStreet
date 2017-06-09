@@ -39,7 +39,7 @@ import static com.campusstreet.common.Const.PHONE;
  * Created by Orange on 2017/4/26.
  */
 
-public class ForgetPasswordActivity extends AppCompatActivity implements ILoginContract.View {
+public class ForgetPasswordActivity extends BaseActivity implements ILoginContract.View {
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -156,11 +156,5 @@ public class ForgetPasswordActivity extends AppCompatActivity implements ILoginC
     @Override
     public void setLoadingIndicator(boolean active) {
 
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
     }
 }

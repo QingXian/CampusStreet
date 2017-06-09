@@ -40,7 +40,7 @@ import static com.campusstreet.R.id.view;
  * Created by Orange on 2017/4/6.
  */
 
-public class PartnerActivity extends AppCompatActivity implements IPartnerContract.View {
+public class PartnerActivity extends BaseActivity implements IPartnerContract.View {
 
     @BindView(R.id.et_search)
     EditText mEtSearch;
@@ -262,11 +262,5 @@ public class PartnerActivity extends AppCompatActivity implements IPartnerContra
             mPresenter.fetchPartnerList(null, mPostion, mPi);
         setLoadingIndicator(true);
 
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
     }
 }

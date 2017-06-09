@@ -37,7 +37,7 @@ import butterknife.OnClick;
  * Created by Orange on 2017/5/24.
  */
 
-public class MyIdleSaleActivity extends AppCompatActivity implements IIdleSaleContract.View {
+public class MyIdleSaleActivity extends BaseActivity implements IIdleSaleContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -232,12 +232,6 @@ public class MyIdleSaleActivity extends AppCompatActivity implements IIdleSaleCo
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

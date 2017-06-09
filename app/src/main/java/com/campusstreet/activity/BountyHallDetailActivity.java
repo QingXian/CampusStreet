@@ -59,7 +59,7 @@ import static com.campusstreet.utils.DataUtil.getTimeRange;
  * Created by Orange on 2017/4/9.
  */
 
-public class BountyHallDetailActivity extends AppCompatActivity implements IBountyHallContract.View {
+public class BountyHallDetailActivity extends BaseActivity implements IBountyHallContract.View {
 
 
     @BindView(R.id.toolbar_title)
@@ -466,12 +466,6 @@ public class BountyHallDetailActivity extends AppCompatActivity implements IBoun
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 

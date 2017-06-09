@@ -40,7 +40,7 @@ import static com.campusstreet.common.Const.USERINFO_EXTRA;
  * Created by Orange on 2017/4/10.
  */
 
-public class AddPostActivity extends AppCompatActivity implements IAssociationContract.View {
+public class AddPostActivity extends BaseActivity implements IAssociationContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.tv_toolbar_right)
@@ -196,12 +196,6 @@ public class AddPostActivity extends AppCompatActivity implements IAssociationCo
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

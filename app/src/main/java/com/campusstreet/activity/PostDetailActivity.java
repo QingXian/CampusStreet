@@ -50,7 +50,7 @@ import static com.campusstreet.utils.DataUtil.getTimeRange;
  * Created by Orange on 2017/4/10.
  */
 
-public class PostDetailActivity extends AppCompatActivity implements IAssociationContract.View {
+public class PostDetailActivity extends BaseActivity implements IAssociationContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -279,12 +279,6 @@ public class PostDetailActivity extends AppCompatActivity implements IAssociatio
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 

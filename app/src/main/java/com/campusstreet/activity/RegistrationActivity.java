@@ -39,7 +39,7 @@ import static com.campusstreet.common.Const.TID_EXTRA;
  * Created by Orange on 2017/5/2.
  */
 
-public class RegistrationActivity extends AppCompatActivity implements IBountyHallContract.View {
+public class RegistrationActivity extends BaseActivity implements IBountyHallContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.toolbar)
@@ -183,12 +183,6 @@ public class RegistrationActivity extends AppCompatActivity implements IBountyHa
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 

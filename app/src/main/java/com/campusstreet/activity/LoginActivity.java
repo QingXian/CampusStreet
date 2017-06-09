@@ -32,7 +32,7 @@ import butterknife.OnClick;
  * Created by Orange on 2017/4/26.
  */
 
-public class LoginActivity extends AppCompatActivity implements ILoginContract.View {
+public class LoginActivity extends BaseActivity implements ILoginContract.View {
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -145,9 +145,4 @@ public class LoginActivity extends AppCompatActivity implements ILoginContract.V
         }
     }
 
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
-    }
 }

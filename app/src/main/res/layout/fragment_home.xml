@@ -172,17 +172,6 @@
                 android:focusable="false"
                 android:paddingBottom="56dp">
             </android.support.v7.widget.RecyclerView>
-
-            <TextView
-                android:id="@+id/tv_error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="加载失败"
-                android:textSize="18sp"
-                android:visibility="gone"/>
         </LinearLayout>
 
         <include layout="@layout/progress_bar"/>

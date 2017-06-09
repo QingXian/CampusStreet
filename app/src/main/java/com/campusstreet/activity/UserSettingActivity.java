@@ -30,7 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Orange on 2017/4/6.
  */
 
-public class UserSettingActivity extends AppCompatActivity {
+public class UserSettingActivity extends BaseActivity {
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;

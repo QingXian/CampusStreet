@@ -18,7 +18,7 @@ import butterknife.OnClick;
  * Created by Orange on 2017/4/11.
  */
 
-public class AddNotice extends AppCompatActivity {
+public class AddNotice extends BaseActivity {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.tv_toolbar_right)

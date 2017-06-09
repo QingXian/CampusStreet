@@ -49,7 +49,7 @@ import static com.campusstreet.utils.DataUtil.getTimeRange;
  * Created by Orange on 2017/6/4.
  */
 
-public class LiveDetailActivity extends AppCompatActivity implements IFindContract.View {
+public class LiveDetailActivity extends BaseActivity implements IFindContract.View {
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -325,11 +325,6 @@ public class LiveDetailActivity extends AppCompatActivity implements IFindContra
         }
     }
 
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void showAlertDialog(String text) {
         new AlertDialog.Builder(this).setTitle(text)

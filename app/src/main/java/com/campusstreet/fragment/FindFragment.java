@@ -59,7 +59,7 @@ public class FindFragment extends Fragment implements IFindContract.View {
     private boolean mIsLoading;
     private boolean mIsNeedLoadMore = true;
     private UserInfo mUserInfo;
-
+    private Toast mToast;
     private Unbinder mUnbinder;
     private IFindContract.Presenter mPresenter;
     private FindFragmentRecyclerViewAdapter mAdapter;
@@ -215,9 +215,25 @@ public class FindFragment extends Fragment implements IFindContract.View {
         }
     }
 
-    protected void showMessage(String msg) {
-        if (getActivity() != null && !getActivity().isFinishing()) {
-            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    public void showMessage(String text) {
+        if (mToast == null) {
+            mToast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+        } else {
+            mToast.setText(text);
+            mToast.setDuration(Toast.LENGTH_SHORT);
         }
+        mToast.show();
+    }
+
+    public void cancelToast() {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        cancelToast();
     }
 }

@@ -41,7 +41,7 @@ import static android.R.attr.type;
  * Created by Orange on 2017/4/6.
  */
 
-public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleContract.View {
+public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -272,12 +272,6 @@ public class IdleSaleActivity extends AppCompatActivity implements IIdleSaleCont
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

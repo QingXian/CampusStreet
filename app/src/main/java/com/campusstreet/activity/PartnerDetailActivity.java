@@ -33,7 +33,7 @@ import static com.campusstreet.common.Const.ID_EXTRA;
  * Created by Orange on 2017/4/10.
  */
 
-public class PartnerDetailActivity extends AppCompatActivity implements IPartnerContract.View {
+public class PartnerDetailActivity extends BaseActivity implements IPartnerContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -141,11 +141,5 @@ public class PartnerDetailActivity extends AppCompatActivity implements IPartner
     @Override
     public void setPresenter(IPartnerContract.Presenter presenter) {
         mPresenter = presenter;
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
     }
 }

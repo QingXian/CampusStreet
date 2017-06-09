@@ -43,7 +43,7 @@ import static com.campusstreet.activity.AddIdleSaleActivity.REQUEST_CODE;
  * Created by Orange on 2017/4/11.
  */
 
-public class ReleaseLiveActivity extends AppCompatActivity implements IFindContract.View {
+public class ReleaseLiveActivity extends BaseActivity implements IFindContract.View {
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -163,12 +163,6 @@ public class ReleaseLiveActivity extends AppCompatActivity implements IFindContr
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 

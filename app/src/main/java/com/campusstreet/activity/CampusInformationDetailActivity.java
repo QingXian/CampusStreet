@@ -36,7 +36,7 @@ import static com.campusstreet.utils.DataUtil.getTimeRange;
  * Created by Orange on 2017/5/4.
  */
 
-public class CampusInformationDetailActivity extends AppCompatActivity implements ICampusInformationContract.View {
+public class CampusInformationDetailActivity extends BaseActivity implements ICampusInformationContract.View {
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -134,9 +134,4 @@ public class CampusInformationDetailActivity extends AppCompatActivity implement
         }
     }
 
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
-    }
 }

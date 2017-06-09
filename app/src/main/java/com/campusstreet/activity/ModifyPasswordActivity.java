@@ -33,7 +33,7 @@ import butterknife.OnClick;
  * Created by Orange on 2017/5/6.
  */
 
-public class ModifyPasswordActivity extends AppCompatActivity implements ISettingContract.View {
+public class ModifyPasswordActivity extends BaseActivity implements ISettingContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -119,12 +119,6 @@ public class ModifyPasswordActivity extends AppCompatActivity implements ISettin
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 

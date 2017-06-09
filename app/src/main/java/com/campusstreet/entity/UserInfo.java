@@ -25,7 +25,16 @@ public class UserInfo implements Serializable{
     private String major;
     private String qq;
     private String userpic;
+    private String point;
 
+
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(String point) {
+        this.point = point;
+    }
 
     public String getUserpic() {
         return userpic;

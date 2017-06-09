@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.campusstreet.R;
+import com.campusstreet.activity.AssociationDetailActivity;
 import com.campusstreet.activity.BountyHallDetailActivity;
 import com.campusstreet.activity.BuyZoneDetailActivity;
 import com.campusstreet.activity.CampusInformationDetailActivity;
@@ -72,6 +73,7 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
     private Unbinder mUnbinder;
     private int mPi;
     private UserInfo mUserInfo;
+    private Toast mToast;
 
     public static MessageFragment newInstance(UserInfo userInfo) {
         Bundle args = new Bundle();
@@ -118,6 +120,18 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
                 switch (messageInfo.getTypecode()) {
                     case "join_assn":
                         showAlertDialog(messageInfo);
+                        break;
+                    case "assn_accept":
+                        if (!messageInfo.getIsread()) {
+                            setLoadingIndicator(true);
+                            mPresenter.fetchMessageList(mUserInfo.getUid(), mPi);
+                        }
+                        break;
+                    case "assn_deny":
+                        if (!messageInfo.getIsread()) {
+                            setLoadingIndicator(true);
+                            mPresenter.fetchMessageList(mUserInfo.getUid(), mPi);
+                        }
                         break;
                     case "ewu_reply":
                         Intent intent = new Intent(getActivity(), IdleSaleDetailActivity.class);
@@ -237,7 +251,6 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
 
     @Override
     public void showReadMessageSuccess() {
-
     }
 
     @Override
@@ -255,10 +268,26 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
         }
     }
 
-    protected void showMessage(String msg) {
-        if (this != null && !getActivity().isFinishing()) {
-            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    public void showMessage(String text) {
+        if (mToast == null) {
+            mToast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+        } else {
+            mToast.setText(text);
+            mToast.setDuration(Toast.LENGTH_SHORT);
         }
+        mToast.show();
+    }
+
+    public void cancelToast() {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        cancelToast();
     }
 
     @Override

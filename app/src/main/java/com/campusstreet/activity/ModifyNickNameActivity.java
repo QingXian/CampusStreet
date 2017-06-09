@@ -32,7 +32,7 @@ import butterknife.OnClick;
  * Created by Orange on 2017/4/6.
  */
 
-public class ModifyNickNameActivity extends AppCompatActivity implements ISettingContract.View {
+public class ModifyNickNameActivity extends BaseActivity implements ISettingContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -113,11 +113,6 @@ public class ModifyNickNameActivity extends AppCompatActivity implements ISettin
         }
     }
 
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @OnClick(R.id.btn_save)
     public void onViewClicked() {

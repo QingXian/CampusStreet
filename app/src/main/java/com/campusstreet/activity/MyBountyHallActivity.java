@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * Created by Orange on 2017/4/9.
  */
 
-public class MyBountyHallActivity extends AppCompatActivity implements IBountyHallContract.View {
+public class MyBountyHallActivity extends BaseActivity implements IBountyHallContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -262,12 +262,6 @@ public class MyBountyHallActivity extends AppCompatActivity implements IBountyHa
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

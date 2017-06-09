@@ -58,7 +58,7 @@ import static android.os.Build.TYPE;
  * Created by Orange on 2017/4/8.
  */
 
-public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleContract.View {
+public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContract.View {
 
     protected final String TAG = getClass().getSimpleName();
     @BindView(R.id.toolbar_title)
@@ -435,9 +435,4 @@ public class AddIdleSaleActivity extends AppCompatActivity implements IIdleSaleC
         }
     }
 
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
-    }
 }

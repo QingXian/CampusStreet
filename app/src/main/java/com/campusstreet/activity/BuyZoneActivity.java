@@ -44,7 +44,7 @@ import static com.campusstreet.R.id.view;
  * Created by Orange on 2017/4/6.
  */
 
-public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContract.View {
+public class BuyZoneActivity extends BaseActivity implements IBuyZoneContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -223,12 +223,6 @@ public class BuyZoneActivity extends AppCompatActivity implements IBuyZoneContra
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

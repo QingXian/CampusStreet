@@ -215,6 +215,7 @@ public class PayActivity extends AppCompatActivity {
                             Intent data = new Intent();
                             data.putExtra(RECHARGE_MONEY_EXTRA, target.mMoney);
                             target.setResult(RESULT_OK, data);
+                            target.mEtRechargeMoney.setText("");
                             target.setLoadingIndicator(false);
                         } else {
                             // 该笔订单真实的支付结果，需要依赖服务端的异步通知。

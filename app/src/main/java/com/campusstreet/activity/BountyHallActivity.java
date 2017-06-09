@@ -46,7 +46,7 @@ import static android.R.id.message;
  * Created by Orange on 2017/4/6.
  */
 
-public class BountyHallActivity extends AppCompatActivity implements IBountyHallContract.View {
+public class BountyHallActivity extends BaseActivity implements IBountyHallContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -310,12 +310,6 @@ public class BountyHallActivity extends AppCompatActivity implements IBountyHall
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
  * Created by Orange on 2017/4/11.
  */
 
-public class PeripheralShopDetailActivity extends AppCompatActivity implements IPeripheralShopContract.View {
+public class PeripheralShopDetailActivity extends BaseActivity implements IPeripheralShopContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -265,12 +265,6 @@ public class PeripheralShopDetailActivity extends AppCompatActivity implements I
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

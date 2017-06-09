@@ -39,7 +39,7 @@ import static com.campusstreet.R.id.view;
  * Created by Orange on 2017/4/6.
  */
 
-public class CampusInformationActivity extends AppCompatActivity implements ICampusInformationContract.View {
+public class CampusInformationActivity extends BaseActivity implements ICampusInformationContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -187,11 +187,6 @@ public class CampusInformationActivity extends AppCompatActivity implements ICam
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -24,6 +24,8 @@ import com.campusstreet.common.Const;
 import com.campusstreet.entity.UserInfo;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -63,6 +65,7 @@ public class UserFragment extends Fragment {
     TextView mTvJoinTask;
     private Unbinder mUnbinder;
     private UserInfo mUserInfo;
+    private Toast mToast;
 
     public static UserFragment newInstance(UserInfo userInfo) {
         Bundle args = new Bundle();
@@ -105,6 +108,13 @@ public class UserFragment extends Fragment {
                 .into(mIvHead);
         mTvDepartment.setText(mUserInfo.getMajor());
         mTvName.setText(mUserInfo.getUsername());
+        if (mUserInfo.getPoint() != null) {
+            double price = Double.parseDouble(mUserInfo.getPoint());
+            DecimalFormat df = new DecimalFormat("0.00");
+            String strprice = df.format(price);
+            mTvBalance.setText("余额：" + strprice);
+        } else
+            mTvBalance.setText("余额：0");
     }
 
 
@@ -181,10 +191,25 @@ public class UserFragment extends Fragment {
         mUnbinder.unbind();
     }
 
-    protected void showMessage(String msg) {
-        if (getActivity() != null && !getActivity().isFinishing()) {
-            Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    public void showMessage(String text) {
+        if (mToast == null) {
+            mToast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+        } else {
+            mToast.setText(text);
+            mToast.setDuration(Toast.LENGTH_SHORT);
+        }
+        mToast.show();
+    }
+
+    public void cancelToast() {
+        if (mToast != null) {
+            mToast.cancel();
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        cancelToast();
+    }
 }

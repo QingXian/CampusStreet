@@ -40,7 +40,7 @@ import static com.campusstreet.R.id.view;
  * Created by Orange on 2017/4/6.
  */
 
-public class PeripheraShopActivity extends AppCompatActivity implements IPeripheralShopContract.View {
+public class PeripheraShopActivity extends BaseActivity implements IPeripheralShopContract.View {
     @BindView(R.id.et_search)
     EditText mEtSearch;
     @BindView(R.id.tv_toolbar_right)
@@ -262,12 +262,6 @@ public class PeripheraShopActivity extends AppCompatActivity implements IPeriphe
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

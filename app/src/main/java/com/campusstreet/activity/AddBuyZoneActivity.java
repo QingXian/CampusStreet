@@ -36,7 +36,7 @@ import butterknife.OnClick;
  * Created by Orange on 2017/4/9.
  */
 
-public class AddBuyZoneActivity extends AppCompatActivity implements IBuyZoneContract.View {
+public class AddBuyZoneActivity extends BaseActivity implements IBuyZoneContract.View {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -185,12 +185,6 @@ public class AddBuyZoneActivity extends AppCompatActivity implements IBuyZoneCon
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }

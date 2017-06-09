@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
  * Created by Orange on 2017/4/6.
  */
 
-public class AssociationActivity extends AppCompatActivity implements IAssociationContract.View {
+public class AssociationActivity extends BaseActivity implements IAssociationContract.View {
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -314,9 +314,4 @@ public class AssociationActivity extends AppCompatActivity implements IAssociati
         }
     }
 
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
-    }
 }

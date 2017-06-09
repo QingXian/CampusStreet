@@ -39,7 +39,7 @@ import okhttp3.RequestBody;
  * Created by Orange on 2017/4/6.
  */
 
-public class ModifyHeadActivity extends AppCompatActivity implements ISettingContract.View {
+public class ModifyHeadActivity extends BaseActivity implements ISettingContract.View {
 
     protected final String TAG = getClass().getSimpleName();
     @BindView(R.id.toolbar_title)
@@ -149,12 +149,6 @@ public class ModifyHeadActivity extends AppCompatActivity implements ISettingCon
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 

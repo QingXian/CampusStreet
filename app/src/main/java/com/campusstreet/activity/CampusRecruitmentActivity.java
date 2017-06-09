@@ -42,7 +42,7 @@ import butterknife.OnClick;
  * Created by Orange on 2017/4/6.
  */
 
-public class CampusRecruitmentActivity extends AppCompatActivity implements ICampusRecruitmentContract.View {
+public class CampusRecruitmentActivity extends BaseActivity implements ICampusRecruitmentContract.View {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.tab_layout)
@@ -328,9 +328,4 @@ public class CampusRecruitmentActivity extends AppCompatActivity implements ICam
         }
     }
 
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-        }
-    }
 }

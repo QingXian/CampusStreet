@@ -43,7 +43,7 @@ import static android.R.attr.password;
  * Created by Orange on 2017/4/26.
  */
 
-public class RegisterActivity extends AppCompatActivity implements IRegisterContract.View {
+public class RegisterActivity extends BaseActivity implements IRegisterContract.View {
 
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
@@ -221,12 +221,6 @@ public class RegisterActivity extends AppCompatActivity implements IRegisterCont
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
-        }
-    }
-
-    protected void showMessage(String msg) {
-        if (this != null && !this.isFinishing()) {
-            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 }
