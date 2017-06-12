@@ -207,14 +207,14 @@ public class IdleSaleDetailActivity extends BaseActivity implements IIdleSaleCon
         mTvDegree.setText(mIdleSaleInfo.getBewrite());
         mTvContent.setText(mIdleSaleInfo.getContent());
 
-        if (mIdleSaleInfo.getSelltype().equals(0)) {
+        if (mIdleSaleInfo.getSelltype().equals("0")) {
             mTvSellType.setText("一口价");
-        } else if (mIdleSaleInfo.getSelltype().equals(1)) {
+        } else if (mIdleSaleInfo.getSelltype().equals("1")) {
             mTvSellType.setText("可小刀");
         }
         String time = getTimeRange(mIdleSaleInfo.getGpublishtime());
         mTvTime.setText(time);
-        if (mIdleSaleInfo.getTradetype().equals(0)) {
+        if (mIdleSaleInfo.getTradetype().equals("0")) {
             mTvTradetype.setText("见面交易");
         }
         mTvPlace.setText(mIdleSaleInfo.getTradeplace());

@@ -153,7 +153,6 @@ public class IdleSaleImpl implements IIdleSaleBiz {
                             }
                             callback.onIdleSaleCategoriesLoaded(categoriesInfos);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
                         }
 
                     } else {
@@ -276,7 +275,7 @@ public class IdleSaleImpl implements IIdleSaleBiz {
                             }
                             callback.onIdleSaleMessageListLoaded(leaveMessageInfoList);
                         } else {
-                            callback.onDataNotAvailable("暂时没有人留言");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {
@@ -309,7 +308,7 @@ public class IdleSaleImpl implements IIdleSaleBiz {
                             IdleSaleInfo idleSaleInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), IdleSaleInfo.class);
                             callback.onIdleSaleDetailLoaded(idleSaleInfo);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {

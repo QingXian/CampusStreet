@@ -144,7 +144,7 @@ public class BuyZoneImpl implements IBuyZoneBiz {
                             BuyZoneInfo buyZoneInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), BuyZoneInfo.class);
                             callback.onBuyZoneListLoaded(buyZoneInfo);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {
@@ -242,7 +242,7 @@ public class BuyZoneImpl implements IBuyZoneBiz {
                             }
                             callback.onBuyZoneMessageListLoaded(leaveMessageInfoList);
                         } else {
-                            callback.onDataNotAvailable("暂时没有人留言");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {

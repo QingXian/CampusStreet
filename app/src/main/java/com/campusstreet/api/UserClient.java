@@ -47,5 +47,9 @@ public interface UserClient {
     @POST("get_forgotmc")
     Call<JsonObject> getForgetMc(@Field("mobile") String phone);
 
+    @FormUrlEncoded
+    @POST("get_upot")
+    Call<JsonObject> getUserPot(@Field("uid") String uid);
+
 }
 

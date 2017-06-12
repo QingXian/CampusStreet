@@ -70,7 +70,6 @@ public class HomeImpl implements IHomeBiz {
                             }
                             callback.onFetchSuccess(bannerInfos);
                         } else {
-                            callback.onFetchFailure("暂时没有数据");
                         }
 
                     } else {

@@ -58,7 +58,9 @@ public class BuyZonePresenter implements IBuyZoneContract.Presenter {
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
-                mView.showErrorMsg(errorMsg);
+                if (!errorMsg.equals("")) {
+                    mView.showErrorMsg(errorMsg);
+                }
                 mView.setLoadingIndicator(false);
             }
         });
@@ -128,7 +130,9 @@ public class BuyZonePresenter implements IBuyZoneContract.Presenter {
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
-//                mView.showErrorMsg(errorMsg);
+                if (!errorMsg.equals("")) {
+                    mView.showErrorMsg(errorMsg);
+                }
                 mView.setLoadingIndicator(false);
             }
         });

@@ -89,6 +89,18 @@ public class CampusRecruitmentActivity extends BaseActivity implements ICampusRe
         initView();
         initEvent();
         new CampusRecruitmentPresenter(CampusRecruitmentImpl.getInstance(getApplicationContext()), this);
+        setLoadingIndicator(true);
+        if (mPostion == 0) {
+            if (!mEtSearch.getText().equals(""))
+                mPresenter.fetchCampusRecruitmentList(mEtSearch.getText().toString(), mPi);
+            else
+                mPresenter.fetchCampusRecruitmentList(null, mPi);
+        } else {
+            if (!mEtSearch.getText().equals(""))
+                mPresenter.fetchStudyWorkList(mEtSearch.getText().toString(), mPi);
+            else
+                mPresenter.fetchStudyWorkList(null, mPi);
+        }
     }
 
     private void initEvent() {
@@ -213,24 +225,6 @@ public class CampusRecruitmentActivity extends BaseActivity implements ICampusRe
         mRvContent.setAdapter(mRecruitAdapter);
         mTabLayout.addTab(mTabLayout.newTab().setText("普通招聘"));
         mTabLayout.addTab(mTabLayout.newTab().setText("勤工俭学/兼职"));
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPi = 0;
-        setLoadingIndicator(true);
-        if (mPostion == 0) {
-            if (!mEtSearch.getText().equals(""))
-                mPresenter.fetchCampusRecruitmentList(mEtSearch.getText().toString(), mPi);
-            else
-                mPresenter.fetchCampusRecruitmentList(null, mPi);
-        } else {
-            if (!mEtSearch.getText().equals(""))
-                mPresenter.fetchStudyWorkList(mEtSearch.getText().toString(), mPi);
-            else
-                mPresenter.fetchStudyWorkList(null, mPi);
-        }
     }
 
     @OnClick(R.id.tv_toolbar_right)

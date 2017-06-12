@@ -102,16 +102,11 @@ public class BountyHallActivity extends BaseActivity implements IBountyHallContr
         initEvent();
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         mPresenter.fetchBountyHallCategories();
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPi = 0;
         mPresenter.fetchTaskList(mPostion, mPi, null);
         setLoadingIndicator(true);
+
     }
+
 
     private void initEvent() {
         mAdapter.setOnItemClickListener(new BountyHallRecyclerViewAdapter.OnRecyclerViewItemClickListener() {

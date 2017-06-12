@@ -88,12 +88,6 @@ public class PeripheraShopActivity extends BaseActivity implements IPeripheralSh
         initView();
         initEvent();
         mPresenter.fetchPeriPheralShopCategories();
-    }
-
-    @Override
-    protected void onStart() {
-        mPi = 0;
-        super.onStart();
         if (!mEtSearch.getText().equals(""))
             mPresenter.fetchPeriPheralShopList(mPostion, mEtSearch.getText().toString(), mPi);
         else

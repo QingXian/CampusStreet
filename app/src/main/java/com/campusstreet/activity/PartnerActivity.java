@@ -88,6 +88,11 @@ public class PartnerActivity extends BaseActivity implements IPartnerContract.Vi
         initView();
         initEvent();
         mPresenter.fetchPartnerCategories();
+        if (!mEtSearch.getText().equals(""))
+            mPresenter.fetchPartnerList(mEtSearch.getText().toString(), mPostion, mPi);
+        else
+            mPresenter.fetchPartnerList(null, mPostion, mPi);
+        setLoadingIndicator(true);
     }
 
     private void initEvent() {
@@ -250,17 +255,5 @@ public class PartnerActivity extends BaseActivity implements IPartnerContract.Vi
                 }
             }
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPi = 0;
-        if (!mEtSearch.getText().equals(""))
-            mPresenter.fetchPartnerList(mEtSearch.getText().toString(), mPostion, mPi);
-        else
-            mPresenter.fetchPartnerList(null, mPostion, mPi);
-        setLoadingIndicator(true);
-
     }
 }

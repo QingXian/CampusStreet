@@ -110,7 +110,6 @@ public class PartnerImpl implements IPartnerBiz {
                             }
                             callback.onPartnerCategoriesLoaded(categoriesInfos);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
                         }
 
                     } else {
@@ -143,7 +142,7 @@ public class PartnerImpl implements IPartnerBiz {
                             PartnerInfo partnerInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), PartnerInfo.class);
                             callback.onPartnerDetailLoaded(partnerInfo);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {

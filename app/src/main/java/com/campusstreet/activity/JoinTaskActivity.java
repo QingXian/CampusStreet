@@ -84,6 +84,8 @@ public class JoinTaskActivity extends BaseActivity implements IBountyHallContrac
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
         initView();
         initEvent();
+        mPresenter.fetchUserJoinTaskList(mUserInfo.getUid(), mPi);
+        setLoadingIndicator(true);
     }
 
     private void initEvent() {
@@ -126,14 +128,6 @@ public class JoinTaskActivity extends BaseActivity implements IBountyHallContrac
         mRvContent.setAdapter(mAdapter);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPi = 0;
-        mPresenter.fetchUserJoinTaskList(mUserInfo.getUid(), mPi);
-        setLoadingIndicator(true);
-
-    }
 
     @Override
     public void setPresenter(IBountyHallContract.Presenter presenter) {

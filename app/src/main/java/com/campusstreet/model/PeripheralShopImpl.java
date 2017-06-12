@@ -111,7 +111,6 @@ public class PeripheralShopImpl implements IPeripheralShopBiz {
                             }
                             callback.onPeripheralCategoriesLoad(categoriesInfos);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
                         }
 
                     } else {

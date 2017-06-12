@@ -21,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.os.Build.VERSION_CODES.M;
+import static com.alipay.sdk.app.statistic.c.v;
 import static com.campusstreet.R.id.view;
 import static com.campusstreet.utils.DataUtil.getTimeRange;
 
@@ -86,7 +88,7 @@ public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
                     .fit()
                     .into(viewHolder.mIvHead);
             if (!liveInfo.getImages().equals("")) {
-                initImage(liveInfo, liveInfo.getImages(), viewHolder);
+                initImage(liveInfo.getImages(), viewHolder);
             } else {
                 viewHolder.mImageContentLl.setVisibility(View.GONE);
             }
@@ -94,7 +96,8 @@ public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         }
     }
 
-    private void initImage(LiveInfo liveInfo, String images, RecyclerItemViewHolder viewHolder) {
+    private void initImage(String images, RecyclerItemViewHolder viewHolder) {
+        mImageNum = 0;
         if (images != null) {
             for (int i = 0; i <= images.length() - 1; i++) {
                 String getstr = images.substring(i, i + 1);

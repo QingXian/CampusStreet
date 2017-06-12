@@ -118,13 +118,18 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
         mUserAssociationInfo = (UserAssociationInfo) getIntent().getSerializableExtra(Const.USERASSOCIATIONINFO_EXTRA);
         mAssociationInfo = (AssociationInfo) getIntent().getSerializableExtra(Const.ASSOCIATIONINFO_EXTRA);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(USERINFO_EXTRA);
+        initView();
+        initEvent();
         if (mAssociationInfo != null) {
             mPresenter.fetchAssociationNumList(mAssociationInfo.getId(), mPi, 1000);
         } else {
             mPresenter.fetchAssociationNumList(mUserAssociationInfo.getAssnid(), mPi, 1000);
         }
-        initView();
-        initEvent();
+        if (mAssociationInfo != null) {
+            mPresenter.fetchAssociationPostList(mAssociationInfo.getId(), mPi);
+        } else {
+            mPresenter.fetchAssociationPostList(mUserAssociationInfo.getAssnid(), mPi);
+        }
     }
 
     private void initEvent() {
@@ -190,16 +195,6 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
         mRvContent.setNestedScrollingEnabled(false);
     }
 
-
-    protected void onStart() {
-        if (mAssociationInfo != null) {
-            mPresenter.fetchAssociationPostList(mAssociationInfo.getId(), mPi);
-        } else {
-            mPresenter.fetchAssociationPostList(mUserAssociationInfo.getAssnid(), mPi);
-        }
-        super.onStart();
-
-    }
 
     @OnClick({R.id.iv_toolbar_right, R.id.btn_join, R.id.rl_notice, R.id.fab_add_task})
     public void onViewClicked(View view) {

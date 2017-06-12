@@ -191,7 +191,7 @@ public class BountyHallImpl implements IBountyHallBiz {
                             BountyHallInfo bountyHallInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), BountyHallInfo.class);
                             callback.onUserTaskDetailLoaded(bountyHallInfo);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {

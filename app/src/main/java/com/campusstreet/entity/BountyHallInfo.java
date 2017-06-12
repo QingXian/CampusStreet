@@ -24,6 +24,12 @@ public class BountyHallInfo implements Serializable {
      * mobile1 : 13635283686
      * userpic : 3.jpg
      * endtime : 2017/3/24 15:00:00
+     * Fee: 任务费用(0表示面议)
+     Person: 需要人数
+     Sperson: 报名人数
+     Tperson: 己选中人数
+     Tpname: 任务类型
+     Endtime: 任务结束时间
      */
 
     private Integer id;

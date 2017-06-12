@@ -81,7 +81,9 @@ public class FindPresenter implements IFindContract.Presenter {
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
-                mView.showErrorMsg(errorMsg);
+                if (!errorMsg.equals("")) {
+                    mView.showErrorMsg(errorMsg);
+                }
                 mView.setLoadingIndicator(false);
             }
         });

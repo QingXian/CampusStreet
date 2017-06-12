@@ -194,7 +194,7 @@ public class BuyZoneDetailActivity extends BaseActivity implements IBuyZoneContr
         mTvTime.setText(time);
         mTvTitle.setText(mBuyZoneInfo.getName());
         mTvContent.setText(mBuyZoneInfo.getCon());
-        mTvPhone.setText(mBuyZoneInfo.getMoney());
+        mTvPhone.setText(mBuyZoneInfo.getMobile());
         Picasso.with(this)
                 .load(AppConfig.AVATAR_SERVER_HOST + mBuyZoneInfo.getUserpic())
                 .fit()

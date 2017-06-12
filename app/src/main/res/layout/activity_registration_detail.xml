@@ -46,20 +46,22 @@
             <!--android:textSize="12sp"/>-->
 
             <TextView
+                android:textSize="16sp"
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="03-22 16:30"/>
+                android:layout_alignParentRight="true"/>
+
             <TextView
-                android:padding="8dp"
+                android:textSize="16sp"
                 android:id="@+id/tv_state"
-                android:textColor="@color/colorOrange"
-                android:layout_below="@id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="进行中"/>
+                android:layout_below="@id/tv_time"
+                android:padding="8dp"
+                android:text="进行中"
+                android:textColor="@color/colorOrange"/>
         </RelativeLayout>
 
 
@@ -70,40 +72,49 @@
             android:padding="8dp">
 
             <TextView
+                android:textSize="16sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/act_registration_detail_remuneration"/>
 
             <TextView
+                android:textSize="16sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:text="¥"/>
+                android:text="¥"
+                android:textColor="@color/colorRed"/>
+
             <TextView
+                android:textSize="16sp"
                 android:id="@+id/tv_remuneration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:text="80元"/>
+                android:textColor="@color/colorRed"
+                />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp">
 
             <TextView
+                android:textSize="16sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/act_registration_detail_phone"/>
 
             <TextView
+                android:textSize="16sp"
                 android:id="@+id/tv_phone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:text="1232323223"/>
+                />
         </LinearLayout>
 
         <!--<LinearLayout-->
@@ -150,17 +161,19 @@
             android:padding="8dp">
 
             <TextView
+                android:textSize="16sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/act_registration_detail_remarks"/>
 
             <TextView
+                android:textSize="16sp"
                 android:id="@+id/tv_remarks"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:hint="报名者备注情况"/>
+                />
         </LinearLayout>
 
         <Button
@@ -169,9 +182,9 @@
             android:layout_height="40dp"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
-            android:layout_marginTop="200dp"
-            android:text="通过"
+            android:layout_marginTop="180dp"
             android:background="@color/colorWhite"
+            android:text="通过"
             android:textColor="@color/colorPrimary"/>
     </LinearLayout>
 

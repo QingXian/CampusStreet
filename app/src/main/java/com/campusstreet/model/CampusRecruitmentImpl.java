@@ -151,7 +151,6 @@ public class CampusRecruitmentImpl implements ICampusRecruitmentBiz {
                             RecruitInfo recruitInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), RecruitInfo.class);
                             callback.onCampusRecruitmentDetailLoaded(recruitInfo);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
                         }
 
                     } else {
@@ -184,7 +183,7 @@ public class CampusRecruitmentImpl implements ICampusRecruitmentBiz {
                             StudyWorkInfo studyWorkInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), StudyWorkInfo.class);
                             callback.onStudyWorkDetailLoaded(studyWorkInfo);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {

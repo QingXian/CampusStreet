@@ -81,6 +81,8 @@ public class MyBuyZoneActivity extends BaseActivity implements IBuyZoneContract.
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         initView();
         initEvent();
+        mPresenter.fetchUserBuyZoneList(mUserInfo.getUid(), null, mPi);
+        setLoadingIndicator(true);
     }
 
     private void initView() {
@@ -121,14 +123,6 @@ public class MyBuyZoneActivity extends BaseActivity implements IBuyZoneContract.
                 }, 500);
             }
         });
-    }
-
-    @Override
-    protected void onStart() {
-        mPi = 0;
-        super.onStart();
-        mPresenter.fetchUserBuyZoneList(mUserInfo.getUid(), null, mPi);
-        setLoadingIndicator(true);
     }
 
     @OnClick(R.id.iv_toolbar_right)

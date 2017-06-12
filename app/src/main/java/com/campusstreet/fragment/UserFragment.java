@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.campusstreet.R;
 import com.campusstreet.activity.AssociationActivity;
 import com.campusstreet.activity.JoinTaskActivity;
@@ -19,18 +20,27 @@ import com.campusstreet.activity.MyBountyHallActivity;
 import com.campusstreet.activity.MyBuyZoneActivity;
 import com.campusstreet.activity.MyIdleSaleActivity;
 import com.campusstreet.activity.PayActivity;
+import com.campusstreet.api.PayClient;
+import com.campusstreet.api.ServiceGenerator;
+import com.campusstreet.api.UserClient;
 import com.campusstreet.common.AppConfig;
 import com.campusstreet.common.Const;
 import com.campusstreet.entity.UserInfo;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Orange on 2017/4/1.
@@ -66,6 +76,7 @@ public class UserFragment extends Fragment {
     private Unbinder mUnbinder;
     private UserInfo mUserInfo;
     private Toast mToast;
+    private UserClient mUserClient;
 
     public static UserFragment newInstance(UserInfo userInfo) {
         Bundle args = new Bundle();
@@ -81,6 +92,7 @@ public class UserFragment extends Fragment {
         if (getArguments() != null) {
             mUserInfo = (UserInfo) getArguments().getSerializable(Const.USERINFO_EXTRA);
         }
+        mUserClient = ServiceGenerator.createService(getActivity().getApplicationContext(), UserClient.class);
     }
 
     @Nullable
@@ -92,12 +104,48 @@ public class UserFragment extends Fragment {
         if (mUserInfo != null) {
             mRlUserInfo.setVisibility(View.VISIBLE);
             mTvLogin.setVisibility(View.GONE);
+            getUserPot(mUserInfo.getUid());
             initView();
         } else {
             mRlUserInfo.setVisibility(View.GONE);
             mTvLogin.setVisibility(View.VISIBLE);
         }
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        if (mUserInfo != null) {
+            getUserPot(mUserInfo.getUid());
+        }
+        super.onResume();
+    }
+
+    private void getUserPot(String uid) {
+        Call<JsonObject> call = mUserClient.getUserPot(uid);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+                        mUserInfo.setPoint(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                        double price = Double.parseDouble(mUserInfo.getPoint());
+                        DecimalFormat df = new DecimalFormat("0.00");
+                        String strprice = df.format(price);
+                        mTvBalance.setText("余额：" + strprice);
+                    } else {
+                        showMessage(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                showMessage("网络异常");
+            }
+        });
     }
 
     private void initView() {

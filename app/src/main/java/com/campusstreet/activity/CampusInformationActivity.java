@@ -81,6 +81,8 @@ public class CampusInformationActivity extends BaseActivity implements ICampusIn
         new CampusInformationPresenter(CampusInformationImpl.getInstance(getApplicationContext()), this);
         initView();
         initEvent();
+        mPresenter.fetchCampusInformationList(null,mPi);
+        setLoadingIndicator(true);
     }
 
     private void initEvent() {
@@ -120,15 +122,6 @@ public class CampusInformationActivity extends BaseActivity implements ICampusIn
         mRvContent.setLinearLayout();
         mAdapter = new CampusInformationRecyclerViewAdapter(this,null);
         mRvContent.setAdapter(mAdapter);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPi = 0;
-        mPresenter.fetchCampusInformationList(null,mPi);
-        setLoadingIndicator(true);
-
     }
 
     @Override

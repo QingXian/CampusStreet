@@ -92,6 +92,16 @@ public class AssociationActivity extends BaseActivity implements IAssociationCon
         mType = getIntent().getIntExtra(Const.TYPE, 0);
         initView();
         initEvent();
+        if (mPostion == 0) {
+            mPresenter.fetchAssociationList(mPi);
+        } else {
+            if (mUserInfo != null) {
+                mPresenter.fetchUserAssociationList(mPi, mUserInfo.getUid());
+            } else {
+                showErrorMsg("您还未登录");
+            }
+        }
+        setLoadingIndicator(true);
     }
 
     private void initEvent() {
@@ -163,23 +173,6 @@ public class AssociationActivity extends BaseActivity implements IAssociationCon
                 startActivity(intent);
             }
         });
-    }
-
-    protected void onStart() {
-        super.onStart();
-        mPi = 0;
-        setLoadingIndicator(true);
-        if (mPostion == 0) {
-            mPresenter.fetchAssociationList(mPi);
-        } else {
-            if (mUserInfo != null) {
-                mPresenter.fetchUserAssociationList(mPi, mUserInfo.getUid());
-            } else {
-                showErrorMsg("您还未登录");
-            }
-        }
-        setLoadingIndicator(true);
-
     }
 
     private void initView() {

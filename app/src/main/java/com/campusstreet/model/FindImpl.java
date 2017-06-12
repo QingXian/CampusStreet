@@ -170,7 +170,7 @@ public class FindImpl implements IFindBiz {
                             }
                             callback.onFindListLoaded(liveReplyInfos);
                         } else {
-                            callback.onDataNotAvailable("暂时没有人留言");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {

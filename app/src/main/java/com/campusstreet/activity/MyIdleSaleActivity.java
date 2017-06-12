@@ -86,15 +86,10 @@ public class MyIdleSaleActivity extends BaseActivity implements IIdleSaleContrac
         initView();
         initEvent();
         mPresenter.fetchIdleSaleCategories();
-    }
-
-    @Override
-    protected void onStart() {
-        mPi = 0;
-        super.onStart();
         mPresenter.fetchUserIdleSaleList(mUserInfo.getUid(), null, mPi);
         setLoadingIndicator(true);
     }
+
 
     private void initEvent() {
         mAdapter.setOnItemClickListener(new IdleSaleRecyclerViewAdapter.OnRecyclerViewItemClickListener() {

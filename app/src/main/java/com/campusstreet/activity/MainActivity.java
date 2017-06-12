@@ -82,6 +82,7 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
     PermissionsManage mPermissionsManage;
     private UserInfo mUserInfo;
     private boolean mIsLogined = false;
+    private int mType;
 
     private ReleasePopupWindow mPop;
 
@@ -112,11 +113,27 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
         }
 //        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
 //        setFragment(mHomeFragment);
-        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
-        setFragment(mHomeFragment);
-        mToolbarHome.setVisibility(View.VISIBLE);
-        mToolbar.setVisibility(View.GONE);
-        new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
+        mType = getIntent().getIntExtra(Const.TYPE, 0);
+        if (mType == 1) {
+            mUserFragment = mUserFragment.newInstance(mUserInfo);
+            setFragment(mUserFragment);
+            clearSeleted();
+            mIvToolbarRight.setVisibility(View.VISIBLE);
+            mToolbarHome.setVisibility(View.GONE);
+            mToolbar.setVisibility(View.VISIBLE);
+            mIvToolbarRight.setImageResource(R.drawable.ic_setting);
+            mToolbarTitle.setText(getString(R.string.bot_tv_user));
+            mTvUser.setTextColor(getResources().getColor(R.color.colorPrimary));
+            mTvUser.setSelected(true);
+        } else {
+            mHomeFragment = mHomeFragment.newInstance(mUserInfo);
+            setFragment(mHomeFragment);
+            mToolbarHome.setVisibility(View.VISIBLE);
+            mToolbar.setVisibility(View.GONE);
+            new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
+        }
+
+
     }
 
     @OnClick({R.id.iv_toolbar_right, R.id.tv_home, R.id.tv_notice, R.id.tv_find, R.id.tv_user, R.id.iv_release})
@@ -204,10 +221,9 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
         }
     }
 
-    private  void showPopupWindow()
-    {
-        mPop=new ReleasePopupWindow(this);
-        mPop.showAtLocation(this.findViewById(R.id.bottom_navigation), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+    private void showPopupWindow() {
+        mPop = new ReleasePopupWindow(this);
+        mPop.showAtLocation(this.findViewById(R.id.bottom_navigation), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         mPop.setUserInfo(mUserInfo);
         mPop.setOnItemClickListener(this);
 
@@ -215,7 +231,7 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
 
     @Override
     public void setOnItemClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_release_bounty: {
                 if (mUserInfo != null) {
                     Intent intent = new Intent(this, AddBountyHallActivity.class);
@@ -255,11 +271,9 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
                     showMessage("请您先登录");
                 }
             }
-                break;
+            break;
         }
     }
-
-
 
 
     private void setFragment(Fragment fragment) {
@@ -291,8 +305,14 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
             mUserFragment = mUserFragment.newInstance(mUserInfo);
             setFragment(mUserFragment);
             Const.mIsLogout = false;
+            clearSeleted();
+            mIvToolbarRight.setVisibility(View.VISIBLE);
             mToolbarHome.setVisibility(View.GONE);
             mToolbar.setVisibility(View.VISIBLE);
+            mIvToolbarRight.setImageResource(R.drawable.ic_setting);
+            mToolbarTitle.setText(getString(R.string.bot_tv_user));
+            mTvUser.setTextColor(getResources().getColor(R.color.colorPrimary));
+            mTvUser.setSelected(true);
         }
     }
 

@@ -84,6 +84,9 @@ public class MyBountyHallActivity extends BaseActivity implements IBountyHallCon
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
         initView();
         initEvent();
+        mPresenter.fetchUserTaskList(mUserInfo.getUid(), 0, mPi, null);
+        setLoadingIndicator(true);
+
     }
 
     private void initEvent() {
@@ -124,15 +127,6 @@ public class MyBountyHallActivity extends BaseActivity implements IBountyHallCon
         mRvContent.setLinearLayout();
         mAdapter = new BountyHallRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mPi = 0;
-        mPresenter.fetchUserTaskList(mUserInfo.getUid(), 0, mPi, null);
-        setLoadingIndicator(true);
-
     }
 
     @OnClick(R.id.iv_toolbar_right)

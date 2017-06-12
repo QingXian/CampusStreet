@@ -13,7 +13,7 @@ import java.util.List;
  */
 
 public class CampusInformationPresenter implements ICampusInformationContract.Presenter {
-    
+
     public static final String TAG = "CampusInformationPresenter";
 
     private CampusInformationImpl mCampusInformationImpl;
@@ -56,8 +56,10 @@ public class CampusInformationPresenter implements ICampusInformationContract.Pr
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
+                if (!errorMsg.equals("")) {
+                    mView.showErrorMsg(errorMsg);
+                }
                 mView.setLoadingIndicator(false);
-                mView.showErrorMsg(errorMsg);
             }
         });
     }

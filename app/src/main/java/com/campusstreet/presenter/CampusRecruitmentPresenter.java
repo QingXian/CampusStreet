@@ -90,8 +90,10 @@ public class CampusRecruitmentPresenter implements ICampusRecruitmentContract.Pr
 
             @Override
             public void onDataNotAvailable(String errorMsg) {
+                if (!errorMsg.equals("")) {
+                    mView.showErrorMsg(errorMsg);
+                }
                 mView.setLoadingIndicator(false);
-                mView.showErrorMsg(errorMsg);
             }
         });
     }

@@ -23,6 +23,8 @@ import com.campusstreet.contract.ISettingContract;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.SettingImpl;
 import com.campusstreet.presenter.SettingPresenter;
+import com.campusstreet.utils.PreferencesUtil;
+import com.google.gson.GsonBuilder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +87,12 @@ public class ModifyNickNameActivity extends BaseActivity implements ISettingCont
         showMessage(successMsg);
         Intent data = new Intent(this, MainActivity.class);
         mUserInfo.setUsername(mEditText.getText().toString());
-        data.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+        String userinfo = new GsonBuilder().create().toJson(mUserInfo, UserInfo.class);
+        PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
+                .edit()
+                .putString(Const.PREF_USERINFO_KEY, userinfo)
+                .apply();
+        data.putExtra(Const.TYPE,1);
         startActivity(data);
     }
 

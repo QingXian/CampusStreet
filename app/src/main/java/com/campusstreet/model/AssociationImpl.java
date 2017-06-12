@@ -204,7 +204,7 @@ public class AssociationImpl implements IAssociationBiz {
                             }
                             callback.onAssociationNumListLoaded(associationNumInfos);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {
@@ -267,7 +267,7 @@ public class AssociationImpl implements IAssociationBiz {
                             }
                             callback.onAssociationPostMessageLoaded(associationPostMessageInfos);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {
@@ -300,7 +300,7 @@ public class AssociationImpl implements IAssociationBiz {
                             AssociationPostInfo associationPostInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), AssociationPostInfo.class);
                             callback.onAssociationPostDetailLoaded(associationPostInfo);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {

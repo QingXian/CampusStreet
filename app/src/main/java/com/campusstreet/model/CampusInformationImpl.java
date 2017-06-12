@@ -103,7 +103,7 @@ public class CampusInformationImpl implements ICampusInformationBiz {
                             NewInfo newInfo = gson.fromJson(resultJsons.get(0).getAsJsonObject(), NewInfo.class);
                             callback.onCampusInformationDetailLoaded(newInfo);
                         } else {
-                            callback.onDataNotAvailable("暂时没有数据");
+                            callback.onDataNotAvailable("");
                         }
 
                     } else {

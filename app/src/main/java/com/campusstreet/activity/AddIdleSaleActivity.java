@@ -190,13 +190,14 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                 break;
             case R.id.btn_mode:
                 new AlertDialog.Builder(this)
-                        .setTitle("请选择讨价类型")
+                        .setTitle("请选择交易方式")
                         .setIcon(R.drawable.ic_idle_sale)
-                        .setSingleChoiceItems(Const.SELLTYPE, mIndex, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(Const.TRADETYPE, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mSelltype = Const.SELLTYPE[i];
-                                mTvMode.setText(Const.SELLTYPE[i]);
+                                mTradetype = Const.TRADETYPE[i];
+                                mPostion = i;
+                                mTvMode.setText(Const.TRADETYPE[i]);
                                 dialogInterface.dismiss();
                             }
                         })
@@ -205,19 +206,21 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                 break;
             case R.id.btn_trade_type:
                 new AlertDialog.Builder(this)
-                        .setTitle("请选择交易方式")
+                        .setTitle("请选择讨价类型")
                         .setIcon(R.drawable.ic_idle_sale)
-                        .setSingleChoiceItems(Const.TRADETYPE, mIndex, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(Const.SELLTYPE, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mTradetype = Const.TRADETYPE[i];
-                                mTvTradeType.setText(Const.TRADETYPE[i]);
+                                mSelltype = Const.SELLTYPE[i];
+                                mPostion = i;
+                                mTvTradeType.setText(Const.SELLTYPE[i]);
                                 dialogInterface.dismiss();
                             }
                         })
                         .create()
                         .show();
                 break;
+
             case R.id.tv_goods_type:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择商品类型")
@@ -237,14 +240,14 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                 break;
             case R.id.tv_mode:
                 new AlertDialog.Builder(this)
-                        .setTitle("请选择讨价类型")
+                        .setTitle("请选择交易方式")
                         .setIcon(R.drawable.ic_idle_sale)
-                        .setSingleChoiceItems(Const.SELLTYPE, mPostion, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(Const.TRADETYPE, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mSelltype = Const.SELLTYPE[i];
+                                mTradetype = Const.TRADETYPE[i];
                                 mPostion = i;
-                                mTvMode.setText(Const.SELLTYPE[i]);
+                                mTvMode.setText(Const.TRADETYPE[i]);
                                 dialogInterface.dismiss();
                             }
                         })
@@ -253,14 +256,14 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                 break;
             case R.id.tv_trade_type:
                 new AlertDialog.Builder(this)
-                        .setTitle("请选择交易方式")
+                        .setTitle("请选择讨价类型")
                         .setIcon(R.drawable.ic_idle_sale)
-                        .setSingleChoiceItems(Const.TRADETYPE, mPostion, new DialogInterface.OnClickListener() {
+                        .setSingleChoiceItems(Const.SELLTYPE, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mTradetype = Const.TRADETYPE[i];
+                                mSelltype = Const.SELLTYPE[i];
                                 mPostion = i;
-                                mTvTradeType.setText(Const.TRADETYPE[i]);
+                                mTvTradeType.setText(Const.SELLTYPE[i]);
                                 dialogInterface.dismiss();
                             }
                         })
@@ -274,16 +277,16 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
      * 添加闲置商品信息
      */
     private void AddIdleSaleGoods() {
-        if (!mTvTradeType.getText().toString().trim().equals(mTradetype)) {
+        if (!mTvMode.getText().toString().trim().equals(mTradetype)) {
             showMessage("请选择交易方式");
             return;
         }
-        if (!mTvMode.getText().toString().trim().equals(mSelltype)) {
+        if (!mTvTradeType.getText().toString().trim().equals(mSelltype)) {
             showMessage("请选择讨价类型");
             return;
         }
-        if (!mTvTradeType.getText().toString().trim().equals(mTradetype)) {
-            showMessage("请选择求助类别");
+        if (!mTvGoodsType.getText().toString().trim().equals(mType)) {
+            showMessage("请选择商品类别");
             return;
         }
         if (TextUtils.isEmpty(mEtTitle.getText().toString().trim())) {

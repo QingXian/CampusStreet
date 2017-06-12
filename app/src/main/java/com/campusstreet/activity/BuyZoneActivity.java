@@ -90,15 +90,10 @@ public class BuyZoneActivity extends BaseActivity implements IBuyZoneContract.Vi
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         initView();
         initEvent();
-    }
-
-    @Override
-    protected void onStart() {
-        mPi = 0;
-        super.onStart();
         mPresenter.fetchBuyZoneList(mPi);
         setLoadingIndicator(true);
     }
+
 
     private void initView() {
         mRvContent.setLinearLayout();
