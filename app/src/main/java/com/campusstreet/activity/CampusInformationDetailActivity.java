@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +24,7 @@ import com.campusstreet.entity.NewInfo;
 import com.campusstreet.entity.RecruitInfo;
 import com.campusstreet.model.CampusInformationImpl;
 import com.campusstreet.presenter.CampusInformationPresenter;
+import com.campusstreet.utils.htmlEscapeUtil;
 
 import java.util.List;
 
@@ -106,9 +108,10 @@ public class CampusInformationDetailActivity extends BaseActivity implements ICa
         mTvTitle.setText(mNewInfo.getTitle());
         String time = getTimeRange(mNewInfo.getPubtime());
         mTvTime.setText(time);
-
-//        String html="<font color='red'>样式一</font> <br>";
-        CharSequence charSequence = Html.fromHtml(mNewInfo.getSummary());
+        
+//        Log.e("sssssss", mNewInfo.getSummary());
+        String summary = htmlEscapeUtil.htmlReplace(mNewInfo.getSummary());
+        CharSequence charSequence = Html.fromHtml(summary);
         mTvContent.setText(charSequence);
 
     }
