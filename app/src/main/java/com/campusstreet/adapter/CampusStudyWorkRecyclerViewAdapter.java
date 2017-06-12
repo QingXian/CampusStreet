@@ -88,6 +88,10 @@ public class CampusStudyWorkRecyclerViewAdapter extends RecyclerView.Adapter<Rec
             viewHolder.mTvReleaseTime.setText(time);
             viewHolder.mTvPlace.setText(studyWorkInfo.getJobplace());
             viewHolder.mTvWages.setText(studyWorkInfo.getJobmoney());
+            if (studyWorkInfo.getJobmoney().equals("0"))
+            {
+                viewHolder.mTvWages.setText("面议");
+            }
             viewHolder.itemView.setTag(studyWorkInfo);
         }
     }

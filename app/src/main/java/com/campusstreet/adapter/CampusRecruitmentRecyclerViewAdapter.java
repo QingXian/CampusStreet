@@ -103,6 +103,10 @@ public class CampusRecruitmentRecyclerViewAdapter extends RecyclerView.Adapter<R
             viewHolder.mTvPlace.setText(recruiInfo.getJobplace());
             viewHolder.mTvRequirement.setText(recruiInfo.getJobeduname());
             viewHolder.mTvWages.setText(recruiInfo.getJobmoney());
+            if (recruiInfo.getJobmoney().equals("0"))
+            {
+                viewHolder.mTvWages.setText("面议");
+            }
             viewHolder.itemView.setTag(recruiInfo);
         }
     }

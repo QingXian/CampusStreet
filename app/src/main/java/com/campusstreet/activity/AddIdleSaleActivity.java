@@ -174,13 +174,24 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
             case R.id.btn_goods_type:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择商品类型")
-//                        .setSingleChoiceItems(mTitles, mIndex, this)
+                        .setIcon(R.drawable.ic_idle_sale)
+                        .setSingleChoiceItems(mTitle, mPostion, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mType = mTitle[i];
+                                mPostion = i;
+                                mIndex = mPostions[i];
+                                mTvGoodsType.setText(mTitle[i]);
+                                dialogInterface.dismiss();
+                            }
+                        })
                         .create()
                         .show();
                 break;
             case R.id.btn_mode:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择讨价类型")
+                        .setIcon(R.drawable.ic_idle_sale)
                         .setSingleChoiceItems(Const.SELLTYPE, mIndex, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -195,6 +206,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
             case R.id.btn_trade_type:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择交易方式")
+                        .setIcon(R.drawable.ic_idle_sale)
                         .setSingleChoiceItems(Const.TRADETYPE, mIndex, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -209,6 +221,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
             case R.id.tv_goods_type:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择商品类型")
+                        .setIcon(R.drawable.ic_idle_sale)
                         .setSingleChoiceItems(mTitle, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -225,6 +238,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
             case R.id.tv_mode:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择讨价类型")
+                        .setIcon(R.drawable.ic_idle_sale)
                         .setSingleChoiceItems(Const.SELLTYPE, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -240,6 +254,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
             case R.id.tv_trade_type:
                 new AlertDialog.Builder(this)
                         .setTitle("请选择交易方式")
+                        .setIcon(R.drawable.ic_idle_sale)
                         .setSingleChoiceItems(Const.TRADETYPE, mPostion, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

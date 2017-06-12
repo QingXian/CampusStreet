@@ -9,7 +9,6 @@
     android:gravity="center"
     android:layout_gravity="center"
     android:padding="@dimen/activity_vertical_margin"
-    android:background="@color/progress_bar_background"
     android:visibility="gone"
     >
 
@@ -28,5 +27,6 @@
         android:padding="8dp"
         android:text="提示信息"
         android:textColor="@color/colorWhite"
+        android:visibility="gone"
         />
 </LinearLayout>

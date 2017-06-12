@@ -22,13 +22,14 @@
         android:text="事件消息"/>
     <TextView
         android:maxLines="2"
-        android:layout_below="@+id/iv_head"
         android:id="@+id/tv_content"
-        android:paddingTop="4dp"
-        android:layout_toRightOf="@+id/iv_head"
+        android:paddingTop="1dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="内容.............."/>
+        android:text="内容.............."
+        android:layout_alignBottom="@+id/iv_head"
+        android:layout_toRightOf="@+id/iv_head"
+        android:layout_toEndOf="@+id/iv_head" />
     <TextView
         android:paddingTop="8dp"
         android:id="@+id/tv_time"

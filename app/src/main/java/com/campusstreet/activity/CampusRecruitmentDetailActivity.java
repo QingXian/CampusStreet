@@ -45,6 +45,8 @@ public class CampusRecruitmentDetailActivity extends BaseActivity implements ICa
     TextView mTvTitle;
     @BindView(R.id.tv_wages)
     TextView mTvWages;
+    @BindView(R.id.tv_money_tag)
+    TextView mTvMoneyTag;
     @BindView(R.id.tv_feedback)
     TextView mTvFeedback;
     @BindView(R.id.tv_place)
@@ -150,6 +152,11 @@ public class CampusRecruitmentDetailActivity extends BaseActivity implements ICa
             mTvComAdd.setText(mRecruitInfo.getJobplace());
             mTvEducation.setText(mRecruitInfo.getJobeduname());
             mTvWages.setText(mRecruitInfo.getJobmoney());
+            if (mRecruitInfo.getJobmoney().equals("0"))
+            {
+                mTvWages.setText("面议");
+                mTvMoneyTag.setVisibility(View.GONE);
+            }
             mTvCompanyName.setText(mRecruitInfo.getComname());
             mTvCompanyRange.setText(mRecruitInfo.getComindustryname());
             mTvCompanyType.setText(mRecruitInfo.getComtypename());
@@ -164,6 +171,11 @@ public class CampusRecruitmentDetailActivity extends BaseActivity implements ICa
             mTvPlace.setText(mStudyWorkInfo.getJobplace());
             mTvEducation.setText("招聘人数:" + mStudyWorkInfo.getJobperson());
             mTvWages.setText(mStudyWorkInfo.getJobmoney());
+            if (mStudyWorkInfo.getJobmoney().equals("0"))
+            {
+                mTvWages.setText("面议");
+                mTvMoneyTag.setVisibility(View.GONE);
+            }
             mTvStudyworkType.setText(mStudyWorkInfo.getJobcom());
             mTvStudyworkRange.setText(mStudyWorkInfo.getJobtime());
             mTvStudyworkPhone.setText(mStudyWorkInfo.getPhone());
