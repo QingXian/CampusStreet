@@ -44,6 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
         <EditText
+            android:maxLength="20"
             android:id="@+id/et_title"
             android:textColorHint="@color/colorGray"
             android:textSize="16sp"
@@ -68,6 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
         <EditText
+            android:maxLength="100"
             android:id="@+id/et_detail"
             android:textColorHint="@color/colorGray"
             android:textSize="16sp"

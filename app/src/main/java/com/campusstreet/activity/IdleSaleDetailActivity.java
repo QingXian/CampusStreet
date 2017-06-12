@@ -207,9 +207,9 @@ public class IdleSaleDetailActivity extends BaseActivity implements IIdleSaleCon
         mTvDegree.setText(mIdleSaleInfo.getBewrite());
         mTvContent.setText(mIdleSaleInfo.getContent());
 
-        if (mIdleSaleInfo.getSelltype().equals("0")) {
+        if (mIdleSaleInfo.getSelltype() == 0) {
             mTvSellType.setText("一口价");
-        } else if (mIdleSaleInfo.getSelltype().equals("1")) {
+        } else if (mIdleSaleInfo.getSelltype() == 1) {
             mTvSellType.setText("可小刀");
         }
         String time = getTimeRange(mIdleSaleInfo.getGpublishtime());
@@ -310,9 +310,8 @@ public class IdleSaleDetailActivity extends BaseActivity implements IIdleSaleCon
             setLoadingIndicator(false);
         }
 
-        if (mAdapter != null)
-        {
-            mMessageHint.setText("留言 ● "+ mAdapter.getItemCount());
+        if (mAdapter != null) {
+            mMessageHint.setText("留言 ● " + mAdapter.getItemCount());
         }
     }
 
@@ -359,9 +358,9 @@ public class IdleSaleDetailActivity extends BaseActivity implements IIdleSaleCon
         mTvDegree.setText(idleSaleInfo.getBewrite());
         mTvContent.setText(idleSaleInfo.getContent());
 
-        if (idleSaleInfo.getSelltype().equals(0)) {
+        if (idleSaleInfo.getSelltype() == 0) {
             mTvSellType.setText("一口价");
-        } else if (idleSaleInfo.getSelltype().equals(1)) {
+        } else if (idleSaleInfo.getSelltype() == 1) {
             mTvSellType.setText("可小刀");
         }
         String time = getTimeRange(idleSaleInfo.getGpublishtime());

@@ -42,7 +42,7 @@
         android:background="@color/colorWhite"
         android:gravity="start"
         android:hint="@string/act_release_live_hint"
-        android:maxLength="100"
+        android:maxLength="200"
         android:padding="16dp"
         android:textSize="16sp"/>
 

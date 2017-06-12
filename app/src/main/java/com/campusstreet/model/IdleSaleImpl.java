@@ -198,7 +198,7 @@ public class IdleSaleImpl implements IIdleSaleBiz {
         requestBodyMap.put("goodstype", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getGoodstype()));
         requestBodyMap.put("tradeplace", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getTradeplace()));
         requestBodyMap.put("tradetype", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getTradetype()));
-        requestBodyMap.put("selltype", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getSelltype()));
+        requestBodyMap.put("selltype", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), String.valueOf(idleSaleInfo.getSelltype())));
         requestBodyMap.put("mobile", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getMobile()));
         requestBodyMap.put("qq", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getQq()));
         requestBodyMap.put("bewrite", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), idleSaleInfo.getBewrite()));

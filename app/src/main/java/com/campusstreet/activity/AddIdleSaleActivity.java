@@ -337,7 +337,10 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
         idlSaleInfo.setContent(mEtDescribe.getText().toString());
         idlSaleInfo.setGoodstype(String.valueOf(mIndex));
         idlSaleInfo.setTradetype(mTradetype);
-        idlSaleInfo.setSelltype(mSelltype);
+        if (mSelltype.equals("一口价"))
+            idlSaleInfo.setSelltype(0);
+        else
+            idlSaleInfo.setSelltype(1);
         idlSaleInfo.setTradeplace(mEtPlace.getText().toString());
         idlSaleInfo.setMobile(mEtPhone.getText().toString());
         idlSaleInfo.setQq(mEtQq.getText().toString());

@@ -10,6 +10,8 @@
               android:layout_height="match_parent">
     <include layout="@layout/toolbar"/>
     <EditText
+        android:maxLength="20"
+        android:singleLine="true"
         android:textSize="16sp"
         android:padding="8dp"
         android:id="@+id/et_title"
@@ -18,6 +20,8 @@
         android:layout_height="40dp"
         android:background="@drawable/bg_act_idle_sale_detail_et"/>
     <EditText
+        android:maxLength="10"
+        android:singleLine="true"
         android:inputType="number"
         android:textSize="16sp"
         android:layout_marginTop="1dp"
@@ -30,7 +34,9 @@
 
 
     <EditText
-        android:inputType="number"
+        android:maxLength="11"
+        android:singleLine="true"
+        android:inputType="phone"
         android:textSize="16sp"
         android:layout_marginTop="1dp"
         android:padding="8dp"
@@ -40,6 +46,7 @@
         android:layout_height="40dp"
         android:background="@drawable/bg_act_idle_sale_detail_et"/>
     <EditText
+        android:singleLine="true"
         android:inputType="number"
         android:textSize="16sp"
         android:layout_marginTop="1dp"
@@ -56,7 +63,7 @@
         android:padding="8dp"
         android:id="@+id/et_describe"
         android:hint="@string/act_idle_sale_add_describe_hint"
-        android:maxLength="300"
+        android:maxLength="100"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/bg_act_idle_sale_detail_et"/>

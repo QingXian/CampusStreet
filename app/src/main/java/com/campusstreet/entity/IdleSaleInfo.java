@@ -40,7 +40,7 @@ public class IdleSaleInfo implements Serializable {
     private String gpublishtime;
     private String name;
     private String bewrite;
-    private String selltype;
+    private int selltype;
     private String username;
     private String coverimage;
     private String vn;
@@ -158,11 +158,11 @@ public class IdleSaleInfo implements Serializable {
         this.bewrite = bewrite;
     }
 
-    public String getSelltype() {
+    public int getSelltype() {
         return selltype;
     }
 
-    public void setSelltype(String selltype) {
+    public void setSelltype(int selltype) {
         this.selltype = selltype;
     }
 
