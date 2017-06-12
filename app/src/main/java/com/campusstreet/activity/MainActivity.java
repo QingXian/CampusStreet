@@ -223,7 +223,7 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
 
     private void showPopupWindow() {
         mPop = new ReleasePopupWindow(this);
-        mPop.showAtLocation(this.findViewById(R.id.bottom_navigation), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        mPop.showAtLocation(this.findViewById(R.id.bottom_navigation), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
         mPop.setUserInfo(mUserInfo);
         mPop.setOnItemClickListener(this);
 
