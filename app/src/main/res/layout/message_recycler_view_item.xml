@@ -8,8 +8,8 @@
                 android:layout_height="wrap_content">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_head"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
         android:src="@drawable/ic_head_test"/>
     <TextView
         android:id="@+id/tv_name"
@@ -18,16 +18,17 @@
         android:layout_toRightOf="@+id/iv_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:text="事件消息"/>
     <TextView
         android:maxLines="2"
         android:id="@+id/tv_content"
-        android:paddingTop="1dp"
+        android:paddingTop="6dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="内容.............."
-        android:layout_alignBottom="@+id/iv_head"
+        android:textSize="12sp"
+        android:layout_below="@+id/tv_name"
         android:layout_toRightOf="@+id/iv_head"
         android:layout_toEndOf="@+id/iv_head" />
     <TextView

@@ -1,13 +1,22 @@
 package com.campusstreet.activity;
 
 import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.Point;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.Handler;
 
 import com.campusstreet.R;
 import com.campusstreet.common.Const;
@@ -26,10 +36,13 @@ import com.campusstreet.model.CampusInformationImpl;
 import com.campusstreet.presenter.CampusInformationPresenter;
 import com.campusstreet.utils.htmlEscapeUtil;
 
+import java.net.URL;
 import java.util.List;
+import java.util.logging.LogRecord;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.internal.framed.FrameReader;
 
 import static com.campusstreet.common.Const.ID_EXTRA;
 import static com.campusstreet.utils.DataUtil.getTimeRange;
@@ -61,6 +74,8 @@ public class CampusInformationDetailActivity extends BaseActivity implements ICa
     private ICampusInformationContract.Presenter mPresenter;
     private NewInfo mNewInfo;
     private int mId;
+
+    private Handler handler = new Handler() ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +117,7 @@ public class CampusInformationDetailActivity extends BaseActivity implements ICa
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void setCampusInformationDetail(NewInfo newInfo) {
         mNewInfo = newInfo;
@@ -109,12 +125,76 @@ public class CampusInformationDetailActivity extends BaseActivity implements ICa
         String time = getTimeRange(mNewInfo.getPubtime());
         mTvTime.setText(time);
         
-//        Log.e("sssssss", mNewInfo.getSummary());
-        String summary = htmlEscapeUtil.htmlReplace(mNewInfo.getSummary());
-        CharSequence charSequence = Html.fromHtml(summary);
-        mTvContent.setText(charSequence);
+        final String summary = htmlEscapeUtil.htmlReplace(mNewInfo.getSummary());
+//        Log.i("sssssss", summary);
 
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                final Spanned text = Html.fromHtml(summary,0,imgGetter,null);
+                handler.post(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        mTvContent.setText(text);
+                    }
+                });
+            }
+        }).start();
     }
+
+    private Html.ImageGetter imgGetter = new Html.ImageGetter() //格式语句不一定相同，只要进行网络加载图片即可
+    {
+        public Drawable getDrawable(String source)
+        {
+            Drawable drawable = null;
+            try
+            {
+                drawable = Drawable.createFromStream(new URL(source).openStream(), "");//加载网络图片资源核心语句
+//                int screenWidth = AndroidUtil.getLayoutWidth(AllianceNewsDetailActivity.this);
+                DisplayMetrics dm = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+                //图片高宽处理
+                int height = drawable.getIntrinsicHeight();
+                int width = drawable.getIntrinsicWidth();
+                if(width < 100){
+                    drawable.setBounds(0, 0, height, width);
+                }else{
+                    double scale = (dm.widthPixels - 40)/width;
+                    width = dm.widthPixels-40;
+                    height = (int)scale*height;
+                    drawable.setBounds(0, 0, width, height);
+                }
+            }
+            catch (Exception e)
+            {
+                return new Drawable()
+                {
+                    @Override
+                    public void draw(@NonNull Canvas canvas) {
+
+                    }
+
+                    public void setAlpha(int alpha) {}
+
+                    @Override
+                    public void setColorFilter(@Nullable ColorFilter colorFilter) {
+
+                    }
+
+                    @Override
+                    public int getOpacity() {
+                        return 0;
+                    }
+                };
+            }
+            return drawable;
+        }
+    };
 
     @Override
     public void showErrorMsg(String errorMsg) {

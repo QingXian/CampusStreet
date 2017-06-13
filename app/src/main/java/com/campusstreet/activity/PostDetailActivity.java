@@ -1,13 +1,16 @@
 package com.campusstreet.activity;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +38,7 @@ import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.AssociationImpl;
 import com.campusstreet.presenter.AssociationPresenter;
 import com.squareup.picasso.Picasso;
+import com.campusstreet.utils.htmlEscapeUtil;
 
 import java.util.List;
 
@@ -132,9 +136,10 @@ public class PostDetailActivity extends BaseActivity implements IAssociationCont
         initEvent();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void initView(AssociationPostInfo associationPostInfo) {
         mTvName.setText(associationPostInfo.getUsername());
-        Log.d("initView: ", "initView: " + associationPostInfo.getAddtime());
+        Log.d("initView: ", "initView: " + associationPostInfo.getCon());
         String time = getTimeRange(associationPostInfo.getAddtime());
         Picasso.with(this)
                 .load(AppConfig.AVATAR_SERVER_HOST + associationPostInfo.getUserpic())
@@ -143,7 +148,12 @@ public class PostDetailActivity extends BaseActivity implements IAssociationCont
                 .into(mIvHead);
         mTvTime.setText(time);
         mTvTitle.setText(associationPostInfo.getTitle());
-        mTvContent.setText(associationPostInfo.getCon());
+        if (associationPostInfo.getCon() != null && associationPostInfo.getCon().equals("") == false)
+        {
+            String htmlStr = htmlEscapeUtil.htmlReplace(associationPostInfo.getCon());
+            CharSequence charSeq = Html.fromHtml(htmlStr,0);
+            mTvContent.setText(charSeq);
+        }
     }
 
     private void initEvent() {
