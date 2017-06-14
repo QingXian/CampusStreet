@@ -66,7 +66,7 @@ public class ReleasePopupWindow extends PopupWindow implements View.OnClickListe
     private void setPopupWindow() {
         this.setContentView(mPopView);// 设置View
         this.setWidth(DrawerLayout.LayoutParams.MATCH_PARENT);// 设置弹出窗口的宽
-        this.setHeight(126);// 设置弹出窗口的高
+        this.setHeight(DrawerLayout.LayoutParams.WRAP_CONTENT);// 设置弹出窗口的高
         this.setAnimationStyle(R.style.mypopwindow_anim_style);// 设置动画
         //实例化一个ColorDrawable颜色为透明
         ColorDrawable dw = new ColorDrawable(0x00000000);

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
+    android:gravity="center_horizontal"
     >
 
     <Button
@@ -14,7 +16,6 @@
         android:drawableTop="@drawable/ic_idle_sale"
         android:background="@color/colorWhite"
         android:hint="发布闲置"
-        android:paddingLeft="12dp"
         />
     <Button
         android:id="@+id/btn_release_buy"
@@ -23,7 +24,6 @@
         android:drawableTop="@drawable/ic_buy_zone"
         android:background="@color/colorWhite"
         android:hint="发布求购"
-        android:paddingLeft="12dp"
 
         />
     <Button
@@ -33,7 +33,6 @@
         android:drawableTop="@drawable/ic_bounty_hall"
         android:background="@color/colorWhite"
         android:hint="发布赏金"
-        android:paddingLeft="12dp"
 
         />
     <Button
@@ -43,7 +42,6 @@
         android:drawableTop="@drawable/ic_campus_information"
         android:background="@color/colorWhite"
         android:hint="发布动态"
-        android:paddingLeft="12dp"
 
         />
 
