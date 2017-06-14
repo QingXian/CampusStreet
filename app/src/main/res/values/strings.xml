@@ -182,4 +182,5 @@
     <string name="act_modif_password_new_password_again">确认密码</string>
     <string name="act_modify_password_toolbar_title">修改密码</string>
     <string name="act_user_setting_logout">退出登录</string>
+    <string name="act_leave_message_et_hint">请输入文字信息</string>
 </resources>
