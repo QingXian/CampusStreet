@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
@@ -154,7 +155,6 @@ public class CampusInformationDetailActivity extends BaseActivity implements ICa
             try
             {
                 drawable = Drawable.createFromStream(new URL(source).openStream(), "");//加载网络图片资源核心语句
-//                int screenWidth = AndroidUtil.getLayoutWidth(AllianceNewsDetailActivity.this);
                 DisplayMetrics dm = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -175,17 +175,11 @@ public class CampusInformationDetailActivity extends BaseActivity implements ICa
                 return new Drawable()
                 {
                     @Override
-                    public void draw(@NonNull Canvas canvas) {
-
-                    }
-
-                    public void setAlpha(int alpha) {}
-
+                    public void draw(@NonNull Canvas canvas) {}
                     @Override
-                    public void setColorFilter(@Nullable ColorFilter colorFilter) {
-
-                    }
-
+                    public void setAlpha(@IntRange(from = 0, to = 255) int alpha) {}
+                    @Override
+                    public void setColorFilter(@Nullable ColorFilter colorFilter) {}
                     @Override
                     public int getOpacity() {
                         return 0;
