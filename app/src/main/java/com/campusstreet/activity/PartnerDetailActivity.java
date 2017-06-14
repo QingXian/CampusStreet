@@ -112,6 +112,7 @@ public class PartnerDetailActivity extends BaseActivity implements IPartnerContr
         Picasso.with(this)
                 .load(AppConfig.PIC_HOME_BANNER_SERVER_HOST + mPartnerInfo.getImg())
                 .fit()
+                .error(R.drawable.ic_head_test)
                 .into(mIvPic);
         mTvEntryName.setText(mPartnerInfo.getName());
         mTvProfile.setText(mPartnerInfo.getSketch());

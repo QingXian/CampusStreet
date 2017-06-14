@@ -61,6 +61,7 @@ public class LiveDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             Picasso.with(mContext)
                     .load(AppConfig.AVATAR_SERVER_HOST + liveReplyInfo.getUserpic())
                     .fit()
+                    .error(R.drawable.ic_head_test)
                     .into(viewHolder.mIvHead);
             viewHolder.mTvName.setText(liveReplyInfo.getUsername());
             viewHolder.mTvContent.setText(liveReplyInfo.getCon());

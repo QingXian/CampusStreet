@@ -154,6 +154,7 @@ public class LiveDetailActivity extends BaseActivity implements IFindContract.Vi
         Picasso.with(this)
                 .load(AppConfig.AVATAR_SERVER_HOST + mLiveInfo.getUserpic())
                 .fit()
+                .error(R.drawable.ic_head_test)
                 .into(mIvHead);
         if (!mLiveInfo.getImages().equals("")) {
             initImage(mLiveInfo.getImages());

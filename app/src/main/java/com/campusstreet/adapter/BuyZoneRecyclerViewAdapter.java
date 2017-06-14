@@ -76,6 +76,7 @@ public class BuyZoneRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             Picasso.with(mContext)
                     .load(AppConfig.AVATAR_SERVER_HOST + buyZoneInfo.getUserpic())
                     .fit()
+                    .error(R.drawable.ic_head_test)
                     .into(viewHolder.mIvHead);
             viewHolder.mTvName.setText(buyZoneInfo.getUsername());
             String time = getTimeRange(buyZoneInfo.getPubtime());

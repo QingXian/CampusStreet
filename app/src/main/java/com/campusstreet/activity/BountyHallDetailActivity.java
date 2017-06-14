@@ -172,13 +172,18 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
     protected void onStart() {
         super.onStart();
         if (mIsFrist) {
-            if (mBountyHallInfo != null) {
-                mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
-                mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+            if (mBountyHallInfo != null && mUserInfo != null) {
+                if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
+                    mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
+                } else {
+                    mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+                }
+
             }
         } else {
             mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), mPostion, mPi);
         }
+
     }
 
     private void initEvent() {
@@ -244,6 +249,7 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
         Picasso.with(this)
                 .load(AppConfig.AVATAR_SERVER_HOST + bountyHallInfo.getUserpic())
                 .fit()
+                .error(R.drawable.ic_head_test)
                 .into(mIvHead);
         mTabLayout.addTab(mTabLayout.newTab().setText("报名申请"));
         mTabLayout.addTab(mTabLayout.newTab().setText("已选择名单"));
@@ -366,6 +372,16 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
                         mBtnEntel.setText("已经放弃等待同意");
                         mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
                         mBtnEntel.setEnabled(false);
+                    } else if (joinInfo.getState() == 1) {
+                        mBtnGiveup.setVisibility(View.GONE);
+                        mBtnEntel.setText("已被选中等待开始");
+                        mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                        mBtnEntel.setEnabled(false);
+                    } else if (joinInfo.getState() == 2) {
+                        mBtnGiveup.setVisibility(View.GONE);
+                        mBtnEntel.setText("已报名");
+                        mBtnEntel.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                        mBtnEntel.setEnabled(false);
                     } else {
                         mBtnGiveup.setVisibility(View.GONE);
                         mBtnEntel.setText("任务结束");
@@ -448,8 +464,13 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
     @Override
     public void setTaskDetail(BountyHallInfo bountyHallInfo) {
         mBountyHallInfo = bountyHallInfo;
-        mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
-        mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+        if (mUserInfo != null) {
+            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
+                mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
+            } else {
+                mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+            }
+        }
         initView(mBountyHallInfo);
     }
 
@@ -505,7 +526,7 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
                     }
                 } else if (mBtnEntel.getText().toString().equals("提交完成")) {
                     if (mJoinInfo != null)
-                        mPresenter.completeTask(mUserInfo.getUid(), mJoinInfo.getId(),mBountyHallInfo.getId());
+                        mPresenter.completeTask(mUserInfo.getUid(), mJoinInfo.getId(), mBountyHallInfo.getId());
                 }
                 break;
             case R.id.btn_giveup:

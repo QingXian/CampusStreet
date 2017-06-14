@@ -118,6 +118,7 @@ public class RegistrationDetailActivity extends BaseActivity implements IBountyH
         Picasso.with(this)
                 .load(AppConfig.AVATAR_SERVER_HOST + mJoinInfo.getUserpic())
                 .fit()
+                .error(R.drawable.ic_head_test)
                 .into(mIvHead);
         if (mType == 0) {
             if (mBountyHallInfo.getState() == 1) {
@@ -162,7 +163,7 @@ public class RegistrationDetailActivity extends BaseActivity implements IBountyH
         if (mBtnAdopt.getText().equals("通过")) {
             //状态1代表选中
             mPresenter.passJoinTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId(), 1);
-        } else if (mBtnAdopt.getText().equals("对方发起放弃")) {
+        } else if (mBtnAdopt.getText().equals("是否同意放弃")) {
             showAlertDialog("对方发起放弃");
         } else if (mBtnAdopt.getText().equals("对方发起完成")) {
             showAlertDialog("对方发起完成");

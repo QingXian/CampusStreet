@@ -86,6 +86,7 @@ public class FindFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
             Picasso.with(mContext)
                     .load(AppConfig.AVATAR_SERVER_HOST + liveInfo.getUserpic())
                     .fit()
+                    .error(R.drawable.ic_head_test)
                     .into(viewHolder.mIvHead);
             if (!liveInfo.getImages().equals("")) {
                 initImage(liveInfo.getImages(), viewHolder);

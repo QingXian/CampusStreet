@@ -78,6 +78,7 @@ public class AssociationDetailRecyclerViewAdapter extends RecyclerView.Adapter<R
             Picasso.with(mContext)
                     .load(AVATAR_SERVER_HOST + associationPostInfo.getUserpic())
                     .fit()
+                    .error(R.drawable.ic_head_test)
                     .into(viewHolder.mIvHead);
             viewHolder.mTvTitle.setText(associationPostInfo.getTitle());
             viewHolder.mTvName.setText(associationPostInfo.getUsername());

@@ -78,8 +78,7 @@ public class MyBountyHallActivity extends BaseActivity implements IBountyHallCon
                 onBackPressed();
             }
         });
-        mIvToolbarRight.setVisibility(View.VISIBLE);
-        mIvToolbarRight.setImageResource(R.drawable.ic_add);
+        mIvToolbarRight.setVisibility(View.GONE);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         new BountyHallPresenter(BountyHallImpl.getInstance(getApplicationContext()), this);
         initView();
@@ -129,13 +128,13 @@ public class MyBountyHallActivity extends BaseActivity implements IBountyHallCon
         mRvContent.setAdapter(mAdapter);
     }
 
-    @OnClick(R.id.iv_toolbar_right)
-    public void onClick() {
-        Intent intent = new Intent(this, AddBountyHallActivity.class);
-        intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
-        intent.putExtra(Const.TYPE,1);
-        startActivity(intent);
-    }
+//    @OnClick(R.id.iv_toolbar_right)
+//    public void onClick() {
+//        Intent intent = new Intent(this, AddBountyHallActivity.class);
+//        intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+//        intent.putExtra(Const.TYPE,1);
+//        startActivity(intent);
+//    }
 
     @Override
     public void setPresenter(IBountyHallContract.Presenter presenter) {

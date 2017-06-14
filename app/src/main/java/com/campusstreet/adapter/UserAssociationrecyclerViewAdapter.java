@@ -73,6 +73,7 @@ public class UserAssociationrecyclerViewAdapter extends RecyclerView.Adapter<Rec
             Picasso.with(mContext)
                     .load(AppConfig.PIC_ASSOCIATION_SERVER_HOST + userAssociationInfo.getClassimg())
                     .fit()
+                    .error(R.drawable.ic_head_test)
                     .into(viewHolder.mIvHead);
             viewHolder.mTvName.setText(userAssociationInfo.getAssnname());
             viewHolder.mTvAssociationJoinTime.setText(userAssociationInfo.getJointime());

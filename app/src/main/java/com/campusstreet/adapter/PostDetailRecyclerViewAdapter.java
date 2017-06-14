@@ -61,6 +61,7 @@ public class PostDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             Picasso.with(mContext)
                     .load(AppConfig.AVATAR_SERVER_HOST + associationPostMessageInfo.getUserpic())
                     .fit()
+                    .error(R.drawable.ic_head_test)
                     .into(viewHolder.mIvHead);
             viewHolder.mTvName.setText(associationPostMessageInfo.getUsername());
             viewHolder.mTvContent.setText(associationPostMessageInfo.getCon());

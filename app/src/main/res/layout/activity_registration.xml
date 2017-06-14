@@ -42,6 +42,7 @@
                 android:textSize="16sp"/>
 
             <EditText
+                android:maxLength="5"
                 android:id="@+id/et_bounty"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -71,6 +72,7 @@
                 android:textSize="16sp"/>
 
             <EditText
+                android:maxLength="11"
                 android:inputType="phone"
                 android:id="@+id/et_phone"
                 android:layout_width="0dp"

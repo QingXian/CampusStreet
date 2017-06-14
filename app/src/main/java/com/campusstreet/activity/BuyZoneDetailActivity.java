@@ -198,6 +198,7 @@ public class BuyZoneDetailActivity extends BaseActivity implements IBuyZoneContr
         Picasso.with(this)
                 .load(AppConfig.AVATAR_SERVER_HOST + mBuyZoneInfo.getUserpic())
                 .fit()
+                .error(R.drawable.ic_head_test)
                 .into(mIvHead);
         if (mBuyZoneInfo.getQq() != null) {
             mTvQq.setVisibility(View.VISIBLE);

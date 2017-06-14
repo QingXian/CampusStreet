@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -33,22 +34,14 @@ import com.campusstreet.common.Const;
 import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.IVersionBiz;
 import com.campusstreet.model.VersionImpl;
+import com.campusstreet.utils.DownLoadUtil;
 import com.campusstreet.utils.GetLocalVersionUtil;
 import com.campusstreet.utils.InternetStateUtil;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DecimalFormat;
 
 import butterknife.BindView;
@@ -60,13 +53,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.provider.MediaStore.getVersion;
-
 /**
  * Created by Orange on 2017/4/1.
  */
 
 public class UserFragment extends Fragment {
+    private static final int DOWN_ERROR = 1;
     @BindView(R.id.iv_head)
     CircleImageView mIvHead;
     @BindView(R.id.tv_name)
@@ -125,6 +117,11 @@ public class UserFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_user, container, false);
         mUnbinder = ButterKnife.bind(this, root);
+        mProgressDlg = new ProgressDialog(getActivity());
+        mProgressDlg.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // 设置ProgressDialog 的进度条是否不明确 false 就是不设置为不明确
+        mProgressDlg.setIndeterminate(false);
+        mHandler = new Handler();
         if (mUserInfo != null) {
             mRlUserInfo.setVisibility(View.VISIBLE);
             mTvLogin.setVisibility(View.GONE);
@@ -187,11 +184,6 @@ public class UserFragment extends Fragment {
             mTvBalance.setText("余额：" + strprice);
         } else
             mTvBalance.setText("余额：0");
-        mProgressDlg = new ProgressDialog(getActivity());
-        mProgressDlg.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        // 设置ProgressDialog 的进度条是否不明确 false 就是不设置为不明确
-        mProgressDlg.setIndeterminate(false);
-        mHandler = new Handler();
     }
 
 
@@ -308,7 +300,22 @@ public class UserFragment extends Fragment {
                                 if (InternetStateUtil.isWifi(getActivity())) {
                                     mProgressDlg.setTitle("正在下载");
                                     mProgressDlg.setMessage("请稍候...");
-                                    downFile(AppConfig.APP_SERVER_HOST + appUrl);
+                                    mProgressDlg.show();
+                                    new Thread() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                update(DownLoadUtil.getFileFromServer(AppConfig.APP_SERVER_HOST + appUrl, mProgressDlg));
+                                            } catch (Exception e) {
+                                                mProgressDlg.cancel();
+                                                Message msg = new Message();
+                                                msg.what = DOWN_ERROR;
+                                                handler.sendMessage(msg);
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }.start();
+
                                 } else {
                                     new AlertDialog.Builder(getActivity()).setTitle("确认提示")
                                             .setMessage("当前为非WIFI网络，是否继续下载")
@@ -317,7 +324,21 @@ public class UserFragment extends Fragment {
                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                     mProgressDlg.setTitle("正在下载");
                                                     mProgressDlg.setMessage("请稍候...");
-                                                    downFile(AppConfig.APP_SERVER_HOST + appUrl);
+                                                    mProgressDlg.show();
+                                                    new Thread() {
+                                                        @Override
+                                                        public void run() {
+                                                            try {
+                                                                update(DownLoadUtil.getFileFromServer(AppConfig.APP_SERVER_HOST + appUrl, mProgressDlg));
+                                                            } catch (Exception e) {
+                                                                mProgressDlg.cancel();
+                                                                Message msg = new Message();
+                                                                msg.what = DOWN_ERROR;
+                                                                handler.sendMessage(msg);
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    }.start();
                                                 }
                                             })
                                             .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -350,67 +371,39 @@ public class UserFragment extends Fragment {
         });
     }
 
-    public void downFile(final String url) {
-        mProgressDlg.show();
-        new Thread() {
-            public void run() {
-                HttpClient client = new DefaultHttpClient();
-                HttpGet get = new HttpGet(url);
-                HttpResponse response;
-                try {
-                    response = client.execute(get);
-                    HttpEntity entity = response.getEntity();
-                    long length = entity.getContentLength();
-
-                    mProgressDlg.setMax((int) length);//设置进度条的最大值
-
-                    InputStream is = entity.getContent();
-                    FileOutputStream fileOutputStream = null;
-                    if (is != null) {
-                        File file = new File(
-                                Environment.getExternalStorageDirectory(),
-                                "fireant.apk");
-                        fileOutputStream = new FileOutputStream(file);
-                        byte[] buf = new byte[1024];
-                        int ch = -1;
-                        int count = 0;
-                        while ((ch = is.read(buf)) != -1) {
-                            fileOutputStream.write(buf, 0, ch);
-                            count += ch;
-                            if (length > 0) {
-                                mProgressDlg.setProgress(count);//设置当前进度
-                            }
-                        }
-                    }
-                    fileOutputStream.flush();
-                    if (fileOutputStream != null) {
-                        fileOutputStream.close();
-                    }
-                    down();  //告诉HANDER已经下载完成了，可以安装了
-                } catch (ClientProtocolException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+    private void update(final File file) {
+        if (file != null) {
+            mHandler.post(new Runnable() {
+                public void run() {
+                    mProgressDlg.cancel();
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.fromFile(file),
+                            "application/vnd.android.package-archive");
+                    startActivity(intent);
                 }
+            });
+        } else {
+            mProgressDlg.cancel();
+            Message msg = new Message();
+            msg.what = DOWN_ERROR;
+            handler.sendMessage(msg);
+        }
+
+
+    }
+
+    Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case DOWN_ERROR:
+                    //下载apk失败
+                    showMessage("下载失败");
+                    break;
             }
-        }.start();
-    }
-
-    private void down() {
-        mHandler.post(new Runnable() {
-            public void run() {
-                mProgressDlg.cancel();
-                update();
-            }
-        });
-    }
-
-    void update() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(new File(Environment
-                        .getExternalStorageDirectory(), "fireant.apk")),
-                "application/vnd.android.package-archive");
-        startActivity(intent);
-    }
-
+        }
+    };
 }

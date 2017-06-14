@@ -80,6 +80,7 @@ public class BountyHallRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             Picasso.with(mContext)
                     .load(AppConfig.AVATAR_SERVER_HOST + bountyHallInfo.getUserpic())
                     .fit()
+                    .error(R.drawable.ic_head_test)
                     .into(viewHolder.mIvHead);
 
             viewHolder.mTvName.setText(bountyHallInfo.getUsername());

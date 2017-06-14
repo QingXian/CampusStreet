@@ -84,6 +84,7 @@ public class PartnerRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                     .load(AppConfig.PIC_HOME_BANNER_SERVER_HOST + partnerInfo.getImg())
                     .error(R.drawable.ic_head_test)
                     .fit()
+                    .error(R.drawable.ic_head_test)
                     .into(viewHolder.mIvHead);
             viewHolder.mTvTitle.setText(partnerInfo.getName());
             viewHolder.mTvContent.setText(partnerInfo.getSketch());

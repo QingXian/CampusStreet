@@ -105,10 +105,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
             @Override
             public void onDataNotAvailable(String errorMsg) {
                 mView.setLoadingIndicator(false);
-                if (state == JOINNOTPASS) {
-                    mView.showNoPassMsg();
-                } else
-                    mView.showNoPassMsg();
+                mView.showNoPassMsg();
             }
         });
 

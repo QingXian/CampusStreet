@@ -75,6 +75,7 @@ public class UserJoinTaskRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
             Picasso.with(mContext)
                     .load(AppConfig.AVATAR_SERVER_HOST + userJoinTaskInfo.getTaskuserpic())
                     .fit()
+                    .error(R.drawable.ic_head_test)
                     .into(viewHolder.mIvHead);
             viewHolder.mTvName.setText(userJoinTaskInfo.getTaskuser());
             viewHolder.mTvContent.setText(userJoinTaskInfo.getSummary());
