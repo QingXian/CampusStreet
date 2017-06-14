@@ -3,6 +3,7 @@ package com.campusstreet.activity;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -41,6 +43,7 @@ import com.campusstreet.utils.PermissionsManage;
 import com.campusstreet.utils.PreferencesUtil;
 import com.google.gson.GsonBuilder;
 
+import java.lang.reflect.Method;
 import java.security.cert.CertPathValidatorException;
 
 import butterknife.BindView;
@@ -223,10 +226,37 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
 
     private void showPopupWindow() {
         mPop = new ReleasePopupWindow(this);
-        mPop.showAtLocation(this.findViewById(R.id.bottom_navigation), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 100);
+        int dis_y = 100;
+        if (checkDeviceHasNavigationBar())
+        {
+            dis_y = 350;
+        }
+        mPop.showAtLocation(this.findViewById(R.id.bottom_navigation), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,dis_y);
         mPop.setUserInfo(mUserInfo);
         mPop.setOnItemClickListener(this);
 
+    }
+
+    public boolean checkDeviceHasNavigationBar() {
+        boolean hasNavigationBar = false;
+        Resources rs = getResources();
+        int id = rs.getIdentifier("config_showNavigationBar", "bool", "android");
+        if (id > 0) {
+            hasNavigationBar = rs.getBoolean(id);
+        }
+        try {
+            Class<?> systemPropertiesClass = Class.forName("android.os.SystemProperties");
+            Method m = systemPropertiesClass.getMethod("get", String.class);
+            String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
+            if ("1".equals(navBarOverride)) {
+                hasNavigationBar = false;
+            } else if ("0".equals(navBarOverride)) {
+                hasNavigationBar = true;
+            }
+        } catch (Exception e) {
+
+        }
+        return hasNavigationBar;
     }
 
     @Override
