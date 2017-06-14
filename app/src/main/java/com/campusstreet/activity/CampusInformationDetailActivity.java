@@ -134,13 +134,21 @@ public class CampusInformationDetailActivity extends BaseActivity implements ICa
             @Override
             public void run()
             {
-                final Spanned text = Html.fromHtml(summary,0,imgGetter,null);
+                Spanned text = null;
+                if (Build.VERSION.SDK_INT >= 24 )
+                {
+                    text = Html.fromHtml(summary,0,imgGetter,null);
+                }
+                else
+                    text = Html.fromHtml(summary,imgGetter,null);
+
+                final Spanned htmlText = text;
                 handler.post(new Runnable()
                 {
                     @Override
                     public void run()
                     {
-                        mTvContent.setText(text);
+                        mTvContent.setText(htmlText);
                     }
                 });
             }
