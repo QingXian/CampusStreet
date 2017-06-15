@@ -112,7 +112,7 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
 
                     @Override
                     public void onLeaveMessageFailure(String errorMsg) {
-                        mView.showErrorMsg("留言失败");
+                        mView.showErrorMsg(errorMsg);
                         mView.setLoadingIndicator(false);
                     }
                 });

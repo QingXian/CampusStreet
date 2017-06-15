@@ -54,6 +54,5 @@ dependencies {
     compile 'me.iwf.photopicker:PhotoPicker:0.1.8'
     // 支付宝SDK
     compile files('libs/alipaySingle-20170510.jar')
-
-
+    compile files('libs/MiPush_SDK_Client_3_4_0.jar')
 }

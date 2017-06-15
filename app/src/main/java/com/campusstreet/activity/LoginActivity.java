@@ -23,6 +23,7 @@ import com.campusstreet.model.UserImpl;
 import com.campusstreet.presenter.LoginPresenter;
 import com.campusstreet.utils.PreferencesUtil;
 import com.google.gson.GsonBuilder;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -107,6 +108,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.View {
                 .putString(Const.PREF_USERINFO_KEY, userinfo)
                 .apply();
 
+        MiPushClient.setAlias(getApplicationContext(), "mi_"+String.valueOf(userInfo.getMobile()), null);
         Const.mIsLogout = false;
         Intent data = new Intent(this, MainActivity.class);
         data.putExtra(Const.USERINFO_EXTRA, userInfo);

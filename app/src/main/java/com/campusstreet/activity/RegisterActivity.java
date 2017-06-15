@@ -28,6 +28,7 @@ import com.campusstreet.presenter.RegisterPresenter;
 import com.campusstreet.utils.PreferencesUtil;
 import com.campusstreet.utils.TimeCountUtil;
 import com.google.gson.GsonBuilder;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +38,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.data;
 import static android.R.attr.password;
+import static java.security.AccessController.getContext;
 
 /**
  * Created by Orange on 2017/4/26.
@@ -190,6 +193,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
                 .putString(Const.PREF_USERINFO_KEY, userinfo)
                 .apply();
 
+        MiPushClient.setAlias(getApplicationContext(), "mi_"+String.valueOf(userInfo.getMobile()), null);
         // 设置返回的结果数据
         Intent data = new Intent(this, MainActivity.class);
         data.putExtra(Const.USERINFO_EXTRA, userInfo);
