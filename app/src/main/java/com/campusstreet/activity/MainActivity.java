@@ -226,10 +226,10 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
 
     private void showPopupWindow() {
         mPop = new ReleasePopupWindow(this);
-        int dis_y = 100;
+        int dis_y = mIvRelease.getHeight();
         if (checkDeviceHasNavigationBar())
         {
-            dis_y = 350;
+            dis_y = mIvRelease.getHeight()*2+10;
         }
         mPop.showAtLocation(this.findViewById(R.id.bottom_navigation), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,dis_y);
         mPop.setUserInfo(mUserInfo);
