@@ -107,13 +107,13 @@ public class BuyZonePresenter implements IBuyZoneContract.Presenter {
         mBuyZoneImpl.leaveMessagae(gid, uid, con, new IBuyZoneBiz.LeaveMessageCallback() {
             @Override
             public void onLeaveMessageSuccess() {
-                mView.showSuccessfullyleaveMessage("留言成功");
+//                mView.showSuccessfullyleaveMessage("留言成功");
                 mView.setLoadingIndicator(false);
             }
 
             @Override
             public void onLeaveMessageFailure(String errorMsg) {
-                mView.showErrorMsg(errorMsg + "留言失败");
+                mView.showErrorMsg(errorMsg);
                 mView.setLoadingIndicator(false);
             }
         });
