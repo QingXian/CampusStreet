@@ -282,7 +282,7 @@ public class PostDetailActivity extends BaseActivity implements IAssociationCont
             imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
         }
         mEtMessage.setText("");
-        mScrollView.smoothScrollTo(0, 0);
+//        mScrollView.smoothScrollTo(0, 0);
     }
 
     @Override

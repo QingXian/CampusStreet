@@ -303,7 +303,7 @@ public class BuyZoneDetailActivity extends BaseActivity implements IBuyZoneContr
             imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
         }
         mEtMessage.setText("");
-        mScrollView.smoothScrollTo(0, 0);
+//        mScrollView.smoothScrollTo(0, 0);
     }
 
     @Override
