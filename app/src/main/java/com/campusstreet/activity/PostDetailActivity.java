@@ -151,7 +151,15 @@ public class PostDetailActivity extends BaseActivity implements IAssociationCont
         if (associationPostInfo.getCon() != null && associationPostInfo.getCon().equals("") == false)
         {
             String htmlStr = htmlEscapeUtil.htmlReplace(associationPostInfo.getCon());
-            CharSequence charSeq = Html.fromHtml(htmlStr,0);
+            CharSequence charSeq = null;
+            if (Build.VERSION.SDK_INT >= 24 )
+            {
+                charSeq = Html.fromHtml(htmlStr,0);
+            }
+            else
+            {
+                charSeq = Html.fromHtml(htmlStr);
+            }
             mTvContent.setText(charSeq);
         }
     }
@@ -265,7 +273,7 @@ public class PostDetailActivity extends BaseActivity implements IAssociationCont
 
     @Override
     public void showSuccessfullyleaveMessage(String succcessMsg) {
-        showMessage(succcessMsg);
+//        showMessage(succcessMsg);
         mPi = 0;
         setLoadingIndicator(true);
         mPresenter.fetchAssociationPostMessageList(mAssociationPostInfo.getId(), mPi);

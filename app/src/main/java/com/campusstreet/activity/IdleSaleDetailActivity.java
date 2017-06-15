@@ -333,7 +333,7 @@ public class IdleSaleDetailActivity extends BaseActivity implements IIdleSaleCon
 
     @Override
     public void showSuccessfullyleaveMessage(String succcessMsg) {
-        showMessage(succcessMsg);
+//        showMessage(succcessMsg);
         mPi = 0;
         setLoadingIndicator(true);
         mPresenter.fetchIdleSaleMessageList(mIdleSaleInfo.getId(), mPi);

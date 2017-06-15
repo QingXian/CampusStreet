@@ -294,7 +294,7 @@ public class BuyZoneDetailActivity extends BaseActivity implements IBuyZoneContr
 
     @Override
     public void showSuccessfullyleaveMessage(String succcessMsg) {
-        showMessage(succcessMsg);
+//        showMessage(succcessMsg);
         mPi = 0;
         setLoadingIndicator(true);
         mPresenter.fetchBuyZoneMessageList(mBuyZoneInfo.getId(), mPi);

@@ -106,13 +106,13 @@ public class IdleSalePresenter implements IIdleSaleContract.Presenter {
                 new IIdleSaleBiz.LeaveMessageCallback() {
                     @Override
                     public void onLeaveMessageSuccess() {
-//                        mView.showSuccessfullyleaveMessage("留言成功");
+                        mView.showSuccessfullyleaveMessage("留言成功");
                         mView.setLoadingIndicator(false);
                     }
 
                     @Override
                     public void onLeaveMessageFailure(String errorMsg) {
-                        mView.showErrorMsg(errorMsg);
+                        mView.showErrorMsg("留言失败");
                         mView.setLoadingIndicator(false);
                     }
                 });
