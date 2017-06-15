@@ -202,7 +202,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
     }
 
     @Override
-    public void publisherOpTask(String uid, int tpid, int taskid, int state) {
+    public void publisherOpTask(String uid, int tpid, int taskid, String state) {
         mView.setLoadingIndicator(true);
         mBountyHallImpl.onPublisherOpTask(uid, tpid, taskid, state, new IBountyHallBiz.onPublisherOpTaskCallback() {
             @Override

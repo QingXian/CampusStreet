@@ -61,7 +61,7 @@ public interface BountyHallClient {
 
     @FormUrlEncoded
     @POST("publisher_op_taskperson")
-    Call<JsonObject> PublisherOpTask(@Field("uid") String uid, @Field("tpid") Integer tpid, @Field("taskid") Integer tid, @Field("state") Integer state);
+    Call<JsonObject> PublisherOpTask(@Field("uid") String uid, @Field("tpid") Integer tpid, @Field("taskid") Integer tid, @Field("state") String state);
 
     @FormUrlEncoded
     @POST("taskperson_done")

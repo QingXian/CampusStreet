@@ -268,7 +268,7 @@ public class BountyHallImpl implements IBountyHallBiz {
     }
 
     @Override
-    public void onPublisherOpTask(String uid, int tpid, int taskid, int state, @NonNull final onPublisherOpTaskCallback callback) {
+    public void onPublisherOpTask(String uid, int tpid, int taskid, String state, @NonNull final onPublisherOpTaskCallback callback) {
         Call<JsonObject> call = mBountyHallClient.PublisherOpTask(uid, tpid, taskid, state);
         call.enqueue(new Callback<JsonObject>() {
             @Override

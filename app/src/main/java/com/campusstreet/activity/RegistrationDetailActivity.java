@@ -165,7 +165,7 @@ public class RegistrationDetailActivity extends BaseActivity implements IBountyH
             mPresenter.passJoinTask(mUserInfo.getUid(), mBountyHallInfo.getId(), mJoinInfo.getId(), 1);
         } else if (mBtnAdopt.getText().equals("是否同意放弃")) {
             showAlertDialog("对方发起放弃");
-        } else if (mBtnAdopt.getText().equals("对方发起完成")) {
+        } else if (mBtnAdopt.getText().equals("是否同意完成")) {
             showAlertDialog("对方发起完成");
         }
     }
@@ -275,14 +275,14 @@ public class RegistrationDetailActivity extends BaseActivity implements IBountyH
                 .setPositiveButton("同意", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //1代表同意
-                        mPresenter.publisherOpTask(mUserInfo.getUid(), mJoinInfo.getId(), mBountyHallInfo.getId(), 1);
+                        mPresenter.publisherOpTask(mUserInfo.getUid(), mJoinInfo.getId(), mBountyHallInfo.getId(), "001");
                     }
                 })
                 .setNegativeButton("拒绝", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //2代表拒绝
-                        mPresenter.publisherOpTask(mUserInfo.getUid(), mJoinInfo.getId(), mBountyHallInfo.getId(), 2);
+                        mPresenter.publisherOpTask(mUserInfo.getUid(), mJoinInfo.getId(), mBountyHallInfo.getId(), "002");
                     }
                 })
                 .show();

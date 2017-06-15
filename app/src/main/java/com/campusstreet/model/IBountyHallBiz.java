@@ -36,7 +36,7 @@ public interface IBountyHallBiz {
     //通过报名请求
     void onPassJoinTask(String uid, int tid, int tpid, int st, @NonNull onPassJoinTaskCallback callback);
 
-    void onPublisherOpTask(String uid, int tpid, int taskid, int state, @NonNull onPublisherOpTaskCallback callback);
+    void onPublisherOpTask(String uid, int tpid, int taskid, String state, @NonNull onPublisherOpTaskCallback callback);
 
     void onCompleteTask(String uid, int tpid, int taskid, @NonNull onCompleteTaskCallback callback);
 

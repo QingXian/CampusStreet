@@ -42,7 +42,7 @@ public interface IBountyHallContract {
         //获取我的赏金任务
         void fetchUserTaskList(String uid, int tp, int pi, String key);
 
-        void publisherOpTask(String uid, int tpid, int taskid, int state);
+        void publisherOpTask(String uid, int tpid, int taskid, String state);
 
         void completeTask(String uid, int tpid, int taskid);
 
