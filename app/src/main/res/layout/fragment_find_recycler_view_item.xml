@@ -24,7 +24,8 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="16dp"
             android:layout_toRightOf="@+id/iv_head"
-            android:hint="昵称"/>
+            android:hint="昵称"
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/tv_time"

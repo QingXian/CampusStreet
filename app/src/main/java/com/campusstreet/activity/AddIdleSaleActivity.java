@@ -16,11 +16,13 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,7 +88,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
     @BindView(R.id.iv_image3)
     ImageView mIvImage3;
     @BindView(R.id.image_content_ll)
-    LinearLayout mImageContentLl;
+    RelativeLayout mImageContentLl;
     @BindView(R.id.btn_release)
     Button mBtnRelease;
     @BindView(R.id.iv_add_img)
@@ -366,6 +368,11 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                     if (mIvImage3.getVisibility() == View.VISIBLE) {
                         mIvImage3.setVisibility(View.INVISIBLE);
                     }
+
+                    float x = mIvImage2.getX();
+                    float y = mIvImage2.getY();
+                    mIvAddImg.setX(x);
+                    mIvAddImg.setY(y);
                 } else if (mImages.size() == 2) {
                     mIvImage1.setVisibility(View.VISIBLE);
                     mIvImage2.setVisibility(View.VISIBLE);
@@ -374,6 +381,10 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                     if (mIvImage3.getVisibility() == View.VISIBLE) {
                         mIvImage3.setVisibility(View.INVISIBLE);
                     }
+                    float x = mIvImage3.getX();
+                    float y = mIvImage3.getY();
+                    mIvAddImg.setX(x);
+                    mIvAddImg.setY(y);
                 } else if (mImages.size() == 3) {
                     mIvImage1.setVisibility(View.VISIBLE);
                     mIvImage2.setVisibility(View.VISIBLE);
@@ -381,6 +392,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                     Picasso.with(this).load(new File(mImages.get(0))).into(mIvImage1);
                     Picasso.with(this).load(new File(mImages.get(1))).into(mIvImage2);
                     Picasso.with(this).load(new File(mImages.get(2))).into(mIvImage3);
+                    mIvAddImg.setVisibility(View.GONE);
                 }
             }
         }

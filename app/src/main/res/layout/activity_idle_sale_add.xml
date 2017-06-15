@@ -160,28 +160,48 @@
             android:maxLines="3"
             android:padding="8dp"
             android:textSize="16sp"/>
-
-        <ImageView
-            android:id="@+id/iv_add_img"
-            android:layout_width="56dp"
-            android:layout_height="24dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:src="@drawable/ic_select_picture"/>
-
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加图片"
+                android:layout_marginLeft="12dp"
+                android:textSize="16sp"
+                android:textColor="@color/black_40"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(最多可上传3张照片)"
+                android:layout_marginLeft="12dp"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
             android:id="@+id/image_content_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
             android:visibility="visible"
             >
+            <ImageView
+                android:id="@+id/iv_add_img"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_select_picture2"/>
 
             <ImageView
                 android:id="@+id/iv_image1"
-                android:layout_width="0dp"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
 
@@ -189,11 +209,10 @@
 
             <ImageView
                 android:id="@+id/iv_image2"
-                android:layout_width="0dp"
+                android:layout_toRightOf="@id/iv_image1"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_weight="1"
+                android:layout_marginLeft="22dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
 
@@ -201,14 +220,13 @@
 
             <ImageView
                 android:id="@+id/iv_image3"
-                android:layout_width="0dp"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
+                android:layout_marginLeft="22dp"
+                android:layout_toRightOf="@+id/iv_image2"
                 android:scaleType="centerCrop"
-
                 />
-        </LinearLayout>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/btn_release"
