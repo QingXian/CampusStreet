@@ -64,6 +64,7 @@ import static com.campusstreet.common.Const.BANNER_TITLE_EXTRA;
 import static com.campusstreet.common.Const.BANNER_URL_EXTRA;
 import static com.campusstreet.common.Const.ID_EXTRA;
 import static com.campusstreet.common.Const.TYPE;
+import static com.campusstreet.common.Const.USERINFO_EXTRA;
 
 /**
  * Created by Orange on 2017/4/1.
@@ -109,7 +110,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
 
     public static HomeFragment newInstance(UserInfo userInfo) {
         Bundle args = new Bundle();
-        args.putSerializable(Const.USERINFO_EXTRA, userInfo);
+        args.putSerializable(USERINFO_EXTRA, userInfo);
         HomeFragment homeFragment = new HomeFragment();
         homeFragment.setArguments(args);
         return homeFragment;
@@ -120,7 +121,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
         super.onCreate(savedInstanceState);
         mBannerInfos = new ArrayList<>();
         if (getArguments() != null) {
-            mUserInfo = (UserInfo) getArguments().getSerializable(Const.USERINFO_EXTRA);
+            mUserInfo = (UserInfo) getArguments().getSerializable(USERINFO_EXTRA);
         }
         if (mUserInfo != null) {
             mPresenter.fetchdynamicList(mUserInfo.getUid());
@@ -148,11 +149,13 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                 switch (homeDynamicInfo.getType()) {
                     case 1:
                         Intent intent = new Intent(getActivity(), IdleSaleDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
                     case 2:
                         intent = new Intent(getActivity(), BuyZoneDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
@@ -164,11 +167,13 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                         break;
                     case 4:
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
                     case 5:
                         intent = new Intent(getActivity(), PostDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
@@ -230,22 +235,22 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                 break;
             case R.id.tv_idle_sale:
                 intent = new Intent(getActivity(), IdleSaleActivity.class);
-                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                intent.putExtra(USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.tv_buy_zone:
                 intent = new Intent(getActivity(), BuyZoneActivity.class);
-                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                intent.putExtra(USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.tv_bounty_hall:
                 intent = new Intent(getActivity(), BountyHallActivity.class);
-                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                intent.putExtra(USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.tv_association:
                 intent = new Intent(getActivity(), AssociationActivity.class);
-                intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+                intent.putExtra(USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
                 break;
             case R.id.tv_campus_information:

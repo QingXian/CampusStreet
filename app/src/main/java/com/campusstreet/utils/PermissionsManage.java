@@ -8,7 +8,7 @@ import android.support.v4.app.ActivityCompat;
 /**
  * Created by Orange on 2017/4/24.
  */
-public  class PermissionsManage {
+public class PermissionsManage {
     // Storage Permissions
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -23,7 +23,7 @@ public  class PermissionsManage {
      *
      * @param activity
      */
-    public static void verifyStoragePermissions(Activity activity) {
+    public  static void  verifyStoragePermissions(Activity activity) {
         // Check if we have write permission
         int permission = ActivityCompat.checkSelfPermission(activity,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);

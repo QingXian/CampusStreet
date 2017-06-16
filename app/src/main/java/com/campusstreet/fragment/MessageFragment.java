@@ -50,6 +50,7 @@ import retrofit2.Response;
 
 import static com.campusstreet.common.Const.ID_EXTRA;
 import static com.campusstreet.common.Const.TYPE;
+import static com.campusstreet.common.Const.USERINFO_EXTRA;
 
 /**
  * Created by Orange on 2017/4/1.
@@ -77,7 +78,7 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
 
     public static MessageFragment newInstance(UserInfo userInfo) {
         Bundle args = new Bundle();
-        args.putSerializable(Const.USERINFO_EXTRA, userInfo);
+        args.putSerializable(USERINFO_EXTRA, userInfo);
         MessageFragment messageFragment = new MessageFragment();
         messageFragment.setArguments(args);
         return messageFragment;
@@ -87,11 +88,10 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mUserInfo = (UserInfo) getArguments().getSerializable(Const.USERINFO_EXTRA);
+            mUserInfo = (UserInfo) getArguments().getSerializable(USERINFO_EXTRA);
         }
         if (mUserInfo != null) {
             mPi = 0;
-            mPresenter.fetchMessageList(mUserInfo.getUid(), mPi);
             setLoadingIndicator(true);
         }
 
@@ -110,6 +110,17 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
         initView();
         initEvent();
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mUserInfo != null) {
+            mPi = 0;
+            mPresenter.fetchMessageList(mUserInfo.getUid(), mPi);
+            setLoadingIndicator(true);
+        }
+
     }
 
     private void initEvent() {
@@ -135,36 +146,43 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
                         break;
                     case "ewu_reply":
                         Intent intent = new Intent(getActivity(), IdleSaleDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "wish_reply":
                         intent = new Intent(getActivity(), BuyZoneDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "task_join":
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "task_accept":
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "task_execute":
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "task_done":
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "task_success":
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;

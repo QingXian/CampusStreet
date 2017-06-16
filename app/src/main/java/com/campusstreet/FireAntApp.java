@@ -19,8 +19,8 @@ public class FireAntApp extends Application {
     public static final String TAG = "FireAntApp";
 
     // 小米推送
-    private static final String APP_ID = "2882303761517516390";
-    private static final String APP_KEY = "5511751639390";
+    private static final String APP_ID = "2882303761517569847";
+    private static final String APP_KEY = "5241756979847";
 
     @Override
     public void onCreate() {

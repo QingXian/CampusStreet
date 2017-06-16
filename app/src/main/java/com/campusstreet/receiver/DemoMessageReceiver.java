@@ -12,6 +12,10 @@ import com.campusstreet.activity.CampusRecruitmentDetailActivity;
 import com.campusstreet.activity.IdleSaleDetailActivity;
 import com.campusstreet.activity.PartnerDetailActivity;
 import com.campusstreet.activity.PostDetailActivity;
+import com.campusstreet.common.Const;
+import com.campusstreet.entity.UserInfo;
+import com.campusstreet.utils.PreferencesUtil;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.xiaomi.mipush.sdk.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
@@ -25,9 +29,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.R.attr.id;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.campusstreet.common.Const.ID_EXTRA;
 import static com.campusstreet.common.Const.TYPE;
+import static com.campusstreet.common.Const.USERINFO_EXTRA;
 
 /**
  * 1、PushMessageReceiver 是个抽象类，该类继承了 BroadcastReceiver。<br/>
@@ -56,13 +62,10 @@ import static com.campusstreet.common.Const.TYPE;
  * 6、DemoMessageReceiver 的 onCommandResult 方法用来接收客户端向服务器发送命令后的响应结果。<br/>
  * 7、DemoMessageReceiver 的 onReceiveRegisterResult 方法用来接收客户端向服务器发送注册命令后的响应结果。<br/>
  * 8、以上这些方法运行在非 UI 线程中。
- *
- * @author mayixiang
  */
 public class DemoMessageReceiver extends PushMessageReceiver {
 
     private static final String TAG = "DemoMessageReceiver";
-    public static final String EMERGENCY_ID_EXTRA = "emergency_id";
     private String mRegId;
     private long mResultCode = -1;
     private String mReason;
@@ -73,6 +76,7 @@ public class DemoMessageReceiver extends PushMessageReceiver {
     private String mUserAccount;
     private String mStartTime;
     private String mEndTime;
+    private UserInfo mUserInfo;
 
     @Override
     public void onReceivePassThroughMessage(Context context, MiPushMessage message) {
@@ -87,6 +91,7 @@ public class DemoMessageReceiver extends PushMessageReceiver {
         }
     }
 
+
     @Override
     public void onNotificationMessageClicked(Context context, MiPushMessage message) {
         Log.d(TAG, "onNotificationMessageClicked: is called");
@@ -100,47 +105,74 @@ public class DemoMessageReceiver extends PushMessageReceiver {
         }
         if (message.getExtra() != null && message.getExtra().get("mainid") != null) {
             if (message.getExtra() != null) {
+                String userStr = PreferencesUtil.getDefaultPreferences(context, Const.PREF_USER)
+                        .getString(Const.PREF_USERINFO_KEY, null);
+                if (userStr != null) {
+                    mUserInfo = new GsonBuilder().setLenient().create().fromJson(userStr, UserInfo.class);
+                }
                 switch (message.getExtra().get("type")) {
                     case "1":
                         Intent intent = new Intent(context, IdleSaleDetailActivity.class);
-                        intent.putExtra(ID_EXTRA, message.getExtra().get("mainid"));
+                        int mainid = Integer.parseInt(message.getExtra().get("mainid"));
+                        intent.putExtra(ID_EXTRA, mainid);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         break;
                     case "2":
                         intent = new Intent(context, BuyZoneDetailActivity.class);
-                        intent.putExtra(ID_EXTRA, message.getExtra().get("mainid"));
+                        mainid = Integer.parseInt(message.getExtra().get("mainid"));
+                        intent.putExtra(ID_EXTRA, mainid);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         break;
                     case "3":
                         intent = new Intent(context, CampusRecruitmentDetailActivity.class);
-                        intent.putExtra(TYPE, message.getExtra().get("type"));
-                        intent.putExtra(ID_EXTRA, message.getExtra().get("mainid"));
+                        int type = Integer.parseInt(message.getExtra().get("type"));
+                        mainid = Integer.parseInt(message.getExtra().get("mainid"));
+                        intent.putExtra(TYPE, type);
+                        intent.putExtra(ID_EXTRA, mainid);
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         break;
                     case "4":
                         intent = new Intent(context, BountyHallDetailActivity.class);
-                        intent.putExtra(ID_EXTRA, message.getExtra().get("mainid"));
+                        mainid = Integer.parseInt(message.getExtra().get("mainid"));
+                        intent.putExtra(ID_EXTRA, mainid);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         break;
                     case "5":
                         intent = new Intent(context, PostDetailActivity.class);
-                        intent.putExtra(ID_EXTRA, message.getExtra().get("mainid"));
+                        mainid = Integer.parseInt(message.getExtra().get("mainid"));
+                        intent.putExtra(ID_EXTRA, mainid);
+                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         break;
                     case "6":
                         intent = new Intent(context, CampusInformationDetailActivity.class);
-                        intent.putExtra(ID_EXTRA, message.getExtra().get("mainid"));
+                        mainid = Integer.parseInt(message.getExtra().get("mainid"));
+                        intent.putExtra(ID_EXTRA, mainid);
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         break;
                     case "7":
                         intent = new Intent(context, PartnerDetailActivity.class);
-                        intent.putExtra(ID_EXTRA, message.getExtra().get("mainid"));
+                        mainid = Integer.parseInt(message.getExtra().get("mainid"));
+                        intent.putExtra(ID_EXTRA, mainid);
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         break;
                     case "8":
                         intent = new Intent(context, CampusRecruitmentDetailActivity.class);
-                        intent.putExtra(TYPE, message.getExtra().get("type"));
-                        intent.putExtra(ID_EXTRA, message.getExtra().get("mainid"));
+                        type = Integer.parseInt(message.getExtra().get("type"));
+                        mainid = Integer.parseInt(message.getExtra().get("mainid"));
+                        intent.putExtra(TYPE, type);
+                        intent.putExtra(ID_EXTRA, mainid);
+                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                         break;
                 }
@@ -176,6 +208,7 @@ public class DemoMessageReceiver extends PushMessageReceiver {
         } else if (MiPushClient.COMMAND_SET_ALIAS.equals(command)) {
             if (message.getResultCode() == ErrorCode.SUCCESS) {
                 mAlias = cmdArg1;
+                Log.d(TAG, "onCommandResult: 注册别名成功 mAlias <== " + mAlias);
             }
         } else if (MiPushClient.COMMAND_UNSET_ALIAS.equals(command)) {
             if (message.getResultCode() == ErrorCode.SUCCESS) {
