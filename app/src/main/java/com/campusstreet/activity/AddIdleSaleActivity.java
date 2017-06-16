@@ -296,7 +296,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
             return;
         }
         try {
-            if (Integer.valueOf(mEtPrice.getText().toString().trim()) < 0) {
+            if (Double.valueOf(mEtPrice.getText().toString().trim()) < 0) {
                 showMessage("请填写大于0的价格");
                 return;
             }
@@ -372,7 +372,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                     float x = mIvImage2.getX();
                     float y = mIvImage2.getY();
                     mIvAddImg.setX(x);
-                    mIvAddImg.setY(y);
+                    mIvAddImg.setY(y+20);
                 } else if (mImages.size() == 2) {
                     mIvImage1.setVisibility(View.VISIBLE);
                     mIvImage2.setVisibility(View.VISIBLE);
@@ -384,7 +384,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                     float x = mIvImage3.getX();
                     float y = mIvImage3.getY();
                     mIvAddImg.setX(x);
-                    mIvAddImg.setY(y);
+                    mIvAddImg.setY(y+20);
                 } else if (mImages.size() == 3) {
                     mIvImage1.setVisibility(View.VISIBLE);
                     mIvImage2.setVisibility(View.VISIBLE);

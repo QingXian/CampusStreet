@@ -69,7 +69,7 @@ public class ReleasePopupWindow extends PopupWindow implements View.OnClickListe
         this.setHeight(DrawerLayout.LayoutParams.WRAP_CONTENT);// 设置弹出窗口的高
         this.setAnimationStyle(R.style.mypopwindow_anim_style);// 设置动画
         //实例化一个ColorDrawable颜色为透明
-        ColorDrawable dw = new ColorDrawable(0x00000000);
+        ColorDrawable dw = new ColorDrawable(0x00ffffff);
         this.setBackgroundDrawable(dw);
         // TODO: 2016/5/17 设置可以获取焦点
         this.setFocusable(true);

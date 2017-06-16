@@ -166,4 +166,18 @@ public class DataUtil {
             return timeStr.substring(index, timeStr.length());
         }
     }
+
+    public static String formatDateToChinese(String time)
+    {
+        String newDate = "";
+        newDate = time.split("/")[0]+"年"+time.split("/")[1]+"月";
+        String dataSpl = time.split("/")[2];
+        newDate = newDate+dataSpl.split(" ")[0] + "日 " ;
+
+        String timeSpl = dataSpl.split(" ")[1];
+        String lastTime = timeSpl.substring(0,timeSpl.length()-3);
+
+        newDate += lastTime;
+        return newDate;
+    }
 }

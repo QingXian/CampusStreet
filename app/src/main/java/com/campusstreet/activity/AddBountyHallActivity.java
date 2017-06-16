@@ -278,7 +278,7 @@ public class AddBountyHallActivity extends BaseActivity implements IBountyHallCo
             return;
         }
         try {
-            if (Integer.valueOf(mEtBounty.getText().toString().trim()) < 0) {
+            if (Double.valueOf(mEtBounty.getText().toString().trim()) < 0) {
                 showMessage("请填写正确的价格");
                 return;
             }

@@ -46,6 +46,7 @@ import butterknife.ButterKnife;
 import okhttp3.internal.framed.FrameReader;
 
 import static com.campusstreet.common.Const.ID_EXTRA;
+import static com.campusstreet.utils.DataUtil.formatDateToChinese;
 import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
@@ -123,7 +124,7 @@ public class CampusInformationDetailActivity extends BaseActivity implements ICa
     public void setCampusInformationDetail(NewInfo newInfo) {
         mNewInfo = newInfo;
         mTvTitle.setText(mNewInfo.getTitle());
-        String time = getTimeRange(mNewInfo.getPubtime());
+        String time = formatDateToChinese(mNewInfo.getPubtime());
         mTvTime.setText(time);
         
         final String summary = htmlEscapeUtil.htmlReplace(mNewInfo.getSummary());

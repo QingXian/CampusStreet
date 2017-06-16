@@ -226,7 +226,7 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
 
     private void showPopupWindow() {
         mPop = new ReleasePopupWindow(this);
-        int dis_y = mIvRelease.getHeight();
+        int dis_y = mIvRelease.getHeight()+5;
         if (checkDeviceHasNavigationBar())
         {
             dis_y = mIvRelease.getHeight()*2+10;

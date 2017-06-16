@@ -99,7 +99,7 @@ public class AddBuyZoneActivity extends BaseActivity implements IBuyZoneContract
             return;
         }
         try {
-            if (Integer.valueOf(mEtPrice.getText().toString().trim()) < 0) {
+            if (Double.valueOf(mEtPrice.getText().toString().trim()) < 0) {
                 showMessage("请填写大于0的价格");
                 return;
             }
