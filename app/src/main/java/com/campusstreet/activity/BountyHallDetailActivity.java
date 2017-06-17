@@ -183,7 +183,7 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
         } else {
             mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), mPostion, mPi);
         }
-
+        mPresenter.fetchTaskDetail(mBountyHallInfo.getId());
     }
 
     private void initEvent() {

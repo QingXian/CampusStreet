@@ -178,6 +178,7 @@ public class BountyHallPresenter implements IBountyHallContract.Presenter {
 
             @Override
             public void onAddFailure(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
                 mView.setLoadingIndicator(false);
             }
         });

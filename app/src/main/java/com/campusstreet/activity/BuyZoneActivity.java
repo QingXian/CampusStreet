@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.campusstreet.R.id.view;
+import static com.campusstreet.common.Const.REQUEST_CODE;
 
 /**
  * Created by Orange on 2017/4/6.
@@ -140,9 +141,19 @@ public class BuyZoneActivity extends BaseActivity implements IBuyZoneContract.Vi
         if (mUserInfo != null) {
             Intent intent = new Intent(this, AddBuyZoneActivity.class);
             intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_CODE);
         } else {
             showMessage("您还未登录");
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            mPi = 0;
+            mPresenter.fetchBuyZoneList(mPi);
+            setLoadingIndicator(true);
         }
     }
 
@@ -189,7 +200,7 @@ public class BuyZoneActivity extends BaseActivity implements IBuyZoneContract.Vi
             mRvContent.setVisibility(View.GONE);
             mTvError.setText(errorMsg);
             mTvError.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             showMessage("没有数据了");
         }
         setLoadingIndicator(false);

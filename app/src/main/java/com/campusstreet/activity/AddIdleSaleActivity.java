@@ -54,6 +54,7 @@ import static android.R.attr.data;
 import static android.R.attr.path;
 import static android.os.Build.ID;
 import static android.os.Build.TYPE;
+import static com.campusstreet.common.Const.REQUEST_CODE;
 
 
 /**
@@ -114,7 +115,6 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
     private IIdleSaleContract.Presenter mPresenter;
-    public static final int REQUEST_CODE = 1;
 
     private String[] mTitle;
     private int[] mPostions;
@@ -313,6 +313,10 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
             showMessage("请填写联系方式");
             return;
         }
+        if (mEtPhone.getText().length() != 11) {
+            showMessage("请填写正确的联系方式");
+            return;
+        }
         if (TextUtils.isEmpty(mEtQq.getText().toString().trim())) {
             showMessage("请填写QQ");
             return;
@@ -372,7 +376,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                     float x = mIvImage2.getX();
                     float y = mIvImage2.getY();
                     mIvAddImg.setX(x);
-                    mIvAddImg.setY(y+20);
+                    mIvAddImg.setY(y + 20);
                 } else if (mImages.size() == 2) {
                     mIvImage1.setVisibility(View.VISIBLE);
                     mIvImage2.setVisibility(View.VISIBLE);
@@ -384,7 +388,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
                     float x = mIvImage3.getX();
                     float y = mIvImage3.getY();
                     mIvAddImg.setX(x);
-                    mIvAddImg.setY(y+20);
+                    mIvAddImg.setY(y + 20);
                 } else if (mImages.size() == 3) {
                     mIvImage1.setVisibility(View.VISIBLE);
                     mIvImage2.setVisibility(View.VISIBLE);
@@ -432,14 +436,7 @@ public class AddIdleSaleActivity extends BaseActivity implements IIdleSaleContra
     @Override
     public void showSuccessfullyPush(String succcessMsg) {
         showMessage(succcessMsg);
-        if (mIsUser == 1) {
-            Intent intent = new Intent(this, MyIdleSaleActivity.class);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(this, IdleSaleActivity.class);
-            startActivity(intent);
-        }
-
+        this.setResult(RESULT_OK);
         this.finish();
     }
 

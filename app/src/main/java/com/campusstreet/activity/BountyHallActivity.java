@@ -41,6 +41,7 @@ import butterknife.OnClick;
 
 import static android.R.attr.type;
 import static android.R.id.message;
+import static com.campusstreet.common.Const.REQUEST_CODE;
 
 /**
  * Created by Orange on 2017/4/6.
@@ -153,9 +154,18 @@ public class BountyHallActivity extends BaseActivity implements IBountyHallContr
         if (mUserInfo != null) {
             Intent intent = new Intent(this, AddBountyHallActivity.class);
             intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
-            startActivity(intent);
+            startActivityForResult(intent,REQUEST_CODE);
         } else {
             showMessage("您还未登录");
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            mPi = 0;
+            mPresenter.fetchTaskList(mPostion, mPi, null);
+            setLoadingIndicator(true);
         }
     }
 
@@ -256,7 +266,6 @@ public class BountyHallActivity extends BaseActivity implements IBountyHallContr
 
     @Override
     public void showSuccessfullJointask(String successMsg) {
-
     }
 
     @Override

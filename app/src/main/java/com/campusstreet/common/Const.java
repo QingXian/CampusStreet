@@ -49,7 +49,7 @@ public class Const {
     public static final String LIVEINFO_EXTRA = "liveinfo_extra";
 
     /**
-     * spinner数据源
+     * 数据源
      */
     public static final String[] TRADETYPE = {"见面交易"};
     public static final String[] SELLTYPE = {"一口价", "可小刀"};
@@ -73,7 +73,5 @@ public class Const {
     public static final String BANNER_URL_EXTRA = "banner_url_extra";
     public static final String PHONE = "phone";
     public static final String CAPTCHA = "captcha";
-    /**
-     * recycler view可见项的阈值
-     */
+    public static final int REQUEST_CODE = 1;
 }

@@ -3,7 +3,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -294,30 +294,31 @@
         android:background="@color/colorWhite"
         android:orientation="horizontal"
         android:paddingBottom="4dp"
-        android:paddingLeft="4dp"
+        android:paddingLeft="6dp"
         android:paddingTop="4dp">
 
         <EditText
+            android:maxLength="200"
+            android:singleLine="true"
             android:id="@+id/et_message"
             android:layout_width="0dp"
             android:layout_height="32dp"
             android:layout_gravity="center"
             android:layout_weight="5"
-            android:background="@drawable/bg_act_idle_sale_detail_et"
-            android:maxLength="200"
             android:drawableLeft="@drawable/ic_message_keyboard"
             android:hint="@string/act_leave_message_et_hint"
-            android:singleLine="true"
-            android:textSize="14sp"/>
+            android:background="@drawable/bg_act_idle_sale_detail_et"
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/btn_send_message"
             android:layout_width="0dp"
             android:layout_height="32dp"
-            android:layout_marginLeft="16dp"
-            android:layout_weight="1.3"
+            android:layout_marginLeft="6dp"
+            android:layout_weight="1"
             android:background="@drawable/bg_act_idle_sale_detail_btn"
             android:text="发送"
+            android:layout_marginRight="3dp"
             android:textColor="@color/colorWhite"/>
     </LinearLayout>
 

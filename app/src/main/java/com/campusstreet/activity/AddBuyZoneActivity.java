@@ -112,6 +112,10 @@ public class AddBuyZoneActivity extends BaseActivity implements IBuyZoneContract
             showMessage("请填写联系方式");
             return;
         }
+        if (mEtPhone.getText().length() != 11) {
+            showMessage("请填写正确的联系方式");
+            return;
+        }
         if (TextUtils.isEmpty(mEtDescribe.getText().toString().trim())) {
             showMessage("请填写详细介绍");
             return;
@@ -158,14 +162,7 @@ public class AddBuyZoneActivity extends BaseActivity implements IBuyZoneContract
     @Override
     public void showSuccessfullyPush(String succcessMsg) {
         showMessage(succcessMsg);
-        if (mIsUser == 1) {
-            Intent intent = new Intent(this, MyBuyZoneActivity.class);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(this, BuyZoneActivity.class);
-            startActivity(intent);
-        }
-
+        this.setResult(RESULT_OK);
         this.finish();
     }
 

@@ -37,7 +37,7 @@ import butterknife.OnClick;
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 
-import static com.campusstreet.activity.AddIdleSaleActivity.REQUEST_CODE;
+import static com.campusstreet.common.Const.REQUEST_CODE;
 
 /**
  * Created by Orange on 2017/4/11.

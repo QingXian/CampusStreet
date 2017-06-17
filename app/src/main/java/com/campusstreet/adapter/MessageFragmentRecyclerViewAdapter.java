@@ -14,6 +14,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Orange on 2017/4/17.
@@ -83,6 +84,41 @@ public class MessageFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Rec
             } else {
                 viewHolder.mTvIsread.setVisibility(View.VISIBLE);
             }
+            switch (messageInfo.getTypecode()) {
+                case "ewu_reply":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_idle_sale);
+                    break;
+                case "wish_reply":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_buy_zone);
+                    break;
+                case "task_join":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_bounty_hall);
+                    break;
+                case "task_accept":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_bounty_hall);
+                    break;
+                case "join_assn":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_association);
+                    break;
+                case "assn_accept":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_association);
+                    break;
+                case "assn_deny":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_association);
+                    break;
+                case "task_execute":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_bounty_hall);
+                    break;
+                case "task_done":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_bounty_hall);
+                    break;
+                case "task_success":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_bounty_hall);
+                    break;
+                case "recruit_push":
+                    viewHolder.mIvHead.setImageResource(R.drawable.ic_campus_recruitment);
+                    break;
+            }
         }
     }
 
@@ -105,6 +141,8 @@ public class MessageFragmentRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         TextView mTvTime;
         @BindView(R.id.tv_isread)
         TextView mTvIsread;
+        @BindView(R.id.iv_head)
+        CircleImageView mIvHead;
 
         private RecyclerItemViewHolder(View viewItem) {
             super(viewItem);

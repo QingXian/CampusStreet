@@ -75,8 +75,8 @@ public class MyBuyZoneActivity extends BaseActivity implements IBuyZoneContract.
                 onBackPressed();
             }
         });
-        mIvToolbarRight.setVisibility(View.VISIBLE);
-        mIvToolbarRight.setImageResource(R.drawable.ic_add);
+        mIvToolbarRight.setVisibility(View.GONE);
+//        mIvToolbarRight.setImageResource(R.drawable.ic_add);
         new BuyZonePresenter(BuyZoneImpl.getInstance(getApplicationContext()), this);
         mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
         initView();
@@ -125,17 +125,17 @@ public class MyBuyZoneActivity extends BaseActivity implements IBuyZoneContract.
         });
     }
 
-    @OnClick(R.id.iv_toolbar_right)
-    public void onClick() {
-        if (mUserInfo != null) {
-            Intent intent = new Intent(this, AddBuyZoneActivity.class);
-            intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
-            intent.putExtra(Const.TYPE,1);
-            startActivity(intent);
-        } else {
-            showMessage("您还未登录");
-        }
-    }
+//    @OnClick(R.id.iv_toolbar_right)
+//    public void onClick() {
+//        if (mUserInfo != null) {
+//            Intent intent = new Intent(this, AddBuyZoneActivity.class);
+//            intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+//            intent.putExtra(Const.TYPE,1);
+//            startActivity(intent);
+//        } else {
+//            showMessage("您还未登录");
+//        }
+//    }
 
     @Override
     public void setPresenter(IBuyZoneContract.Presenter presenter) {

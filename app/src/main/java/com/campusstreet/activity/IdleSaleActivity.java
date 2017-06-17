@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static android.R.attr.type;
+import static com.campusstreet.common.Const.REQUEST_CODE;
 
 /**
  * Created by Orange on 2017/4/6.
@@ -118,7 +119,7 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.fetchIdleSaleList(0, mPi);
+                        mPresenter.fetchIdleSaleList(mPostion, mPi);
                     }
                 }, 1500);
             }
@@ -128,7 +129,7 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mPresenter.fetchIdleSaleList(0, ++mPi);
+                        mPresenter.fetchIdleSaleList(mPostion, ++mPi);
                     }
                 }, 500);
             }
@@ -150,7 +151,7 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
                 if (mUserInfo != null) {
                     Intent intent = new Intent(this, AddIdleSaleActivity.class);
                     intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
-                    startActivity(intent);
+                    startActivityForResult(intent, REQUEST_CODE);
                 } else {
                     showMessage("您还未登录");
                 }
@@ -267,6 +268,15 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
                     mProgressBarContainer.setVisibility(View.GONE);
                 }
             }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            mPi = 0;
+            mPresenter.fetchIdleSaleList(mPostion, mPi);
+            setLoadingIndicator(true);
         }
     }
 }

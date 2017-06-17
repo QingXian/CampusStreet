@@ -1,11 +1,18 @@
 package com.campusstreet.activity;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -49,6 +56,11 @@ import java.security.cert.CertPathValidatorException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.campusstreet.R.id.view;
+import static com.campusstreet.utils.PermissionsManage.PERMISSIONCODE;
+import static com.campusstreet.utils.PermissionsManage.SD;
+import static com.campusstreet.utils.PermissionsManage.SD1;
 
 public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnItemClickListener {
 
@@ -97,7 +109,10 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
         ButterKnife.bind(this);
         mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
         mTvHome.setSelected(true);
-        PermissionsManage.verifyStoragePermissions(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PermissionsManage.checkPermission(this, SD1);
+        }
+
         // 从登录成功后获取的用户信息
         if (getIntent() != null) {
             mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
@@ -138,6 +153,58 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
 
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean hasAllGranted = true;
+        for (int i = 0; i < grantResults.length; ++i) {
+            if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                hasAllGranted = false;
+                //在用户已经拒绝授权的情况下，如果shouldShowRequestPermissionRationale返回false则
+                // 可以推断出用户选择了“不在提示”选项，在这种情况下需要引导用户至设置页手动授权
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[i])) {
+                    //解释原因，并且引导用户至设置页手动授权
+                    new AlertDialog.Builder(this)
+                            .setTitle("权限异常")
+                            .setMessage("缺少这些权限将会使应用无法使用")
+                            .setPositiveButton("去授权", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //引导用户至设置页手动授权
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    Uri uri = Uri.fromParts("package", getApplicationContext().getPackageName(), null);
+                                    intent.setData(uri);
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //引导用户手动授权，权限请求失败
+                                    PermissionsManage.checkPermission(MainActivity.this, SD1);
+                                }
+                            }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            //引导用户手动授权，权限请求失败
+                            PermissionsManage.checkPermission(MainActivity.this, SD1);
+                        }
+                    }).show();
+
+                } else {
+                    //权限请求失败，但未选中“不再提示”选项
+                    showMessage("缺少这些权限将会使应用无法使用");
+                    PermissionsManage.checkPermission(this, SD1);
+                }
+                break;
+            }
+        }
+        if (hasAllGranted) {
+            //权限请求成功
+        }
+    }
+
 
     @OnClick({R.id.iv_toolbar_right, R.id.tv_home, R.id.tv_notice, R.id.tv_find, R.id.tv_user, R.id.iv_release})
     public void onClick(View view) {
@@ -226,12 +293,11 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
 
     private void showPopupWindow() {
         mPop = new ReleasePopupWindow(this);
-        int dis_y = mIvRelease.getHeight()+5;
-        if (checkDeviceHasNavigationBar())
-        {
-            dis_y = mIvRelease.getHeight()*2+10;
+        int dis_y = mIvRelease.getHeight() + 5;
+        if (checkDeviceHasNavigationBar()) {
+            dis_y = mIvRelease.getHeight() * 2 + 10;
         }
-        mPop.showAtLocation(this.findViewById(R.id.bottom_navigation), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0,dis_y);
+        mPop.showAtLocation(this.findViewById(R.id.bottom_navigation), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, dis_y);
         mPop.setUserInfo(mUserInfo);
         mPop.setOnItemClickListener(this);
 
@@ -319,6 +385,12 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
         mTvNotice.setSelected(false);
         mTvFind.setSelected(false);
         mTvUser.setSelected(false);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        PermissionsManage.checkPermission(this, SD1);
     }
 
     @Override

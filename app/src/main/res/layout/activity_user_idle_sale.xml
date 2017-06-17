@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:text="加载失败"/>
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_add"
         app:layout_behavior="com.campussteet.utils.ScrollAwareFABBehaviorDefault"
         android:layout_width="64dp"

@@ -138,16 +138,16 @@ public class MyIdleSaleActivity extends BaseActivity implements IIdleSaleContrac
         switch (view.getId()) {
             case R.id.iv_toolbar_right:
                 break;
-            case R.id.btn_add:
-                if (mUserInfo != null) {
-                    Intent intent = new Intent(this, AddIdleSaleActivity.class);
-                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
-                    intent.putExtra(Const.TYPE,1);
-                    startActivity(intent);
-                } else {
-                    showMessage("您还未登录");
-                }
-                break;
+//            case R.id.btn_add:
+//                if (mUserInfo != null) {
+//                    Intent intent = new Intent(this, AddIdleSaleActivity.class);
+//                    intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
+//                    intent.putExtra(Const.TYPE,1);
+//                    startActivity(intent);
+//                } else {
+//                    showMessage("您还未登录");
+//                }
+//                break;
         }
     }
 

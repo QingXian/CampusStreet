@@ -1,5 +1,6 @@
 package com.campusstreet.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -158,6 +161,21 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
                 startActivity(intent);
             }
         });
+        mTvIntroduce.setOnKeyListener(new View.OnKeyListener() {
+
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    setLoadingIndicator(true);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void initView() {
@@ -262,6 +280,8 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
                 if (associationNumInfo.getUid().equals(mUserInfo.getUid())) {
                     if (associationNumInfo.getAssnjob() == 1 || associationNumInfo.getAssnjob() == 2) {
                         mTvIntroduce.setEnabled(true);
+                    } else {
+                        mTvIntroduce.setEnabled(false);
                     }
                     mBtnJoin.setVisibility(View.GONE);
                     mFabAddTask.setVisibility(View.VISIBLE);
