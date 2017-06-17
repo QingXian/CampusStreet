@@ -75,8 +75,8 @@
         android:layout_below="@+id/tv_title"
         android:ellipsize="end"
         android:maxLines="3"
-        android:padding="16dp"
-        android:textColor="@color/colorBlack"/>
+        android:padding="8dp"
+        android:textColor="@color/tv_color_defult"/>
 
     <TextView
         android:id="@+id/tv_position"

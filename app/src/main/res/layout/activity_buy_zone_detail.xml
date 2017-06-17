@@ -104,21 +104,10 @@
                     android:layout_below="@+id/iv_head"
                     android:maxLines="1"
                     android:paddingLeft="8dp"
-                    android:paddingTop="8dp"
+                    android:paddingTop="12dp"
                     android:textColor="@color/colorBlack"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     />
-
-                <TextView
-                    android:id="@+id/tv_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/tv_title"
-                    android:ellipsize="end"
-                    android:padding="16dp"
-                    android:textColor="@color/colorBlack"/>
 
                 <TextView
                     android:id="@+id/tv_expected_price_symbol"
@@ -135,7 +124,7 @@
                     android:id="@+id/tv_phone_hint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_content"
+                    android:layout_below="@+id/tv_title"
                     android:paddingTop="8dp"
                     android:text="@string/act_idle_sale_detail_phone_hint"/>
 
@@ -172,6 +161,26 @@
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
                     android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_content_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_place"
+                    android:layout_alignStart="@+id/tv_place"
+                    android:layout_below="@+id/tv_qq_hint"
+                    android:paddingTop="8dp"
+                    android:text="@string/act_idle_sale_detail_content_hint"
+                    />
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_qq_hint"
+                    android:layout_toRightOf="@+id/tv_content_hint"
+                    android:padding="8dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/tv_color_defult"/>
 
                 <TextView
                     android:id="@+id/tv_expected_price"

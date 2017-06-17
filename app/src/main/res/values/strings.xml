@@ -147,6 +147,7 @@
     <string name="Login_progress_bar_title">登录中...</string>
     <string name="register_progress_bar_title">注册中...</string>
     <string name="act_idle_sale_detail_qq_hint">QQ：</string>
+    <string name="act_idle_sale_detail_content_hint">简要描述：</string>
     <string name="act_idle_sale_add_goods_type_hint_hint">商品类型</string>
     <string name="act_idle_sale_add_qq_hint">QQ</string>
     <string name="act_login">登录</string>
