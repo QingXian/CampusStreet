@@ -180,4 +180,11 @@ public class DataUtil {
         newDate += lastTime;
         return newDate;
     }
+
+    public static String formateDateWithoutTime(String time)
+    {
+        time = time.replaceAll("/","-");
+        String date = time.split(" ")[0];
+        return date;
+    }
 }

@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.campusstreet.utils.DataUtil.formateDateWithoutTime;
 import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
@@ -92,7 +93,8 @@ public class BountyHallRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             viewHolder.mTvNeedNum.setText(String.valueOf(bountyHallInfo.getPerson()));
             viewHolder.mTvSignUpNum.setText(String.valueOf(bountyHallInfo.getSperson()));
             viewHolder.mTvSelectedNum.setText(String.valueOf(bountyHallInfo.getTperson()));
-            viewHolder.mTvSurplusTime.setText(bountyHallInfo.getEndtime() + mContext.getString(R.string.act_bounty_halll_item_end_hint));
+            String newDate = formateDateWithoutTime(bountyHallInfo.getEndtime());
+            viewHolder.mTvSurplusTime.setText(newDate + mContext.getString(R.string.act_bounty_halll_item_end_hint));
             viewHolder.itemView.setTag(bountyHallInfo);
         }
 
