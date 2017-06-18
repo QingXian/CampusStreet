@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,8 +30,12 @@ import com.campusstreet.entity.UserInfo;
 import com.campusstreet.entity.UserJoinTaskInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
+import com.campusstreet.utils.CompareTimeUtil;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -102,6 +107,7 @@ public class AddBountyHallActivity extends BaseActivity implements IBountyHallCo
     private int[] mPostions;
     private int mPostion;
     private Toast mToast;
+    private String mTotalEndTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,7 +236,7 @@ public class AddBountyHallActivity extends BaseActivity implements IBountyHallCo
         }
     }
 
-    @OnClick({R.id.tv_end_date, R.id.tv_toolbar_right, R.id.rl_task_type,R.id.btn_end_date,R.id.tv_end_time,R.id.btn_end_time})
+    @OnClick({R.id.tv_end_date, R.id.tv_toolbar_right, R.id.rl_task_type, R.id.btn_end_date, R.id.tv_end_time, R.id.btn_end_time})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_task_type:
@@ -280,24 +286,24 @@ public class AddBountyHallActivity extends BaseActivity implements IBountyHallCo
                 new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        mTvEndTime.setText(String.format("%d:%d", i,  i1));
+                        mTvEndTime.setText(String.format("%d:%d", i, i1));
                         mEndTime = mTvEndTime.getText().toString();
                         mHour = i;
                         mMinute = i1;
                     }
-                },c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE),true).show();
+                }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true).show();
                 break;
             case R.id.btn_end_time:
                 c = Calendar.getInstance();
                 new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                        mTvEndTime.setText(String.format("%d:%d", i,  i1));
+                        mTvEndTime.setText(String.format("%d:%d", i, i1));
                         mEndTime = mTvEndTime.getText().toString();
                         mHour = i;
                         mMinute = i1;
                     }
-                },c.get(Calendar.HOUR_OF_DAY),c.get(Calendar.MINUTE),true).show();
+                }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true).show();
                 break;
             case R.id.tv_toolbar_right:
                 AddTask();
@@ -362,26 +368,11 @@ public class AddBountyHallActivity extends BaseActivity implements IBountyHallCo
             showMessage("请选择截止时间");
             return;
         }
-        Calendar c = Calendar.getInstance();
-        if (mYear < c.get(Calendar.YEAR)) {
-            showMessage("请选择正确的日期");
-            return;
-        } else if (mMonth < c.get(Calendar.MONTH)) {
-            showMessage("请选择正确的日期");
-            return;
-        } else if (mDay < c.get(Calendar.DAY_OF_MONTH)) {
-            showMessage("请选择正确的日期");
-            return;
-        } else if (mHour < c.get(Calendar.HOUR_OF_DAY)) {
+        mTotalEndTime = mEndDate + " " + mEndTime;
+        if (!CompareTimeUtil.compareTime(mTotalEndTime)) {
             showMessage("请选择正确的时间");
             return;
-        }else if (mMinute < c.get(Calendar.MINUTE)) {
-            if (mHour < c.get(Calendar.HOUR_OF_DAY)){
-                showMessage("请选择正确的时间");
-                return;
-            }
         }
-        mEndTime = mEndDate+" "+mEndTime;
         BountyHallInfo bountyHallInfo = new BountyHallInfo();
         bountyHallInfo.setTitle(mEtTitle.getText().toString());
         bountyHallInfo.setFee(mEtBounty.getText().toString());
@@ -393,7 +384,7 @@ public class AddBountyHallActivity extends BaseActivity implements IBountyHallCo
         bountyHallInfo.setPerson(Integer.valueOf(mEtNum.getText().toString()));
 //        bountyHallInfo.setUid("Mw==");
         bountyHallInfo.setUid(mUserInfo.getUid());
-        bountyHallInfo.setEndtime(mEndTime);
+        bountyHallInfo.setEndtime(mTotalEndTime);
         mPresenter.addTask(bountyHallInfo);
     }
 

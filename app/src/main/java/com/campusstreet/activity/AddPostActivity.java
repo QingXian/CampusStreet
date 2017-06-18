@@ -155,6 +155,11 @@ public class AddPostActivity extends BaseActivity implements IAssociationContrac
     }
 
     @Override
+    public void showSuccessfullyAddNotice(String succcessMsg) {
+
+    }
+
+    @Override
     public void showSuccessfullyApplyJoin(String succcessMsg) {
 
     }

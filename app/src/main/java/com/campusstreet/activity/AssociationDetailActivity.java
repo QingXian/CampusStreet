@@ -8,10 +8,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputFilter;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.campusstreet.R;
 import com.campusstreet.adapter.AssociationDetailRecyclerViewAdapter;
@@ -46,6 +45,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static android.R.id.input;
+import static com.campusstreet.R.id.editText;
 import static com.campusstreet.common.Const.USERASSOCIATIONINFO_EXTRA;
 import static com.campusstreet.common.Const.USERINFO_EXTRA;
 
@@ -96,6 +97,7 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
     private UserInfo mUserInfo;
     private boolean mIsLoading;
     private boolean mIsNeedLoadMore = true;
+    private String mNotice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +220,7 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_toolbar_right:
+                showAlertDialog("发布公告");
                 break;
             case R.id.btn_join:
                 if (mUserInfo != null) {
@@ -279,9 +282,9 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
             if (mUserInfo != null) {
                 if (associationNumInfo.getUid().equals(mUserInfo.getUid())) {
                     if (associationNumInfo.getAssnjob() == 1 || associationNumInfo.getAssnjob() == 2) {
-                        mTvIntroduce.setEnabled(true);
+                        mIvToolbarRight.setVisibility(View.VISIBLE);
                     } else {
-                        mTvIntroduce.setEnabled(false);
+                        mIvToolbarRight.setVisibility(View.GONE);
                     }
                     mBtnJoin.setVisibility(View.GONE);
                     mFabAddTask.setVisibility(View.VISIBLE);
@@ -304,6 +307,12 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
     @Override
     public void showSuccessfullyJoin(String succcessMsg) {
         showMessage(succcessMsg);
+    }
+
+    @Override
+    public void showSuccessfullyAddNotice(String succcessMsg) {
+        showMessage(succcessMsg);
+        mTvIntroduce.setText(mNotice);
     }
 
     @Override
@@ -352,21 +361,42 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
     }
 
     private void showAlertDialog(String text) {
-        final EditText et = new EditText(this);
-        new AlertDialog.Builder(this).setTitle(text)
-                .setView(et)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        String input = et.getText().toString();
-                        if (!input.equals("")) {
-                            mPresenter.onJoinAssociation(mAssociationInfo.getId(), mUserInfo.getUid(), input);
-                        } else {
-                            showErrorMsg("备注信息不能为空");
+        if (text.equals("备注")) {
+            final EditText et = new EditText(this);
+            et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(30)});
+            new AlertDialog.Builder(this).setTitle(text)
+                    .setView(et)
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            String input = et.getText().toString();
+                            if (!input.equals("")) {
+                                mPresenter.onJoinAssociation(mAssociationInfo.getId(), mUserInfo.getUid(), input);
+                            } else {
+                                showErrorMsg("备注信息不能为空");
+                            }
                         }
-                    }
-                })
-                .setNegativeButton("取消", null)
-                .show();
+                    })
+                    .setNegativeButton("取消", null)
+                    .show();
+        } else {
+            final EditText et = new EditText(this);
+            et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(50)});
+            new AlertDialog.Builder(this).setTitle(text)
+                    .setView(et)
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            mNotice = et.getText().toString();
+                            if (!mNotice.equals("")) {
+                                mPresenter.addAssociationNotice(mAssociationInfo.getId(), mUserInfo.getUid(), mNotice);
+                            } else {
+                                showErrorMsg("公告不能为空");
+                            }
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .show();
+        }
     }
+
 
 }

@@ -40,6 +40,8 @@ public interface IAssociationContract {
         //发布帖子
         void addAssociationPost(int aid,String uid ,String con,String title);
 
+        void addAssociationNotice(int aid,String uid ,String con);
+
         //获取社团下帖子的留言列表数据
         void fetchAssociationPostMessageList(int pid, int pi);
 
@@ -64,6 +66,8 @@ public interface IAssociationContract {
         void setUserAssociationList(List<UserAssociationInfo> UserAssociationList);
 
         void showSuccessfullyJoin(String succcessMsg);
+
+        void showSuccessfullyAddNotice(String succcessMsg);
 
         void showSuccessfullyApplyJoin(String succcessMsg);
 

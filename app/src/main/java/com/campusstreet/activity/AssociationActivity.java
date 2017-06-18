@@ -260,6 +260,11 @@ public class AssociationActivity extends BaseActivity implements IAssociationCon
     }
 
     @Override
+    public void showSuccessfullyAddNotice(String succcessMsg) {
+
+    }
+
+    @Override
     public void showSuccessfullyApplyJoin(String succcessMsg) {
 
     }

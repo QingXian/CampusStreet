@@ -143,6 +143,24 @@ public class AssociationPresenter implements IAssociationContract.Presenter {
     }
 
     @Override
+    public void addAssociationNotice(int aid, String uid, String con) {
+        mView.setLoadingIndicator(true);
+        mAssociationImpl.onAddAssociationNotice(aid, uid, con, new IAssociationBiz.addAssociationNoticeCallback() {
+            @Override
+            public void onAddSuccess() {
+                mView.setLoadingIndicator(false);
+                mView.showSuccessfullyPushPost("发布成功");
+            }
+
+            @Override
+            public void onAddFailure(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+                mView.setLoadingIndicator(false);
+            }
+        });
+    }
+
+    @Override
     public void fetchAssociationPostMessageList(int pid, int pi) {
         mAssociationImpl.fetchAssociationPostMessageList(pid, pi, new IAssociationBiz.LoadAssociationPostMessageCallback() {
             @Override

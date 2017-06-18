@@ -30,6 +30,7 @@ import com.campusstreet.entity.UserInfo;
 import com.campusstreet.entity.UserJoinTaskInfo;
 import com.campusstreet.model.BountyHallImpl;
 import com.campusstreet.presenter.BountyHallPresenter;
+import com.campusstreet.utils.CompareTimeUtil;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -164,7 +165,8 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
         } else {
             mPresenter.fetchTaskDetail(mBountyHallInfo.getId());
         }
-        initEvent();
+        mTabLayout.addTab(mTabLayout.newTab().setText("报名申请"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("已选择名单"));
 
     }
 
@@ -178,12 +180,13 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
                 } else {
                     mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
                 }
-
             }
         } else {
             mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), mPostion, mPi);
         }
-        mPresenter.fetchTaskDetail(mBountyHallInfo.getId());
+        if (mBountyHallInfo != null) {
+            mPresenter.fetchTaskDetail(mBountyHallInfo.getId());
+        }
     }
 
     private void initEvent() {
@@ -251,8 +254,6 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
                 .fit()
                 .error(R.drawable.ic_head_test)
                 .into(mIvHead);
-        mTabLayout.addTab(mTabLayout.newTab().setText("报名申请"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("已选择名单"));
         if (mUserInfo == null) {
             mBtnGiveup.setVisibility(View.GONE);
             mBtnEntel.setVisibility(View.GONE);
@@ -465,13 +466,16 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
     public void setTaskDetail(BountyHallInfo bountyHallInfo) {
         mBountyHallInfo = bountyHallInfo;
         if (mUserInfo != null) {
-            if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
-                mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
-            } else {
-                mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+            if (mIsFrist) {
+                if (mUserInfo.getUid().equals(mBountyHallInfo.getUid()) || mBountyHallInfo.getUid() == null) {
+                    mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINNOTPASS, mPi);
+                } else {
+                    mPresenter.fetchjoinTaskList(mBountyHallInfo.getId(), JOINPASS, mPi);
+                }
             }
         }
         initView(mBountyHallInfo);
+        initEvent();
     }
 
 
@@ -495,22 +499,8 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
         switch (view.getId()) {
             case R.id.btn_entel:
                 if (mBtnEntel.getText().toString().equals("报名")) {
-                    Calendar c1 = Calendar.getInstance();
-                    Calendar c2 = Calendar.getInstance();
-                    SimpleDateFormat CurrentTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                    Date curDate = new Date(System.currentTimeMillis());
-                    String dataStrNew = CurrentTime.format(curDate);
-                    try {
-                        c1.setTime(CurrentTime.parse(mBountyHallInfo.getEndtime()));
-                        c2.setTime(CurrentTime.parse(dataStrNew));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    int result = c1.compareTo(c2);
-                    if (result == 0) {
-                        showMessage("任务已经过期");
-                    } else if (result < 0) {
-                        showMessage("任务已经过期");
+                    if (!CompareTimeUtil.compareTime(mBountyHallInfo.getEndtime())) {
+                        showMessage("任务已过期");
                     } else {
                         Intent intent = new Intent(this, RegistrationActivity.class);
                         intent.putExtra(TID_EXTRA, mBountyHallInfo.getId());

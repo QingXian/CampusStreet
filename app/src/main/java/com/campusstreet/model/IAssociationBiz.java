@@ -46,9 +46,18 @@ public interface IAssociationBiz {
 
     void fetchAssociationPostDetail(int pid, @NonNull LoadAssociationPostDetailCallback callback);
 
-    void fetchUserAssociationList(int pi, String uid,@NonNull LoadUserAssociationListCallback callback);
+    void fetchUserAssociationList(int pi, String uid, @NonNull LoadUserAssociationListCallback callback);
+
+    void onAddAssociationNotice(int aid, String uid, String con, @NonNull addAssociationNoticeCallback callback);
 
     interface addAssociationPostCallback {
+
+        void onAddSuccess();
+
+        void onAddFailure(String errorMsg);
+    }
+
+    interface addAssociationNoticeCallback {
 
         void onAddSuccess();
 

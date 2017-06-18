@@ -354,5 +354,30 @@ public class AssociationImpl implements IAssociationBiz {
             }
         });
     }
+
+    @Override
+    public void onAddAssociationNotice(int aid, String uid, String con, @NonNull final addAssociationNoticeCallback callback) {
+        Call<JsonObject> call = mAssociationClient.addAssociationNotion(aid, uid, con);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 0) {
+                        callback.onAddSuccess();
+                    } else {
+                        callback.onAddFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onAddFailure("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
 }
 
