@@ -136,7 +136,6 @@ public class PostDetailActivity extends BaseActivity implements IAssociationCont
         initEvent();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void initView(AssociationPostInfo associationPostInfo) {
         mTvName.setText(associationPostInfo.getUsername());
         Log.d("initView: ", "initView: " + associationPostInfo.getCon());
@@ -241,6 +240,11 @@ public class PostDetailActivity extends BaseActivity implements IAssociationCont
 
     @Override
     public void showSuccessfullyJoin(String succcessMsg) {
+
+    }
+
+    @Override
+    public void showSuccessfullyAddNotice(String succcessMsg) {
 
     }
 
