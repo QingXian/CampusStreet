@@ -8,6 +8,7 @@ import com.campusstreet.entity.MessageInfo;
 import com.campusstreet.model.IMessageBiz;
 import com.campusstreet.model.MessageImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,6 +36,7 @@ public class MessagePresenter implements IMessageContract.Presenter {
         mMessageImpl.getMessageList(uid, pi, new IMessageBiz.LoadMessageListCallback() {
             @Override
             public void onMessageListLoaded(List<MessageInfo> messageInfos) {
+                Collections.reverse(messageInfos);
                 mView.setMessageList(messageInfos);
                 mView.setLoadingIndicator(false);
             }

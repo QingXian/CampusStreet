@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.campusstreet.R;
 import com.campusstreet.entity.MessageInfo;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;

@@ -54,6 +54,7 @@ import static com.campusstreet.common.Const.JOINPASS;
 import static com.campusstreet.common.Const.TID_EXTRA;
 import static com.campusstreet.common.Const.TYPE;
 import static com.campusstreet.common.Const.USERINFO_EXTRA;
+import static com.campusstreet.utils.DataUtil.formateDateWithoutSecond;
 import static com.campusstreet.utils.DataUtil.getTimeRange;
 
 /**
@@ -245,7 +246,7 @@ public class BountyHallDetailActivity extends BaseActivity implements IBountyHal
         mTvTime.setText(time);
         mTvTitle.setText(bountyHallInfo.getTitle());
         mTvPeopleNum.setText(String.valueOf(bountyHallInfo.getSperson()));
-        mTvCompletionTime.setText(bountyHallInfo.getEndtime());
+        mTvCompletionTime.setText(formateDateWithoutSecond(bountyHallInfo.getEndtime()) );
         mTvContactPeople.setText(bountyHallInfo.getLinkman());
         mTvDescribe.setText(bountyHallInfo.getCon());
         mTvPhone.setText(bountyHallInfo.getMobile());
