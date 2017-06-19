@@ -151,11 +151,15 @@ public class UserFragment extends Fragment {
                 if (bodyJson != null) {
                     int res = bodyJson.get(Const.RES_KEY).getAsInt();
                     if (res == 1) {
-                        mUserInfo.setPoint(bodyJson.get(Const.MESSAGE_KEY).getAsString());
-                        double price = Double.parseDouble(mUserInfo.getPoint());
-                        DecimalFormat df = new DecimalFormat("0.00");
-                        String strprice = df.format(price);
-                        mTvBalance.setText("余额：" + strprice);
+                        if (mUserInfo != null) {
+                            mUserInfo.setPoint(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                            double price = Double.parseDouble(mUserInfo.getPoint());
+                            DecimalFormat df = new DecimalFormat("0.00");
+                            String strprice = df.format(price);
+                            if (mTvBalance != null) {
+                                mTvBalance.setText("余额：" + strprice);
+                            }
+                        }
                     } else {
                         showMessage(bodyJson.get(Const.MESSAGE_KEY).getAsString());
                     }

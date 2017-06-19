@@ -146,43 +146,43 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
                         break;
                     case "ewu_reply":
                         Intent intent = new Intent(getActivity(), IdleSaleDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "wish_reply":
                         intent = new Intent(getActivity(), BuyZoneDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "task_join":
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "task_accept":
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "task_execute":
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "task_done":
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
                     case "task_success":
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, messageInfo.getMainid());
                         startActivity(intent);
                         break;
@@ -235,23 +235,26 @@ public class MessageFragment extends Fragment implements IMessageContract.View {
 
     @Override
     public void setMessageList(List<MessageInfo> messageList) {
-        if (messageList != null && messageList.size() < 20) {
-            mRvContent.setPushRefreshEnable(false);
-        } else {
-            mRvContent.setPushRefreshEnable(true);
-        }
-        if (mPi != 0) {
-            if (messageList != null) {
-                mAdapter.addData(messageList);
-                mRvContent.setPullLoadMoreCompleted();
+        if (mRvContent != null) {
+            if (messageList != null && messageList.size() < 20) {
+                mRvContent.setPushRefreshEnable(false);
+            } else {
+                mRvContent.setPushRefreshEnable(true);
             }
-        } else {
-            mRvContent.setVisibility(View.VISIBLE);
-            mTvError.setVisibility(View.GONE);
-            mAdapter.replaceData(messageList);
-            mRvContent.setPullLoadMoreCompleted();
-            setLoadingIndicator(false);
+            if (mPi != 0) {
+                if (messageList != null) {
+                    mAdapter.addData(messageList);
+                    mRvContent.setPullLoadMoreCompleted();
+                }
+            } else {
+                mRvContent.setVisibility(View.VISIBLE);
+                mTvError.setVisibility(View.GONE);
+                mAdapter.replaceData(messageList);
+                mRvContent.setPullLoadMoreCompleted();
+                setLoadingIndicator(false);
+            }
         }
+
     }
 
     @Override

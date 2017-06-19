@@ -159,21 +159,23 @@ public class FindFragment extends Fragment implements IFindContract.View {
 
     @Override
     public void setFindList(List<LiveInfo> liveInfos) {
-        if (liveInfos != null && liveInfos.size() < 20) {
-            mIsNeedLoadMore = false;
-        } else {
-            mIsNeedLoadMore = true;
-        }
-        if (mPi != 0) {
-            if (liveInfos != null) {
-                mAdapter.addData(liveInfos);
-                mIsLoading = false;
+        if (mRvContent != null) {
+            if (liveInfos != null && liveInfos.size() < 20) {
+                mIsNeedLoadMore = false;
+            } else {
+                mIsNeedLoadMore = true;
             }
-        } else {
-            mRvContent.setVisibility(View.VISIBLE);
-            mTvError.setVisibility(View.GONE);
-            mAdapter.replaceData(liveInfos);
-            setLoadingIndicator(false);
+            if (mPi != 0) {
+                if (liveInfos != null) {
+                    mAdapter.addData(liveInfos);
+                    mIsLoading = false;
+                }
+            } else {
+                mRvContent.setVisibility(View.VISIBLE);
+                mTvError.setVisibility(View.GONE);
+                mAdapter.replaceData(liveInfos);
+                setLoadingIndicator(false);
+            }
         }
     }
 

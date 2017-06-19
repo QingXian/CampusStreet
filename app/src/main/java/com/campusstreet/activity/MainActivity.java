@@ -394,10 +394,8 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-//        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
-//        setFragment(mHomeFragment);
+    protected void onResume() {
+        super.onResume();
         if (Const.mIsLogout) {
             String userStr = PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
                     .getString(Const.PREF_USERINFO_KEY, null);
@@ -417,7 +415,6 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
             mTvUser.setSelected(true);
         }
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

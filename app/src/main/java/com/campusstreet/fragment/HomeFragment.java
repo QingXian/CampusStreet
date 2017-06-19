@@ -149,31 +149,31 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                 switch (homeDynamicInfo.getType()) {
                     case 1:
                         Intent intent = new Intent(getActivity(), IdleSaleDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
                     case 2:
                         intent = new Intent(getActivity(), BuyZoneDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
                     case 3:
                         intent = new Intent(getActivity(), CampusRecruitmentDetailActivity.class);
-                        intent.putExtra(TYPE,homeDynamicInfo.getType());
+                        intent.putExtra(TYPE, homeDynamicInfo.getType());
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
                     case 4:
                         intent = new Intent(getActivity(), BountyHallDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
                     case 5:
                         intent = new Intent(getActivity(), PostDetailActivity.class);
-                        intent.putExtra(USERINFO_EXTRA,mUserInfo);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
@@ -189,7 +189,7 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
                         break;
                     case 8:
                         intent = new Intent(getActivity(), CampusRecruitmentDetailActivity.class);
-                        intent.putExtra(TYPE,homeDynamicInfo.getType());
+                        intent.putExtra(TYPE, homeDynamicInfo.getType());
                         intent.putExtra(ID_EXTRA, homeDynamicInfo.getMainid());
                         startActivity(intent);
                         break;
@@ -314,9 +314,11 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
 
     @Override
     public void setdynamicList(List<HomeDynamicInfo> homeDynamicInfos) {
-        mRvContent.setVisibility(View.VISIBLE);
-        mAdapter.replaceData(homeDynamicInfos);
-        setLoadingIndicator(false);
+        if (mRvContent != null) {
+            mRvContent.setVisibility(View.VISIBLE);
+            mAdapter.replaceData(homeDynamicInfos);
+            setLoadingIndicator(false);
+        }
     }
 
     @Override
