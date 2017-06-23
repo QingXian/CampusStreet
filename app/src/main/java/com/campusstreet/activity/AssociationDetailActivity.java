@@ -168,25 +168,9 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
                 startActivity(intent);
             }
         });
-        mTvIntroduce.setOnKeyListener(new View.OnKeyListener() {
-
-            @Override
-            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    setLoadingIndicator(true);
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
     private void initView() {
-        mTvIntroduce.setEnabled(false);
         mBtnJoin.setVisibility(View.VISIBLE);
         mFabAddTask.setVisibility(View.GONE);
         if (mAssociationInfo != null) {
@@ -393,7 +377,12 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
                         public void onClick(DialogInterface dialog, int which) {
                             mNotice = et.getText().toString();
                             if (!mNotice.equals("")) {
-                                mPresenter.addAssociationNotice(mUserAssociationInfo.getAssnid(), mUserInfo.getUid(), mNotice);
+                                if (mAssociationInfo != null) {
+                                    mPresenter.addAssociationNotice(mAssociationInfo.getId(), mUserInfo.getUid(), mNotice);
+                                }else{
+                                    mPresenter.addAssociationNotice(mUserAssociationInfo.getAssnid(), mUserInfo.getUid(), mNotice);
+                                }
+
                             } else {
                                 showErrorMsg("公告不能为空");
                             }
