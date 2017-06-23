@@ -24,6 +24,8 @@ public class AssociationNumInfo implements Serializable {
     private String username;
     private int assnjob;
     private String jointime;
+    private String major;
+
 
     public String getId() {
         return id;
@@ -71,5 +73,12 @@ public class AssociationNumInfo implements Serializable {
 
     public void setJointime(String jointime) {
         this.jointime = jointime;
+    }
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
     }
 }

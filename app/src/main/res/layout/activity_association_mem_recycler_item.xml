@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_master_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_flag_red_24dp"
+        android:layout_marginTop="5dp"
+        />
+    <ImageView
+        android:id="@+id/iv_deputy_master_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_flag_green_24dp"
+        android:layout_marginTop="5dp"
+        />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_head"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginLeft="30dp"
+        android:src="@drawable/ic_head_test"/>
+    <TextView
+        android:id="@+id/tv_name"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:layout_toRightOf="@+id/iv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/colorBlack"
+        android:text="@string/act_register_nickname"/>
+
+    <TextView
+        android:paddingTop="10dp"
+        android:id="@+id/tv_department"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="信息院"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

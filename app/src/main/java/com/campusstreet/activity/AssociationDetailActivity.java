@@ -3,6 +3,7 @@ package com.campusstreet.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
@@ -13,12 +14,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -98,6 +101,8 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
     private boolean mIsLoading;
     private boolean mIsNeedLoadMore = true;
     private String mNotice;
+    PopupWindow mPopWin;
+    View mPopView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,7 +225,8 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_toolbar_right:
-                showAlertDialog("发布公告");
+//                showAlertDialog("发布公告");
+                showPopWin(mIvToolbarRight);
                 break;
             case R.id.btn_join:
                 if (mUserInfo != null) {
@@ -396,6 +402,55 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
                     .setNegativeButton("取消", null)
                     .show();
         }
+    }
+
+    private void showPopWin(View view)
+    {
+        if (mPopWin == null)
+        {
+            LayoutInflater inflater =(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //绑定布局
+            mPopView = inflater.inflate(R.layout.popupwindow_association, null);
+            Button noticeBtn = (Button)mPopView.findViewById(R.id.btn_release_notice);
+            noticeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mPopWin != null)
+                    {
+                        showAlertDialog("发布公告");
+                        mPopWin.dismiss();
+                    }
+                }
+            });
+
+            Button memberBtn = (Button)mPopView.findViewById(R.id.btn_association_memebers);
+            memberBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mPopWin != null)
+                    {
+                        Intent intent = new Intent(AssociationDetailActivity.this, AssociationMembersActivity.class);
+                        intent.putExtra(USERINFO_EXTRA, mUserInfo);
+                        intent.putExtra(USERASSOCIATIONINFO_EXTRA, mUserAssociationInfo);
+                        intent.putExtra(Const.ASSOCIATIONINFO_EXTRA, mAssociationInfo);
+                        startActivity(intent);
+                        mPopWin.dismiss();
+                    }
+                }
+            });
+
+            mPopWin = new PopupWindow(mPopView,200,200);
+        }
+        mPopWin.setFocusable(true);
+        mPopWin.setOutsideTouchable(true);
+        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景
+        mPopWin.setBackgroundDrawable(new BitmapDrawable());
+
+        int xPos = -mPopWin.getWidth() / 2
+                + mIvToolbarRight.getWidth() / 2;
+
+        mPopWin.showAsDropDown(view, xPos, 4);
+
     }
 
 

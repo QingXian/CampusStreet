@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorGray">
+
+    <include layout="@layout/toolbar"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv_signed"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="@color/colorBlue_G"
+            android:layout_marginLeft="30dp"
+            android:hint="签到"
+            android:layout_marginTop="20dp"
+            android:drawableTop="@drawable/ic_bounty_hall"
+            android:paddingTop="40dp"
+            android:gravity="center_horizontal"
+            android:drawablePadding="10dp"
+            android:textSize="18dp"
+            />
+        <TextView
+            android:id="@+id/tv_release_seat"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="@color/colorRed_light"
+            android:layout_toRightOf="@id/tv_signed"
+            android:hint="释放座位"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:drawableTop="@drawable/ic_bounty_hall"
+            android:paddingTop="40dp"
+            android:gravity="center_horizontal"
+            android:drawablePadding="10dp"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_continue_seat"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="@color/colorPurple_D"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/tv_signed"
+            android:layout_marginLeft="30dp"
+            android:hint="续约"
+            android:drawableTop="@drawable/ic_bounty_hall"
+            android:paddingTop="40dp"
+            android:gravity="center_horizontal"
+            android:drawablePadding="10dp"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_pause_leave"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:background="@color/colorGreen_D"
+            android:layout_toRightOf="@id/tv_continue_seat"
+            android:layout_below="@+id/tv_release_seat"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:hint="暂离"
+            android:drawableTop="@drawable/ic_bounty_hall"
+            android:paddingTop="40dp"
+            android:gravity="center_horizontal"
+            android:drawablePadding="10dp"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_order_seat"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:background="@color/colorPrimaryDark"
+            android:layout_below="@+id/tv_continue_seat"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:hint="预约座位"
+            android:drawableTop="@drawable/ic_bounty_hall"
+            android:paddingTop="40dp"
+            android:gravity="center_horizontal"
+            android:drawablePadding="10dp"
+            android:textSize="18dp"
+            />
+    </RelativeLayout>
+
+
+</LinearLayout>

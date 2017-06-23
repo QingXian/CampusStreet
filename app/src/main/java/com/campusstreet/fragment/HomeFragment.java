@@ -34,6 +34,7 @@ import com.campusstreet.activity.PartnerActivity;
 import com.campusstreet.activity.PartnerDetailActivity;
 import com.campusstreet.activity.PeripheraShopActivity;
 import com.campusstreet.activity.PostDetailActivity;
+import com.campusstreet.activity.SeatsActivity;
 import com.campusstreet.adapter.HomeFragmentRecyclerViewAdapter;
 import com.campusstreet.adapter.IdleSaleRecyclerViewAdapter;
 import com.campusstreet.common.AppConfig;
@@ -102,6 +103,8 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    @BindView(R.id.tv_order_seats)
+    TextView mTvOrderSeats;
     private Unbinder mUnbinder;
     private HomeFragmentRecyclerViewAdapter mAdapter;
     private IHomeContract.Presenter mPresenter;
@@ -226,7 +229,8 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
     }
 
 
-    @OnClick({R.id.tv_campus_recruitment, R.id.tv_idle_sale, R.id.tv_buy_zone, R.id.tv_bounty_hall, R.id.tv_association, R.id.tv_campus_information, R.id.tv_partner, R.id.tv_peripheral_shop})
+    @OnClick({R.id.tv_campus_recruitment, R.id.tv_idle_sale, R.id.tv_buy_zone, R.id.tv_bounty_hall,
+            R.id.tv_association, R.id.tv_campus_information, R.id.tv_partner, R.id.tv_peripheral_shop, R.id.tv_order_seats})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_campus_recruitment:
@@ -264,6 +268,13 @@ public class HomeFragment extends Fragment implements OnBannerListener, IHomeCon
             case R.id.tv_peripheral_shop:
                 intent = new Intent(getActivity(), PeripheraShopActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.tv_order_seats:
+                intent = new Intent(getActivity(), SeatsActivity.class);
+                intent.putExtra(USERINFO_EXTRA, mUserInfo);
+                startActivity(intent);
+                break;
+            default:
                 break;
         }
     }

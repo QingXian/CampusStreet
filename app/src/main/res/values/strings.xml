@@ -112,6 +112,7 @@
     <string name="act_bounty_hall_add_end_time_hint">请为任务选择一个截止时间</string>
     <string name="act_bounty_hall_add_toolbar_title">任务发布</string>
     <string name="act_association_detail_toolbar_title">社团主页</string>
+    <string name="act_association_members_title">社团成员</string>
     <string name="act_partner_detail_profile">项目简介：</string>
     <string name="act_partner_detail_company_name">名称：</string>
     <string name="act_partner_detail_type">招募合伙人类型：</string>
@@ -185,4 +186,6 @@
     <string name="act_modify_password_toolbar_title">修改密码</string>
     <string name="act_user_setting_logout">退出登录</string>
     <string name="act_leave_message_et_hint">请输入文字信息</string>
+    <string name="act_release_notice_hint">发布公告</string>
+    <string name="act_association_members_hint">社团成员</string>
 </resources>

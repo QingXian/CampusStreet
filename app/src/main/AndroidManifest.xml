@@ -144,7 +144,9 @@
         </activity>
         <activity android:name=".activity.JoinTaskActivity">
         </activity>
-
+        <activity android:name=".activity.SeatsActivity" />
+        <activity android:name=".activity.AssociationMembersActivity">
+        </activity>
         <!-- 小米推送start -->
         <service
             android:name="com.xiaomi.push.service.XMPushService"

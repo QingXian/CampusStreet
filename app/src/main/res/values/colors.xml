@@ -13,4 +13,8 @@
     <color name="tv_color_peripheral_shop_detail_name">#83000000</color>
     <color name="progress_bar_background">#90000000</color>
     <color name="colorGray_light">#f7f7f7</color>
+    <color name="colorBlue_G">#5F9F9F</color>
+    <color name="colorGreen_D">#215E21</color>
+    <color name="colorPurple_D">#871F78</color>
+
 </resources>

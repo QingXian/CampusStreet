@@ -158,6 +158,17 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="4dp"
                 android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tv_order_seats"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="预约座位"
+                android:textSize="20sp"
+                android:textColor="@color/colorBlack"
+                android:gravity="center"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="match_parent"

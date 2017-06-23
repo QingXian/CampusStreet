@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_act_modify_nickname_tv"
+    >
+
+    <Button
+        android:id="@+id/btn_seat_1"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:hint="01"
+        />
+    <Button
+        android:id="@+id/btn_seat_2"
+        android:layout_toRightOf="@+id/btn_seat_1"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:hint="02"
+        />
+    <Button
+        android:id="@+id/btn_seat_3"
+        android:layout_width="70dp"
+        android:layout_below="@+id/btn_seat_1"
+        android:layout_height="wrap_content"
+        android:hint="03"
+        />
+    <Button
+        android:id="@+id/btn_seat_4"
+        android:layout_toRightOf="@+id/btn_seat_3"
+        android:layout_below="@+id/btn_seat_2"
+        android:layout_marginLeft="5dp"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:hint="04"
+        />
+
+</RelativeLayout>
