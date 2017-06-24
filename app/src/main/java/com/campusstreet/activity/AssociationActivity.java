@@ -107,9 +107,9 @@ public class AssociationActivity extends BaseActivity implements IAssociationCon
     private void initEvent() {
         mAdapter.setOnItemClickListener(new AssociationRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
-            public void onItemClick(View view, AssociationInfo AssociationInfo) {
+            public void onItemClick(View view, AssociationInfo associationInfo) {
                 Intent intent = new Intent(AssociationActivity.this, AssociationDetailActivity.class);
-                intent.putExtra(Const.ASSOCIATIONINFO_EXTRA, AssociationInfo);
+                intent.putExtra(Const.ASSOCIATIONINFO_EXTRA, associationInfo);
                 intent.putExtra(Const.USERINFO_EXTRA, mUserInfo);
                 startActivity(intent);
             }

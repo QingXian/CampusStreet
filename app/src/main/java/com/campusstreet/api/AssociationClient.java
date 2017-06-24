@@ -60,6 +60,6 @@ public interface AssociationClient {
     Call<JsonObject> getUserAssociation(@Field("pi") Integer pi,@Field("uid") String uid);
 
     @FormUrlEncoded
-    @POST("")
+    @POST("upd_assn_note")
     Call<JsonObject> addAssociationNotion(@Field("aid") Integer aid,@Field("uid") String uid,@Field("con") String con);
 }

@@ -393,7 +393,7 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
                         public void onClick(DialogInterface dialog, int which) {
                             mNotice = et.getText().toString();
                             if (!mNotice.equals("")) {
-                                mPresenter.addAssociationNotice(mAssociationInfo.getId(), mUserInfo.getUid(), mNotice);
+                                mPresenter.addAssociationNotice(mUserAssociationInfo.getAssnid(), mUserInfo.getUid(), mNotice);
                             } else {
                                 showErrorMsg("公告不能为空");
                             }
