@@ -50,6 +50,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.R.id.input;
 import static com.campusstreet.R.id.editText;
+import static com.campusstreet.common.Const.REQUEST_CODE;
 import static com.campusstreet.common.Const.USERASSOCIATIONINFO_EXTRA;
 import static com.campusstreet.common.Const.USERINFO_EXTRA;
 
@@ -142,6 +143,19 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            mPi = 0;
+            if (mAssociationInfo != null) {
+                mPresenter.fetchAssociationPostList(mAssociationInfo.getId(), mPi);
+            } else {
+                mPresenter.fetchAssociationPostList(mUserAssociationInfo.getAssnid(), mPi);
+            }
+            setLoadingIndicator(true);
+        }
+    }
+
     private void initEvent() {
         mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
@@ -229,7 +243,7 @@ public class AssociationDetailActivity extends BaseActivity implements IAssociat
                     intent.putExtra(USERINFO_EXTRA, mUserInfo);
                     intent.putExtra(USERASSOCIATIONINFO_EXTRA, mUserAssociationInfo);
                     intent.putExtra(Const.ASSOCIATIONINFO_EXTRA, mAssociationInfo);
-                    startActivity(intent);
+                    startActivityForResult(intent,REQUEST_CODE);
                 } else {
                     showMessage("您还未登录");
                 }

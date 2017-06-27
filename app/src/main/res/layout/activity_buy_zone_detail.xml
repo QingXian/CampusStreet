@@ -242,7 +242,6 @@
             android:layout_height="32dp"
             android:layout_gravity="center"
             android:layout_weight="5"
-            android:drawableLeft="@drawable/ic_message_keyboard"
             android:hint="@string/act_leave_message_et_hint"
             android:background="@drawable/bg_act_idle_sale_detail_et"
             android:textSize="16sp"/>
@@ -255,7 +254,7 @@
             android:layout_weight="1"
             android:background="@drawable/bg_act_idle_sale_detail_btn"
             android:text="发送"
-            android:layout_marginRight="3dp"
+            android:layout_marginRight="6dp"
             android:textColor="@color/colorWhite"/>
     </LinearLayout>
 

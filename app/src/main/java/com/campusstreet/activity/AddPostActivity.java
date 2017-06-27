@@ -167,10 +167,11 @@ public class AddPostActivity extends BaseActivity implements IAssociationContrac
     @Override
     public void showSuccessfullyPushPost(String succcessMsg) {
         showMessage(succcessMsg);
-        Intent intent = new Intent(this, AssociationDetailActivity.class);
-        intent.putExtra(ASSOCIATIONINFO_EXTRA, mAssociationInfo);
-        intent.putExtra(USERASSOCIATIONINFO_EXTRA, mUserAssociationInfo);
-        startActivity(intent);
+//        Intent intent = new Intent(this, AssociationDetailActivity.class);
+//        intent.putExtra(ASSOCIATIONINFO_EXTRA, mAssociationInfo);
+//        intent.putExtra(USERASSOCIATIONINFO_EXTRA, mUserAssociationInfo);
+//        startActivity(intent);
+        this.setResult(RESULT_OK);
         this.finish();
     }
 
