@@ -22,6 +22,7 @@ import com.campusstreet.entity.UserInfo;
 import com.campusstreet.model.UserImpl;
 import com.campusstreet.presenter.LoginPresenter;
 import com.campusstreet.utils.PreferencesUtil;
+import com.campusstreet.wxapi.WXEntryActivity;
 import com.google.gson.GsonBuilder;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
@@ -55,6 +56,8 @@ public class LoginActivity extends BaseActivity implements ILoginContract.View {
     TextView mProgressBarTitle;
     @BindView(R.id.progress_bar_container)
     LinearLayout mProgressBarContainer;
+    @BindView(R.id.btn_wx_login)
+    Button mBtnWxLogin;
     private ILoginContract.Presenter mPresenter;
 
     @Override
@@ -77,7 +80,7 @@ public class LoginActivity extends BaseActivity implements ILoginContract.View {
         new LoginPresenter(UserImpl.getInstance(getApplicationContext()), this);
     }
 
-    @OnClick({R.id.tv_register, R.id.tv_forget_password, R.id.btn_login})
+    @OnClick({R.id.tv_register, R.id.tv_forget_password, R.id.btn_login,R.id.btn_wx_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_register:
@@ -91,6 +94,11 @@ public class LoginActivity extends BaseActivity implements ILoginContract.View {
             case R.id.btn_login:
                 mPresenter.onLogin(mEtLoginUsername.getText().toString(), mEtLoginPassword.getText().toString());
                 break;
+            case R.id.btn_wx_login:
+                intent = new Intent(this, WXEntryActivity.class);
+                startActivity(intent);
+                break;
+
         }
     }
 
