@@ -12,6 +12,7 @@ import java.util.Date;
 public class CompareTimeUtil {
 
     public static boolean compareTime(String time) {
+        time = time.replaceAll("/", "-");
         Calendar c1 = Calendar.getInstance();
         Calendar c2 = Calendar.getInstance();
         SimpleDateFormat CurrentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm");

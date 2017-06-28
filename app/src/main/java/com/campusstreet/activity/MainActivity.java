@@ -112,8 +112,6 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PermissionsManage.checkPermission(this, SD1);
         }
-
-        // 从登录成功后获取的用户信息
         if (getIntent() != null) {
             mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
             if (mUserInfo != null) {
@@ -129,29 +127,15 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
                 mUserInfo = new GsonBuilder().setLenient().create().fromJson(userStr, UserInfo.class);
             }
         }
-//        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
-//        setFragment(mHomeFragment);
-        mType = getIntent().getIntExtra(Const.TYPE, 0);
-        if (mType == 1) {
-            mUserFragment = mUserFragment.newInstance(mUserInfo);
-            setFragment(mUserFragment);
-            clearSeleted();
-            mIvToolbarRight.setVisibility(View.VISIBLE);
-            mToolbarHome.setVisibility(View.GONE);
-            mToolbar.setVisibility(View.VISIBLE);
-            mIvToolbarRight.setImageResource(R.drawable.ic_setting);
-            mToolbarTitle.setText(getString(R.string.bot_tv_user));
-            mTvUser.setTextColor(getResources().getColor(R.color.colorPrimary));
-            mTvUser.setSelected(true);
-        } else {
-            mHomeFragment = mHomeFragment.newInstance(mUserInfo);
-            setFragment(mHomeFragment);
-            mToolbarHome.setVisibility(View.VISIBLE);
-            mToolbar.setVisibility(View.GONE);
-            new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
-        }
-
-
+        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
+        setFragment(mHomeFragment);
+        clearSeleted();
+        mToolbarHome.setVisibility(View.VISIBLE);
+        mToolbar.setVisibility(View.GONE);
+        mToolbarTitle.setText("");
+        new HomePresenter(HomeImpl.getInstance(getApplicationContext()), mHomeFragment);
+        mTvHome.setTextColor(getResources().getColor(R.color.colorPrimary));
+        mTvHome.setSelected(true);
     }
 
     @Override
@@ -414,6 +398,46 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
             mTvUser.setTextColor(getResources().getColor(R.color.colorPrimary));
             mTvUser.setSelected(true);
         }
+        if (getIntent() != null) {
+            mUserInfo = (UserInfo) getIntent().getSerializableExtra(Const.USERINFO_EXTRA);
+            if (mUserInfo != null) {
+                Log.d(TAG, "登录成功获取的用户: mUserInfo <== " + mUserInfo.getUid());
+                mIsLogined = true;
+                mUserFragment = mUserFragment.newInstance(mUserInfo);
+                setFragment(mUserFragment);
+                clearSeleted();
+                mIvToolbarRight.setVisibility(View.VISIBLE);
+                mToolbarHome.setVisibility(View.GONE);
+                mToolbar.setVisibility(View.VISIBLE);
+                mIvToolbarRight.setImageResource(R.drawable.ic_setting);
+                mToolbarTitle.setText(getString(R.string.bot_tv_user));
+                mTvUser.setTextColor(getResources().getColor(R.color.colorPrimary));
+                mTvUser.setSelected(true);
+            }
+        }
+        //从持久化文件中获取的用户信息
+        if (!mIsLogined && mUserInfo == null) {
+            String userStr = PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
+                    .getString(Const.PREF_USERINFO_KEY, null);
+            if (userStr != null) {
+                mUserInfo = new GsonBuilder().setLenient().create().fromJson(userStr, UserInfo.class);
+            }
+        }
+//        mHomeFragment = mHomeFragment.newInstance(mUserInfo);
+//        setFragment(mHomeFragment);
+        mType = getIntent().getIntExtra(Const.TYPE, 0);
+        if (mType == 1) {
+            mUserFragment = mUserFragment.newInstance(mUserInfo);
+            setFragment(mUserFragment);
+            clearSeleted();
+            mIvToolbarRight.setVisibility(View.VISIBLE);
+            mToolbarHome.setVisibility(View.GONE);
+            mToolbar.setVisibility(View.VISIBLE);
+            mIvToolbarRight.setImageResource(R.drawable.ic_setting);
+            mToolbarTitle.setText(getString(R.string.bot_tv_user));
+            mTvUser.setTextColor(getResources().getColor(R.color.colorPrimary));
+            mTvUser.setSelected(true);
+        }
     }
 
     @Override
@@ -431,6 +455,12 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);// 必须存储新的intent,否则getIntent()将返回旧的intent
     }
 
 }
