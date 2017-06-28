@@ -243,6 +243,11 @@ public class CampusRecruitmentDetailActivity extends BaseActivity implements ICa
         mTvCompanyPhone.setText(mRecruitInfo.getComphone());
         String time = getTimeRange(mRecruitInfo.getPublishtime());
         mTvTime.setText(time);
+        if (mRecruitInfo.getJobmoney().equals("0"))
+        {
+            mTvWages.setText("面议");
+            mTvMoneyTag.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -260,6 +265,11 @@ public class CampusRecruitmentDetailActivity extends BaseActivity implements ICa
         String time = getTimeRange(mRecruitInfo.getPublishtime());
         mTvTime.setText(time);
         mTvDuty.setText(mStudyWorkInfo.getJobperson());
+        if (mStudyWorkInfo.getJobmoney().equals("0"))
+        {
+            mTvWages.setText("面议");
+            mTvMoneyTag.setVisibility(View.GONE);
+        }
     }
 
     @Override
