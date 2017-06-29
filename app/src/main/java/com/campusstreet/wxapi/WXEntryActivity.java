@@ -158,7 +158,6 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 			e.printStackTrace();
 		}
 
-
 		if (!api.isWXAppInstalled())
 		{
 			Toast.makeText(WXEntryActivity.this, "没有安装微信,请先安装微信!", Toast.LENGTH_SHORT).show();
@@ -251,10 +250,10 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 		if (resp.errCode == ErrCode.ERR_OK) {
 			Toast.makeText(this, "errCode = " +  ErrCode.ERR_OK, Toast.LENGTH_SHORT).show();
 			this.finish();
+			return;
 		}
 		getResult(code);
-		int errCode = resp.errCode;
-		Toast.makeText(this, "errCode = " + errCode, Toast.LENGTH_SHORT).show();
+
 	}
 
 	/**
@@ -328,7 +327,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 					});
 
 				return;
-			};
+			}
 		}.start();
 	}
 
