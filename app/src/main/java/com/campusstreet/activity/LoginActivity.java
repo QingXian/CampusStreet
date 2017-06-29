@@ -19,6 +19,7 @@ import com.campusstreet.R;
 import com.campusstreet.common.Const;
 import com.campusstreet.contract.ILoginContract;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.entity.UserWxInfo;
 import com.campusstreet.model.UserImpl;
 import com.campusstreet.presenter.LoginPresenter;
 import com.campusstreet.utils.PreferencesUtil;
@@ -29,6 +30,8 @@ import com.xiaomi.mipush.sdk.MiPushClient;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.campusstreet.common.Const.REQUEST_CODE;
 
 /**
  * Created by Orange on 2017/4/26.
@@ -96,9 +99,18 @@ public class LoginActivity extends BaseActivity implements ILoginContract.View {
                 break;
             case R.id.btn_wx_login:
                 intent = new Intent(this, WXEntryActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE);
                 break;
 
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
+        {
+            UserWxInfo wxInfo = (UserWxInfo) data.getSerializableExtra("WX_INFO");
+            mPresenter.onWxLogin(wxInfo);
         }
     }
 

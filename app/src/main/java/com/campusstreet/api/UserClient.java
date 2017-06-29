@@ -23,6 +23,10 @@ public interface UserClient {
     @POST("user_login")
     Call<JsonObject> login(@Field("mobile") String phone, @Field("pwd") String passwrod);
 
+    @Multipart
+    @POST("wx_login")
+    Call<JsonObject> wxLogin(@PartMap Map<String,RequestBody> params);
+
     @FormUrlEncoded
     @POST("get_mobilecode")
     Call<JsonObject> fetchCaptcha(@Field("mt") String mt,@Field("mc") String mc, @Field("mobile") String phone);

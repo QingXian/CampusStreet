@@ -8,6 +8,7 @@ import com.campusstreet.api.ServiceGenerator;
 import com.campusstreet.api.UserClient;
 import com.campusstreet.common.Const;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.entity.UserWxInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -73,6 +74,45 @@ public class UserImpl implements IUserBiz {
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
                 callback.onLoginFailure("网络异常");
+                Log.d(TAG, "onFailure: " + t);
+            }
+        });
+    }
+
+    @Override
+    public void onWxLogin(UserWxInfo wxInfo, @NonNull final onWxLoginCallback callback) {
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+        requestBodyMap.put("openid", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getOpenid()));
+        requestBodyMap.put("nick", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getNickname()));
+        requestBodyMap.put("sex", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getSex()));
+        requestBodyMap.put("province", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getProvince()));
+        requestBodyMap.put("city", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getCity()));
+        requestBodyMap.put("country", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getCountry()));
+        requestBodyMap.put("headimgurl", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getHeadimgurl()));
+        requestBodyMap.put("priviledge", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getPrililedge()));
+        requestBodyMap.put("unionid", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getUnionid()));
+        Call<JsonObject> call = mUserClient.wxLogin(requestBodyMap);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject bodyJson = response.body();
+                if (bodyJson != null) {
+                    int res = bodyJson.get(Const.RES_KEY).getAsInt();
+                    if (res == 1) {
+                        JsonArray resultJsons = bodyJson.get(Const.EXT_KEY).getAsJsonArray();
+                        Gson gson = new GsonBuilder().setLenient().create();
+                        JsonObject json = resultJsons.get(0).getAsJsonObject();
+                        UserInfo userInfo = gson.fromJson(json, UserInfo.class);
+                        callback.onWxLoginSuccess(userInfo);
+                    } else {
+                        callback.onWxLoginFailure(bodyJson.get(Const.MESSAGE_KEY).getAsString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                callback.onWxLoginFailure("网络异常");
                 Log.d(TAG, "onFailure: " + t);
             }
         });

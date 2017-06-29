@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.campusstreet.entity.BuyZoneInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.entity.UserWxInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ public interface IUserBiz {
 
     void onLogin(String phone, String password, @NonNull onLoginCallback callback);
 
+    void onWxLogin(UserWxInfo wxInfo, @NonNull onWxLoginCallback callback);
 
     void onResgister(UserInfo userInfo, String password, String code, @NonNull onResgisterCallback callback);
 
@@ -36,6 +38,12 @@ public interface IUserBiz {
         void onLoginSuccess(UserInfo userInfo);
 
         void onLoginFailure(String errorMsg);
+    }
+    interface onWxLoginCallback {
+
+        void onWxLoginSuccess(UserInfo userInfo);
+
+        void onWxLoginFailure(String errorMsg);
     }
 
 

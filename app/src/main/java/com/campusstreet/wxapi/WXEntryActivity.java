@@ -16,6 +16,7 @@ import java.net.URL;
 //import org.apache.http.client.methods.HttpGet;
 //import org.apache.http.impl.client.DefaultHttpClient;
 import com.campusstreet.activity.BaseActivity;
+import com.campusstreet.entity.UserWxInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -110,7 +111,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 	protected static final int RETURN_OPENID_ACCESSTOKEN = 0;// 返回openid，accessToken消息码
 	protected static final int RETURN_NICKNAME_UID = 1; // 返回昵称，uid消息码
 	
-	protected static final int THUMB_SIZE = 150;// 分享的图片大小
+//	protected static final int THUMB_SIZE = 150;// 分享的图片大小
 	
 	private IWXAPI api;
 	private SendAuth.Req req;
@@ -127,10 +128,13 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 				break;
 
 			case RETURN_NICKNAME_UID:
-				Bundle bundle2 = (Bundle) msg.obj;
-				String nickname = bundle2.getString("nickname");
-				String uid = bundle2.getString("unionid");
-
+				String jsonStr = (String) msg.obj;
+				Gson gson = new GsonBuilder().setLenient().create();
+				UserWxInfo wxInfo = gson.fromJson(jsonStr,UserWxInfo.class);
+				Intent data = new Intent();
+				data.putExtra("WX_INFO",wxInfo);
+				WXEntryActivity.this.setResult(RESULT_OK,data);
+				WXEntryActivity.this.finish();
 				break;
 
 			default:
@@ -358,33 +362,9 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 					}
 					@Override
 					public void onResponse(Call call, Response response) throws IOException {
-						JSONObject jsonObject = null;
-						try {
-							jsonObject = new JSONObject(response.body().toString());
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-						String nickname = null;
-						try {
-							nickname = jsonObject.getString("nickname");
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-						String unionid = null;
-						try {
-							unionid = jsonObject.getString("unionid");
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-						Log.i(TAG, "nickname = " + nickname);
-						Log.i(TAG, "unionid = " + unionid);
-
 						Message msg = handler.obtainMessage();
 						msg.what = RETURN_NICKNAME_UID;
-						Bundle bundle = new Bundle();
-						bundle.putString("nickname", nickname);
-						bundle.putString("unionid", unionid);
-						msg.obj = bundle;
+						msg.obj = response.body().toString();
 						handler.sendMessage(msg);
 					}
 				});

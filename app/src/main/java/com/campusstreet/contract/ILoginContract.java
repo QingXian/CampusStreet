@@ -2,6 +2,7 @@ package com.campusstreet.contract;
 
 import com.campusstreet.entity.BountyHallInfo;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.entity.UserWxInfo;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public interface ILoginContract {
         void forgetPassword(String phone, String inputCaptcha, String password,String passwordAgain);
 
         void fetchCaptcha(String phone);
+
+        void onWxLogin(UserWxInfo wxInfo);
 
     }
 

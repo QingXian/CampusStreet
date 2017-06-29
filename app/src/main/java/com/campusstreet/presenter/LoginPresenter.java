@@ -2,6 +2,7 @@ package com.campusstreet.presenter;
 
 import com.campusstreet.contract.ILoginContract;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.entity.UserWxInfo;
 import com.campusstreet.model.IUserBiz;
 import com.campusstreet.model.UserImpl;
 
@@ -99,6 +100,24 @@ public class LoginPresenter implements ILoginContract.Presenter {
             @Override
             public void GetForgetPasswordMcFailure(String errorMsg) {
                 mView.showErrorMsg(errorMsg);
+            }
+        });
+    }
+
+    @Override
+    public void onWxLogin(UserWxInfo wxInfo) {
+        mView.setLoadingIndicator(true);
+        mUserImpl.onWxLogin(wxInfo, new IUserBiz.onWxLoginCallback() {
+            @Override
+            public void onWxLoginSuccess(UserInfo userInfo) {
+                mView.showSuccessfullyLogin(userInfo);
+                mView.setLoadingIndicator(false);
+            }
+
+            @Override
+            public void onWxLoginFailure(String errorMsg) {
+                mView.showErrorMsg(errorMsg);
+                mView.setLoadingIndicator(false);
             }
         });
     }
