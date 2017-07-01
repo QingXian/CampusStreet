@@ -162,6 +162,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
         }
     }
 
+    
     private void addUser() {
         if (!mTvSex.getText().toString().trim().equals(mSex)) {
             showMessage("请选择性别");
