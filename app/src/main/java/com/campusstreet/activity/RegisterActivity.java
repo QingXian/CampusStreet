@@ -149,7 +149,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 mSex = Const.DEPARTMENT[i];
-                                mTvSex.setText(Const.DEPARTMENT[i]);
+                                mTvSex.setText(Const.SEX[i]);
                                 dialogInterface.dismiss();
                             }
                         })
@@ -162,7 +162,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
         }
     }
 
-    
+
     private void addUser() {
         if (!mTvSex.getText().toString().trim().equals(mSex)) {
             showMessage("请选择性别");
