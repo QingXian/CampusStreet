@@ -89,7 +89,6 @@ public class UserImpl implements IUserBiz {
         requestBodyMap.put("city", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getCity()));
         requestBodyMap.put("country", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getCountry()));
         requestBodyMap.put("headimgurl", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getHeadimgurl()));
-        requestBodyMap.put("priviledge", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getPrililedge()));
         requestBodyMap.put("unionid", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), wxInfo.getUnionid()));
         Call<JsonObject> call = mUserClient.wxLogin(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {
@@ -125,6 +124,7 @@ public class UserImpl implements IUserBiz {
         requestBodyMap.put("mcode", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), code));
         requestBodyMap.put("pwd", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), password));
         requestBodyMap.put("nick", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), userInfo.getUsername()));
+        requestBodyMap.put("sex", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), userInfo.getSex()));
         requestBodyMap.put("major", RequestBody.create(MediaType.parse(MULTIPART_FORM_DATA), userInfo.getMajor()));
         Call<JsonObject> call = mUserClient.resgister(requestBodyMap);
         call.enqueue(new Callback<JsonObject>() {

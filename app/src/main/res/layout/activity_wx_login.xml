@@ -3,6 +3,10 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:theme="@android:style/Theme.Translucent.NoTitleBar">
-
+              >
+<Button
+    android:id="@+id/btn_wx_login"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:hint="登入微信"/>
 </LinearLayout>

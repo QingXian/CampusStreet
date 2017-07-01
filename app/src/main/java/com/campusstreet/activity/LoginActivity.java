@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -24,7 +25,11 @@ import com.campusstreet.model.UserImpl;
 import com.campusstreet.presenter.LoginPresenter;
 import com.campusstreet.utils.PreferencesUtil;
 import com.campusstreet.wxapi.WXEntryActivity;
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.SendAuth;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import butterknife.BindView;
@@ -62,6 +67,11 @@ public class LoginActivity extends BaseActivity implements ILoginContract.View {
     @BindView(R.id.btn_wx_login)
     Button mBtnWxLogin;
     private ILoginContract.Presenter mPresenter;
+    private IWXAPI api;
+    private SendAuth.Req req;
+
+    public static final String APP_ID = "wxf2cbad533bd474c5";// 微信开放平台申请到的app_id
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +91,29 @@ public class LoginActivity extends BaseActivity implements ILoginContract.View {
             }
         });
         new LoginPresenter(UserImpl.getInstance(getApplicationContext()), this);
+
+        Log.i("xxxxxxxxxx","loginactivity onCreate");
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("xxxxxxxxxx","loginactivity onStart");
+        String weixinStr = PreferencesUtil.getDefaultPreferences(this, Const.PREF_USER)
+                .getString(Const.PREF_WEIXIN_INFO_KEY, null);
+        Gson gson = new GsonBuilder().setLenient().create();
+        UserWxInfo wxInfo = null;
+        if (weixinStr != null)
+        {
+            wxInfo = gson.fromJson(weixinStr,UserWxInfo.class);
+
+        }
+        if (mPresenter != null && wxInfo!= null)
+        {
+            mPresenter.onWxLogin(wxInfo);
+        }
+    }
+
 
     @OnClick({R.id.tv_register, R.id.tv_forget_password, R.id.btn_login,R.id.btn_wx_login})
     public void onViewClicked(View view) {
@@ -97,20 +129,26 @@ public class LoginActivity extends BaseActivity implements ILoginContract.View {
             case R.id.btn_login:
                 mPresenter.onLogin(mEtLoginUsername.getText().toString(), mEtLoginPassword.getText().toString());
                 break;
-            case R.id.btn_wx_login:
-                intent = new Intent(this, WXEntryActivity.class);
-                startActivityForResult(intent,REQUEST_CODE);
+            case R.id.btn_wx_login: {
+//                intent = new Intent(this, WXEntryActivity.class);
+//                startActivityForResult(intent,REQUEST_CODE);
+                api = WXAPIFactory.createWXAPI(this, APP_ID, false);
+                api.registerApp(APP_ID);//
+
+                if (!api.isWXAppInstalled())
+                {
+                    Toast.makeText(this, "没有安装微信,请先安装微信!", Toast.LENGTH_SHORT).show();
+                    this.finish();
+                    return;
+                }
+
+                req = new SendAuth.Req();
+                req.scope = "snsapi_userinfo";
+                req.state = "campustreet";
+                api.sendReq(req);
+            }
                 break;
 
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK)
-        {
-            UserWxInfo wxInfo = (UserWxInfo) data.getSerializableExtra("WX_INFO");
-            mPresenter.onWxLogin(wxInfo);
         }
     }
 

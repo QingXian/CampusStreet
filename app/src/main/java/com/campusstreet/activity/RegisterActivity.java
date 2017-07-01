@@ -70,6 +70,10 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
     TextView mTvDepartment;
     @BindView(R.id.ll_department)
     LinearLayout mLlDepartment;
+    @BindView(R.id.tv_sex)
+    TextView mTvSex;
+    @BindView(R.id.ll_sex)
+    LinearLayout mLlSex;
     @BindView(R.id.btn_register)
     Button mBtnRegister;
     @BindView(R.id.progress_bar)
@@ -80,6 +84,8 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
     LinearLayout mProgressBarContainer;
     private int mIndex;
     private String mDepartment;
+    private String mSex;
+
     private IRegisterContract.Presenter mPresenter;
     private TimeCountUtil mTimeCountUtil;
     private Integer mTel;
@@ -107,7 +113,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
 
     }
 
-    @OnClick({R.id.tv_login, R.id.btn_fetch_captcha, R.id.ll_department, R.id.btn_register})
+    @OnClick({R.id.tv_login, R.id.btn_fetch_captcha, R.id.ll_department, R.id.btn_register, R.id.ll_sex})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
@@ -136,6 +142,20 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
                         .create()
                         .show();
                 break;
+            case R.id.ll_sex:
+                new AlertDialog.Builder(this)
+                        .setTitle("请选择性别")
+                        .setSingleChoiceItems(Const.SEX, mIndex, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mSex = Const.DEPARTMENT[i];
+                                mTvSex.setText(Const.DEPARTMENT[i]);
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .create()
+                        .show();
+                break;
             case R.id.btn_register:
                 addUser();
                 break;
@@ -143,6 +163,10 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
     }
 
     private void addUser() {
+        if (!mTvSex.getText().toString().trim().equals(mSex)) {
+            showMessage("请选择性别");
+            return;
+        }
         if (!mTvDepartment.getText().toString().trim().equals(mDepartment)) {
             showMessage("请选择院系");
             return;
@@ -174,6 +198,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
         }
         UserInfo userInfo = new UserInfo();
         userInfo.setMajor(mTvDepartment.getText().toString());
+        userInfo.setSex(mTvSex.getText().toString());
         userInfo.setUsername(mEtNickname.getText().toString());
         userInfo.setMobile(mEtPhone.getText().toString());
         mPresenter.onResgister(userInfo,mEtPassword.getText().toString(),mEtCaptcha.getText().toString());

@@ -126,6 +126,10 @@ public class UserSettingActivity extends BaseActivity {
                                 .edit()
                                 .putString(Const.PREF_USERINFO_KEY, null)
                                 .apply();
+                        PreferencesUtil.getDefaultPreferences(UserSettingActivity.this, Const.PREF_USER)
+                                .edit()
+                                .putString(Const.PREF_WEIXIN_INFO_KEY, null)
+                                .apply();
                         Const.mIsLogout = true;
                         Intent intent = new Intent(UserSettingActivity.this, LoginActivity.class);
                         startActivity(intent);

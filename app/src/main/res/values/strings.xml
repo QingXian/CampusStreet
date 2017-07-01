@@ -164,6 +164,7 @@
     <string name="act_register_password_again">确认密码</string>
     <string name="act_register_nickname">请输入昵称</string>
     <string name="act_register_department">请选择院系</string>
+    <string name="act_register_sex">请选择性别</string>
     <string name="act_forget_password_captcha">请输入手机收到的验证码</string>
     <string name="act_random_code_captcha">随机验证码</string>
     <string name="next">下一步</string>

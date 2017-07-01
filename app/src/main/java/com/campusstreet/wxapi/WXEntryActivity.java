@@ -16,7 +16,10 @@ import java.net.URL;
 //import org.apache.http.client.methods.HttpGet;
 //import org.apache.http.impl.client.DefaultHttpClient;
 import com.campusstreet.activity.BaseActivity;
+import com.campusstreet.activity.LoginActivity;
+import com.campusstreet.common.Const;
 import com.campusstreet.entity.UserWxInfo;
+import com.campusstreet.utils.PreferencesUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -101,6 +104,9 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
  */
 public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 
+	@BindView(R.id.btn_wx_login)
+	Button mBtnWxLogin;
+
 	private static final String TAG = "WXEntryActivity";
 	
 	public static final String APP_ID = "wxf2cbad533bd474c5";// 微信开放平台申请到的app_id
@@ -124,16 +130,35 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 				Bundle bundle1 = (Bundle) msg.obj;
 				String accessToken = bundle1.getString("access_token");
 				String openId = bundle1.getString("open_id");
+				Log.i("xxxxxxxxxx", "handleMessage===0");
 				getUID(openId, accessToken);
 				break;
 
 			case RETURN_NICKNAME_UID:
-				String jsonStr = (String) msg.obj;
+				Log.i("xxxxxxxxxx", "handleMessage===1");
+				JSONObject jsonObj = (JSONObject) msg.obj;
+				Log.i("xxxxxxxxxx", jsonObj.toString());
+				try {
+					String nickname = jsonObj.getString("nickname");
+					Log.i("xxxxxxxxxx",nickname);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				try {
+					String unionid = jsonObj.getString("unionid");
+					Log.i("xxxxxxxxxx",unionid);
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 				Gson gson = new GsonBuilder().setLenient().create();
-				UserWxInfo wxInfo = gson.fromJson(jsonStr,UserWxInfo.class);
-				Intent data = new Intent();
-				data.putExtra("WX_INFO",wxInfo);
-				WXEntryActivity.this.setResult(RESULT_OK,data);
+//				UserWxInfo wxInfo = gson.fromJson(jsonObj.toString(),UserWxInfo.class);
+				PreferencesUtil.getDefaultPreferences(WXEntryActivity.this, Const.PREF_USER)
+						.edit()
+						.putString(Const.PREF_WEIXIN_INFO_KEY, jsonObj.toString())
+						.apply();
+				Intent intent = new Intent(WXEntryActivity.this , LoginActivity.class);
+				startActivity(intent);
 				WXEntryActivity.this.finish();
 				break;
 
@@ -150,7 +175,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 		ButterKnife.bind(this);
 
 		api = WXAPIFactory.createWXAPI(this, APP_ID, false);
-		api.registerApp(APP_ID);// 注册到微信列表，没什么用，笔者不知道干嘛用的，有知道的请告诉我，该文件顶部有我博客链接。或加Q1692475028,谢谢！
+		api.registerApp(APP_ID);//
 
 		try {
 			api.handleIntent(getIntent(), this);
@@ -158,18 +183,27 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 			e.printStackTrace();
 		}
 
-		if (!api.isWXAppInstalled())
-		{
-			Toast.makeText(WXEntryActivity.this, "没有安装微信,请先安装微信!", Toast.LENGTH_SHORT).show();
-			this.finish();
-			return;
-		}
+//		if (!api.isWXAppInstalled())
+//		{
+//			Toast.makeText(WXEntryActivity.this, "没有安装微信,请先安装微信!", Toast.LENGTH_SHORT).show();
+//			this.finish();
+//			return;
+//		}
 
-		// 请求授权登录
-		Toast.makeText(getApplicationContext(), "登录微信",
-				Toast.LENGTH_LONG).show();
-		Log.i(TAG, "登录微信");
-		sendAuth();
+
+	}
+
+	@OnClick({R.id.btn_wx_login})
+	public void onViewClicked(View view) {
+		switch (view.getId()) {
+			case R.id.btn_wx_login:
+				// 请求授权登录
+				Toast.makeText(getApplicationContext(), "登录微信",
+						Toast.LENGTH_LONG).show();
+				Log.i(TAG, "登录微信");
+				sendAuth();
+				break;
+		}
 	}
 
 	/**
@@ -191,43 +225,13 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 		req.state = WEIXIN_STATE;
 		api.sendReq(req);
 	}
-
+//
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		Log.i(TAG, "onNewIntent");
 		setIntent(intent);
 		api.handleIntent(intent, this);
-	}
-	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
-			switch (requestCode) {
-			case 0x101:
-				final com.tencent.mm.sdk.openapi.WXAppExtendObject appdata = new com.tencent.mm.sdk.openapi.WXAppExtendObject();
-				final String path = "/sdcard/test.jpg";
-				appdata.filePath = path;
-				appdata.extInfo = "this is ext info";
-
-				final WXMediaMessage msg = new WXMediaMessage();
-				msg.setThumbImage(Util.extractThumbNail(path, 150, 150, true));
-				msg.title = "this is title";
-				msg.description = "this is description";
-				msg.mediaObject = appdata;
-				
-				SendMessageToWX.Req req = new SendMessageToWX.Req();
-				req.transaction = buildTransaction("appdata");
-				req.message = msg;
-				req.scene = SendMessageToWX.Req.WXSceneTimeline;
-				api.sendReq(req);
-				break;
-
-			default:
-				break;
-			}
-		}
 	}
 
 	/**
@@ -243,14 +247,25 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
      */
 	@Override
 	public void onResp(BaseResp resp) {
-		Log.i(TAG, "onResp");
-		SendAuth.Resp sendAuthResp = (Resp) resp;// 用于分享时不要有这个，不能强转
+		Log.i("xxxxxxxxxx", "onResp+");
+
+		SendAuth.Resp sendAuthResp = (SendAuth.Resp) resp;// 用于分享时不要有这个，不能强转
+		Log.i("xxxxxxxxxx", "onResp+");
+		if (sendAuthResp == null)
+		{
+			Log.e("xxxxxxx","error");
+		}
+
 		String code = sendAuthResp.token;
+		Log.i("xxxxxxxxxx", "code = " + code);
 
 		if (resp.errCode == ErrCode.ERR_OK) {
-			Toast.makeText(this, "errCode = " +  ErrCode.ERR_OK, Toast.LENGTH_SHORT).show();
-			this.finish();
-			return;
+//			Toast.makeText(this, "errCode = " +  ErrCode.ERR_OK, Toast.LENGTH_SHORT).show();
+//			this.finish();
+		}
+		else
+		{
+			Toast.makeText(this, "errCode = " +  resp.errCode, Toast.LENGTH_SHORT).show();
 		}
 		getResult(code);
 
@@ -261,6 +276,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 	 * @param code 请求码
 	 */
 	private void getResult(final String code) {
+		Log.i("xxxxxxxxxx", "getResult");
 		new Thread() {// 开启工作线程进行网络请求
 			public void run() {
 				final String path = "https://api.weixin.qq.com/sns/oauth2/access_token?appid="
@@ -283,13 +299,16 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 					call.enqueue(new Callback() {
 						@Override
 						public void onFailure(Call call, IOException e) {
-							Log.e("getResult", "onFailure: ");
+							Log.e("xxxxxxxxxx", "onFailure: ");
 							WXEntryActivity.this.finish();
 						}
 
 						@Override
 						public void onResponse(Call call, Response response) throws IOException {
-							 String httpStr =  response.body().string();
+							Log.i("xxxxxxxxxx", "getResult onResponse");
+
+							String httpStr =  response.body().string();
+							Log.i("xxxxxxxxxx",httpStr);
 							JSONObject jsonObject = null; // 请求https连接并得到json结果
 							try {
 								jsonObject = new JSONObject(httpStr);
@@ -312,8 +331,8 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 								} catch (JSONException e) {
 									e.printStackTrace();
 								}
-								Log.i(TAG, "openid = " + openid);
-								Log.i(TAG, "access_token = " + access_token);
+								Log.i("xxxxxxxxxx", "openid = " + openid);
+								Log.i("xxxxxxxxxx", "access_token = " + access_token);
 
 								Message msg = handler.obtainMessage();
 								msg.what = RETURN_OPENID_ACCESSTOKEN;
@@ -337,6 +356,8 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 	 * @param accessToken
 	 */
 	private void getUID(final String openId, final String accessToken) {
+		Log.i("xxxxxxxxxx", "getUID");
+
 		new Thread() {
 			@Override
 			public void run() {
@@ -361,9 +382,29 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 					}
 					@Override
 					public void onResponse(Call call, Response response) throws IOException {
+						Log.i("xxxxxxxxxx", "getUID onResponse");
+						JSONObject jsonObj = null;
+						try {
+							 jsonObj = new JSONObject(response.body().string());
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						try {
+							String nickname = jsonObj.getString("nickname");
+							Log.i("xxxxxxxxxx",nickname);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						try {
+							String unionid = jsonObj.getString("unionid");
+							Log.i("xxxxxxxxxx",unionid);
+
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 						Message msg = handler.obtainMessage();
 						msg.what = RETURN_NICKNAME_UID;
-						msg.obj = response.body().toString();
+						msg.obj = jsonObj;
 						handler.sendMessage(msg);
 					}
 				});

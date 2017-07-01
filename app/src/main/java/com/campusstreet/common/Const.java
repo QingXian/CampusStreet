@@ -20,6 +20,7 @@ public class Const {
     public static final String PREF_USERNAME_KEY = "username";
     public static final String PREF_USERINFO_KEY = "userinfo";
     public static final String MULTIPART_FORM_DATA = "multipart/form-data";
+    public static final String PREF_WEIXIN_INFO_KEY = "userwxinfo";
     /**
      * API结果KEY
      */
@@ -54,6 +55,8 @@ public class Const {
     public static final String[] TRADETYPE = {"见面交易"};
     public static final String[] SELLTYPE = {"一口价", "可小刀"};
     public static final String[] DEPARTMENT = {"信息院", "物机院", "化材院", "经管院", "教科院", "生科院"};
+    public static final String[] SEX = {"男", "女"};
+
     /**
      * 判断标识
      */
