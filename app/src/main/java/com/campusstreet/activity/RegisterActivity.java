@@ -148,7 +148,7 @@ public class RegisterActivity extends BaseActivity implements IRegisterContract.
                         .setSingleChoiceItems(Const.SEX, mIndex, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                mSex = Const.DEPARTMENT[i];
+                                mSex = Const.SEX[i];
                                 mTvSex.setText(Const.SEX[i]);
                                 dialogInterface.dismiss();
                             }
