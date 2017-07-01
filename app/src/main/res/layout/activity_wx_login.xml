@@ -8,5 +8,6 @@
     android:id="@+id/btn_wx_login"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:hint="登入微信"/>
+    android:hint="登入微信"
+    android:visibility="gone"/>
 </LinearLayout>

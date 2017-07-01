@@ -262,12 +262,12 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 		if (resp.errCode == ErrCode.ERR_OK) {
 //			Toast.makeText(this, "errCode = " +  ErrCode.ERR_OK, Toast.LENGTH_SHORT).show();
 //			this.finish();
+			getResult(code);
 		}
 		else
 		{
 			Toast.makeText(this, "errCode = " +  resp.errCode, Toast.LENGTH_SHORT).show();
 		}
-		getResult(code);
 
 	}
 
