@@ -21,6 +21,9 @@
         android:protectionLevel="signature"/>
 
     <uses-permission android:name="com.campusstreet.permission.MIPUSH_RECEIVE"/>
+    <!--摄像头闪光灯权限-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".FireAntApp"
@@ -152,6 +155,8 @@
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"/>
+        <activity android:name=".activity.ScannerActivity">
+        </activity>
 
         <!-- 小米推送start -->
         <service

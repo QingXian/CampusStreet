@@ -91,6 +91,14 @@
             android:drawablePadding="10dp"
             android:textSize="18dp"
             />
+        <TextView
+            android:id="@+id/tv_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_order_seat"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="8dp"
+            />
     </RelativeLayout>
 
 

@@ -55,4 +55,5 @@ dependencies {
     //微信
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     compile files('libs/libammsdk.jar')
+    compile 'me.dm7.barcodescanner:zxing:1.9.3'
 }
