@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
+
     <include layout="@layout/toolbar"/>
+
     <LinearLayout
         android:background="@drawable/bg_act_modify_nickname_tv"
         android:layout_marginTop="16dp"
@@ -47,13 +49,13 @@
             />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+<com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+    android:id="@+id/rv_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:background="@color/colorGray">
-
-    </android.support.v7.widget.RecyclerView>
+</com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
 
 
     <include layout="@layout/progress_bar">

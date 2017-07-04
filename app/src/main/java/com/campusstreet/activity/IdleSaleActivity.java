@@ -1,6 +1,7 @@
 package com.campusstreet.activity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
@@ -9,10 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +29,15 @@ import com.campusstreet.entity.CategoriesInfo;
 import com.campusstreet.entity.IdleSaleInfo;
 import com.campusstreet.entity.LeaveMessageInfo;
 import com.campusstreet.entity.UserInfo;
+import com.campusstreet.fragment.IdleSaleAllTabPopupWindow;
 import com.campusstreet.model.IdleSaleImpl;
 import com.campusstreet.presenter.IdleSalePresenter;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +50,7 @@ import static com.campusstreet.common.Const.REQUEST_CODE;
  * Created by Orange on 2017/4/6.
  */
 
-public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.View {
+public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.View ,IdleSaleAllTabPopupWindow.OnItemClickListener {
     @BindView(R.id.toolbar_title)
     TextView mToolbarTitle;
     @BindView(R.id.iv_toolbar_right)
@@ -63,6 +71,8 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
     LinearLayout mProgressBarContainer;
     @BindView(R.id.tv_error)
     TextView mTvError;
+    @BindView(R.id.btn_drop)
+    Button mBtnDrop;
     private IIdleSaleContract.Presenter mPresenter;
     private IdleSaleRecyclerViewAdapter mAdapter;
     private int mPi = 0;
@@ -70,6 +80,8 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
     private int[] mPostions;
     private String[] mTitle;
     private UserInfo mUserInfo;
+    private IdleSaleAllTabPopupWindow mPop;
+    ArrayList<Map<String,String>> popDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +115,7 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
 
 
     private void initEvent() {
+        popDataList = new ArrayList<>();
         mAdapter.setOnItemClickListener(new IdleSaleRecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, IdleSaleInfo idleSaleInfo) {
@@ -138,13 +151,13 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
 
 
     private void initView() {
-        mRvContent.setGridLayout(2);
+        mRvContent.setStaggeredGridLayout(2);
         mAdapter = new IdleSaleRecyclerViewAdapter(this, null);
         mRvContent.setAdapter(mAdapter);
     }
 
 
-    @OnClick({R.id.iv_toolbar_right, R.id.btn_add})
+    @OnClick({R.id.iv_toolbar_right, R.id.btn_add, R.id.btn_drop})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_toolbar_right:
@@ -157,6 +170,13 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
                 }
                 break;
             case R.id.btn_add:
+                break;
+            case R.id.btn_drop:
+                mPop = new IdleSaleAllTabPopupWindow(this,popDataList);
+
+                mPop.showAsDropDown(mToolbar,  0, 0);
+                mPop.setUserInfo(mUserInfo);
+                mPop.setOnItemClickListener(this);
                 break;
         }
     }
@@ -192,9 +212,15 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
     public void setIdleSaleCategories(List<CategoriesInfo> categories) {
         mTitle = new String[categories.size() + 1];
         mPostions = new int[categories.size() + 1];
+        Map<String,String> mapA = new HashMap<>();
+        mapA.put("key_array","全部");
+        popDataList.add(mapA);
         for (int i = 0; i < categories.size(); i++) {
             mTitle[i + 1] = categories.get(i).getName();
             mPostions[i + 1] = categories.get(i).getId();
+            Map<String,String> map = new HashMap<>();
+            map.put("key_array",categories.get(i).getName());
+            popDataList.add(map);
         }
         if (mTitle != null) {
             mTabLayout.addTab(mTabLayout.newTab().setText("全部"));
@@ -277,6 +303,36 @@ public class IdleSaleActivity extends BaseActivity implements IIdleSaleContract.
             mPi = 0;
             mPresenter.fetchIdleSaleList(mPostion, mPi);
             setLoadingIndicator(true);
+        }
+    }
+
+    @Override
+    public void setOnItemClick(View v,int position) {
+        Log.i("xxxxxxxxxx", "setOnItemClick: "+position);
+        mPi = 0;
+        mPresenter.fetchIdleSaleList(mPostions[position], mPi);
+        mPostion = mPostions[position];
+        TabLayout.Tab tabs = mTabLayout.getTabAt(position);
+        tabs.select();
+    }
+
+
+    public class SpacesItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int space;
+
+        public SpacesItemDecoration(int space) {
+            this.space=space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.left=space;
+            outRect.right=space;
+            outRect.bottom=space;
+            if(parent.getChildAdapterPosition(view)==0){
+                outRect.top=space;
+            }
         }
     }
 }

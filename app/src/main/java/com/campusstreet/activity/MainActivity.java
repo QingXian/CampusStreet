@@ -412,7 +412,7 @@ public class MainActivity extends BaseActivity implements ReleasePopupWindow.OnI
                 mIvToolbarRight.setImageResource(R.drawable.ic_setting);
                 mToolbarTitle.setText(getString(R.string.bot_tv_user));
                 mTvUser.setTextColor(getResources().getColor(R.color.colorPrimary));
-                mTvUser.setSelected(true);
+                mTvUser.setSelected(false);
             }
         }
         //从持久化文件中获取的用户信息
