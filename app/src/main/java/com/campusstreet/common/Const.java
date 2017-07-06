@@ -56,6 +56,7 @@ public class Const {
     public static final String[] SELLTYPE = {"一口价", "可小刀"};
     public static final String[] DEPARTMENT = {"信息院", "物机院", "化材院", "经管院", "教科院", "生科院"};
     public static final String[] SEX = {"男", "女"};
+    public static final String[] SEATS_VENUE = {"图书馆一", "图书馆二", "图书馆三", "图书馆四", "图书馆五", "图书馆六"};
 
     /**
      * 判断标识

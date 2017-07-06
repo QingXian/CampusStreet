@@ -32,10 +32,14 @@ public class SeatsSelectRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
     private List<SeatsGroupInfo> mList;
     private static OnRecyclerViewItemClickListener mOnItemClickListener;
 
+    public SeatsSelectRecyclerViewAdapter(Context context, List<SeatsGroupInfo> list) {
+        mContext = context;
+        mList = list;
+    }
 
     public static interface OnRecyclerViewItemClickListener {
 
-        void onItemClick(View view, IdleSaleInfo idleSaleInfo);
+        void onItemClick(View view, SeatsSingleInfo singleInfo);
     }
 
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
@@ -71,14 +75,26 @@ public class SeatsSelectRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
                 if (seatsGroupInfo.getSeatsGroup().get(idx) != null)
                 {
                     SeatsSingleInfo singleInfo = (SeatsSingleInfo)seatsGroupInfo.getSeatsGroup().get(idx);
-                    if (idx == 0)
+                    if (idx == 0) {
                         viewHolder.mBtnSeat1.setText(singleInfo.getSeatId());
-                    else if(idx ==1)
+                        viewHolder.mBtnSeat1.setOnClickListener(this);
+                        viewHolder.mBtnSeat1.setTag(singleInfo);
+                    }
+                    else if(idx ==1) {
                         viewHolder.mBtnSeat2.setText(singleInfo.getSeatId());
-                    else if(idx ==2)
+                        viewHolder.mBtnSeat2.setOnClickListener(this);
+                        viewHolder.mBtnSeat2.setTag(singleInfo);
+                    }
+                    else if(idx ==2) {
                         viewHolder.mBtnSeat3.setText(singleInfo.getSeatId());
-                    else if(idx ==3)
+                        viewHolder.mBtnSeat3.setOnClickListener(this);
+                        viewHolder.mBtnSeat3.setTag(singleInfo);
+                    }
+                    else if(idx ==3) {
                         viewHolder.mBtnSeat4.setText(singleInfo.getSeatId());
+                        viewHolder.mBtnSeat4.setOnClickListener(this);
+                        viewHolder.mBtnSeat4.setTag(singleInfo);
+                    }
 
                 }
             }
@@ -98,7 +114,7 @@ public class SeatsSelectRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             // 注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(v, (IdleSaleInfo) v.getTag());
+            mOnItemClickListener.onItemClick(v, (SeatsSingleInfo) v.getTag());
         }
     }
 

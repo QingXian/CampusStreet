@@ -78,13 +78,17 @@ public class SeatsActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.tv_signed})
+    @OnClick({R.id.tv_signed ,R.id.tv_order_seat})
     public void onClick(View view)
     {
         switch (view.getId())
         {
             case  R.id.tv_signed:
                 startActivityForResult(new Intent(this, ScannerActivity.class), REQUEST_CODE);
+                break;
+            case R.id.tv_order_seat:
+                Intent intent = new Intent(this,SeatsSelectActivity.class);
+                startActivity(intent);
                 break;
         }
     }

@@ -150,6 +150,8 @@
         <activity android:name=".activity.JoinTaskActivity">
         </activity>
         <activity android:name=".activity.SeatsActivity" />
+        <activity android:name=".activity.SeatsSelectActivity" />
+        <activity android:name=".activity.SeatsSelectTimeActivity" />
         <activity android:name=".activity.AssociationMembersActivity">
         </activity>
         <activity
